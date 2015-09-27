@@ -1,0 +1,87 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[hmargin=2.5cm,vmargin=2.5cm]{geometry}
+\usepackage[section]{placeins}
+\usepackage[french]{babel} 
+\usepackage{subcaption}
+\usepackage{titlesec}
+
+\title{Jeu du Solitaire}
+\author{Gustavo Ciotto Pinton}
+\date{Octobre 2014}
+
+\begin{document}
+
+\begin{titlepage}
+\vspace*{.18\textheight}
+\begin{center}
+%
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.12]{images/LogoSupelec}
+\end{figure}
+%
+\vspace*{10pt}
+\textbf{\LARGE JEU DU SOLITAIRE} \\[0.5 cm]
+\textbf{\LARGE Projet de développement logiciel }\\[1 cm]
+
+Gustavo \textbf{CIOTTO PINTON}\\
+Ignacio \textbf{GARCIA ATANCE GARCIA}\\
+
+\vspace*{10pt}
+Séquence 5 - Promotion 2013-2015\\[1 cm]
+
+\vspace*{60pt}
+Octobre 2014
+
+\end{center}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+
+\newpage
+\section{Introduction}
+
+Le but de ce projet de conception de logiciel a été de développer les outils
+complèts du jeu du solitaire en appliquant les connaissances apprises dans le
+cours de première année comme fondements de l'informatique, génie logiciel et
+modèles de programmation.
+
+\vspace{12pt}
+
+Le jeu du solitaire consiste à un plateau composé des trous qui peuvent être
+occupés par des pions ou pas. L’objectif est alors d’éliminer le maximum des
+pièces possible. Une pièce est enlevée du jeu lorsqu’une autre pièce la
+mange, c’est-à-dire, saute par-dessus.
+
+\vspace{12pt}
+
+Notre programme est capable de plusieurs fonctionnalités comment la
+manipulation des fichiers texte, devant réaliser la lecture de l’état du plateau et aussi
+l’écriture la liste des coups qui ont été faits, l’affichage graphique travers
+de le packetage Swing en Java et finalement fournir une Intelligence
+Artificielle qui puisse calculer la meilleure liste de coups possible.
+Pour programmer et modéliser nous avons utilisé les outils fournis par le
+logiciel Eclipse comment le plug-in Papyrus, avec lequel nous avons modélisé le
+diagramme de classes et le diagramme de cas d’utilisation. On remarque aussi
+l’utilisation de l’outil SVN qui nous a permis de contrôler plus facilement les
+nombreuses modifications .
+
+
+\newpage
+\section{Modélisation du programme - UML}
+
+
+
+\subsection{Diagramme de cas d'use}
+
+
+\subsection{Diagramme de classes}
+das
+
+\end{document}

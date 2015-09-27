@@ -1,0 +1,16 @@
+\select@language {french}
+\contentsline {section}{\numberline {1}Introduction}{2}
+\contentsline {section}{\numberline {2}Mod\IeC {\'e}lisation du programme - UML}{3}
+\contentsline {subsection}{\numberline {2.1}Diagramme de cas d'utilisation}{3}
+\contentsline {subsection}{\numberline {2.2}Diagramme de classes}{3}
+\contentsline {subsubsection}{\numberline {2.2.1}Les classes \FB@og Entit\IeC {\'e}s \FB@fg }{4}
+\contentsline {subsubsection}{\numberline {2.2.2}Les classes \FB@og Contr\IeC {\^o}le \FB@fg }{5}
+\contentsline {subsubsection}{\numberline {2.2.3}Les classes \FB@og Interface \FB@fg }{6}
+\contentsline {section}{\numberline {3}Le codage}{7}
+\contentsline {subsection}{\numberline {3.1}L'impl\IeC {\'e}mentation du paquet \FB@og Entit\IeC {\'e}s \FB@fg }{7}
+\contentsline {subsection}{\numberline {3.2}L'impl\IeC {\'e}mentation du paquet \FB@og Contr\IeC {\^o}le \FB@fg }{7}
+\contentsline {subsubsection}{\numberline {3.2.1}Strat\IeC {\'e}gies de r\IeC {\'e}solution}{7}
+\contentsline {subsection}{\numberline {3.3}L'impl\IeC {\'e}mentation du paquet \FB@og Interface \FB@fg }{8}
+\contentsline {subsubsection}{\numberline {3.3.1}L'interface graphique}{8}
+\contentsline {subsubsection}{\numberline {3.3.2}L'interface d'entr\IeC {\'e}e et sortie}{9}
+\contentsline {section}{\numberline {4}Annexes}{10}

@@ -1,0 +1,14 @@
+ 
+import score.Score;
+public class Teste {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		String origem = "/home/gciotto/workspace/Solitaire_Source_Seq5_2014_C115/tests/plateau/grand1.sol",
+				coups = "/home/gciotto/workspace/Solitaire_Source_Seq5_2014_C115/tests/coups/grand1.cps.238";
+		Score.evaluer(origem,coups);
+
+	}
+
+}

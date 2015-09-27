@@ -1,0 +1,278 @@
+package controleurs;
+
+import entites.*;
+
+import java.io.*;
+import java.util.*;
+
+public class ControleurJeu {
+
+	private List<Coup> listeCoups;
+	private Plateau plateau;
+	private IControleurIO controleurIO;
+	private IControleurInterface controleurInterface;
+	private int movements;
+
+	public ControleurJeu(IControleurIO cIO, IControleurInterface cInterface) { 
+
+		this.controleurIO = cIO;
+		this.controleurInterface = cInterface;
+		this.listeCoups = new ArrayList<Coup>();		
+		this.movements = 0;
+	}
+
+	public List<Coup> getListeCoups() {
+		return listeCoups; 
+	}
+
+	public Plateau getPlateau() {
+		return plateau; 
+	}
+
+	public IControleurIO getControleurIO() {
+		return controleurIO; 
+	}
+
+	public IControleurInterface getControleurInterface() {
+		return controleurInterface; 
+	}
+
+	public Plateau lirePlateau(IMillieu m) throws FileNotFoundException, IOException { 
+
+		this.plateau = this.controleurIO.lirePlateau(m);
+		this.listeCoups.clear();
+		this.movements = 0;		
+		return this.plateau;
+	}
+
+	public boolean ecrireListeCoups(IMillieu m) throws IOException { 
+		return this.controleurIO.ecritListeCoup(this.listeCoups, m);
+	}
+
+
+	public List<Coup> coupsPossibles() { 
+
+		List<Coup> coups = new ArrayList<Coup>();
+
+		for (Case c : this.plateau.getCasesVides()) {
+
+			int x = c.getCoordonnee().getLigne(),
+					y = c.getCoordonnee().getColonne();
+
+			for (Case v : this.plateau.getVoisinesA(x, y)) {
+
+				if (v.getEtat() == Case.OCCUPEE) {
+
+					if (v.getCoordonnee().getLigne() == x -1 ) { // BAS
+
+						Case candidat = this.plateau.getCaseA(x - 2, y);
+						if (candidat != null && candidat.getEtat() == Case.OCCUPEE)
+							coups.add( new Coup (new Coordonnee (x - 2, y), new Direction (Direction.BAS)));
+
+					}
+
+					if (v.getCoordonnee().getLigne() == x + 1 ) { // HAUTE
+
+						Case candidat = this.plateau.getCaseA(x + 2, y);
+						if (candidat != null && candidat.getEtat() == Case.OCCUPEE)
+							coups.add( new Coup (new Coordonnee (x + 2, y), new Direction (Direction.HAUTE)));
+
+					}
+
+					if (v.getCoordonnee().getColonne() == y - 1 ) { // DROITE
+
+						Case candidat = this.plateau.getCaseA(x, y - 2);
+						if (candidat != null && candidat.getEtat() == Case.OCCUPEE)
+							coups.add( new Coup (new Coordonnee (x, y - 2), new Direction (Direction.DROITE)));
+
+					}
+
+					if (v.getCoordonnee().getColonne() == y + 1 ) { // GAUCHE
+
+						Case candidat = this.plateau.getCaseA(x, y + 2);
+						if (candidat != null && candidat.getEtat() == Case.OCCUPEE)
+							coups.add( new Coup (new Coordonnee (x, y + 2), new Direction (Direction.GAUCHE)));
+
+					}
+				}
+			}
+
+		}
+
+		return coups;
+	}
+
+	public Coup prochainCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+		
+		if (listePossibles.isEmpty())
+			return null;
+		
+		Coup prochain = listePossibles.get(0);
+		
+		this.listeCoups.add(prochain);
+		
+		this.plateau.actualiserPlateau(prochain);
+		
+		this.movements++;
+		
+		return prochain;
+	}
+
+	public Coup prochainMinVoisinCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+		
+		if (listePossibles.isEmpty())
+			return null;
+		
+		int choisi = 0, nbVoisins = 9, total = 0;
+		Coup prochain = null;		
+		
+		for (Coup cand : listePossibles) {
+			
+			int nbVoisinsCaseVide, 
+				ligne = cand.getCoordonneeOrigine().getLigne(),
+				colonne = cand.getCoordonneeOrigine().getColonne(),
+				directionCode = cand.getDirection().getDirectionCode(); 
+					
+			
+			if (directionCode  == Direction.HAUTE) 
+				nbVoisinsCaseVide = this.plateau.getVoisinesA(ligne - 2, colonne).size();
+			
+			else if (directionCode == Direction.BAS) 
+				nbVoisinsCaseVide = this.plateau.getVoisinesA(ligne + 2, colonne).size();
+			
+			else if (directionCode == Direction.DROITE) 
+				nbVoisinsCaseVide = this.plateau.getVoisinesA(ligne, colonne + 2).size();
+			
+			else 
+				nbVoisinsCaseVide = this.plateau.getVoisinesA(ligne, colonne - 2).size();
+			
+			if (nbVoisinsCaseVide < nbVoisins) {
+				
+				choisi = total;
+				nbVoisins = nbVoisinsCaseVide;				
+			}
+			
+			
+			total++;
+		}		
+		
+		prochain = listePossibles.get(choisi);
+		
+		this.listeCoups.add(prochain);
+		
+		this.plateau.actualiserPlateau(prochain);
+		
+		this.movements++;
+		
+		return prochain;
+	}
+	
+	public Coup prochainMaxVoisinCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+		
+		if (listePossibles.isEmpty())
+			return null;
+		
+		int choisi = 0, nbVoisins = 0, total = 0;
+		Coup prochain = null;		
+		
+		for (Coup cand : listePossibles) {
+			
+			int nbVoisinsCaseVide, 
+				ligne = cand.getCoordonneeOrigine().getLigne(),
+				colonne = cand.getCoordonneeOrigine().getColonne(),
+				directionCode = cand.getDirection().getDirectionCode(); 
+					
+			
+			if (directionCode  == Direction.HAUTE) 
+				nbVoisinsCaseVide = this.plateau.getVoisinesA(ligne - 2, colonne).size();
+			
+			else if (directionCode == Direction.BAS) 
+				nbVoisinsCaseVide = this.plateau.getVoisinesA(ligne + 2, colonne).size();
+			
+			else if (directionCode == Direction.DROITE) 
+				nbVoisinsCaseVide = this.plateau.getVoisinesA(ligne, colonne + 2).size();
+			
+			else 
+				nbVoisinsCaseVide = this.plateau.getVoisinesA(ligne, colonne - 2).size();
+			
+			if (nbVoisinsCaseVide > nbVoisins) {
+				
+				choisi = total;
+				nbVoisins = nbVoisinsCaseVide;				
+			}
+			
+			
+			total++;
+		}		
+		
+		prochain = listePossibles.get(choisi);
+		
+		this.listeCoups.add(prochain);
+		
+		this.plateau.actualiserPlateau(prochain);
+		
+		this.movements++;
+		
+		return prochain;
+	}
+	
+	public Coup prochainRandomCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+		
+		if (listePossibles.isEmpty())
+			return null;
+						
+		Random randomGenerator = new Random();
+		
+		int indice = 0; 
+		
+		if (!listePossibles.isEmpty())
+			indice = randomGenerator.nextInt(listePossibles.size());
+		
+		System.out.println("total: "+ listePossibles.size() + "indice: "+ indice);
+		
+		Coup prochain = listePossibles.get(indice);
+		
+		this.listeCoups.add(prochain);
+		
+		this.plateau.actualiserPlateau(prochain);
+		
+		this.movements++;
+		
+		return prochain;
+	}
+
+	public void commencerJeu() { 
+		this.controleurInterface.metEnOperation();
+	} 
+
+	public static Plateau plateauVide() {
+
+		Plateau p = new Plateau(9, 9);
+
+		for (int i = 0; i < 9; i++)
+			for (int j = 0; j < 9; j++)
+				p.changeEtatA(new Coordonnee(i,j), Case.PAS_EN_USE);
+
+		return p;
+	}
+
+	public List<Case> getListeCasesVides() {
+		return this.plateau.getCasesVides();
+	}
+
+	public int getTotalMovements() {
+		return this.movements;
+	}
+	
+	public int getPiecesRestantes() {
+		return this.plateau.getPiecesRestantes();
+	}
+}

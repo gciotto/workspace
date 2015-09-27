@@ -1,0 +1,158 @@
+\section{Introduction}
+
+\subsection{The Objective}
+
+This work focus on the implementation of an artificial intelligence able to
+play effectively the board game Pentago. The programming language that will be
+deployed to achieve so is Matlab. Most Pentago AIs are developed in C++, hence
+using Matlab would bring some innovation for there is little documentation on
+programming a Pentago AI with this language. Moreover, this choice has a
+pedagogical value: we have previously worked with Matlab and our advisor has
+done a Pentago AI of his own before, in such way that it would be easier to
+compare results and approaches for the evaluation of our work.
+
+\vspace{10pt}
+
+For simplicity reasons we will employ << he >> instead of << he or she >> on
+the writing.
+
+\subsection{What is Pentago?}
+
+<< \textit{Pentago} is a two-player abstract strategy game invented by Tomas
+Flodén. The Swedish company Mindtwister has the rights of developing and
+commercializing the product.
+
+\vspace{10pt}
+
+The game is played on a 6x6 board divided into four 3x3 sub-boards (or
+quadrants). Taking turns, the two players place a marble of their color (either
+black or white) onto an unoccupied space on the board, and then rotate one of
+the sub-boards by 90 degrees either clockwise or anti-clockwise. A player wins
+by getting five of their marbles in a vertical, horizontal or diagonal row
+(either before or after the sub-board rotation in their move). If all 36 spaces
+on the board are occupied without a row of five being formed then the game is a
+draw.>> (Pentago, 2015).
+
+
+\subsection{Why Pentago?}
+
+When Pentago was introduced in 2005, it immediately attracted the interest of
+Computer Science community, as it presents itself as <<[...] a two player,
+deterministic, perfect knowledge, zero sum game: there is no random or hidden
+state, and the goal of the two players is to make the other player lose (or at
+least tie).>> (Pentago is a first player win, 2015). Games that hold those
+characteristics, as Chess and Go, are of great interest for the computer
+science and frequently of great popularity worldwide.
+
+\vspace{10pt}
+
+<< But where does the motivation to examine games comes from? Herik et al. [43]
+described, the interest of Artificial Intelligence researchers in strong
+game-playing programs as an important goal for more than half a century now.
+”The principal aim is to witness the ”intelligence“ of computers. A second aim
+has been to establish the game-theoretic value of a game, i.e., the outcome
+when all participants play optimally.“ Heule et al. [19] added the motivational
+question: ”Can artificial intelligence outperform the human masters in the
+game? “. Yet it is important to mention, that the methods to show intelligence
+and outperform human master can differ substantially from those for solving.
+But altogether, games seem to be an interesting site to show Artificial
+Intelligence. Moreover solving games applies the Artificial Intelligence
+methods to larger problems which may become computational puzzles. Even so the
+topic of solving may be seen as a toy application, it is perfect to show that
+large knowledge based problems are solvable.>> (On solving Pentago, 2015).
+
+\vspace{10pt}
+
+By solving we mean the computational sense of the word: finding an optimal
+strategy that would either proof that a player (the first or the second to
+play) always win or that both may force a draw. The strength of a solution may
+be categorised in as stated in (On solving Pentago, 2015):
+
+
+\begin{enumerate}
+  \item Ultra-weak: It is known what is the result of the game when it is
+  perfectly played, although the strategy that leads to this result is not known.
+	
+  \item Weak: A strategy that leads from the initial position(s) to the
+  perfect-play result for both players is known.
+  
+  \item  Strong: For all possible to have positions, a strategy that leads to
+  the perfect-play result is known.
+
+\end{enumerate}
+
+\vspace{10pt}
+
+We may observe that «strongly solve» implies «weakly solved» that implies «ultra-weakly solved». 
+
+\vspace{10pt}
+
+Unfortunately, many games present such complexibility to evaluate the possible
+outcomes that it takes too much time to trace a strategy, hence rendering the
+solution unreachable with the contemporane technologie. As it presents some
+symmetries and <<not so many>> states, Pentago is more easily solved than the
+previous examples of Chess and Go.
+
+\vspace{10pt}
+
+<< The 6x6 version of Pentago has been strongly solved with the help of a Cray
+supercomputer at NERSC. With symmetries removed, there are
+3,009,081,623,421,558 possible positions. If both sides play perfectly, the
+first player to move will always win the game.>> (Pentago is a first player win,
+2015).
+
+\vspace{10pt}
+
+All in all, we may conclude that the solution of Pentago belongs to a class of
+problems (solving games with an AI) that has been subject of everlasting
+interest of the scientific community and general public. It is an already
+solved problem, but it has been solved employing a supercomputer. Moreover,
+there is little documentation on programming Pentago with Matlab instead of C++.
+
+\vspace{10pt}
+
+We want to produce with this work an efficient AI, employing Matlab language
+and conventional computers to run it. Finally, we want it to be fast, as it
+should be suited for tests against other available AI and human players, in
+such fashion that we want to make it play in less than a couple of minutes.
+
+\subsection{Work Planning}
+
+We will deploy the following phases of our project:
+
+\begin{enumerate}
+  \item First, we will have a player vs player enabled Pentago.
+  		\begin{itemize}
+  		  \item Creation of a graphical interface that enables players to play a
+  		  piece on an empty space when it is his turn.
+
+  		  \item Modification of this interface to allow players to rotate the board
+  		  after their play.
+  		  
+  		  \item Introduction of a <<game over>> clause, that ends the game as a
+  		  player wins or there is a tie.
+  		\end{itemize}
+  		
+  	\item Second, we will introduce an artificial intelligence able to play
+  	against an external player (i.e. player vs AI enabled).
+  		\begin{itemize}
+  		  \item Insertion of a random play AI able to play against a player, i.e.
+  		  obeying the rules of the game.
+  		  \item Research about possible solving algorithms to implement.
+  		\end{itemize}
+  		 
+  	\item Finally, we will work on the optimization of our AI, rendering its
+  	algorithm more efficient and robust (i.e. strong AI).
+  		\begin{itemize}
+  		  \item Implementation of efficient solving algorithms.
+  		  \item Further tuning for optimal results.  
+  		\end{itemize}
+\end{enumerate}
+
+In order to advance from a module of work to the next one, we will employ
+unitary and integration tests for the validation of the progress. Likewise, we
+will employ tests and simulations to verify the performance of our choices in
+the tuning phase of our algorithm, for instance confronting our artificial
+intelligence with the one programmed by our advisor.
+
+\newpage

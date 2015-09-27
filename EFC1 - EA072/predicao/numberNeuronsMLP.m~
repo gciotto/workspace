@@ -1,0 +1,51 @@
+function numberNeuronsMLP (N)
+
+erro_tot_avg_iter = [];
+mean_eqmv_min_avg_itr = [];
+
+neurons_interval = 5:N;
+iter_interval = 
+
+
+for n = 500:100:1000;
+    
+    mean_eqmv_min_avg_array = [];
+    error_tot_avg_array = [];
+    
+    for i=5:N
+        
+        disp(['==========================' num2str(i) ' NEURONS==================']);
+        
+        nn1h_k_folds('matrizes', 10, i, 1, n);
+        
+        [error_tot_avg mean_eqmv_min_avg eqm_ens] = analysis('matrizes', 1, 10);
+        
+        mean_eqmv_min_avg_array = [mean_eqmv_min_avg_array mean_eqmv_min_avg];
+        error_tot_avg_array = [error_tot_avg_array error_tot_avg];
+        disp('===============================================================');
+        
+    end
+    
+    erro_tot_avg_iter = [erro_tot_avg_iter error_tot_avg_array'];
+    mean_eqmv_min_avg_itr = [mean_eqmv_min_avg_itr mean_eqmv_min_avg_array'];
+    
+    [A B] = sort(mean_eqmv_min_avg_array, 'ascend');
+    disp(sprintf('Numero de neuronios para minimizar erro de validacao: %d', B(1)));
+    
+    figure
+    plot(1:N, mean_eqmv_min_avg_array);
+    hold on; plot(1:N, mean_eqmv_min_avg_array, '*');
+    plot(1:N, error_tot_avg_array, 'r');
+    plot(1:N, error_tot_avg_array, 'r*');
+    title(sprintf('Erros para N = %d e n. iteracoes = %d', i, n));
+    grid on;
+    hold off;
+end
+
+figure 
+
+plot (500:100:1000, mean(mean_eqmv_min_avg_itr));
+hold on;
+plot (500:100:1000, mean(erro_tot_avg_iter), 'r');
+end
+

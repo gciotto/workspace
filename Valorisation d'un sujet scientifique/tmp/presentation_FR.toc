@@ -1,0 +1,6 @@
+\beamer@endinputifotherversion {3.33pt}
+\select@language {french}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{D\IeC {\'e}tails du sujet}{5}{0}{2}
+\beamer@sectionintoc {3}{Valorisation du sujet}{10}{0}{3}
+\beamer@sectionintoc {4}{Conclusions}{13}{0}{4}

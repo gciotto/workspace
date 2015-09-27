@@ -1,0 +1,334 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[hmargin=3.0cm,vmargin=3.0cm]{geometry}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+
+\begin{document}
+
+\begin{titlepage}
+\vspace*{.28\textheight}
+\begin{center}
+%
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.12]{images/LogoSupelec}
+\end{figure}
+%
+\vspace*{10pt}
+%\text{ }\\[7 cm]
+\textbf{\LARGE{VALORISATION D'UN SUJET SCIENTIFIQUE}}\\[2 cm]
+Gustavo \textbf{CIOTTO PINTON}\\[1 cm]
+Supélec, 2015
+
+\end{center}
+\end{titlepage}
+
+\newpage
+
+\section{Introdução}
+
+A atividade de pesquisa é um campo fundamental a qualquer área da indústria,
+sendo assim principal fonte de inovação de uma empresa. Representando um ramo
+tão importante de uma economia, tal atividade deve ser apresentada de maneira a
+convencer a sociedade de sua importância. É nesse contexto que a eletiva
+''valorisation d'un sujet scientifique'' nos propõe maneiras e técnicas para
+atrair a atenção a nosso tema.
+
+\vspace{12pt}
+
+A fim de colocar em prática tais conceitos, nada melhor do que conhecer as
+experiências de um profissional que já atua nesse setor e que, consequentemente,
+já está acostumado a participar de conferências e a escrever textos de natureza
+científica. O objetivo deste documento é assim de explorar tais experiências.  
+
+\vspace{12pt}
+
+O assunto escolhido a este trabalho foi um tema que me atrai muito, que é a área
+da microeletrônica digital, que atualmente uma das áreas mais importantes da
+indústria, dado o sucesso dos aparelhos eletrônicos como tablets e aparelhos
+celulares. A problemática do sujeto tratado neste documento consiste no diálogo
+e adaptação entre as diversas partes analógicas e digitais de um determinado
+circuito, que envolvem evidentemente conceitos matemáticos completamente
+distintos. Parte do problema reside no fato de que atualmente existem poucos
+simuladores e aqueles que existem são muito complexos e muito específicos para
+determinada aplicação.
+
+\vspace{12pt}
+
+Considerando este cenário que o doutorando Daniel C. CAFÉ, do departamento de
+Informatique da Supelec, entrevistado por mim, encontrou uma oportunidade de
+tese.  Seus estudos têm o objetivo, de maneira geral, de desenvolver uma
+adaptação semântica entre os dois domínios do circuito para que, assim, novas 
+ferramentas permitindo simular circuitos digitais e analógicos sob vários
+pontos, como por exemplo, a influência do tipo de bus de comunicação escolhido,
+possam ser criadas. Essas aplicações possuem evidentemente uma grande
+importância já que elas podem ser utilizadas independentemente da natureza e
+aplicação do circuito, uma vez que elas introduzem conceitos genéricos.
+
+
+\newpage
+
+
+\section{A tese de doutorado}
+
+A parte de simulação de sistemas mistos, isto é, sistemas contendo partes
+analógicas e digitais, é problemática pelo fato de que os modelos matemáticos
+utilizados por cada um deles são essencialmente distintos. Pelo lado analógico,
+existem os clássicos algoritmos resolvedores de equações diferenciais que
+calculam a cada instante de tempo um resultado válido. Na parte digital, por
+outro lado, eventos discretos são o objeto de manipulação do circuito. Se
+pegarmos o exemplo de um circuito contendo diversas portas lógicas ou
+flip-flops, o resultado da alteração de seus estados e sua saída serão
+modificados logo depois de um evento bem definido, geralmente representado por
+um pulso de clock (somado com o intervalo de propagação dos sinais).
+Nós temos assim duas maneiras completamente diferentes de realizar os cálculos,
+o que impõe problemas consideráveis na construção de circuitos mistos, já que,
+de um lado, nós podemos ativar o lado digital toda vez que um cálculo da parte
+analógica for realizado ou, ao contrário, ativar a parte analógico somente
+quando um evento do lado digital for gerado.
+
+\vspace{12pt}
+
+A fim de resolver essa problemática, nós fazemos uso de uma teoria da computação
+chamada de adaptação semântica, que consiste justamente à pegar os conceitos de
+um domínio e adaptá-los a um outro qualquer em três eixos: tempo, dados e
+controle. No eixo do tempo, por exemplo, imaginemos que determinado sistema seja
+responsável por converter um tempo em segundos para uma rotação, isto é,
+desejamos medir o tempo de uma rotação de uma engrenagem. De um lado, temos o
+tempo em segundo e, de outro, em ângulos. Em relação à adaptação de dados, a
+conversão é simples: se nós quisermos traduzir um medida analógica em volts para
+um nível digital binário, é necessário introduzirmos um sentido à tradução, isto
+é, a partir de qual voltagem consideramos a medida como 1 ou como 0?
+Evidentemente isto depende das características da aplicação, ou em outras
+palavras, da semântica de adaptação da aplicação. Finalmente, o último e mais
+complicado eixo, o de controle, determina como os componentes serão ligados no
+circuito e como eles se comunicarão. Por exemplo, nós podemos definir que um fio
+representa um barramento de dados ou uma fifo, se estivermos modelisando um
+software. Podemos especificar ainda o protocolo seguido para a transmissão:
+ethernet, tcp/ip ou qualquer outro. De maneira geral, a adaptação deste eixo
+leva em conta o significado de cada componente, ou no nosso caso, o fio.
+
+\vspace{12pt}
+
+Esses três eixos formam assim o centro da teoria de adaptação semântica, que, à
+princípio, foi desenvolvida para o domínio da computação. O objetivo da tese
+desenvolvida pelo meu entrevistado é justamente aplicar esses conceitos ao mundo
+da microeletrônica, especificamente para o caso de circuitos mistos.
+
+\vspace{12pt}
+
+Segundo ele, seu primeiro ano de doutorado foi utilizado inteiramente para o
+estudo das refêrencias existentes na área, isto é, as ferramentas já
+implementadas e os pesquisadores que também se interessavam pelo domínio. Nesta
+atividade, Daniel encontrou três simuladores que resolvem o problema: o
+primeiro é chamado Modélix e é utilizado na Supélec, o segundo, Pitoremi, foi
+desenvolvido na universidade de Berkeley nos Estados Unidos e o terceiro,
+chamado de SystemC. Todos eles se baseiam sobre conceitos relativamente
+similares, mas lidam com o problema de uma maneira diferente. As estudando
+profundamente, o doutorando sentiu a necessidade de utilizar somente os pontos
+mais pertinentes de cada uma dessas soluções para criar, enfim, sua ferramenta. 
+
+\vspace{12pt}
+
+De maneira geral, essa solução consiste à construir o diagrama do circuito em
+alto nível, isto é, em forma de blocos e anotar em cada um de seus componentes a
+sua função semântica (em outras palavras, o seu significado). É necessário
+também dizer que só isso não é suficiente, já que ainda é preciso anotar a
+semântica de adaptação, que consiste a definir o significado dos fios que ligam
+os diversos blocos do sistema. Dessa forma, o simulador conhece claramente o que
+cada componente significa e qual é a sua função. Por exemplo, nós podemos
+especificar quais adaptações o simulador terá que realizar se quisermos
+fazer uma adaptação do análogico para o digital ou do software para o hardware.
+
+\vspace{12pt}
+
+Então, toda essa capacidade de especificação se mostra como uma ferramenta
+muito poderosa porque ela evita o uso de vários simuladores distintos, uma vez
+que a solução proposta é capaz de se adaptar e simular a comunicação entre os
+diversos tipos de sistemas (mêcanico, életrico, analógico), e, consequentemente,
+evita também a realização dos cálculos muito pesados inerentes de cada um desses
+sistemas. Dessa forma, a simulação de sistemas muito complexos, como por
+exemplo, a simulação inteira de aviões ou carros, onde sistemas de diversos
+tipos se comunicam continuamente, se torna mais simples e menos custosa. Enfim,
+esse é o segredo que torna o valor dessa pesquisa tão elevado e atrativo às
+diversas empresas de engenharia.
+
+\section{Valorização}
+
+Em relação ao processo de escrita de artigo científico, Daniel comentou que uma
+das dificuldades é justamente explicar de uma maneira eficiente um o domínio de
+um pesquisador sobre um determinado tema. Para tal, ele afirmou que um artigo
+científico sempre segue um padrão, sendo constituido de uma introdução, que
+explicará brevemente o seu problema, seguida de uma seção que resumirá o arte da
+arte atual, isto é, como as outras pessoas do mundo resolveram ou estão tentando
+resolver o problema, as ferramentas utilizadas, desenvolvimento teórico e
+matemático e, por fim, uma conclusão com algumas perpectivas.
+
+\vspace{12pt}
+
+O doutorando ainda me explicou que a conclusão é a parte mais importante de um
+artigo, já que é essa seção que determinará se ele será posteriormente lido ou
+não.Em outras palavras, a conclusão deve chamar a atenção do leitor a sua
+solução de forma objetiva e clara. Se a conclusão atendeu às expectativas, a
+próxima seção a ser lida é a introdução. Nela, podemos encontrar uma breve
+descrição do problema a ser resolvido. Em seguida, as demais seções são lidas
+dependendo da necessidade do pesquisador.
+
+\vspace{12pt}
+
+Existem diversas formas de publicar um artigo. Nós, como engenheiros, temos dois
+alvos principais: o primeiro trata-se das revistas da IEEE e o segundo, da ACM
+(mais direcionadas às comunidades que lidam com problemas na área de
+computação). Na IEEE, eles utilizam um padrão de tal forma que o texto fique
+separado em duas colunas e que a bibliografia seja numerotada, enquanto que na
+ACM os artigos publicados são escritos em apenas uma coluna com a presença de
+mais espaços, o que permite uma melhor utilização de imagens por exemplo. 
+
+\vspace{12pt}
+
+O principal objetivo é então publicar nos journals, que são realizados apenas
+uma vez a cada dois ou três anos. Neles, estão presentes somente as melhores
+pesquisas e as publicações são mais densas, podendo possuir mais de 20 páginas
+cada uma, já que o nível de detalhamento deve ser alto. Uma outra alternativa é
+a publicação de artigos científicos de conferência, apresentada de uma forma
+mais resumida e rápida (aproximadamente 8 páginas) e seguida de uma exposição
+oral realizada por outros profissionais da área. Neste quesito, ele acrescentou
+que o objetivo destes outros profissionais é de te desafiar a fim de testar se
+a sua solução é realmente válida. Finalmente, o artigo passa por uma revisão
+final. Se tudo está de acordo, o artigo é publicado nas chamadas transactions e
+todos aqueles inscritos na comunidade podem acessá-lo. Como complemento, o
+pesquisador pode escrever pequenas cartas, acrescentando pequenos trechos a sua
+pesquisa (novas ideais, sugestões resultados etc).
+
+\vspace{12pt}
+
+Um outro aspecto muito importante a ser levado em conta também é o tipo de
+financiamento de um doutorado. Existem basicamente duas opções. A primeira,
+chamada CIFRE, consiste em uma colaboração com uma empresa. Esse tipo de acordo
+é muito visado, uma vez que o pesquisador tem muitas chances de continuar dentro
+da empresa mesmo depois do fim de sua tese, já que processo de implementação da
+solução pode levar muitos anos. A segunda forma, chamada de CNRS, trata-se de um
+financiamento dado pelo governo e pela escola.
+
+\newpage
+
+\section{Entrevista}
+
+Na opinião do meu entrevistado, se dirigir à pesquisa ou não depende da vocação
+de cada um, isto é, você pode resolver um problema utilizando um método que não
+seja necessariamente um método científico. Como exemplo para explicar essa
+afirmação, ele citou os casos de ''engenharia de garagem'', típicos da cultura
+norte-americana, em que a pessoa resolve um determinado problema sem recorrer
+aos métodos utilizados na academia. Ainda que essa pessoa tenha achado uma
+solução a seu problema, ela pode não ser a mais eficiente, já que nenhuma outra 
+refêrencia que já tinha resolvido a mesma situação foi procurada. Esse
+comportamento se revela frequentemente também no meio industrial, uma vez que,
+quando um problema aparece, o engenheiro tenta resovê-lo através das
+ferramentas ao seu alcance e se esquece de uma etapa muito importante da
+métodologia científica, que é a procura de refêrencias já existentes. Ainda
+segundo Daniel, muitas vezes a solução reside em outros domínios de
+atividade e comunidades (ele mesmo é exemplo disso, já que ele teve que buscar
+a solução na área de informática para seu problema de microelêtronica). Assim,
+ele conclui que a grande vantagem do doutorado é justamente a capacidade de
+abrir a mente a outros domínios: se eu não estou resolvendo o problema ou se o
+resolvo mal, então eu vou procurar a solução em alguma outra área.
+
+\vspace{12pt}
+
+Ainda neste tema, Daniel comentou de uma confêrencia em que ele participou
+no Brasil onde o pricipal assunto discutido era exatamente essa problemática de
+encontrar uma solução a um determinado problema. Segundo ele, muitas pessoas ao
+redor do planeta possuem as mesmas ideias, mas o que realmente as diferencia é a
+capacidade de realizar e sintetizar todas os conceitos em uma solução concreta.
+Em outras palavras, não basta ter as ideias, é preciso também ter o conhecimento
+técnico. Enfim, ele concluiu que essa característica é fundamental para o
+fortalecimento e crescimento de uma empresa: capacidade de fusão de um carater
+inovador com um conhecimento técnico que permita a implementação das ideias.
+
+\vspace{12pt}
+
+Ainda segundo meu entrevistado, a metodologia industrial é completamente
+diferente daquela científica. No meio industrial, quando se deparamos com um
+problema, a primeira ação é procurar quem vende a solução. Neste caso, não há um
+processo de pesquisa ou estudo profundo do problema. Por outro lado, no meio
+acadêmico, geralmente os problemas ainda não possuem um resposta, então a única
+de forma de resolvê-los é através da metodologia científica: olhar o estado da
+arte, comparar o seu problema com diversas outras pessoas do mundo e propor a
+solução. É justamente nesse aspecto de criação de soluções que um pesquisador
+pode se destacar em relação aos demais, à medida que ele consegue extender seus
+conhecimentos a diversas áreas e publicar mais papers relevantes à comunidade.
+Desse modo, ele torna-se mais procurado para a apresentação de conferências e
+seminários e para novos projetos.
+
+\vspace{12pt}
+
+Quando perguntado sobre os motivos de realizar o doutorado em um país diferente
+daquele de sua origem, ele me disse que essa era a sua única opção, uma vez que
+o domínio da microeletrônia é ainda muito mal desenvolvido no Brasil, que é onde
+ele nasceu. Ele ainda citou alguns exemplos de fábricas de chips no exterior que
+são totalmente automatizadas, enquanto que, no Brasil, os profissionais são
+forçados a fabricá-los quase que manualmente.
+
+\vspace{12pt}
+ 
+Em relação ao percurso profissional do entrevistado, antes de começar o seu
+doutorado, ele já havia tido uma experiência em uma empresa dentro do ramo
+de microeletrôncia, que, segundo ele, foi muito importante. Isso porque essa
+atividade já havia lhe dado um conhecimento prático muito precioso e útil à
+pesquisa. Resumindo, para Daniel, uma experiência profissional antes de um
+doutorado é muito válida, já que é lá que o pesquisador vai estar em contato com
+os verdadeiros problemas práticos e não com os puramente teóricos, como acontece
+frequentemente na academia. Ele acrescentou ainda que uma experiência
+internacional é fundamental para o enriquecimento do seu conhecimento, já que
+você tem a oportunidade de entrar em contato com outras maneiras de resolução de
+um determinado problema.
+ 
+\vspace{12pt}
+
+Enfim, eu questionei sobre a importância de um doutorado para conseguir um
+emprego nas principais empresas de microeletrônica atuais e a resposta foi que,
+na sua opinião, uma tese é muito importante já que ela revela o cárater inovador
+e a capacidade de propor do pesquisador, duas características essenciais para o
+crescimento de qualquer empresa.
+
+\section{Conclusão}
+
+A atividade de pesquisa possui um carater muito importante, já que é ela que
+garante o crescimento e notoriedade de uma organização através da inovação.
+Sendo assim, o sujeito científico torna-se um aspecto essential à apresentação
+de uma nova solução a determinada comunidade e deve ser feita respeitando
+os respectivos padrões impostos. Por exemplo, nós, como engenheiros,
+direcionamos nossas publicações na grande maioria à IEEE e à ACM e, por isso,
+devemos ter certeza que nosso texto atende às diversas imposições dessas
+organizações. 
+
+\vspace{12pt}
+
+Ainda em relação à apresentação de um sujeito científico, devemos considerar
+também o aspecto oral. Para isso, as aulas realizadas durante a sequência foram
+muito úteis, uma vez que os palestrantes foram capazes de demonstrar através de
+exercícios práticos os principais métodos que são utilizados atualmente para se
+vender uma solução. Dentro desses métodos, destacam-se a utilização de pequenas
+questões (accroches) e de exemplos concretos que causem a reflexão dos
+interlocutores. É preciso remarcar igualmente que devemos sempre levar em conta
+as características das pessoas a quem estamos falando, isto é, sejam eles
+investidores ou consumidores finais, temos que ser capazes de transmitir nossas
+idéias de maneira a capturar suas atenções.
+
+\vspace{12pt}
+
+Em relação à entrevista com o doutourando, tive a sensação que ela me esclarece
+muito pontos em relação à atividade de pesquisa. O primeiro aspecto que eu não
+tinha muito certeza era sobre como um profissional decide que ele quer um
+doutorado. Antes, eu pensava que esse tipo de atividade era completamente
+separada à atividade industrial, o que não verdade. As duas áreas se
+complementam e, mais que isso, dependem uma da outra. Por exemplo, o meu
+entrevistado só percebeu a necessidade de um doutorado depois de uma experiência na área
+industrial. Sem dúvidas, atualmente um doutorado faz parte do meu projeto
+profissional a partir de agora.
+
+\end{document}

@@ -1,0 +1,17 @@
+package controleurs;
+
+public interface IControleurInterface {
+
+	
+	/**
+	 * 
+	 */
+	public void metEnOperation();
+
+	/**
+	 * 
+	 */
+	public void finirOperation(); 
+
+	public void changeControleur (ControleurJeu nouveauControleur);
+}

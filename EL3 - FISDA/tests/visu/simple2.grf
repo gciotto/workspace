@@ -1,0 +1,5 @@
+# graphe trivial, 2-coloriable
+#  1----2
+
+1 [2] (-.8, 0)
+2 (.8, 0)

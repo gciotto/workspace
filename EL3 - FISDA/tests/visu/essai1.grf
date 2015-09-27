@@ -1,0 +1,6 @@
+# graphe 2-coloriable. Le premier coloriage trouvé n'est pas optimal.
+# 1 -- 4 -- 3 -- 2
+1 [4] (-.75, 0)
+2 [3] (.75, 0)
+3 [4] (.25, 0)
+4 (-.25, 0)

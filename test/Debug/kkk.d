@@ -1,0 +1,1 @@
+kkk.d: ../kkk.cpp

@@ -1,0 +1,9 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Aspects of Development}{7}{0}{2}
+\beamer@subsectionintoc {2}{1}{Graphical Interface - GUI}{7}{0}{2}
+\beamer@subsectionintoc {2}{2}{PENTAGO's algorithm}{13}{0}{2}
+\beamer@subsectionintoc {2}{3}{Battle of AIs - A statistical point of view}{22}{0}{2}
+\beamer@sectionintoc {3}{Conclusion}{26}{0}{3}
+\beamer@sectionintoc {4}{Bibliography}{27}{0}{4}

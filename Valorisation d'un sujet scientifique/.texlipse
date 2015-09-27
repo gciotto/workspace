@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Wed Jan 14 17:25:19 CET 2015
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=valorisation_FR_CIOTTO.tex
+outputFile=rapport_FR.pdf
+langSpell=en
+markDer=true
+srcDir=

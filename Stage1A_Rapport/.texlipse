@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Tue Sep 23 22:15:25 CEST 2014
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=main.tex
+outputFile=rapport_CIOTTO_PINTON.pdf
+langSpell=en
+markDer=true
+srcDir=

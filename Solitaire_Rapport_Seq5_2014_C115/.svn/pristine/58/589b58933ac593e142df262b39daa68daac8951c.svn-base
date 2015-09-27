@@ -1,0 +1,61 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[hmargin=2.5cm,vmargin=2.5cm]{geometry}
+\usepackage[section]{placeins}
+\usepackage[french]{babel} 
+\usepackage{subcaption}
+\usepackage{titlesec}
+
+\title{Jeu du Solitaire}
+\author{Gustavo Ciotto Pinton}
+\date{Octobre 2014}
+
+\begin{document}
+
+\begin{titlepage}
+\vspace*{.18\textheight}
+\begin{center}
+%
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.12]{images/LogoSupelec}
+\end{figure}
+%
+\vspace*{10pt}
+\textbf{\LARGE JEU DU SOLITAIRE} \\[0.5 cm]
+\textbf{\LARGE Projet de développement logiciel }\\[1 cm]
+
+Gustavo \textbf{CIOTTO PINTON}\\
+Ignacio \textbf{GARCIA ATANCE GARCIA}\\
+
+\vspace*{10pt}
+Séquence 5 - Promotion 2013-2015\\[1 cm]
+
+\vspace*{60pt}
+Octobre 2014
+
+\end{center}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+
+\newpage
+\section{Introduction}
+djsjadh
+\newpage
+\section{Modélisation du programme - UML}
+dnahjs
+\subsection{Diagramme de cas d'use}
+
+
+
+
+\subsection{Diagramme de classes}
+das
+
+\end{document}

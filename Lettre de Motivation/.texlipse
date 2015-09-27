@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Fri Jan 30 16:02:13 CET 2015
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=lettre2a.tex
+outputFile=Lettre de Motivation - Gustavo CIOTTO PINTON.pdf
+langSpell=fr
+markDer=true
+srcDir=

@@ -1,0 +1,108 @@
+package interfaces;
+
+import java.awt.*;
+import java.util.List;
+
+import javax.swing.*;
+
+import entites.*;
+
+public class JResultat extends JPanel {
+
+	private JTextArea coups, coupsPossibles;
+	private JButton buttonProchain, buttonFinir;
+
+	public JResultat () {
+
+		super();
+
+		coups = new JTextArea();
+		coups.setEditable(false);
+
+		coupsPossibles = new JTextArea();
+		coupsPossibles.setEditable(false);
+		
+		JScrollPane scrollPane = new JScrollPane(coups);
+		JScrollPane scrollPanePossibles = new JScrollPane(coupsPossibles);
+
+		JPanel auxSuperieur = new JPanel ();
+		auxSuperieur.setLayout(new BorderLayout());
+		
+		JPanel auxInferieur = new JPanel ();
+		auxInferieur.setLayout(new BorderLayout());
+		
+		JLabel label = new JLabel ("Liste de Coups:");
+
+		auxSuperieur.add(label, BorderLayout.NORTH);
+		auxSuperieur.add(scrollPane, BorderLayout.CENTER);
+		
+		buttonProchain = new JButton ("Prochain Coup");
+		buttonProchain.setEnabled(false);
+		
+		buttonFinir = new JButton ("Finir Jeu");
+		buttonFinir.setEnabled(false);
+		
+		JPanel buttons = new JPanel (new GridLayout(2,1));
+		buttons.add(buttonProchain);
+		buttons.add(buttonFinir);
+
+		auxInferieur.add (new JLabel ("Liste de Coups Possibles:"), BorderLayout.NORTH);
+		auxInferieur.add(scrollPanePossibles, BorderLayout.CENTER);
+		auxInferieur.add(buttons, BorderLayout.SOUTH);
+		
+		this.setLayout(new GridLayout(2,1));
+
+		this.add(auxSuperieur);
+		this.add(auxInferieur);
+
+	}
+
+	public JButton getButtonProchain() {
+		return buttonProchain;
+	}
+	
+	public JButton getButtonFinir() {
+		return buttonFinir;
+	}
+
+	public void afficherNouveauCoup(Coup c) { 
+
+		this.coups.append(c.toString() + "\n");
+	} 
+
+	public void reinitialiser() { 
+
+		this.coups.setText("");
+		this.coupsPossibles.setText("");
+		this.buttonProchain.setEnabled(true);
+		this.buttonFinir.setEnabled(true);
+	}
+
+	public void afficherCoupsPossibles(List<Coup> cPossibles) {
+		
+		for (Coup c : cPossibles) {
+			
+			this.coupsPossibles.append(c.toString() + "\n");
+			
+		}
+		
+	}
+
+	public void ajouterCoup(Coup prochain) {
+		
+		this.coups.append(prochain.toString() + "\n");
+		
+	}
+
+	public void finirJeu() {
+		this.buttonProchain.setEnabled(false);
+		this.buttonFinir.setEnabled(false);
+	}
+
+	public void reinitialiserProchainsCoups() {
+		this.coupsPossibles.setText("");
+		
+	} 
+
+	
+}

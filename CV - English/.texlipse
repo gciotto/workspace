@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Mon Nov 17 15:58:08 CET 2014
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=document_v2.tex
+outputFile=CV English - Gustavo CIOTTO PINTON.pdf
+langSpell=en
+markDer=true
+srcDir=

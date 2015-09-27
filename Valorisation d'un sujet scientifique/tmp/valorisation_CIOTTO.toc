@@ -1,0 +1,4 @@
+\select@language {portuguese}
+\contentsline {section}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{2}
+\contentsline {section}{\numberline {2}A tese de doutorado}{3}
+\contentsline {section}{\numberline {3}Valoriza\IeC {\c c}\IeC {\~a}o}{3}

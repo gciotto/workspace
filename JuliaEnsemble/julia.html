@@ -1,0 +1,170 @@
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="julia.css">
+<script type="text/javascript">
+ 
+c = {a : 0.3, b: 0.5}
+isMandelbrot = false;
+A = {a: -1.25, b: 1.25}
+B = {a: -1.25, b: 1.25}
+
+function getPointAsZ(point) {
+	
+	var pointJulia = {};
+	
+	pointJulia.a = ((A.b - A.a)*point.a) / w + A.a;
+	pointJulia.b = ((B.b - B.a)*point.b) / h + B.a;
+	
+	return pointJulia; 
+
+}
+
+function getModule(x, y) {
+	
+	return Math.sqrt(x*x + y*y);
+
+}
+
+function setMandelbrot(v) {
+
+	if (!v) {
+		setRealDuPoint(c, document.getElementById("real_c").value);
+		setComplexeDuPoint(c, document.getElementById("complexe_c").value);
+	}
+
+	isMandelbrot = v;
+}
+
+function isJulia(point) {
+
+	var x = 0,
+		un = {a:point.a, b:point.b, module: getModule(point.a, point.b)};
+	
+	while (x < 200 && un.module < 2) {
+		
+		var x_aux = un.a*un.a - un.b*un.b + c.a,
+			y_aux = 2*un.a*un.b + c.b;
+			  
+		un.a = x_aux;
+		un.b = y_aux;
+	
+		un.module = getModule(x_aux, y_aux);
+		x++;
+	}
+
+	if (un.module > 2) return x;
+	
+	return -1;
+
+}
+
+function setRealDuPoint(point, x) {
+	point.a = parseFloat(x);
+}
+
+function setComplexeDuPoint(point,x) {
+	point.b = parseFloat(x);
+}
+
+function setCanvasHeight(x) {
+	var context = document.getElementById("julia").getContext('2d');
+	context.canvas.height = parseInt(x);
+	document.getElementById("julia").style.height = parseInt(x);
+}
+
+function setCanvasWidth(x) {
+	var context = document.getElementById("julia").getContext('2d');
+	context.canvas.width = parseInt(x);
+	document.getElementById("julia").style.width = parseInt(x); 
+}
+
+function coco(){
+
+	var	point = {},
+		context = document.getElementById("julia").getContext('2d'),
+		t;
+		
+		
+	w =  context.canvas.width;
+	h =  context.canvas.height;
+			
+	context.clearRect ( 0 , 0 , w , h );			
+
+	
+	for (i = 0; i < w; i++) { 
+		for (j = 0; j < h; j++) {
+		
+			if (isMandelbrot) {
+				var aux = getPointAsZ({a: i, b:j});
+				
+				c.a = aux.a;
+				c.b = aux.b;
+				
+				t = isJulia({a: 0, b:0});
+			}
+			else t = isJulia(getPointAsZ({a: i, b:j}));
+			
+			if (t == -1) context.fillStyle = "#AA0000";
+			else context.fillStyle = "#" + (t + 5).toString(16) + (t + 5).toString(16) + (t+5).toString(16);
+			
+        	context.fillRect(i, j, 1, 1);
+        	
+		}
+		
+		
+	}
+ 
+}
+</script>
+
+</head>
+
+<body>
+<div id = "data">
+z<sub>n+1</sub> = f(x) = z<sub>n</sub><sup>2</sup> + c
+<table>
+
+<tr>
+	<td>Param&egravetre c: </td> 
+	<td> <input type="text" id="real_c" size = 4 value="0.3" onchange="setRealDuPoint(c,value)"> </td>
+	<td> + </td>
+	<td>i<input type="text" id="complexe_c" size =4 value="0.5" onchange="setComplexeDuPoint(c,value)"> </td> 
+</tr>
+
+<tr>
+	<td>Surface: </td>
+	<td><input type="text" id="width" size = 4 value="1000" onchange="setCanvasWidth(value)"></td>
+	<td> x </td>
+	<td> <input type="text" id="height" size =4 value="500" onchange="setCanvasHeight(value)"> </td> 
+</tr>
+
+<tr>
+	<td>Re(z)  &#8712 </td>
+	<td>[<input type="text" id="real_za" size = 4 value="-1.25" onchange="setRealDuPoint(A,value)"></td>
+	<td> , </td>
+	<td> <input type="text" id="real_zb" size =4 value="1.25" onchange="setComplexeDuPoint(A,value)">] </td> 
+</tr>
+
+<tr>
+	<td>Im(z) &#8712 </td>
+	<td>[<input type="text" id="im_za" size = 4 value="-1.25" onchange="setRealDuPoint(B,value)"></td>
+	<td> , </td>
+	<td> <input type="text" id="im_zb" size = 4 value="1.25" onchange="setComplexeDuPoint(B,value)">] </td> 
+</tr>
+
+<tr>
+	<td><button type="button" onclick="coco()">Afficher Fractal!</button></td>
+	<td> <input type="radio" name="type" value="julia" onchange="setMandelbrot(false)" checked>Julia</td>
+	<td></td>
+	<td> <input type="radio" name="type" value="maldelbrot" onchange="setMandelbrot(true)">Mandelbrot</td>
+</tr>
+</table>
+
+
+</div>
+<div id = "canvasSite">
+ <canvas id = "julia" width="1200px" height="800px"></canvas>
+</div>
+</body>
+</html>

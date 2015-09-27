@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_0cg9gE0kEeSj-JaB9xyXQA" name="model">
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_JmVP4E0lEeSj-JaB9xyXQA" name="Choisir Plateau">
+    <include xmi:type="uml:Include" xmi:id="_lzzLME0lEeSj-JaB9xyXQA" addition="_akokEE0lEeSj-JaB9xyXQA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_akokEE0lEeSj-JaB9xyXQA" name="Lire Fichier">
+    <include xmi:type="uml:Include" xmi:id="_hG4wIE0lEeSj-JaB9xyXQA" addition="_JmVP4E0lEeSj-JaB9xyXQA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_npm2QE0lEeSj-JaB9xyXQA" name="Sauvegarder Resultats">
+    <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_22Iq0E0lEeSj-JaB9xyXQA" name=""/>
+    <include xmi:type="uml:Include" xmi:id="_wfFpME0lEeSj-JaB9xyXQA" addition="_uOuwIE0lEeSj-JaB9xyXQA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_uOuwIE0lEeSj-JaB9xyXQA" name="Ecrire Fichier"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_zBBacE0lEeSj-JaB9xyXQA" name="Sauvegarder Plateau">
+    <extend xmi:type="uml:Extend" xmi:id="_21ZD8E0lEeSj-JaB9xyXQA" extendedCase="_npm2QE0lEeSj-JaB9xyXQA" extensionLocation="_22Iq0E0lEeSj-JaB9xyXQA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_9uK5oE0lEeSj-JaB9xyXQA" name="Sauvegarder Coups">
+    <extend xmi:type="uml:Extend" xmi:id="_AddxcE0mEeSj-JaB9xyXQA" extendedCase="_npm2QE0lEeSj-JaB9xyXQA" extensionLocation="_22Iq0E0lEeSj-JaB9xyXQA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_DXM-sE0mEeSj-JaB9xyXQA" name="Joueur"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_aBJnEE0mEeSj-JaB9xyXQA" name="Choisir Stratégie"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_jYOrME0mEeSj-JaB9xyXQA" name="Calculer Prochain Coup">
+    <include xmi:type="uml:Include" xmi:id="_pAsIgE0mEeSj-JaB9xyXQA" addition="_aBJnEE0mEeSj-JaB9xyXQA"/>
+    <include xmi:type="uml:Include" xmi:id="_zK5SsE0mEeSj-JaB9xyXQA" addition="_uf5jME0mEeSj-JaB9xyXQA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_uf5jME0mEeSj-JaB9xyXQA" name="Calculer Coups Possibles"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_3jBJgE0mEeSj-JaB9xyXQA" name="A_joueur_sauvegarder resultats" memberEnd="_3jBJgU0mEeSj-JaB9xyXQA _3jBJhE0mEeSj-JaB9xyXQA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3jBJgU0mEeSj-JaB9xyXQA" name="joueur" type="_DXM-sE0mEeSj-JaB9xyXQA" association="_3jBJgE0mEeSj-JaB9xyXQA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3jBJgk0mEeSj-JaB9xyXQA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3jBJg00mEeSj-JaB9xyXQA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3jBJhE0mEeSj-JaB9xyXQA" name="sauvegarder resultats" type="_npm2QE0lEeSj-JaB9xyXQA" association="_3jBJgE0mEeSj-JaB9xyXQA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3jBJhU0mEeSj-JaB9xyXQA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3jBJhk0mEeSj-JaB9xyXQA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_7_zd4E0mEeSj-JaB9xyXQA" name="A_joueur_calculer prochain coup" memberEnd="_7_zd4U0mEeSj-JaB9xyXQA _7_zd5E0mEeSj-JaB9xyXQA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_7_zd4U0mEeSj-JaB9xyXQA" name="joueur" type="_DXM-sE0mEeSj-JaB9xyXQA" association="_7_zd4E0mEeSj-JaB9xyXQA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_7_zd4k0mEeSj-JaB9xyXQA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7_zd400mEeSj-JaB9xyXQA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_7_zd5E0mEeSj-JaB9xyXQA" name="calculer prochain coup" type="_jYOrME0mEeSj-JaB9xyXQA" association="_7_zd4E0mEeSj-JaB9xyXQA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_7_zd5U0mEeSj-JaB9xyXQA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7_zd5k0mEeSj-JaB9xyXQA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_COd_kE0nEeSj-JaB9xyXQA" name="A_joueur_choisir plateau" memberEnd="_COd_kU0nEeSj-JaB9xyXQA _COd_lE0nEeSj-JaB9xyXQA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_COd_kU0nEeSj-JaB9xyXQA" name="joueur" type="_DXM-sE0mEeSj-JaB9xyXQA" association="_COd_kE0nEeSj-JaB9xyXQA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_COd_kk0nEeSj-JaB9xyXQA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_COd_k00nEeSj-JaB9xyXQA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_COd_lE0nEeSj-JaB9xyXQA" name="choisir plateau" type="_JmVP4E0lEeSj-JaB9xyXQA" association="_COd_kE0nEeSj-JaB9xyXQA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_COd_lU0nEeSj-JaB9xyXQA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_COd_lk0nEeSj-JaB9xyXQA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_Qr4rYE0nEeSj-JaB9xyXQA" name="Obtenir Plateau Final">
+    <include xmi:type="uml:Include" xmi:id="_fQ6bEE0nEeSj-JaB9xyXQA" addition="_aBJnEE0mEeSj-JaB9xyXQA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_V3qMsE0nEeSj-JaB9xyXQA" name="A_joueur_obtenir plateau final" memberEnd="_V3qMsU0nEeSj-JaB9xyXQA _V3qMtE0nEeSj-JaB9xyXQA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_V3qMsU0nEeSj-JaB9xyXQA" name="joueur" type="_DXM-sE0mEeSj-JaB9xyXQA" association="_V3qMsE0nEeSj-JaB9xyXQA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_V3qMsk0nEeSj-JaB9xyXQA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_V3qMs00nEeSj-JaB9xyXQA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_V3qMtE0nEeSj-JaB9xyXQA" name="obtenir plateau final" type="_Qr4rYE0nEeSj-JaB9xyXQA" association="_V3qMsE0nEeSj-JaB9xyXQA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_V3qMtU0nEeSj-JaB9xyXQA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_V3qMtk0nEeSj-JaB9xyXQA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>

@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_kmoF4EqSEeSecsyACLpHeQ" name="model">
+  <packagedElement xmi:type="uml:Package" xmi:id="_nisOYEqSEeSecsyACLpHeQ" name="entites">
+    <packagedElement xmi:type="uml:Class" xmi:id="_nisOYUqSEeSecsyACLpHeQ" name="Coup">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nisOYkqSEeSecsyACLpHeQ" name="direction" type="_nisOcUqSEeSecsyACLpHeQ" association="_nisOeUqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nisOY0qSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nisOZEqSEeSecsyACLpHeQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nisOZUqSEeSecsyACLpHeQ" name="coordonneeOrigine" type="_nis1ckqSEeSecsyACLpHeQ" association="_nis1fkqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nisOZkqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nisOZ0qSEeSecsyACLpHeQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nisOaEqSEeSecsyACLpHeQ" name="Coup">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nisOaUqSEeSecsyACLpHeQ" name="coord" type="_nis1ckqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nisOakqSEeSecsyACLpHeQ" name="dir" type="_nisOcUqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nisOa0qSEeSecsyACLpHeQ" name="toString">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nisObEqSEeSecsyACLpHeQ" direction="return" effect="create">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nisObUqSEeSecsyACLpHeQ" name="getDirection">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nisObkqSEeSecsyACLpHeQ" type="_nisOcUqSEeSecsyACLpHeQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nisOb0qSEeSecsyACLpHeQ" name="getCoordonneeOrigine">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nisOcEqSEeSecsyACLpHeQ" type="_nis1ckqSEeSecsyACLpHeQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nisOcUqSEeSecsyACLpHeQ" name="Direction">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nisOckqSEeSecsyACLpHeQ" name="directionCode">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nisOc0qSEeSecsyACLpHeQ" name="Direction">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nisOdEqSEeSecsyACLpHeQ" name="code">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nisOdUqSEeSecsyACLpHeQ" name="toString">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nisOdkqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nisOd0qSEeSecsyACLpHeQ" name="getDirectionCode" visibility="public">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nisOeEqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nisOeUqSEeSecsyACLpHeQ" name="A_coup_direction_1" memberEnd="_nisOekqSEeSecsyACLpHeQ _nisOYkqSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nisOekqSEeSecsyACLpHeQ" name="coup" type="_nisOYUqSEeSecsyACLpHeQ" association="_nisOeUqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nis1cEqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nis1cUqSEeSecsyACLpHeQ" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nis1ckqSEeSecsyACLpHeQ" name="Coordonnee">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nis1c0qSEeSecsyACLpHeQ" name="ligne" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nis1dEqSEeSecsyACLpHeQ" name="colonne" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1dUqSEeSecsyACLpHeQ" name="Coordonne">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1dkqSEeSecsyACLpHeQ" name="l">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1d0qSEeSecsyACLpHeQ" name="col">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1eEqSEeSecsyACLpHeQ" name="toString">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1eUqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1ekqSEeSecsyACLpHeQ" name="getLigne">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1e0qSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1fEqSEeSecsyACLpHeQ" name="getColonne">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1fUqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nis1fkqSEeSecsyACLpHeQ" name="A_coup_coordonnee_1" memberEnd="_nis1f0qSEeSecsyACLpHeQ _nisOZUqSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nis1f0qSEeSecsyACLpHeQ" name="coup" type="_nisOYUqSEeSecsyACLpHeQ" association="_nis1fkqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nis1gEqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nis1gUqSEeSecsyACLpHeQ" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nis1gkqSEeSecsyACLpHeQ" name="A_controleurJeu_coup_1" memberEnd="_nis1g0qSEeSecsyACLpHeQ _niv4wkqSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nis1g0qSEeSecsyACLpHeQ" name="controleurJeu" type="_niv4wUqSEeSecsyACLpHeQ" association="_nis1gkqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nis1hEqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nis1hUqSEeSecsyACLpHeQ" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nis1hkqSEeSecsyACLpHeQ" name="Plateau">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nis1h0qSEeSecsyACLpHeQ" name="cases" type="_nis1r0qSEeSecsyACLpHeQ" association="_nis1vUqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nis1iEqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nis1iUqSEeSecsyACLpHeQ" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nis1ikqSEeSecsyACLpHeQ" name="casesVides" visibility="private" type="_nis1r0qSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nis1i0qSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nis1jEqSEeSecsyACLpHeQ" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nis1jUqSEeSecsyACLpHeQ" name="piecesRestantes" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1jkqSEeSecsyACLpHeQ" name="Plateau">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1j0qSEeSecsyACLpHeQ" name="nbLigne">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1kEqSEeSecsyACLpHeQ" name="nbColonne">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1kUqSEeSecsyACLpHeQ" name="changeEtatA">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1kkqSEeSecsyACLpHeQ" name="c" type="_nis1ckqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1k0qSEeSecsyACLpHeQ" name="nEtat">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1lEqSEeSecsyACLpHeQ" name="getEtatA">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1lUqSEeSecsyACLpHeQ" name="c" type="_nis1ckqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1lkqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1l0qSEeSecsyACLpHeQ" name="toString">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1mEqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1mUqSEeSecsyACLpHeQ" name="changeEtatA" visibility="public">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1mkqSEeSecsyACLpHeQ" name="c" type="_nis1ckqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1m0qSEeSecsyACLpHeQ" name="nEtat">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1nEqSEeSecsyACLpHeQ" name="getCaseA">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1nUqSEeSecsyACLpHeQ" name="l">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1nkqSEeSecsyACLpHeQ" name="c">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1n0qSEeSecsyACLpHeQ" name="getCasesVides">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1oEqSEeSecsyACLpHeQ" type="_nis1r0qSEeSecsyACLpHeQ" direction="return">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nis1oUqSEeSecsyACLpHeQ" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nis1okqSEeSecsyACLpHeQ" value="*"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1o0qSEeSecsyACLpHeQ" name="getNbColonnes">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1pEqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1pUqSEeSecsyACLpHeQ" name="geNbLignes" visibility="public">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1pkqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1p0qSEeSecsyACLpHeQ" name="getPiecesRestantes">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1qEqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1qUqSEeSecsyACLpHeQ" name="getVoisines">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1qkqSEeSecsyACLpHeQ" name="l">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1q0qSEeSecsyACLpHeQ" name="c">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1rEqSEeSecsyACLpHeQ" type="_nis1r0qSEeSecsyACLpHeQ" direction="return">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nis1rUqSEeSecsyACLpHeQ" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nis1rkqSEeSecsyACLpHeQ" value="*"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nis1r0qSEeSecsyACLpHeQ" name="Case">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nis1sEqSEeSecsyACLpHeQ" name="etat" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nis1sUqSEeSecsyACLpHeQ" name="coordonnee" visibility="private" type="_nis1ckqSEeSecsyACLpHeQ"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1skqSEeSecsyACLpHeQ" name="Case">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1s0qSEeSecsyACLpHeQ" name="etat">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1tEqSEeSecsyACLpHeQ" name="c" type="_nis1ckqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1tUqSEeSecsyACLpHeQ" name="changeEtat">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1tkqSEeSecsyACLpHeQ" name="nouveauEtat">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1t0qSEeSecsyACLpHeQ" name="getEtat">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1uEqSEeSecsyACLpHeQ" name="" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1uUqSEeSecsyACLpHeQ" name="getCoordonnee">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1ukqSEeSecsyACLpHeQ" type="_nis1ckqSEeSecsyACLpHeQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1u0qSEeSecsyACLpHeQ" name="toString" visibility="public">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1vEqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nis1vUqSEeSecsyACLpHeQ" name="A_plateau_case_1" memberEnd="_nis1vkqSEeSecsyACLpHeQ _nis1h0qSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nis1vkqSEeSecsyACLpHeQ" name="plateau" type="_nis1hkqSEeSecsyACLpHeQ" association="_nis1vUqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nis1v0qSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nis1wEqSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nis1wUqSEeSecsyACLpHeQ" name="Fichier">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nis1wkqSEeSecsyACLpHeQ" name="adresse" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_nis1w0qSEeSecsyACLpHeQ" name="InterfaceRealization1" client="_nis1wUqSEeSecsyACLpHeQ" supplier="_niv4-UqSEeSecsyACLpHeQ" contract="_niv4-UqSEeSecsyACLpHeQ"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nis1xEqSEeSecsyACLpHeQ" name="getAdresse">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nis1xUqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Realization" xmi:id="_nis1xkqSEeSecsyACLpHeQ" name="Realization1" client="_nis1wUqSEeSecsyACLpHeQ" supplier="_niv4-UqSEeSecsyACLpHeQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_niuqoEqSEeSecsyACLpHeQ" name="A_solitaire_controleurJeu_1" memberEnd="_niuqoUqSEeSecsyACLpHeQ _niuqpEqSEeSecsyACLpHeQ">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_niuqoUqSEeSecsyACLpHeQ" name="solitaire" type="_niuqp0qSEeSecsyACLpHeQ" association="_niuqoEqSEeSecsyACLpHeQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niuqokqSEeSecsyACLpHeQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niuqo0qSEeSecsyACLpHeQ" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_niuqpEqSEeSecsyACLpHeQ" name="controleurJeu" type="_niv4wUqSEeSecsyACLpHeQ" association="_niuqoEqSEeSecsyACLpHeQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niuqpUqSEeSecsyACLpHeQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niuqpkqSEeSecsyACLpHeQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_niuqp0qSEeSecsyACLpHeQ" name="Solitaire">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_niuqqEqSEeSecsyACLpHeQ" name="main"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_niuqqUqSEeSecsyACLpHeQ" name="interfaces">
+    <packagedElement xmi:type="uml:Class" xmi:id="_niuqqkqSEeSecsyACLpHeQ" name="InterfaceFichier">
+      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_niuqq0qSEeSecsyACLpHeQ" name="InterfaceRealization1" client="_niuqqkqSEeSecsyACLpHeQ" supplier="_niv450qSEeSecsyACLpHeQ" contract="_niv450qSEeSecsyACLpHeQ"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niuqrEqSEeSecsyACLpHeQ" name="ControleurFichier"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niuqrUqSEeSecsyACLpHeQ" name="ecritPlateau">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niuqrkqSEeSecsyACLpHeQ" name="plateau" type="_nis1hkqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niuqr0qSEeSecsyACLpHeQ" name="m" type="_niv4-UqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niuqsEqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niuqsUqSEeSecsyACLpHeQ" name="lirePlateau">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niuqskqSEeSecsyACLpHeQ" type="_nis1hkqSEeSecsyACLpHeQ" direction="return"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niuqs0qSEeSecsyACLpHeQ" name="m" type="_niv4-UqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niuqtEqSEeSecsyACLpHeQ" name="ecritListeCoup">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niuqtUqSEeSecsyACLpHeQ" name="coups" type="_nisOYUqSEeSecsyACLpHeQ">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niuqtkqSEeSecsyACLpHeQ" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niuqt0qSEeSecsyACLpHeQ" value="*"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niuquEqSEeSecsyACLpHeQ" name="m" type="_niv4-UqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niuquUqSEeSecsyACLpHeQ" name="" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_niuqukqSEeSecsyACLpHeQ" name="InterfaceTerminal">
+      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_niuqu0qSEeSecsyACLpHeQ" name="InterfaceRealization1" client="_niuqukqSEeSecsyACLpHeQ" supplier="_niv5A0qSEeSecsyACLpHeQ" contract="_niv5A0qSEeSecsyACLpHeQ"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niuqvEqSEeSecsyACLpHeQ" name="metEnOperation"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niuqvUqSEeSecsyACLpHeQ" name="finirOperation"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_niuqvkqSEeSecsyACLpHeQ" name="JSolitaire">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_niuqv0qSEeSecsyACLpHeQ" name="plateau" type="_nivRuUqSEeSecsyACLpHeQ" association="_nivR10qSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niuqwEqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niuqwUqSEeSecsyACLpHeQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nivRsEqSEeSecsyACLpHeQ" name="plateauResultat" type="_nivRw0qSEeSecsyACLpHeQ" association="_nivR30qSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nivRsUqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nivRskqSEeSecsyACLpHeQ" value="1"/>
+      </ownedAttribute>
+      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_nivRs0qSEeSecsyACLpHeQ" name="InterfaceRealization1" client="_niuqvkqSEeSecsyACLpHeQ" supplier="_niv5A0qSEeSecsyACLpHeQ" contract="_niv5A0qSEeSecsyACLpHeQ"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRtEqSEeSecsyACLpHeQ" name="JSolitaire"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRtUqSEeSecsyACLpHeQ" name="finirOperation"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRtkqSEeSecsyACLpHeQ" name="metEnOperation"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRt0qSEeSecsyACLpHeQ" name="changeControleur">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nivRuEqSEeSecsyACLpHeQ" name="c" type="_niv4wUqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nivRuUqSEeSecsyACLpHeQ" name="JPlateau">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nivRukqSEeSecsyACLpHeQ" name="cases" type="_nivR0EqSEeSecsyACLpHeQ" aggregation="composite" association="_nivR20qSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nivRu0qSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nivRvEqSEeSecsyACLpHeQ" value="*"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRvUqSEeSecsyACLpHeQ" name="JPlateau"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRvkqSEeSecsyACLpHeQ" name="paintComponent"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRv0qSEeSecsyACLpHeQ" name="actualiserPlateau">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nivRwEqSEeSecsyACLpHeQ" name="p" type="_nis1hkqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRwUqSEeSecsyACLpHeQ" name="actualiserPlateau">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nivRwkqSEeSecsyACLpHeQ" name="c" type="_nisOYUqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nivRw0qSEeSecsyACLpHeQ" name="JResultat">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRxEqSEeSecsyACLpHeQ" name="JResultat"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRxUqSEeSecsyACLpHeQ" name="afficherNouveauCoup">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nivRxkqSEeSecsyACLpHeQ" name="c" type="_nisOYUqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRx0qSEeSecsyACLpHeQ" name="afficherCoupsPossibles">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nivRyEqSEeSecsyACLpHeQ" name="c" type="_nisOYUqSEeSecsyACLpHeQ">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nivRyUqSEeSecsyACLpHeQ" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nivRykqSEeSecsyACLpHeQ" value="*"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRy0qSEeSecsyACLpHeQ" name="ajouterNouveauCoup">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nivRzEqSEeSecsyACLpHeQ" name="c" type="_nisOYUqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRzUqSEeSecsyACLpHeQ" name="finirJeu"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRzkqSEeSecsyACLpHeQ" name="reinitialiser"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivRz0qSEeSecsyACLpHeQ" name="reinitialiserProchainsCoups"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nivR0EqSEeSecsyACLpHeQ" name="JCase">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nivR0UqSEeSecsyACLpHeQ" name="etat" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivR0kqSEeSecsyACLpHeQ" name="JCase">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nivR00qSEeSecsyACLpHeQ" name="e">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivR1EqSEeSecsyACLpHeQ" name="changeEtat">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_nivR1UqSEeSecsyACLpHeQ" name="nEtat">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nivR1kqSEeSecsyACLpHeQ" name="paint"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nivR10qSEeSecsyACLpHeQ" name="A_jSolitaire_jPlateau_1" memberEnd="_nivR2EqSEeSecsyACLpHeQ _niuqv0qSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nivR2EqSEeSecsyACLpHeQ" name="jSolitaire" type="_niuqvkqSEeSecsyACLpHeQ" association="_nivR10qSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nivR2UqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nivR2kqSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nivR20qSEeSecsyACLpHeQ" name="A_jPlateau_jCase_1" memberEnd="_nivR3EqSEeSecsyACLpHeQ _nivRukqSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nivR3EqSEeSecsyACLpHeQ" name="plateau" type="_nivRuUqSEeSecsyACLpHeQ" association="_nivR20qSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nivR3UqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nivR3kqSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nivR30qSEeSecsyACLpHeQ" name="A_jSolitaire_jResultat_1" memberEnd="_nivR4EqSEeSecsyACLpHeQ _nivRsEqSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nivR4EqSEeSecsyACLpHeQ" name="solitaire" type="_niuqvkqSEeSecsyACLpHeQ" association="_nivR30qSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nivR4UqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nivR4kqSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_niv4wEqSEeSecsyACLpHeQ" name="controleurs">
+    <packagedElement xmi:type="uml:Class" xmi:id="_niv4wUqSEeSecsyACLpHeQ" name="ControleurJeu">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_niv4wkqSEeSecsyACLpHeQ" name="listeCoups" type="_nisOYUqSEeSecsyACLpHeQ" association="_nis1gkqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv4w0qSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv4xEqSEeSecsyACLpHeQ" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_niv4xUqSEeSecsyACLpHeQ" name="plateau" type="_nis1hkqSEeSecsyACLpHeQ" association="_nixG4EqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv4xkqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv4x0qSEeSecsyACLpHeQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_niv4yEqSEeSecsyACLpHeQ" name="controleurIO" type="_niv450qSEeSecsyACLpHeQ" association="_niv49UqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv4yUqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv4ykqSEeSecsyACLpHeQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_niv4y0qSEeSecsyACLpHeQ" name="controleurInterface" type="_niv5A0qSEeSecsyACLpHeQ" association="_niv5D0qSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv4zEqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv4zUqSEeSecsyACLpHeQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_niv4zkqSEeSecsyACLpHeQ" name="quantiteMovements" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv4z0qSEeSecsyACLpHeQ" name="ControleurJeu">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv40EqSEeSecsyACLpHeQ" name="cIO" type="_niv450qSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv40UqSEeSecsyACLpHeQ" name="cInterface" type="_niv5A0qSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv40kqSEeSecsyACLpHeQ" name="lirePlateau">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv400qSEeSecsyACLpHeQ" name="m" type="_niv4-UqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv41EqSEeSecsyACLpHeQ" type="_nis1hkqSEeSecsyACLpHeQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv41UqSEeSecsyACLpHeQ" name="ecrireListeCoups">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv41kqSEeSecsyACLpHeQ" name="m" type="_niv4-UqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv410qSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv42EqSEeSecsyACLpHeQ" name="actualiserPlateau"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv42UqSEeSecsyACLpHeQ" name="coupsPossibles">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv42kqSEeSecsyACLpHeQ" type="_nisOYUqSEeSecsyACLpHeQ" direction="return">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv420qSEeSecsyACLpHeQ" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv43EqSEeSecsyACLpHeQ" value="*"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv43UqSEeSecsyACLpHeQ" name="prochainCoup">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv43kqSEeSecsyACLpHeQ" type="_nisOYUqSEeSecsyACLpHeQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv430qSEeSecsyACLpHeQ" name="getListeCoups">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv44EqSEeSecsyACLpHeQ" type="_nisOYUqSEeSecsyACLpHeQ" direction="return">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv44UqSEeSecsyACLpHeQ" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv44kqSEeSecsyACLpHeQ" value="*"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv440qSEeSecsyACLpHeQ" name="ouvrirFenetre"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv45EqSEeSecsyACLpHeQ" name="commencerJeu"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv45UqSEeSecsyACLpHeQ" name="prochainRandomCoup">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv45kqSEeSecsyACLpHeQ" type="_nisOYUqSEeSecsyACLpHeQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_niv450qSEeSecsyACLpHeQ" name="IControleurIO">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv46EqSEeSecsyACLpHeQ" name="lirePlateau" isAbstract="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv46UqSEeSecsyACLpHeQ" type="_nis1hkqSEeSecsyACLpHeQ" direction="return"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv46kqSEeSecsyACLpHeQ" name="m" type="_niv4-UqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv460qSEeSecsyACLpHeQ" name="ecritPlateau" isAbstract="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv47EqSEeSecsyACLpHeQ" name="plateau" type="_nis1hkqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv47UqSEeSecsyACLpHeQ" name="m" type="_niv4-UqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv47kqSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv470qSEeSecsyACLpHeQ" name="ecritListeCoup" isAbstract="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv48EqSEeSecsyACLpHeQ" name="coups" type="_nisOYUqSEeSecsyACLpHeQ">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv48UqSEeSecsyACLpHeQ" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv48kqSEeSecsyACLpHeQ" value="*"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv480qSEeSecsyACLpHeQ" name="m" type="_niv4-UqSEeSecsyACLpHeQ"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv49EqSEeSecsyACLpHeQ" name="" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_niv49UqSEeSecsyACLpHeQ" name="A_controleurJeu_iControleurIO_1" memberEnd="_niv49kqSEeSecsyACLpHeQ _niv4yEqSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_niv49kqSEeSecsyACLpHeQ" name="controleurJeu" type="_niv4wUqSEeSecsyACLpHeQ" association="_niv49UqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv490qSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv4-EqSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_niv4-UqSEeSecsyACLpHeQ" name="IMillieu">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv4-kqSEeSecsyACLpHeQ" name="getAdresse" isAbstract="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv4-0qSEeSecsyACLpHeQ" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_niv4_EqSEeSecsyACLpHeQ" name="A_iControleurIO_iMillieu_1" memberEnd="_niv5AEqSEeSecsyACLpHeQ _niv4_UqSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_niv4_UqSEeSecsyACLpHeQ" name="millieu" type="_niv4-UqSEeSecsyACLpHeQ" association="_niv4_EqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv4_kqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv4_0qSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_niv5AEqSEeSecsyACLpHeQ" name="controleurIO" type="_niv450qSEeSecsyACLpHeQ" association="_niv4_EqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv5AUqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv5AkqSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_niv5A0qSEeSecsyACLpHeQ" name="IControleurInterface">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv5BEqSEeSecsyACLpHeQ" name="metEnOperation" isAbstract="true"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv5BUqSEeSecsyACLpHeQ" name="finirOperation" isAbstract="true"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_niv5BkqSEeSecsyACLpHeQ" name="changeControleur" isAbstract="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_niv5B0qSEeSecsyACLpHeQ" name="c" type="_niv4wUqSEeSecsyACLpHeQ"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_niv5CEqSEeSecsyACLpHeQ" name="A_controleurJeu_iControleurInterface_1" memberEnd="_niv5CUqSEeSecsyACLpHeQ _niv5DEqSEeSecsyACLpHeQ" navigableOwnedEnd="_niv5CUqSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_niv5CUqSEeSecsyACLpHeQ" name="controleurJeu" type="_niv4wUqSEeSecsyACLpHeQ" association="_niv5CEqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv5CkqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv5C0qSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_niv5DEqSEeSecsyACLpHeQ" name="iControleurInterface" type="_niv5A0qSEeSecsyACLpHeQ" association="_niv5CEqSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv5DUqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv5DkqSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_niv5D0qSEeSecsyACLpHeQ" name="A_iControleurInterface_controleurJeu_1" memberEnd="_niv4y0qSEeSecsyACLpHeQ _niv5EEqSEeSecsyACLpHeQ">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_niv5EEqSEeSecsyACLpHeQ" name="controleurJeu" type="_niv4wUqSEeSecsyACLpHeQ" association="_niv5D0qSEeSecsyACLpHeQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_niv5EUqSEeSecsyACLpHeQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_niv5EkqSEeSecsyACLpHeQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_nixG4EqSEeSecsyACLpHeQ" name="A_controleurJeu_plateau_1" memberEnd="_nixG4UqSEeSecsyACLpHeQ _niv4xUqSEeSecsyACLpHeQ">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_nixG4UqSEeSecsyACLpHeQ" name="controleurJeu" type="_niv4wUqSEeSecsyACLpHeQ" association="_nixG4EqSEeSecsyACLpHeQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nixG4kqSEeSecsyACLpHeQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nixG40qSEeSecsyACLpHeQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>

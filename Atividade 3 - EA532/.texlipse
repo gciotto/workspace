@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Mon Aug 31 16:30:12 BRT 2015
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=atividade3.tex
+outputFile=atividade3.pdf
+langSpell=en
+markDer=true
+srcDir=

@@ -1,0 +1,520 @@
+package controleurs;
+
+import entites.*;
+
+import java.io.*;
+import java.util.*;
+
+public class ControleurJeu {
+
+	private List<Coup> listeCoups;
+	private Plateau plateau;
+	private IControleurIO controleurIO;
+	private IControleurInterface controleurInterface;
+	private int movements;
+
+	public ControleurJeu(IControleurIO cIO, IControleurInterface cInterface) { 
+
+		this.controleurIO = cIO;
+		this.controleurInterface = cInterface;
+		this.listeCoups = new ArrayList<Coup>();		
+		this.movements = 0;
+	}
+
+	public List<Coup> getListeCoups() {
+		return listeCoups; 
+	}
+
+	public Plateau getPlateau() {
+		return plateau; 
+	}
+
+	public IControleurIO getControleurIO() {
+		return controleurIO; 
+	}
+
+	public IControleurInterface getControleurInterface() {
+		return controleurInterface; 
+	}
+
+	public Plateau lirePlateau(IMillieu m) throws FileNotFoundException, IOException { 
+
+		this.plateau = this.controleurIO.lirePlateau(m);
+		this.listeCoups.clear();
+		this.movements = 0;		
+		return this.plateau;
+	}
+
+	public boolean ecrireListeCoups(IMillieu m) throws IOException { 
+		return this.controleurIO.ecritListeCoup(this.listeCoups, m);
+	}
+
+
+	public List<Coup> coupsPossibles() { 
+
+		List<Coup> coups = new ArrayList<Coup>();
+
+		for (Case c : this.plateau.getCasesVides()) {
+
+			int x = c.getCoordonnee().getLigne(),
+					y = c.getCoordonnee().getColonne();
+
+			for (Case v : this.plateau.getVoisinesA(x, y)) {
+
+				if (v.getEtat() == Case.OCCUPEE) {
+
+					if (v.getCoordonnee().getLigne() == x -1 ) { // BAS
+
+						Case candidat = this.plateau.getCaseA(x - 2, y);
+						if (candidat != null && candidat.getEtat() == Case.OCCUPEE)
+							coups.add( new Coup (new Coordonnee (x - 2, y), new Direction (Direction.BAS)));
+
+					}
+
+					if (v.getCoordonnee().getLigne() == x + 1 ) { // HAUTE
+
+						Case candidat = this.plateau.getCaseA(x + 2, y);
+						if (candidat != null && candidat.getEtat() == Case.OCCUPEE)
+							coups.add( new Coup (new Coordonnee (x + 2, y), new Direction (Direction.HAUTE)));
+
+					}
+
+					if (v.getCoordonnee().getColonne() == y - 1 ) { // DROITE
+
+						Case candidat = this.plateau.getCaseA(x, y - 2);
+						if (candidat != null && candidat.getEtat() == Case.OCCUPEE)
+							coups.add( new Coup (new Coordonnee (x, y - 2), new Direction (Direction.DROITE)));
+
+					}
+
+					if (v.getCoordonnee().getColonne() == y + 1 ) { // GAUCHE
+
+						Case candidat = this.plateau.getCaseA(x, y + 2);
+						if (candidat != null && candidat.getEtat() == Case.OCCUPEE)
+							coups.add( new Coup (new Coordonnee (x, y + 2), new Direction (Direction.GAUCHE)));
+
+					}
+				}
+			}
+
+		}
+
+		return coups;
+	}
+
+	public Coup prochainCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+
+		if (listePossibles.isEmpty())
+			return null;
+
+		Coup prochain = listePossibles.get(0);
+
+		return prochain;
+	}
+
+	public Coup prochainDistanceMaxVoisinCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+
+		if (listePossibles.isEmpty())
+			return null;
+
+		int choisi = 0, total = 0;
+		double dist = 0;
+
+		Coup coupAvant; 
+
+		if (this.listeCoups.isEmpty())
+			coupAvant = new Coup(new Coordonnee (this.plateau.getNbLignes() / 2,this.plateau.getNbColonnes() / 2), 
+					new Direction(1));
+		else coupAvant = this.listeCoups.get(this.listeCoups.size() - 1);
+
+		Coup prochain = null;		
+
+		for (Coup cand : listePossibles) {
+
+			int distAux = this.plateau.getDistanceDeA(cand.getCoordonneeOrigine(), coupAvant.getCoordonneeOrigine());
+
+			if (distAux > dist) {
+				choisi = total;
+				dist = distAux;
+			}
+
+			total++;
+		}		
+
+		prochain = listePossibles.get(choisi);
+
+		return prochain;
+	}
+
+	public void ajouterCoup(Coup c) {
+
+		this.listeCoups.add(c);
+
+		this.plateau.actualiserPlateau(c);
+
+		this.movements++;
+
+	}
+
+	public Coup prochainDistanceMinVoisinCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+
+		if (listePossibles.isEmpty())
+			return null;
+
+		int choisi = 0, total = 0;
+		int dist = this.plateau.getNbColonnes()*this.plateau.getNbColonnes() + 
+				this.plateau.getNbLignes()*this.plateau.getNbLignes(); 
+
+		Coup coupAvant; 
+
+		if (this.listeCoups.isEmpty())
+			coupAvant = new Coup(new Coordonnee (this.plateau.getNbLignes() / 2,this.plateau.getNbColonnes() / 2), 
+					new Direction(1));
+
+		else coupAvant = this.listeCoups.get(this.listeCoups.size() - 1);
+
+		Coup prochain = null;		
+
+		for (Coup cand : listePossibles) {
+
+			int distAux = this.plateau.getDistanceDeA(cand.getCoordonneeOrigine(), coupAvant.getCoordonneeOrigine());
+
+			if (distAux < dist) {
+				choisi = total;
+				dist = distAux;
+			}
+
+			total++;
+		}		
+
+		prochain = listePossibles.get(choisi);
+
+		return prochain;
+	}
+
+
+
+	public Coup prochainMinVoisinCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+
+		if (listePossibles.isEmpty())
+			return null;
+
+		int choisi = 0, nbVoisins = 9, total = 0;
+		Coup prochain = null;		
+
+		for (Coup cand : listePossibles) {
+
+			int nbVoisinsCaseVide;
+
+			Coordonnee cible = cand.getCoordonneeCible();
+
+			nbVoisinsCaseVide = this.plateau.getVoisinesA(cible).size(); 
+
+			if (nbVoisinsCaseVide < nbVoisins) {
+
+				choisi = total;
+				nbVoisins = nbVoisinsCaseVide;				
+			}
+
+
+			total++;
+		}		
+
+		prochain = listePossibles.get(choisi);
+
+		return prochain;
+	}
+
+	private List<Coup> uneListeAleatoire() {
+		
+		List<Coup> 	liste = new ArrayList<Coup>();
+		
+		Coup prochain = this.prochainBranchBound();
+		while (prochain != null) {
+			
+			this.plateau.actualiserPlateau(prochain);
+			liste.add(prochain);
+			prochain = this.prochainBranchBound();
+		}
+		
+		this.plateau.eliminerCoups(liste);
+		return liste;
+		
+	}
+	
+	public List<Coup> prochainListeRandom() {
+	
+		int total = 100, meilleureTaille = 0;
+		
+		List<Coup> 	aux = this.uneListeAleatoire(),
+					resultat = null;
+		
+		while (total > 0) {
+			
+			if (aux.size() > meilleureTaille ) {
+				
+				resultat = aux;
+				meilleureTaille = aux.size();
+			}
+			
+			aux = this.uneListeAleatoire();
+			total--;
+		}
+		
+		return resultat;
+		
+	}
+	
+	
+	public Coup prochainBranchBound() {
+		
+		List<Coup> 	resultatAux = new ArrayList<Coup>(),
+					listePossibles = this.coupsPossibles(),
+					resultatPremier = new ArrayList<Coup>();
+		Coup resultat;
+		
+		if (listePossibles.isEmpty())
+			return null;
+		
+		Coup prochain = listePossibles.remove(0);
+		while (prochain != null) {
+			
+			this.plateau.actualiserPlateau(prochain);
+			resultatPremier.add(prochain);
+			prochain = this.prochainRandomCoup();
+		}
+		
+		int taillePremiere = resultatPremier.size();
+		
+		this.plateau.eliminerCoups(resultatPremier);
+		
+		if (!resultatPremier.isEmpty())
+			resultat = resultatPremier.remove(0);
+		else return null;
+		
+		for (Coup c : listePossibles) {
+		
+			while (c != null) {
+				
+				this.plateau.actualiserPlateau(c);
+				resultatAux.add(c);
+				c = this.prochainRandomCoup();
+			}
+			
+			this.plateau.eliminerCoups(resultatAux);
+			
+			int tailleAux = resultatAux.size();
+			
+			if (tailleAux > taillePremiere) {
+				
+				resultat = resultatAux.get(0);
+				taillePremiere = tailleAux;
+			}
+			
+			
+		}
+		
+		return resultat;
+	}
+	
+	
+	public Coup prochainMelange(){
+		
+		int piecesRestantes = this.plateau.getPiecesRestantes();
+		Coup resultat = null;
+		
+		if (piecesRestantes < 15) {
+			Boolean aTrouve = false;
+			
+			List<Coup> r = this.prochainOptimalCoup(false, aTrouve);
+			
+			if (!r.isEmpty())
+				resultat = r.get(0);
+						
+		}
+		else resultat = this.prochainBranchBound();
+	
+		return resultat;
+	}
+	
+	public List<Coup> prochainOptimalCoup(boolean estPremier, Boolean aTrouve) { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+
+		List<Coup> resultat = new ArrayList<Coup>();
+
+		int count = 0;
+		
+		while (!listePossibles.isEmpty() && !aTrouve) {
+			
+			Coup cand = listePossibles.remove(0);
+			List<Coup> resultatAux = new ArrayList<Coup>();
+
+			Coordonnee cAncienne = cand.getCoordonneeOrigine();
+			this.plateau.actualiserPlateau(cand);
+
+			int restantes = this.plateau.getPiecesRestantes();
+			
+			resultatAux.add(cand);
+			
+			if (restantes ==1) { 
+				aTrouve = true;
+				this.plateau.annuleCoup(cand);
+				return resultatAux;
+				
+			} else {
+				
+				resultatAux.addAll(this.prochainOptimalCoup(false, aTrouve));
+				this.plateau.annuleCoup(cand);
+			}
+						
+			if (resultatAux.size() > resultat.size())
+				resultat = resultatAux;
+			
+			count++;
+
+			if (estPremier) listePossibles.clear();
+		}
+
+		return resultat;
+	}
+	
+	
+	public Coup prochainMaxVoisinCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+
+		if (listePossibles.isEmpty())
+			return null;
+
+		int choisi = 0, nbVoisins = 0, total = 0;
+		Coup prochain = null;		
+
+		for (Coup cand : listePossibles) {
+
+			int nbVoisinsCaseVide;
+
+			Coordonnee cible = cand.getCoordonneeCible();
+
+			nbVoisinsCaseVide = this.plateau.getVoisinesA(cible).size(); 
+
+			if (nbVoisinsCaseVide > nbVoisins) {
+
+				choisi = total;
+				nbVoisins = nbVoisinsCaseVide;				
+			}
+
+
+			total++;
+		}		
+
+		prochain = listePossibles.get(choisi);
+
+		return prochain;
+	}
+
+	public Coup prochainConcentreCoup() {
+
+		List<Coup> listePossibles = this.coupsPossibles();
+
+		if (listePossibles.isEmpty())
+			return null;
+
+		Coordonnee centre = this.plateau.getCentre();
+
+		int choisiIdeal = listePossibles.size(),l = this.plateau.getNbLignes(), c = this.plateau.getNbColonnes(),
+				total = 0, dist = this.plateau.getDistanceDeA(new Coordonnee(0,0), centre);
+
+		Coup prochain = null;		
+
+		boolean ok = false;
+
+		for (Coup cand : listePossibles) {
+
+			Coordonnee 	cible = cand.getCoordonneeCible(),
+					origine = cand.getCoordonneeEliminee();
+
+
+			int distanceOrigineCentre = this.plateau.getDistanceDeA(origine, centre),
+					distanceCibleCentre = this.plateau.getDistanceDeA(cible, centre),
+					lig = cand.getCoordonneeOrigine().getLigne(),
+					col = cand.getCoordonneeOrigine().getColonne();
+
+			if ( !( lig - 1 == 0  || lig + 1 == l || col - 1 == 0 || col + 1 == c) 
+					|| coupsPossibles().size() == 1 || (total == listePossibles.size() - 1 && choisiIdeal == listePossibles.size())){
+
+				if ( (col == c ) || (col == 0) || (lig == 0) || (l == lig)) {
+					choisiIdeal = total;
+					ok = true;
+				}
+				else 
+					if (distanceCibleCentre < dist && !ok)  { 
+						choisiIdeal = total;
+						dist = distanceCibleCentre; 
+					}
+			}
+			total++;
+		}		
+
+		prochain = listePossibles.get(choisiIdeal);
+
+		return prochain;
+
+	}
+
+	public Coup prochainRandomCoup() { 
+
+		List<Coup> listePossibles = this.coupsPossibles();
+
+		if (listePossibles.isEmpty())
+			return null;
+
+		Random randomGenerator = new Random();
+
+		int indice = 0; 
+
+		if (!listePossibles.isEmpty())
+			indice = randomGenerator.nextInt(listePossibles.size());
+
+		//System.out.println("total: "+ listePossibles.size() + "indice: "+ indice);
+
+		Coup prochain = listePossibles.get(indice);
+
+		return prochain;
+	}
+
+	public void commencerJeu() { 
+		this.controleurInterface.metEnOperation();
+	} 
+
+	public static Plateau plateauVide() {
+
+		Plateau p = new Plateau(9, 9);
+
+		for (int i = 0; i < 9; i++)
+			for (int j = 0; j < 9; j++)
+				p.changeEtatA(new Coordonnee(i,j), Case.PAS_EN_USE);
+
+		return p;
+	}
+
+	public List<Case> getListeCasesVides() {
+		return this.plateau.getCasesVides();
+	}
+
+	public int getTotalMovements() {
+		return this.movements;
+	}
+
+	public int getPiecesRestantes() {
+		return this.plateau.getPiecesRestantes();
+	}
+}

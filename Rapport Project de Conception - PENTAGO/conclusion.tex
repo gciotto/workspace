@@ -1,0 +1,59 @@
+\section {Conclusion}
+
+In order to program an artificial intelligence able to play Pentago, we have
+employed Matlab language, an alpha-beta pruning algorithm (first-depth) and a
+regular laptop computer. The results obtained reach our expectations:
+
+\begin{enumerate}
+
+	\item Our graphical interface performed well. Easy to use, functional and
+	enjoyable.
+
+	\item Our program may enable matches between humans, between AIs and mixed.
+
+	\item The processing time demanded by each play is reasonable.
+
+	\item The AI is efficient. It is roughly comparable in strength to the one
+	developed by our advisor, which was set in the beginning of the project as our
+	parameter of quality.
+
+\end{enumerate}
+
+Nevertheless, an AI capable of strongly solving Pentago has been already
+programed with C++ and runned on a supercomputer at NERSC. Therefore, it is
+clear that may identify some room for improvement:
+
+\begin{enumerate}
+  	\item Programming Language: The use of C++ language instead of Matlab would
+  	enable better access to and better performance of the computational
+  	resources. For instance, it allows the algorithm used at NERSC to code and
+  	manipulate data in a very ingenious way, which enables a better solution.
+
+	\item Algorithm: From embodying transition tables to speed up the performance
+	to increasing the depth of the alpha-beta search, there are some possible
+	improvements. Some of them, for instance the increase of the depth of search,
+	are not very well suited for an ordinary computer as it implies a greater
+	overall processing time. The strong solving algorithm used at NERSC succeeded
+	by associating the use of in game symmetries with brute force, all that being
+	allowed by the way used to store data.
+
+	\item Hardware: NERSC's supercomputer, Edison, has « a peak performance of
+	2.57 petaflops/sec, 133,824 compute cores, 357 terabytes of memory, and 7.56
+	petabytes of disk » (Nersc, 2015). Meanwhile, our algorithm is developed to
+	perform in laptops. It may be difficult to have access to a Cray XC30
+	supercomputer as Edison, but there cheaper and more accessible options on the
+	market. For instance, one may exploit a regular computer GPU using CUDA to
+	rise performances (NVIDEA,2015).
+
+\end{enumerate}
+
+Lastly, those improvements might be hard to achieve for the time and the effort
+that they demand. They are maybe more suited for a longer and deeper project
+that surpasses a final graduation project. Furthermore, the results obtained on
+this project may be used by future students who want to solve Pentago or other
+board games on Matlab. They might also use our work, as well as our advisor AI,
+to compare different Pentago AIs. This last approach may allow some interesting
+results, for instance it may be used as a tool for evaluating non deterministic
+AIs.
+
+\newpage

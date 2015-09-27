@@ -1,0 +1,31 @@
+\frametitle{Algorithme MUSIC}
+\framesubtitle{Mise en oeuvre - \textit{test.m}}
+%
+%
+\begin{itemize}
+
+  \item Calcul des pics pour chaqu'un des SNRs
+
+  \begin{lstlisting}
+bAux = randn(1,N);
+
+%signal
+s = zeros (1, N);
+for k = 1:P
+s = s + A(k) * exp(2*pi*1i*n*T*F(k) + 1i*Theta(k));
+end
+
+%bruit
+for l = 1 : size(SNR, 2)
+
+varianceNoise = sum (A.*A) / ( 10 ^ (SNR(l) / 10));
+b = sqrt(varianceNoise) * bAux;
+x = s + b;
+
+frequences = fDebut : fPas : fFin;
+result = P_music (x, frequences, P);
+plot(...)
+end
+\end{lstlisting}
+
+\end{itemize}

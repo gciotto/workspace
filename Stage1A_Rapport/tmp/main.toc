@@ -1,0 +1,24 @@
+\select@language {french}
+\contentsline {section}{Remerciements}{2}
+\contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {2}L'entreprise}{4}
+\contentsline {subsection}{\numberline {2.1}Pr\IeC {\'e}sentation g\IeC {\'e}n\IeC {\'e}rale du groupe Elis}{4}
+\contentsline {subsection}{\numberline {2.2}Pr\IeC {\'e}sentation du centre de Br\IeC {\'e}tigny}{4}
+\contentsline {subsection}{\numberline {2.3}La recherche et le processus d'embauche}{5}
+\contentsline {subsection}{\numberline {2.4}Mon quotidien}{5}
+\contentsline {section}{\numberline {3}Activit\IeC {\'e}s effectu\IeC {\'e}es pendant le stage}{6}
+\contentsline {subsection}{\numberline {3.1}Contr\IeC {\^o}le Entr\IeC {\'e}e}{6}
+\contentsline {subsubsection}{\numberline {3.1.1}Engagement du linge}{6}
+\contentsline {subsubsection}{\numberline {3.1.2}Tri du linge}{6}
+\contentsline {subsection}{\numberline {3.2}H\IeC {\'e}bergement}{7}
+\contentsline {subsubsection}{\numberline {3.2.1}R\IeC {\'e}sultats du jour}{7}
+\contentsline {subsubsection}{\numberline {3.2.2}Engagement du linge - les calandres}{8}
+\contentsline {subsubsection}{\numberline {3.2.3}Pr\IeC {\'e}paration des Commandes}{8}
+\contentsline {paragraph}{\numberline {3.2.3.1}Les Sacs}{8}
+\contentsline {paragraph}{\numberline {3.2.3.2}Pousser les Chariots}{9}
+\contentsline {subsubsection}{\numberline {3.2.4}Carr\IeC {\'e} Revisage}{9}
+\contentsline {subsubsection}{\numberline {3.2.5}Le RECO}{11}
+\contentsline {subsection}{\numberline {3.3}Restauration}{12}
+\contentsline {subsubsection}{\numberline {3.3.1}Management des passes}{12}
+\contentsline {section}{\numberline {4}R\IeC {\'e}flexions personnelles}{13}
+\contentsline {section}{\numberline {5}Conclusion}{14}
