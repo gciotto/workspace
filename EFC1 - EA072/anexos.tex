@@ -2,6 +2,12 @@
 
 \section{Anexos}
 
+A figura \ref{fig:forw} possui todos os resultados das execuções do
+\textit{forward selection}. Observa-se que o comportamento das curvas em todas
+elas é muito parecido, apresentando um mínimo para um número de variáveis
+próximo de 15. \textit{(Rever análise completa na seção 2 item
+\ref{item:forwsunspot}).}
+
 \FloatBarrier
 \begin{figure}[H] 
 				
@@ -46,6 +52,13 @@
 			\end{figure}
 			
 		\FloatBarrier
+
+
+A figura \ref{fig:back} possui todos os resultados das
+execuções do \textit{backward elimination}. Assim como o caso
+anterior, observa-se que o comportamento das curvas em todas elas é muito
+parecido, apresentando um mínimo para um número de variáveis próximo de 15.
+\textit{(Rever análise completa na seção 2 item \ref{item:forwsunspot}).}
 		
 		\begin{figure}[H] 
 				
@@ -91,6 +104,15 @@
 
 
 \FloatBarrier
+
+\newpage
+
+A figura \ref{fig:forw2} possui todos os resultados das
+execuções do \textit{forward selection} para os dados contidos em
+\texttt{wineq.mat}. Observa-se que o comportamento das curvas em todas elas é
+muito parecido, apresentando um mínimo para um número de variáveis próximo de 8.
+\textit{(Rever análise completa na seção 2 item \ref{item:forwwineq}).}
+
 \begin{figure}[H] 
 				
 			\centering
@@ -134,7 +156,15 @@
 			\end{figure}
 			
 		\FloatBarrier
-				
+
+\newpage
+
+A figura \ref{fig:back2} possui todos os resultados das
+execuções do \textit{backward elimination} para os dados contidos em
+\texttt{wineq.mat}. Observa-se que o comportamento das curvas em todas elas é
+muito parecido, apresentando um mínimo para um número de variáveis próximo de
+10. \textit{(Rever análise completa na seção 2 item \ref{item:forwwineq}).}	
+		
 		\begin{figure}[H] 
 				
 			\centering
@@ -193,6 +223,14 @@
 		label={lst:mlp}] {predicao/numberNeuronsMLP.m}
 		
 		\FloatBarrier
+		
+\newpage
+
+Resultados obtidos para diversos valores do número de iterações do algoritmo
+otimizador. Destaca-se que os resultados não apresentam nenhum comportamento bem
+definido, mas tendem a diminuir com o aumento de \(i\). \textit{(Rever análise
+completa na seção
+\ref{sec:iteracoes}.)}
 		
 		\begin{figure}[H] 
 				
@@ -259,6 +297,7 @@
 			
 			\caption{Médias dos erros de validação e de
 			teste para vários valores possíveis \(i\) de iteração.}
+			\label{fig:iens}
 			\end{figure}
 			
 		\FloatBarrier

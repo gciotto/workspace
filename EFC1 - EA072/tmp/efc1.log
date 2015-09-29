@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  26 SEP 2015 21:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  28 SEP 2015 18:41
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -630,17 +630,17 @@ Package pdftex.def Info: image/filtro_nlin.png used on input line 86.
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./image/filtro_lin.png
  (PNG copy)> <./image/filtro_nlin.png (PNG copy)>]
-Overfull \hbox (1.71165pt too wide) in paragraph at lines 215--220
+Overfull \hbox (1.71165pt too wide) in paragraph at lines 217--222
 [][]\OT1/cmr/m/n/12 Considerando so-mente as pri-mei-ras cinco vari^^Saveis se-
 le-ci-o-na-das em cada execu^^Xc~ao, percebe-
  []
 
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 340.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 342.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [3]
-Overfull \hbox (0.94453pt too wide) in paragraph at lines 357--363
+Overfull \hbox (0.94453pt too wide) in paragraph at lines 359--365
 \OT1/cmr/m/n/12 sa^^S^^Pda pra-ti-ca-mente nu-las (os re-sul-ta-dos de \OT1/pcr
 /m/n/12 corr (X(:,21), S) \OT1/cmr/m/n/12 ... \OT1/pcr/m/n/12 corr (X(:,25),
  []
@@ -649,17 +649,17 @@ Overfull \hbox (0.94453pt too wide) in paragraph at lines 357--363
 File: image/filtro_lin2.png Graphic file (type png)
 
 <use image/filtro_lin2.png>
-Package pdftex.def Info: image/filtro_lin2.png used on input line 448.
+Package pdftex.def Info: image/filtro_lin2.png used on input line 450.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
 <image/filtro_nlin2.png, id=37, 449.68pt x 337.26pt>
 File: image/filtro_nlin2.png Graphic file (type png)
 
 <use image/filtro_nlin2.png>
-Package pdftex.def Info: image/filtro_nlin2.png used on input line 454.
+Package pdftex.def Info: image/filtro_nlin2.png used on input line 456.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-Overfull \hbox (11.24776pt too wide) in paragraph at lines 482--497
+Overfull \hbox (11.24776pt too wide) in paragraph at lines 484--499
  [][][] 
  []
 
@@ -702,268 +702,274 @@ File: image/mlp_1000_iterations.png Graphic file (type png)
 <use image/mlp_1000_iterations.png>
 Package pdftex.def Info: image/mlp_1000_iterations.png used on input line 209.
 (pdftex.def)             Requested size: 332.89412pt x 249.6817pt.
-) (./bibliografia.tex
+ [10 <./image/mlp_average_iterations.png (PNG copy)> <./image/mlp_1000_iteratio
+ns.png (PNG copy)>]) (./conclusao.tex)
+(./bibliografia.tex
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 3.
-
-(/usr/share/texmf-dist/tex/latex/base/omscmr.fd
+ (/usr/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 3.
- [10 <./image/mlp_average_iterations.png (PNG copy)> <./image/mlp_1000_iteratio
-ns.png (PNG copy)>])
+)
 (./anexos.tex [11] <image/forward1.png, id=67, 421.575pt x 316.18124pt>
 File: image/forward1.png Graphic file (type png)
 
 <use image/forward1.png>
-Package pdftex.def Info: image/forward1.png used on input line 12.
+Package pdftex.def Info: image/forward1.png used on input line 18.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
  <image/forward2.png, id=68, 421.575pt x 316.18124pt>
 File: image/forward2.png Graphic file (type png)
 
 <use image/forward2.png>
-Package pdftex.def Info: image/forward2.png used on input line 18.
+Package pdftex.def Info: image/forward2.png used on input line 24.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
  <image/forward3.png, id=69, 421.575pt x 316.18124pt>
 File: image/forward3.png Graphic file (type png)
 
 <use image/forward3.png>
-Package pdftex.def Info: image/forward3.png used on input line 25.
+Package pdftex.def Info: image/forward3.png used on input line 31.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
  <image/forward4.png, id=70, 421.575pt x 316.18124pt>
 File: image/forward4.png Graphic file (type png)
 
 <use image/forward4.png>
-Package pdftex.def Info: image/forward4.png used on input line 31.
+Package pdftex.def Info: image/forward4.png used on input line 37.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
  <image/forward5.png, id=71, 421.575pt x 316.18124pt>
 File: image/forward5.png Graphic file (type png)
 
 <use image/forward5.png>
-Package pdftex.def Info: image/forward5.png used on input line 38.
-(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
- <image/backward1.png, id=72, 421.575pt x 316.18124pt>
-File: image/backward1.png Graphic file (type png)
-
-<use image/backward1.png>
-Package pdftex.def Info: image/backward1.png used on input line 56.
-(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
-
-<image/backward2.png, id=73, 421.575pt x 316.18124pt>
-File: image/backward2.png Graphic file (type png)
-
-<use image/backward2.png>
-Package pdftex.def Info: image/backward2.png used on input line 62.
-(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
-
-<image/backward3.png, id=74, 421.575pt x 316.18124pt>
-File: image/backward3.png Graphic file (type png)
-
-<use image/backward3.png>
-Package pdftex.def Info: image/backward3.png used on input line 69.
-(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
-
-<image/backward4.png, id=75, 421.575pt x 316.18124pt>
-File: image/backward4.png Graphic file (type png)
-
-<use image/backward4.png>
-Package pdftex.def Info: image/backward4.png used on input line 75.
-(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
-
-<image/backward5.png, id=76, 421.575pt x 316.18124pt>
-File: image/backward5.png Graphic file (type png)
-
-<use image/backward5.png>
-Package pdftex.def Info: image/backward5.png used on input line 82.
+Package pdftex.def Info: image/forward5.png used on input line 44.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
  [12 <./image/forward1.png (PNG copy)> <./image/forward2.png (PNG copy)> <./ima
 ge/forward3.png (PNG copy)> <./image/forward4.png (PNG copy)> <./image/forward5
 .png (PNG copy)>]
-<image/forward1_2.png, id=80, 449.68pt x 337.26pt>
+<image/backward1.png, id=75, 421.575pt x 316.18124pt>
+File: image/backward1.png Graphic file (type png)
+
+<use image/backward1.png>
+Package pdftex.def Info: image/backward1.png used on input line 69.
+(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
+
+<image/backward2.png, id=76, 421.575pt x 316.18124pt>
+File: image/backward2.png Graphic file (type png)
+
+<use image/backward2.png>
+Package pdftex.def Info: image/backward2.png used on input line 75.
+(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
+
+<image/backward3.png, id=77, 421.575pt x 316.18124pt>
+File: image/backward3.png Graphic file (type png)
+
+<use image/backward3.png>
+Package pdftex.def Info: image/backward3.png used on input line 82.
+(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
+
+<image/backward4.png, id=78, 421.575pt x 316.18124pt>
+File: image/backward4.png Graphic file (type png)
+
+<use image/backward4.png>
+Package pdftex.def Info: image/backward4.png used on input line 88.
+(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
+
+<image/backward5.png, id=79, 421.575pt x 316.18124pt>
+File: image/backward5.png Graphic file (type png)
+
+<use image/backward5.png>
+Package pdftex.def Info: image/backward5.png used on input line 95.
+(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
+ [13 <./image/backward1.png (PNG copy)> <./image/backward2.png (PNG copy)> <./i
+mage/backward3.png (PNG copy)> <./image/backward4.png (PNG copy)> <./image/back
+ward5.png (PNG copy)>]
+<image/forward1_2.png, id=84, 449.68pt x 337.26pt>
 File: image/forward1_2.png Graphic file (type png)
  <use image/forward1_2.png>
-Package pdftex.def Info: image/forward1_2.png used on input line 100.
+Package pdftex.def Info: image/forward1_2.png used on input line 122.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/forward2_2.png, id=81, 449.68pt x 337.26pt>
+<image/forward2_2.png, id=85, 449.68pt x 337.26pt>
 File: image/forward2_2.png Graphic file (type png)
  <use image/forward2_2.png>
-Package pdftex.def Info: image/forward2_2.png used on input line 106.
+Package pdftex.def Info: image/forward2_2.png used on input line 128.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/forward3_2.png, id=82, 449.68pt x 337.26pt>
+<image/forward3_2.png, id=86, 449.68pt x 337.26pt>
 File: image/forward3_2.png Graphic file (type png)
  <use image/forward3_2.png>
-Package pdftex.def Info: image/forward3_2.png used on input line 113.
+Package pdftex.def Info: image/forward3_2.png used on input line 135.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/forward4_2.png, id=83, 449.68pt x 337.26pt>
+<image/forward4_2.png, id=87, 449.68pt x 337.26pt>
 File: image/forward4_2.png Graphic file (type png)
  <use image/forward4_2.png>
-Package pdftex.def Info: image/forward4_2.png used on input line 119.
+Package pdftex.def Info: image/forward4_2.png used on input line 141.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/forward5_2.png, id=84, 449.68pt x 337.26pt>
+<image/forward5_2.png, id=88, 449.68pt x 337.26pt>
 File: image/forward5_2.png Graphic file (type png)
  <use image/forward5_2.png>
-Package pdftex.def Info: image/forward5_2.png used on input line 126.
+Package pdftex.def Info: image/forward5_2.png used on input line 148.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-[13 <./image/backward1.png (PNG copy)> <./image/backward2.png (PNG copy)> <./im
-age/backward3.png (PNG copy)> <./image/backward4.png (PNG copy)> <./image/backw
-ard5.png (PNG copy)>] <image/backward1_2.png, id=89, 449.68pt x 337.26pt>
+[14 <./image/forward1_2.png (PNG copy)> <./image/forward2_2.png (PNG copy)> <./
+image/forward3_2.png (PNG copy)> <./image/forward4_2.png (PNG copy)> <./image/f
+orward5_2.png (PNG copy)>] <image/backward1_2.png, id=92, 449.68pt x 337.26pt>
 File: image/backward1_2.png Graphic file (type png)
 
 <use image/backward1_2.png>
-Package pdftex.def Info: image/backward1_2.png used on input line 144.
+Package pdftex.def Info: image/backward1_2.png used on input line 174.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/backward2_2.png, id=90, 449.68pt x 337.26pt>
+<image/backward2_2.png, id=93, 449.68pt x 337.26pt>
 File: image/backward2_2.png Graphic file (type png)
 
 <use image/backward2_2.png>
-Package pdftex.def Info: image/backward2_2.png used on input line 150.
+Package pdftex.def Info: image/backward2_2.png used on input line 180.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/backward3_2.png, id=91, 449.68pt x 337.26pt>
+<image/backward3_2.png, id=94, 449.68pt x 337.26pt>
 File: image/backward3_2.png Graphic file (type png)
 
 <use image/backward3_2.png>
-Package pdftex.def Info: image/backward3_2.png used on input line 157.
+Package pdftex.def Info: image/backward3_2.png used on input line 187.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/backward4_2.png, id=92, 449.68pt x 337.26pt>
+<image/backward4_2.png, id=95, 449.68pt x 337.26pt>
 File: image/backward4_2.png Graphic file (type png)
 
 <use image/backward4_2.png>
-Package pdftex.def Info: image/backward4_2.png used on input line 163.
+Package pdftex.def Info: image/backward4_2.png used on input line 193.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/backward5_2.png, id=93, 449.68pt x 337.26pt>
+<image/backward5_2.png, id=96, 449.68pt x 337.26pt>
 File: image/backward5_2.png Graphic file (type png)
 
 <use image/backward5_2.png>
-Package pdftex.def Info: image/backward5_2.png used on input line 170.
+Package pdftex.def Info: image/backward5_2.png used on input line 200.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
- [14 <./image/forward1_2.png (PNG copy)> <./image/forward2_2.png (PNG copy)> <.
-/image/forward3_2.png (PNG copy)> <./image/forward4_2.png (PNG copy)> <./image/
-forward5_2.png (PNG copy)>] [15 <./image/backward1_2.png (PNG copy)> <./image/b
-ackward2_2.png (PNG copy)> <./image/backward3_2.png (PNG copy)> <./image/backwa
-rd4_2.png (PNG copy)> <./image/backward5_2.png (PNG copy)>] (./predicao/gera_da
-dos.m) (./predicao/resolve_sistema_k_folds.m
-[16]) (./predicao/numberNeuronsMLP.m [17])
-<image/mlp_50_iterations.png, id=107, 449.68pt x 337.26pt>
+ [15 <./image/backward1_2.png (PNG copy)> <./image/backward2_2.png (PNG copy)> 
+<./image/backward3_2.png (PNG copy)> <./image/backward4_2.png (PNG copy)> <./im
+age/backward5_2.png (PNG copy)>]
+(./predicao/gera_dados.m) (./predicao/resolve_sistema_k_folds.m [16])
+(./predicao/numberNeuronsMLP.m [17]) [18]
+Overfull \hbox (1.33765pt too wide) in paragraph at lines 229--234
+[][]\OT1/cmr/m/n/12 Resultados ob-ti-dos para di-ver-sos va-lo-res do n^^Sumero
+ de itera^^Xc~oes do al-go-ritmo oti-mi-za-dor. Destaca-
+ []
+
+<image/mlp_50_iterations.png, id=110, 449.68pt x 337.26pt>
 File: image/mlp_50_iterations.png Graphic file (type png)
 
 <use image/mlp_50_iterations.png>
-Package pdftex.def Info: image/mlp_50_iterations.png used on input line 203.
+Package pdftex.def Info: image/mlp_50_iterations.png used on input line 241.
 (pdftex.def)             Requested size: 169.0103pt x 126.75522pt.
 
-<image/mlp_100_iterations.png, id=108, 449.68pt x 337.26pt>
+<image/mlp_100_iterations.png, id=111, 449.68pt x 337.26pt>
 File: image/mlp_100_iterations.png Graphic file (type png)
 
 <use image/mlp_100_iterations.png>
-Package pdftex.def Info: image/mlp_100_iterations.png used on input line 208.
+Package pdftex.def Info: image/mlp_100_iterations.png used on input line 246.
 (pdftex.def)             Requested size: 169.0103pt x 126.75522pt.
 
-<image/mlp_150_iterations.png, id=109, 449.68pt x 337.26pt>
+<image/mlp_150_iterations.png, id=112, 449.68pt x 337.26pt>
 File: image/mlp_150_iterations.png Graphic file (type png)
 
 <use image/mlp_150_iterations.png>
-Package pdftex.def Info: image/mlp_150_iterations.png used on input line 213.
+Package pdftex.def Info: image/mlp_150_iterations.png used on input line 251.
 (pdftex.def)             Requested size: 169.0103pt x 126.75522pt.
 
-<image/mlp_200_iterations.png, id=110, 449.68pt x 337.26pt>
+<image/mlp_200_iterations.png, id=113, 449.68pt x 337.26pt>
 File: image/mlp_200_iterations.png Graphic file (type png)
 
 <use image/mlp_200_iterations.png>
-Package pdftex.def Info: image/mlp_200_iterations.png used on input line 219.
+Package pdftex.def Info: image/mlp_200_iterations.png used on input line 257.
 (pdftex.def)             Requested size: 169.0103pt x 126.75522pt.
 
-<image/mlp_300_iterations.png, id=111, 449.68pt x 337.26pt>
+<image/mlp_300_iterations.png, id=114, 449.68pt x 337.26pt>
 File: image/mlp_300_iterations.png Graphic file (type png)
 
 <use image/mlp_300_iterations.png>
-Package pdftex.def Info: image/mlp_300_iterations.png used on input line 224.
+Package pdftex.def Info: image/mlp_300_iterations.png used on input line 262.
 (pdftex.def)             Requested size: 169.0103pt x 126.75522pt.
 
-<image/mlp_400_iterations.png, id=112, 449.68pt x 337.26pt>
+<image/mlp_400_iterations.png, id=115, 449.68pt x 337.26pt>
 File: image/mlp_400_iterations.png Graphic file (type png)
 
 <use image/mlp_400_iterations.png>
-Package pdftex.def Info: image/mlp_400_iterations.png used on input line 229.
+Package pdftex.def Info: image/mlp_400_iterations.png used on input line 267.
 (pdftex.def)             Requested size: 169.0103pt x 126.75522pt.
 
-<image/mlp_500_iterations.png, id=113, 449.68pt x 337.26pt>
+<image/mlp_500_iterations.png, id=116, 449.68pt x 337.26pt>
 File: image/mlp_500_iterations.png Graphic file (type png)
 
 <use image/mlp_500_iterations.png>
-Package pdftex.def Info: image/mlp_500_iterations.png used on input line 235.
+Package pdftex.def Info: image/mlp_500_iterations.png used on input line 273.
 (pdftex.def)             Requested size: 169.0103pt x 126.75522pt.
 
-<image/mlp_600_iterations.png, id=114, 449.68pt x 337.26pt>
+<image/mlp_600_iterations.png, id=117, 449.68pt x 337.26pt>
 File: image/mlp_600_iterations.png Graphic file (type png)
 
 <use image/mlp_600_iterations.png>
-Package pdftex.def Info: image/mlp_600_iterations.png used on input line 240.
+Package pdftex.def Info: image/mlp_600_iterations.png used on input line 278.
 (pdftex.def)             Requested size: 169.0103pt x 126.75522pt.
 
-<image/mlp_700_iterations.png, id=115, 449.68pt x 337.26pt>
+<image/mlp_700_iterations.png, id=118, 449.68pt x 337.26pt>
 File: image/mlp_700_iterations.png Graphic file (type png)
 
 <use image/mlp_700_iterations.png>
-Package pdftex.def Info: image/mlp_700_iterations.png used on input line 245.
+Package pdftex.def Info: image/mlp_700_iterations.png used on input line 283.
 (pdftex.def)             Requested size: 169.0103pt x 126.75522pt.
 
-<image/mlp_800_iterations.png, id=116, 449.68pt x 337.26pt>
+<image/mlp_800_iterations.png, id=119, 449.68pt x 337.26pt>
 File: image/mlp_800_iterations.png Graphic file (type png)
 
 <use image/mlp_800_iterations.png>
-Package pdftex.def Info: image/mlp_800_iterations.png used on input line 251.
+Package pdftex.def Info: image/mlp_800_iterations.png used on input line 289.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/mlp_900_iterations.png, id=117, 449.68pt x 337.26pt>
+<image/mlp_900_iterations.png, id=120, 449.68pt x 337.26pt>
 File: image/mlp_900_iterations.png Graphic file (type png)
 
 <use image/mlp_900_iterations.png>
-Package pdftex.def Info: image/mlp_900_iterations.png used on input line 256.
+Package pdftex.def Info: image/mlp_900_iterations.png used on input line 294.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
- [18]) [19 <./image/mlp_50_iterations.png (PNG copy)> <./image/mlp_100_iteratio
-ns.png (PNG copy)> <./image/mlp_150_iterations.png (PNG copy)> <./image/mlp_200
-_iterations.png (PNG copy)> <./image/mlp_300_iterations.png (PNG copy)> <./imag
-e/mlp_400_iterations.png (PNG copy)> <./image/mlp_500_iterations.png (PNG copy)
-> <./image/mlp_600_iterations.png (PNG copy)> <./image/mlp_700_iterations.png (
-PNG copy)> <./image/mlp_800_iterations.png (PNG copy)> <./image/mlp_900_iterati
-ons.png (PNG copy)>] (./efc1.aux) ) 
+) [19 <./image/mlp_50_iterations.png (PNG copy)> <./image/mlp_100_iterations.pn
+g (PNG copy)> <./image/mlp_150_iterations.png (PNG copy)> <./image/mlp_200_iter
+ations.png (PNG copy)> <./image/mlp_300_iterations.png (PNG copy)> <./image/mlp
+_400_iterations.png (PNG copy)> <./image/mlp_500_iterations.png (PNG copy)> <./
+image/mlp_600_iterations.png (PNG copy)> <./image/mlp_700_iterations.png (PNG c
+opy)> <./image/mlp_800_iterations.png (PNG copy)> <./image/mlp_900_iterations.p
+ng (PNG copy)>] (./efc1.aux) ) 
 Here is how much of TeX's memory you used:
- 7547 strings out of 493089
- 105966 string characters out of 6140694
- 375597 words of memory out of 5000000
- 10814 multiletter control sequences out of 15000+600000
+ 7554 strings out of 493089
+ 106063 string characters out of 6140694
+ 371636 words of memory out of 5000000
+ 10818 multiletter control sequences out of 15000+600000
  21977 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,22n,41p,335b,1700s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/base/
-8r.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/s
-hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.
-pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmmib10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cme
-xtra/cmmib8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
-fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/uc
-rr8a.pfb>
-Output written on efc1.pdf (19 pages, 567445 bytes).
+{/usr/share/texmf-dist/fonts/enc/dvips/base/8r.en
+c}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmmib10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cmextra/
+cmmib8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
+r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/public/ams
+fonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.
+pfb>
+Output written on efc1.pdf (19 pages, 572461 bytes).
 PDF statistics:
  196 PDF objects out of 1000 (max. 8388607)
  111 compressed objects within 2 object streams

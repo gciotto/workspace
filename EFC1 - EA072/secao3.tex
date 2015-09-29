@@ -66,7 +66,7 @@ Para esta etapa, define-se \(M = 5\) a dimensão do espaço de entrada (consulta
 seção \ref{sec:corr}) e \(R = 1\), a de saída. Em outras palavras, utilizaremos
 dados de 5 semanas anteriores para determinar o resultado da 'semana seguinte'. As funções
 utilizadas para a construção da série e nos cálculos dos preditores encontram-se, respectivamente, nos
-\textit{listings} \ref{lst:geracao} e \ref{lst:preditor} na seção
+programas \ref{lst:geracao} e \ref{lst:preditor} na seção
 \textbf{Anexos} no fim deste documento.
 
 \vspace{12pt}
@@ -225,4 +225,34 @@ apresentam comportamentos definidos, isto é, os erros para diferentes valores d
 \vspace{12pt}
 
 Os demais resultados para outros valores de \(i\) e \(n\) podem ser observados
-na seção \textbf{Anexos}.
+na figura \ref{fig:iens} na seção \textbf{Anexos}. 
+
+\subsection{Análise dos resultados dos preditores e MLPs}
+\label{sec:comparacao}
+
+A pior performance entre os três preditores implementados nesta lista foi a do
+\textit{preditor linear não regularizado}, para qual só foi utilizado o conjunto
+de trinamento para o cálculo do erro quadrático médio, que foi 0.2500. Esse resultado era
+perfeitamente esperado, já que, uma vez o conjunto de validação não foi
+utilizado, a capacidade de generalização do preditor é comprometido. 
+
+\vspace{12pt}
+
+Em segundo lugar, destaca-se \textit{preditor linear regularizado}, cujo erro
+quadrático médio vale 0.15602. A introdução de um parâmetro \(c\) adicional e a
+sua determinação ótima juntamente ao conjunto de validação provaram que o
+desempenho obtido pode ser melhorado de maneira significativa, visto que o
+modelo linear mantem-se o mesmo. Isso significa que nesta oportunidade,
+observa-se uma maior flexibilidade do preditor a todos os dados.
+
+\vspace{12pt}
+
+Enfim, para o caso das MLPs, obtem-se um erro médio quadrático de validação de
+0.1356, para \(i=1000\) e \(n=5\). É necessário dizer que este resultado foi
+conseguido com base em uma quantidade de processamento muito superior aos dois
+casos precedentes, uma vez que, no total, foram treinadas
+\(10*\mathbf{card}(n)*\mathbf{card}(i) = 10*15*12 = 1800\) MLPs (uma para cada
+configuração das \textit{folds}, cada valor de \(n\) e \(i\)). Foram utilizados
+conjuntos de validação e teste para otimizar ainda mais a adequação da rede aos
+dados. A rede neural é, portanto, a melhor opção para predizer a série temporal
+da dengue em São Paulo.
