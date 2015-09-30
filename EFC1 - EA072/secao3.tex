@@ -79,7 +79,7 @@ melhor valor do parâmetro \(c\). Neste caso, adota-se \(k=10\).
 A resolução de \(\overrightarrow{b} = \left( A^T A \right) A^T
 Y\) utilizando apenas o conjunto de treinamento produz o vetor, cujos
 coeficientes encontram-se na tabela abaixo, e um erro quadrático médio de
-0.2500.
+\textbf{0.2500}.
 
 \[
 \overrightarrow{b}_{nreg}^T = \begin{bmatrix}
@@ -108,7 +108,7 @@ execuções do programa (uma execução para cada uma das pastas de validação)
 	\FloatBarrier 
 	
 	Ressalta-se a presença de um mínimo local, para \(c_1 = 2^{-1} =
-	0.5\), valendo \(0.15602\). Esse erro é inferior a aquele obtido
+	0.5\), valendo \textbf{0.15602}. Esse erro é inferior a aquele obtido
 	ao caso não regularizado, já que o preditor obtido
 	neste caso adapta-se melhor a todo conjunto dos dados e não somente a aqueles
 	que só foram usados no treinamento.
@@ -151,6 +151,7 @@ uma grande variação entre si, isto é, os coeficientes do modelo autoregressiv
 que produzem o menor erro médio possuem um comportamento bem definido.
 
 \subsection{Síntese de uma rede neural MLP}
+\label{sec:mlp}
 
 Os resultados contidos nas seções \ref{sec:iteracoes} e \ref{sec:neuronios}
 foram obitdos do programa \texttt{numberNeuronsMLP.m}, contido no trecho de
@@ -184,7 +185,7 @@ todos os dados e, assim, o erro para dados novos não levados em consideração
 (como aqueles do conjunto de teste) não se distanciará fortemente do erro de
 validação. Sendo assim, utilizaremos o valor que possui o maior custo benefício
 entre os dois erros, isto é, \(i = 1000\), que produz um erro médio de validação
-igual a 0.1588 e um erro médio de teste valendo 0.1813.
+igual a \textbf{0.1588} e um erro médio de teste valendo \textbf{0.1813}.
 
 \begin{figure}[H]
 			\centering
@@ -215,7 +216,7 @@ gráfico da figura \ref{fig:iter1000}.
 	\FloatBarrier
 	
 O melhor custo benefício entre os dois erros é, neste caso \(n = 5\),
-apresentando erro médio de validação de 0.1356 e erro médio de teste de 0.1671.
+apresentando erro médio de validação de \textbf{0.1356} e erro médio de teste de \textbf{0.1671}.
 Destaca-se que, para \(n=7\), temos o valor mínimo do erro de validação, mas, ao
 mesmo tempo, um erro relacionado ao teste muito elevado. Por esta rezão, este
 número de neurônios não foi escolhido.  Observa-se também que as duas curvas não
@@ -227,28 +228,73 @@ apresentam comportamentos definidos, isto é, os erros para diferentes valores d
 Os demais resultados para outros valores de \(i\) e \(n\) podem ser observados
 na figura \ref{fig:iens} na seção \textbf{Anexos}. 
 
-\subsection{Análise dos resultados dos preditores e MLPs}
+
+\subsection{Síntese da Máquina de Aprendizado Máximo - \textit{ELM}}
+\label{sec:elm}
+
+Neste exercício, adotaremos uma \textit{ELM} com apenas uma camada
+intermediária com um número de neurônios que determinaremos a seguir. Para tal,
+utilizamos o programa \ref{lst:elm}, presente no fim deste documento na seção
+\textbf{Anexos}. Neste trecho de código, iteramos o número de neurônios no
+conjunto  \( \left\{ 100, 150, 250, 400, 500, 1000  \right\} \) e o parâmetro
+regularizador \(c\) e, obtemos um gráfico da média do erro quadrático médio de
+validação das 10 execuções (uma para cada \textit{fold}) para valor do número
+de neurônios utilizado.
+
+\vspace{12pt}
+
+Após a execução no ambiente MATLAB, encontrou-se que o menor erro quadrático
+médio junto ao conjunto de validação foi \textbf{0.3036}, referente a \(N =
+400\) neurônios e \(c=2^{-6}=0.015625\). A figura a seguir mostra o resultado da
+execução nestas configurações:
+
+	\begin{figure}[H]
+			\centering
+			  \includegraphics[width=0.650\textwidth]{image/elm_400_neurons}
+			  \caption{Erro quadrático médio de validação em função de \(c\),
+			  para \(N=400\).}
+			  \label{fig:elm400}
+	\end{figure}
+	
+	\FloatBarrier
+	
+Percebe-se que o erro cresce à medida que \(c\) se aproxima de 0 e depois se
+estabiliza para c tendendo a infinito.  Os resultados das demais execuções
+encontram-se na figura \ref{fig:elms} na seção \textbf{Anexos}.
+
+\subsection{Análise dos resultados dos preditores lineares, MLPs e ELMs}
 \label{sec:comparacao}
 
-A pior performance entre os três preditores implementados nesta lista foi a do
-\textit{preditor linear não regularizado}, para qual só foi utilizado o conjunto
-de trinamento para o cálculo do erro quadrático médio, que foi 0.2500. Esse resultado era
-perfeitamente esperado, já que, uma vez o conjunto de validação não foi
-utilizado, a capacidade de generalização do preditor é comprometido. 
+A pior performance entre os quatro preditores implementados nesta lista foi a
+do \textit{ELM}, que obteve um erro quadrático médio de \textbf{0.3036}. Tal
+resultado é um tanto quanto surpreendente, já que esse desempenho é inferior a
+aquele dos preditores lineares, fato este que não era esperado.  Possíveis
+explicações para este fato são a quantidade insuficiente de camadas utilizadas,
+a inicialização dos pesos sinápticos da camada intermediária, que, foi neste
+caso, determinada aleatoriamente segundo uma lei normal de média 0 e variância
+1, ou algum erro eventual no programa \ref{lst:elm}.
+
+\vspace{12pt}
+
+O terceiro lugar, \textit{preditor linear não regularizado}, para qual só foi
+utilizado o conjunto de treinamento para o cálculo do erro quadrático médio,
+obteve um erro de \textbf{0.2500}. Uma vez o conjunto de validação não foi
+utilizado, a capacidade de generalização do preditor é comprometido e, assim, o
+preditor apresenta um erro relativamente alto.
 
 \vspace{12pt}
 
 Em segundo lugar, destaca-se \textit{preditor linear regularizado}, cujo erro
-quadrático médio vale 0.15602. A introdução de um parâmetro \(c\) adicional e a
+quadrático médio vale \textbf{0.15602}. A introdução de um parâmetro \(c\) adicional e a
 sua determinação ótima juntamente ao conjunto de validação provaram que o
 desempenho obtido pode ser melhorado de maneira significativa, visto que o
 modelo linear mantem-se o mesmo. Isso significa que nesta oportunidade,
 observa-se uma maior flexibilidade do preditor a todos os dados.
 
-\vspace{12pt}
+\vspace{12pt}  
 
 Enfim, para o caso das MLPs, obtem-se um erro médio quadrático de validação de
-0.1356, para \(i=1000\) e \(n=5\). É necessário dizer que este resultado foi
+\textbf{0.1356}, para \(i=1000\) e \(n=5\). É necessário dizer que este resultado foi
 conseguido com base em uma quantidade de processamento muito superior aos dois
 casos precedentes, uma vez que, no total, foram treinadas
 \(10*\mathbf{card}(n)*\mathbf{card}(i) = 10*15*12 = 1800\) MLPs (uma para cada

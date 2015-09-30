@@ -2,6 +2,8 @@
 %=========================== PACKAGES =============================%
 
 \usepackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{00A0}{ }
+
 \usepackage[hmargin=1.5cm,vmargin=1.5cm]{geometry}
 \usepackage[brazil]{babel}
 
@@ -17,7 +19,7 @@
 \usepackage{bm}
 \usepackage{amsfonts}
 
-
+\usepackage{hyperref}
 
 \usepackage{listings}
 \renewcommand\lstlistingname{Programa}
@@ -56,12 +58,14 @@
 \author{Gustavo Ciotto Pinton}
 
 \begin{document}
- 
-{\large 
-    \centerline{\textbf{Exercício de Fixação de Conceitos 1}}
-    \centerline{Gustavo Ciotto Pinton - 117136}
-    \centerline{EA072 - Inteligência Artificial em Aplicações Industriais}
-}
+
+\input{cover}
+%  
+% {\large 
+%     \centerline{\textbf{Exercício de Fixação de Conceitos 1}}
+%     \centerline{Gustavo Ciotto Pinton - 117136}
+%     \centerline{EA072 - Inteligência Artificial em Aplicações Industriais}
+% }
 
 \input{secao2}
 
