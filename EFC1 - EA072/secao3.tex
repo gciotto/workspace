@@ -17,7 +17,7 @@
 	X_i = \frac{V_i - \hat{\mu}}{\hat{\sigma}}
 	\end{equation}
 	
-	em que \(\hat{\mu}\) é a média de todas as entradas (calcula através de
+	em que \(\hat{\mu}\) é a média de todas as entradas (calculada através de
 	\texttt{mean(dengue\_SP)}) e \(\hat{\sigma}\) é o estimador do desvio padrão
 	(calculado por \texttt{std(dengue\_SP)}). Obtem-se, assim, um novo vetor cuja
 	média e variância valem, respectivamente, \(1.8288\times10^{-16}\) e 1. A
@@ -40,7 +40,7 @@
 
 A fim de obter um resultado mais representativo nos preditores a serem
 realizados, aplica-se um filtro de correlações nas 20 variáveis que inicialmente
-foram propostas para determinar a precvisão do número de casos de dengue para a
+foram propostas para determinar a previsão do número de casos de dengue para a
 próxima semana. Para isso, usamos o programa \texttt{calc\_corr2.m},
 disponibilizado pelo professor. Obtem-se o gráfico mostrado na figura
 \ref{fig:corr_variavel} a seguir:
@@ -95,8 +95,9 @@ cross-validation} permite a adequação mais correta dos dados de entrada aos de
 saída, conforme observado em sala de aula. A execução do programa
 \texttt{resolve\_sistema\_k\_folds.m} da seção \textbf{Anexos} gera o gráfico,
 em escala semi logarítmica, contido na figura \ref{fig:pred.regula}, que
-relaciona \(c\) com a média do erro quadrático médio em cada uma das 10
-execuções do programa (uma execução para cada uma das pastas de validação).
+relaciona \(c\) com a média do erro quadrático médio junto ao conjunto de
+validação em cada uma das 10 execuções do programa (uma execução para cada uma
+das pastas de validação).
 
 	\begin{figure}[H]
 	  \centering
@@ -154,7 +155,7 @@ que produzem o menor erro médio possuem um comportamento bem definido.
 \label{sec:mlp}
 
 Os resultados contidos nas seções \ref{sec:iteracoes} e \ref{sec:neuronios}
-foram obitdos do programa \texttt{numberNeuronsMLP.m}, contido no trecho de
+foram obtidos do programa \texttt{numberNeuronsMLP.m}, contido no trecho de
 código \ref{lst:mlp} na seção \textbf{Anexos} no fim deste documento. Em poucas
 palavras, este programa automatiza o processo de treinamento de análise dos
 resultados de uma rede MLP para diferentes quantidades de neurônios e iterações.
@@ -176,8 +177,8 @@ sobre os resultados.
 \label{sec:iteracoes}
 
 A figura \ref{fig:avg_iter} mostra um gráfico que relaciona o desempenho médio
-das MLPs com o número de iterações. Observa-se que os comportamentos dos erros
-de teste e de validação são similiares, isto é, quando uma apresenta um valor
+das MLPs (treinadas para cada valor de \(n\)) com o número de iterações.
+Observa-se que os comportamentos dos erros de teste e de validação são similiares, isto é, quando uma apresenta um valor
 elevado, a outra também apresentará. Esta afirmação explica-se pela capacidade
 de generalização das MLPs: se uma rede é treinada de forma que o conjunto de
 validação seja utilizado, é possível atingir um maior grau de flexibilidade a
@@ -259,7 +260,7 @@ execução nestas configurações:
 	\FloatBarrier
 	
 Percebe-se que o erro cresce à medida que \(c\) se aproxima de 0 e depois se
-estabiliza para c tendendo a infinito.  Os resultados das demais execuções
+estabiliza para \(c\) tendendo a infinito.  Os resultados das demais execuções
 encontram-se na figura \ref{fig:elms} na seção \textbf{Anexos}.
 
 \subsection{Análise dos resultados dos preditores lineares, MLPs e ELMs}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  30 SEP 2015 12:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  30 SEP 2015 21:37
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -714,11 +714,11 @@ File: image/LogoUnicamp.png Graphic file (type png)
 
 <use image/LogoUnicamp.png>
 Package pdftex.def Info: image/LogoUnicamp.png used on input line 7.
-(pdftex.def)             Requested size: 96.35829pt x 96.35829pt.
+(pdftex.def)             Requested size: 86.72025pt x 86.72025pt.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 23.
+(babel)             in language  on input line 22.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 23.
+(babel)             in language  on input line 22.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./image/LogoUnicamp.png>])
@@ -739,87 +739,87 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: image/filtro_lin.png Graphic file (type png)
 
 <use image/filtro_lin.png>
-Package pdftex.def Info: image/filtro_lin.png used on input line 85.
+Package pdftex.def Info: image/filtro_lin.png used on input line 90.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
 
 <image/filtro_nlin.png, id=83, 421.575pt x 316.18124pt>
 File: image/filtro_nlin.png Graphic file (type png)
 
 <use image/filtro_nlin.png>
-Package pdftex.def Info: image/filtro_nlin.png used on input line 91.
+Package pdftex.def Info: image/filtro_nlin.png used on input line 96.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 100.
+(babel)             in language  on input line 105.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 100.
+(babel)             in language  on input line 105.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.100 			\FloatBarrier
+l.105 			\FloatBarrier
                        [1]
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 219.
+(babel)             in language  on input line 224.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 219.
+(babel)             in language  on input line 224.
  [2 <./image/filtro_lin.png (PNG copy)> <./image/filtro_nlin.png (PNG copy)>]
-Overfull \hbox (1.71165pt too wide) in paragraph at lines 222--227
+Overfull \hbox (1.71165pt too wide) in paragraph at lines 227--232
 [][]\OT1/cmr/m/n/12 Considerando so-mente as pri-mei-ras cinco vari^^Saveis se-
 le-ci-o-na-das em cada execu^^Xc~ao, percebe-
  []
 
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 347.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 352.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 363.
+(babel)             in language  on input line 368.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 363.
+(babel)             in language  on input line 368.
  [3]
-Overfull \hbox (0.94453pt too wide) in paragraph at lines 364--370
+Overfull \hbox (0.94453pt too wide) in paragraph at lines 369--375
 \OT1/cmr/m/n/12 sa^^S^^Pda pra-ti-ca-mente nu-las (os re-sul-ta-dos de \OT1/pcr
 /m/n/12 corr (X(:,21), S) \OT1/cmr/m/n/12 ... \OT1/pcr/m/n/12 corr (X(:,25),
  []
 
-<image/filtro_lin2.png, id=142, 449.68pt x 337.26pt>
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 456.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 456.
+[4] <image/filtro_lin2.png, id=155, 449.68pt x 337.26pt>
 File: image/filtro_lin2.png Graphic file (type png)
 
 <use image/filtro_lin2.png>
-Package pdftex.def Info: image/filtro_lin2.png used on input line 456.
+Package pdftex.def Info: image/filtro_lin2.png used on input line 463.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
 
-<image/filtro_nlin2.png, id=143, 449.68pt x 337.26pt>
+<image/filtro_nlin2.png, id=156, 449.68pt x 337.26pt>
 File: image/filtro_nlin2.png Graphic file (type png)
 
 <use image/filtro_nlin2.png>
-Package pdftex.def Info: image/filtro_nlin2.png used on input line 462.
+Package pdftex.def Info: image/filtro_nlin2.png used on input line 469.
 (pdftex.def)             Requested size: 256.07481pt x 192.06522pt.
-Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 469.
-Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 469.
- [4]
-Overfull \hbox (11.24776pt too wide) in paragraph at lines 490--505
+
+Overfull \hbox (15.72127pt too wide) in paragraph at lines 497--512
  [][][] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 612.
+(babel)             in language  on input line 619.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 612.
+(babel)             in language  on input line 619.
 [5 <./image/filtro_lin2.png (PNG copy)> <./image/filtro_nlin2.png (PNG copy)>])
 (./secao3.tex
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 5.
- <image/hist_normalizados.png, id=176, 580.569pt x 415.954pt>
+ <image/hist_normalizados.png, id=175, 580.569pt x 415.954pt>
 File: image/hist_normalizados.png Graphic file (type png)
 
 <use image/hist_normalizados.png>
@@ -833,7 +833,7 @@ Package babel Info: Redefining portuges shorthand "|
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 38.
 
-<image/corr_variaveis_preditor.png, id=190, 521.95pt x 407.121pt>
+<image/corr_variaveis_preditor.png, id=189, 521.95pt x 407.121pt>
 File: image/corr_variaveis_preditor.png Graphic file (type png)
 
 <use image/corr_variaveis_preditor.png>
@@ -853,12 +853,12 @@ Package babel Info: Redefining portuges shorthand "|
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 91.
 
-<image/preditor_regularizado_k_folds.png, id=201, 740.366pt x 582.978pt>
+<image/preditor_regularizado_k_folds.png, id=200, 740.366pt x 582.978pt>
 File: image/preditor_regularizado_k_folds.png Graphic file (type png)
 
 <use image/preditor_regularizado_k_folds.png>
 Package pdftex.def Info: image/preditor_regularizado_k_folds.png used on input 
-line 103.
+line 104.
 (pdftex.def)             Requested size: 332.89412pt x 262.13307pt.
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 148.
@@ -866,58 +866,58 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 148.
  [8 <./image/preditor_regularizado_k_folds.png (PNG copy)>]
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 153.
+(babel)             in language  on input line 154.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 175.
+(babel)             in language  on input line 176.
 
-<image/mlp_average_iterations.png, id=213, 576.554pt x 409.53pt>
+<image/mlp_average_iterations.png, id=212, 576.554pt x 409.53pt>
 File: image/mlp_average_iterations.png Graphic file (type png)
 
 <use image/mlp_average_iterations.png>
 Package pdftex.def Info: image/mlp_average_iterations.png used on input line 19
-2.
+3.
 (pdftex.def)             Requested size: 332.89412pt x 236.46524pt.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 197.
+(babel)             in language  on input line 198.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 197.
+(babel)             in language  on input line 198.
  [9]
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 200.
+(babel)             in language  on input line 201.
 
-<image/mlp_1000_iterations.png, id=222, 449.68pt x 337.26pt>
+<image/mlp_1000_iterations.png, id=221, 449.68pt x 337.26pt>
 File: image/mlp_1000_iterations.png Graphic file (type png)
 
 <use image/mlp_1000_iterations.png>
-Package pdftex.def Info: image/mlp_1000_iterations.png used on input line 210.
+Package pdftex.def Info: image/mlp_1000_iterations.png used on input line 211.
 (pdftex.def)             Requested size: 332.89412pt x 249.6817pt.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 232.
+(babel)             in language  on input line 233.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 243.
+(babel)             in language  on input line 244.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 243.
+(babel)             in language  on input line 244.
  [10 <./image/mlp_average_iterations.png (PNG copy)> <./image/mlp_1000_iteratio
 ns.png (PNG copy)>]
-<image/elm_400_neurons.png, id=231, 578.16pt x 433.62pt>
+<image/elm_400_neurons.png, id=230, 578.16pt x 433.62pt>
 File: image/elm_400_neurons.png Graphic file (type png)
 
 <use image/elm_400_neurons.png>
-Package pdftex.def Info: image/elm_400_neurons.png used on input line 253.
+Package pdftex.def Info: image/elm_400_neurons.png used on input line 254.
 (pdftex.def)             Requested size: 332.89412pt x 249.667pt.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 265.
+(babel)             in language  on input line 266.
 
-Overfull \hbox (5.23425pt too wide) in paragraph at lines 287--293
+Overfull \hbox (5.23425pt too wide) in paragraph at lines 288--294
 [][]\OT1/cmr/m/n/12 Em se-gundo lu-gar, destaca-se \OT1/cmr/m/it/12 pre-di-tor 
 li-near re-gu-la-ri-zado\OT1/cmr/m/n/12 , cujo erro quadr^^Satico m^^Sedio vale
  \OT1/cmr/bx/n/12 0.15602\OT1/cmr/m/n/12 .
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 295.
+(babel)             in language  on input line 296.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 295.
+(babel)             in language  on input line 296.
 [11 <./image/elm_400_neurons.png (PNG copy)>]) (./conclusao.tex
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 1.
@@ -1292,7 +1292,7 @@ Here is how much of TeX's memory you used:
  14353 multiletter control sequences out of 15000+600000
  22643 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,22n,41p,476b,1876s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,22n,41p,338b,1876s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
@@ -1300,22 +1300,21 @@ cmbxti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
 /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8
-.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/sh
-are/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/share/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb>
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti1
-2.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></u
-sr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on efc1.pdf (27 pages, 729271 bytes).
+sfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib
+10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></
+usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols
+/msbm10.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on efc1.pdf (27 pages, 722905 bytes).
 PDF statistics:
- 986 PDF objects out of 1000 (max. 8388607)
- 878 compressed objects within 9 object streams
+ 983 PDF objects out of 1000 (max. 8388607)
+ 876 compressed objects within 9 object streams
  546 named destinations out of 1000 (max. 500000)
  364 words of extra memory for PDF output out of 10000 (max. 10000000)
 

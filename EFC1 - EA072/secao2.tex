@@ -66,7 +66,12 @@
 					\end{tabular}	    
 			    \end{table}    
 			    
-			    Em relação ao evento físico, conhece-se que a atividade das \textit{sunspots} possui um ciclo de aproximadade 11 anos.  O ponto de maior atividade durante o ciclo é chamado de \textit{solar maximum} e o ponto de menor atividade, \textit{solar minimum}. Este período de 11 anos também é observado para outros fenomênos solares e é ligado à variação no cam po magnético que altera a oplaridade durante ente período.
+			    Em relação ao evento físico, conhece-se que a atividade das
+			    \textit{sunspots} possui um ciclo de aproximadade 11 anos.  O ponto de
+			    maior atividade durante o ciclo é chamado de \textit{solar maximum} e o
+			    ponto de menor atividade, \textit{solar minimum}. Este período de 11
+			    anos também é observado para outros fenomênos solares e é ligado à
+			    variação no campo magnético que altera a polaridade durante ente período.
 
 			    
 			    \item Para o \textit{filtro linear}, as execuções de 
@@ -110,7 +115,7 @@
 				\vspace{12pt}
 				
 			Observa-se ainda que as variáveis 21 até 25 apresentam \(R_{linear}\) e
-			\(R_{nlinear}\) são muito inferiores em relação aos valores das outras varíaveis
+			\(R_{nlinear}\) muito inferiores em relação aos valores das outras varíaveis
 			e que a sua ordem de relevância é diferente: para o filtro \textit{linear} temos
 			a sequência 24, 21, 22, 25 e 23, enquanto que para o \textit{não linear} obtemos
 			22, 24, 25, 21 e 23.
@@ -400,8 +405,9 @@
 		  \textit{volatile acidity}, \textit{citric acid}, \textit{residual sugar},
 		  \textit{chlorides}, \textit{free sulfur dioxide}, \textit{total sulfur
 		  dioxide}, \textit{density}, \textit{pH}, \textit{sulphates} e
-		  \textit{alcohol}. A tabela abaixo mostra algumas características dessas
-		  propriedades.
+		  \textit{alcohol}. Foram considerados variações de vinhos tintos e brancos do
+		  vinho português \textit{Vinho Verde}. A tabela abaixo mostra algumas
+		  características dessas propriedades.
 		  
 		  \begin{table}[H]
 			    \centering
@@ -427,7 +433,8 @@
 				\end{tabular}	    
 		    \end{table} 
 		    
-		    Para a saída encontra-se:
+		    Para a saída, que mede o nível de qualidade de cada vinho, baseado em um
+		    teste sensitivo, encontra-se:
 		    
 		    \begin{table}[H]
 			    \centering
@@ -492,14 +499,14 @@
 				\hline
 				 & \multicolumn{16}{|c|}{Ordem} \\
 				\hhline{|=|=|=|=|=|=|=|=|=|=|=|=|=|=|=|=|=|} 
-				\(V_{lin}\) & 11 & 2 & 10 & 3 & 7 & 5 & 1 & 9 & 6 & 12 &
+				Linear & 11 & 2 & 10 & 3 & 7 & 5 & 1 & 9 & 6 & 12 &
 				16 & 8 & 4 & 13 & 14 & 15 \\ \hline 
 				
-				\(V_{nlin}\) &  11 & 2 & 10 & 7 & 3 & 5 & 1 & 6 & 9 & 4 
+				\textit{Não} linear &  11 & 2 & 10 & 7 & 3 & 5 & 1 & 6 & 9 & 4 
 				& 16 & 12 & 15 & 8 & 14 & 13 \\ \hline 
 				
 				\(\Delta\) & 0.01 & -0.12 & 0.26 & 0.07 & 0.13 & 0.2 &
-				0.11 & 0.31 & 0.18 & 0.16 & 0.46 & 0back.5 & 0.68 & 0.73 & 0.75 & 0.72 \\
+				0.11 & 0.31 & 0.18 & 0.16 & 0.46 & 0.5 & 0.68 & 0.73 & 0.75 & 0.72 \\
 				\hline
 				\end{tabular}	    
 		    \end{table} 
@@ -721,7 +728,7 @@
 		     
 		     Em relação à técnica de \textit{backward elimination}, as mesmas
 		     variáveis citadas no parágrafo anterior estiveram presentes, com exceção
-		     à 6, em que esteve ausente somente na execução 2. Foram selecionadas, em
+		     da 6, que esteve ausente somente na execução 2. Foram selecionadas, em
 		     média, um número maior de variáveis, 9, e um erro superior, 1.05262. As
 		     variáveis restantes foram escolhidas dentre as geradas aleatoriamente.
 		     
