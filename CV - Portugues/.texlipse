@@ -1,5 +1,5 @@
 #TeXlipse project settings
-#Wed Aug 05 13:06:08 BRT 2015
+#Wed Oct 07 17:57:24 BRT 2015
 markTmpDer=true
 builderNum=2
 outputDir=
@@ -8,7 +8,7 @@ bibrefDir=
 outputFormat=pdf
 tempDir=tmp
 mainTexFile=document.tex
-outputFile=document.pdf
+outputFile=CV_CIOTTO PINTON Gustavo.pdf
 langSpell=en
 markDer=true
 srcDir=

@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.8.5)  31 AUG 2015 16:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  7 OCT 2015 18:00
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
  %&-line parsing enabled.
 **document.tex
 (./document.tex
-LaTeX2e <2014/05/01>
+LaTeX2e <2015/01/01>
 Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (/usr/share/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
@@ -25,7 +25,7 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \bibindent=\dimen102
 )
 (/usr/share/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2014/04/30 v1.2b Input encoding file
+Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
 
@@ -301,7 +301,7 @@ Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 (/usr/share/texmf-dist/tex/latex/latexconfig/graphics.cfg
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
-Package graphics Info: Driver file: pdftex.def on input line 91.
+Package graphics Info: Driver file: pdftex.def on input line 94.
 
 (/usr/share/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
@@ -463,17 +463,17 @@ LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
 (Font)              scaled to size 9.49997pt on input line 53.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 68.
+(Font)              scaled to size 11.39996pt on input line 67.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 68.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 67.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 68.
+(Font)              scaled to size 11.39996pt on input line 67.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 70.
+(Font)              <7> on input line 69.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 70.
+(Font)              <5> on input line 69.
 
-Overfull \hbox (6.56516pt too wide) in paragraph at lines 70--88
+Overfull \hbox (6.56516pt too wide) in paragraph at lines 69--88
 [][][] 
  []
 
@@ -516,10 +516,10 @@ Overfull \hbox (1.16211pt too wide) in paragraph at lines 188--193
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./document.aux) ) 
 Here is how much of TeX's memory you used:
- 3012 strings out of 493109
- 40351 string characters out of 6140857
- 125475 words of memory out of 5000000
- 6432 multiletter control sequences out of 15000+600000
+ 3013 strings out of 493089
+ 40372 string characters out of 6140694
+ 125730 words of memory out of 5000000
+ 6453 multiletter control sequences out of 15000+600000
  16310 words of font info for 29 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,12n,33p,240b,260s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -529,7 +529,7 @@ ublic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uh
 vb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/shar
 e/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/t
 ype1/urw/helvetic/uhvro8a.pfb>
-Output written on document.pdf (1 page, 47087 bytes).
+Output written on document.pdf (1 page, 47121 bytes).
 PDF statistics:
  29 PDF objects out of 1000 (max. 8388607)
  20 compressed objects within 1 object stream
