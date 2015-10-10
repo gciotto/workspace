@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Sat Oct 10 12:26:30 BRT 2015
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=cover letter.tex
+outputFile=Cover letter - CIOTTO PINTON Gustavo.pdf
+langSpell=en
+markDer=true
+srcDir=
