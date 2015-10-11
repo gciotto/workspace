@@ -1,0 +1,7 @@
+# Um programa para IAS que soma 1 com 2
+.text:
+0000 01 01 D0 50 1E
+.data:
+001D 00 00 00 00 01
+001E 00 00 00 00 02
+
