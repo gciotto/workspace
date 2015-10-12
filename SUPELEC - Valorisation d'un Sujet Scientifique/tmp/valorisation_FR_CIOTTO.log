@@ -1,16 +1,16 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2014.9.18)  14 JAN 2015 17:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  12 OCT 2015 00:04
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
  %&-line parsing enabled.
 **valorisation_FR_CIOTTO.tex
 (./valorisation_FR_CIOTTO.tex
-LaTeX2e <2014/05/01>
-Babel <3.9k> and hyphenation patterns for 79 languages loaded.
+LaTeX2e <2015/01/01>
+Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (/usr/share/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -25,19 +25,19 @@ File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \bibindent=\dimen102
 )
 (/usr/share/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2014/04/30 v1.2b Input encoding file
+Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
 
 (/usr/share/texmf-dist/tex/latex/base/utf8.def
-File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
+File: utf8.def 2014/09/29 v1.1m UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
 (/usr/share/texmf-dist/tex/latex/base/t1enc.dfu
-File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+File: t1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00AB (decimal 171)
@@ -187,7 +187,7 @@ Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
 (/usr/share/texmf-dist/tex/latex/base/ot1enc.dfu
-File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+File: ot1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00B8 (decimal 184)
@@ -218,7 +218,7 @@ Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
 (/usr/share/texmf-dist/tex/latex/base/omsenc.dfu
-File: omsenc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+File: omsenc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
    defining Unicode char U+00B7 (decimal 183)
@@ -245,7 +245,7 @@ Now handling font encoding U ...
 Package: geometry 2010/09/12 v5.6 Page Geometry
 
 (/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
 )
 (/usr/share/texmf-dist/tex/generic/oberdiek/ifpdf.sty
@@ -273,13 +273,13 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@dimlist=\toks17
 )
 (/usr/share/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2014/03/24 3.9k The Babel package
+Package: babel 2014/09/25 3.9l The Babel package
 
 (/usr/share/texmf-dist/tex/generic/babel-french/frenchb.ldf
-Language: frenchb 2014/06/21 v3.1a French support from the babel system
+Language: frenchb 2015/05/31 v3.1f French support from the babel system
 
 (/usr/share/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2014/03/24 3.9k Babel common definitions
+File: babel.def 2014/09/25 3.9l Babel common definitions
 \babel@savecnt=\count90
 \U@D=\dimen111
 )
@@ -304,10 +304,10 @@ Package babel Info: Making ? an active character on input line 374.
 ))
 (/usr/share/texmf-dist/tex/latex/carlisle/scalefnt.sty)
 (/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
@@ -315,7 +315,7 @@ Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 (/usr/share/texmf-dist/tex/latex/latexconfig/graphics.cfg
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
-Package graphics Info: Driver file: pdftex.def on input line 91.
+Package graphics Info: Driver file: pdftex.def on input line 94.
 
 (/usr/share/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
@@ -458,8 +458,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 24.
  [1
 
-{/home/gciotto/.texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./images
-/LogoSupelec.jpg>]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/LogoSupelec.jpg>]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 39.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -474,10 +473,10 @@ Package pdftex.def Info: images/exemple2.png used on input line 150.
  [2 <./images/exemple2.png>] [3] [4] [5]
 (./valorisation_FR_CIOTTO.aux) ) 
 Here is how much of TeX's memory you used:
- 3230 strings out of 493108
- 44706 string characters out of 6140725
- 123527 words of memory out of 5000000
- 6663 multiletter control sequences out of 15000+600000
+ 3246 strings out of 493089
+ 45038 string characters out of 6140694
+ 124108 words of memory out of 5000000
+ 6700 multiletter control sequences out of 15000+600000
  7334 words of font info for 26 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  37i,6n,31p,248b,439s stack positions out of 5000i,500n,10000p,200000b,80000s
