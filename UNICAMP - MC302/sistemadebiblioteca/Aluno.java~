@@ -1,0 +1,29 @@
+package sistemadebiblioteca;
+
+import java.util.GregorianCalendar;
+
+
+public class Aluno extends Usuario {
+
+	public Aluno() {
+		super();
+		this.setCarga(7);
+	}
+	
+	public Aluno(String nome, int id){
+		super();
+		this.setNome(nome);
+		this.setId( id );
+		//aluno pode emprestar o livro por 15 dias
+		this.setCarga(7);
+		
+		
+	}
+	
+	
+	protected boolean isAluno(){
+		return true;
+	}
+ 
+}
+ 
