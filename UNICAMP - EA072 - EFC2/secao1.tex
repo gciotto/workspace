@@ -1,0 +1,86 @@
+\section{Síntese de controle PID}
+
+\begin {enumerate}
+  \item Antes de definirmos os operadores de mutação e \textit{crossover}, é
+  necessário diferenciarmos estes dois conceitos. Embora ambos ocorram em
+  organismos biológicos e sejam responsáveis pela alteração do genótipo de um
+  indivíduo, estes mecanismos ocorrem em diferentes etapas da vida do respectivo
+  organismo. O termo \textit{mutação} é utilizado para descrever o processo no
+  qual um alelo de um gene é \textbf{aleatoriamente} substituído ou modificado
+  por outro. Em termos matemáticos, sejam os índices \(r, \ldots, u\) as
+  posições que sofrerão mutação e que foram determinadas aleatoriamente. Cada
+  posição possui um probabalidade \(p_m\) de ser submetida a este processo. Ao
+  final da mutação, os alelos referentes a estes índices serão modificados, no
+  caso de uma codificação em ponto flutuante, segundo uma distribuição
+  \textit{uniforme} ou \textit{não uniforme}. No caso da \textit{não uniforme},
+  insere-se uma perturbação com distribuição \textit{normal} com média nula na
+  posição escolhida e desvio-padrão decrescente ao longo das gerações, o que
+  garante consequentemente um refinamento da solução à medida que nos
+  aproximamos de resultados ótimos. 
+  
+  O processo de \textit{crossover}, por sua vez, trata-se de um mecanismo de
+  recombinação genética de dois ou mais cromossomos. Para a codificação de
+  algoritmos evolutivos em que os cromossomos possuem valores em ponto
+  flutuante, destacam-se duas técnicas: o \textit{crossover} aritmético e o
+  uniforme. Para o primeiro, a partir dos cromossomos \(\textbf{x}\) e \(\textbf{y}\),
+  obtém-se uma combinção convexa dos valores dos genes de \(\textbf{x}\) e
+  \(\textbf{y}\), isto é, o cromossomo \(a\textbf{x} + (1-a)\textbf{y}\), em que
+  \(a \in [0, +1]\). Para o segundo, os genes dos cromossomos pais são
+  escolhidos com igual probabilidade para formar um cromossomo filho. Por
+  exemplo, se a probabilidade vale 0.5, então espera-se que o cromossomo
+  resultante seja composto por metade dos genes de \textbf{x} e metade de
+  \textbf{y}.
+  
+  Outra etapa importante para os algoritmos evolutivos é a seleção dos
+  indivíduos mais ``adaptados'' ao problema (que possuem maior função de
+  \textit{fitness}). Este processo deve garantir que os melhores indivíduos
+  persistam, mas não deve ser extremamente radical a fim de garantir uma
+  diversidade na população. Um exemplo de um operador de seleção é a técnica de
+  \textit{seleção por torneio}. Para selecionar \(N\) indivíduos, realizam-se
+  \(N\) torneios com \(p\) participantes, escolhidos aleatoriamente. Quanto mais
+  alto é \(p\), maior é a pressão seletiva, isto é, para um indivíduo ruim ser
+  escolhido ao menos em um torneio, é necessário que ele compita com \(p-1\)
+  indivíduos piores que ele (para \(p\) grande, a probabilidade deste fato
+  ocorrer é muito pequena). Cada torneio é vencido pelo indivíduo que apresenta maior
+  \textit{fitness}. No caso deste exercício, será realizado apenas um torneio,
+  que é composto por 3 indivíduos.
+
+  \item As constantes apresentadas na tabela \ref{tab:pid_constantes} a seguir
+  foram definidas no arquivo \texttt{prog\_PID.m}, disponibilizado pelo
+  professor.
+  
+  \begin{table}[h]
+	    \centering
+		\caption{\label{tab:pid_constantes} Constantes definidas em
+		\texttt{prog\_PID.m}}
+		\begin{tabular}{|c | c |}
+			\hline
+			\textbf{Atributos} & \textbf{Valor} \\	\hhline{|=|=|}
+			Tamanho da População & 100 \\ \hline 
+			Número máximo de Gerações & 50 \\ \hline 
+			Taxa de Mutação & 0.4 \\ \hline 			
+			Taxa de Crossover & 0.8 \\ \hline 			
+		\end{tabular}	    
+    \end{table} 
+    
+    Observa-se taxas de mutação e \textit{crossover} relativamente altas: para a
+    primeira, um alelo tem probalidade de 40\% de ser mutado, isto é, ele possui
+    aproximadamente a metade das chances de ser modificado. Em relação ao
+    tamanho da população e o número de gerações , 100 e 50 são
+    números suficientemente grandes para garantir, respectivamente,	 diversidade
+    entre os indivíduos e uma boa qualidade no resultado visto a quantidade de
+    recombinações entre os cromossomos que serão realizadas.
+    
+    A população inicial é obtida pelo comando \texttt{pop =
+    5*rand(tam\_pop,3);}, em que \texttt{rand} é uma função do MATLAB que gera
+    números aleatórios segundo uma distribuição uniforme e \texttt{tam\_pop}
+    vale 100. Será criada, portanto, uma matriz de 100 linhas, cada uma
+    representando um indivíduo, e 3 colunas, uma para cada constante a ser
+    determinada \(k_p\), \(k_d\) e \(k_i\).
+    
+    Finalmente, cada operador de \textit{crossover} é escolhido com 50\% de
+    probabilidade. Espera-se portanto que o operador aritmétido seja escolhido
+    em metade das oportunidades e o uniforme, também.
+    
+    \item 
+\end{enumerate}
