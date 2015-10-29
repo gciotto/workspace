@@ -1,39 +1,39 @@
 % Programa vinculado ao EFC2
-% EA072 - Intelig�ncia Artificial em Aplica��es Industriais
+% EA072 - Inteligencia Artificial em Aplicacoes Industriais
 % FEEC/Unicamp
 % Prof. Fernando J. Von Zuben
 % 07/10/2015
 clear all;
 close all;
-% Define o tamanho da popula��o [tam_pop], como um n�mero par
-tam_pop = 100;
-% Define as taxas de crossover e de muta��o
-pc = 0.8;
-pm = 0.4;
-% Define o intervalo de excurs�o das vari�veis
+% Define o tamanho da populacao [tam_pop], como um numero par
+tam_pop = 300;
+% Define as taxas de crossover e de mutacao
+pc = 0.9;
+pm = 0.6;
+% Define o intervalo de excursao das variaveis
 v_inf = 0.0;
 v_sup = 5.0;
-% Define o n�mero de gera��es
+% Define o numero de geracoes
 n_ger = 50;
-% Estruturas para preservar o melhor indiv�duo a cada gera��o e seu fitness
+% Estruturas para preservar o melhor individuo a cada geracao e seu fitness
 v_melhor_fitness = [];
 v_fitness_medio = [];
 v_melhor_ind = [];
-% Gera a popula��o inicial. Cada indiv�duo � uma linha da matriz [pop].
+% Gera a populacao inicial. Cada individuo a uma linha da matriz [pop].
 pop = 5*rand(tam_pop,3);
-% Avalia a popula��o inicial
+% Avalia a populacao inicial
 for i=1:tam_pop,
     kp = pop(i,1);
     kd = pop(i,2);
     ki = pop(i,3);
     S = stepinfo(planta(kp,kd,ki));
     [Gm,Pm,Wcg,Wcp] = margin(planta(kp,kd,ki));
-    fitness(i,1) = 100/(10*(S.RiseTime+1));
+    fitness(i,1) = 100/(10*(S.RiseTime+1)+((Pm-60)^2+1));
     if isnan(fitness(i,1)),
         fitness(i,1) = 0;
     end
 end
-% Loop para gerar a nova popula��o at� atingir um n�mero m�ximo de gera��es
+% Loop para gerar a nova populacao ate atingir um numero maximo de geracoes
 [melhor_fitness,melhor_ind] = max(fitness);
 v_melhor_fitness = [v_melhor_fitness;melhor_fitness];
 v_fitness_medio = [v_fitness_medio;mean(fitness)];
@@ -41,7 +41,7 @@ v_melhor_ind = [v_melhor_ind;pop(melhor_ind,:)];
 v_delta = [];
 for k = 1:n_ger,
     % Em lugar da roleta, adota-se torneio de 3, pois deve-se excluir os
-    % indiv�duos de fitness nulo e a implementa��o fica melhor
+    % individuos de fitness nulo e a implementacao fica melhor
     candidatos = [];
     for i=1:tam_pop,
         if fitness(i,1) > 0,
@@ -59,10 +59,10 @@ for k = 1:n_ger,
         [v_max,ind_max] = max(c_fitness);
         n_pop = [n_pop;pop(candidatos(torneio(ind_max,1),1),:)];
     end
-    % Aplica��o de crossover onde for escolhido
+    % Aplicacao de crossover onde for escolhido
     for j=1:(tam_pop/2),
         if rand(1,1) <= pc,
-            % 50% de chance de ocorrer o crossover aritm�tico
+            % 50% de chance de ocorrer o crossover aritmetico
             if rand(1,1) <= 0.5,
                 a = rand(1,1);
                 n_pop1 = a*n_pop(2*(j-1)+1,:)+(1-a)*n_pop(2*(j-1)+2,:);
@@ -85,7 +85,7 @@ for k = 1:n_ger,
             end
         end
     end
-    % Aplica��o de muta��o n�o-uniforme onde for escolhido
+    % Aplicacao de mutacao nao-uniforme onde for escolhido
     n_mut = round(tam_pop*3*pm);
     bits_mutados = randi([1 tam_pop*3],n_mut,1);
     for i=1:n_mut,
@@ -106,20 +106,20 @@ for k = 1:n_ger,
             n_pop(linha,coluna) = n_pop(linha,coluna) - delta;
         end
     end
-    % Avalia��o da nova popula��o
+    % Avaliacao da nova populacao
     for i=1:tam_pop,
         kp = n_pop(i,1);
         kd = n_pop(i,2);
         ki = n_pop(i,3);
         S = stepinfo(planta(kp,kd,ki));
         [Gm,Pm,Wcg,Wcp] = margin(planta(kp,kd,ki));
-        fitness(i,1) = 100/(10*(S.RiseTime+1));
+        fitness(i,1) = 100/(10*(S.RiseTime+1)+((Pm-60)^2+1));
         if isnan(fitness(i,1)),
             fitness(i,1) = 0;
         end
     end
-    % Preserva��o do melhor indiv�duo da gera��o anterior, se melhor que o
-    % melhor da nova gera��o
+    % Preservacao do melhor individuo da geracao anterior, se melhor que o
+    % melhor da nova geracao
     melhor_fitness1 = melhor_fitness;
     melhor_ind1 = melhor_ind;
     [melhor_fitness,melhor_ind] = max(fitness);
@@ -140,15 +140,15 @@ for k = 1:n_ger,
     figure(1);step(planta(kp,kd,ki));drawnow;
     S = stepinfo(planta(kp,kd,ki));
     [Gm,Pm,Wcg,Wcp] = margin(planta(kp,kd,ki));
-    disp(sprintf('Gera��o %d: T_sub = %g | T_acom = %g | Sobrs = %g | Margfase = %g',k,S.RiseTime,S.SettlingTime,S.Overshoot,Pm));
-    disp(sprintf('Gera��o %d: Os melhores valores encontrados foram: k_p = %g; k_d = %g; k_i = %g',k,kp,kd,ki));
-    disp(sprintf('Gera��o %d: Fitness deste melhor indiv�duo = %g',k,melhor_fitness));
+    disp(sprintf('Geracao %d: T_sub = %g | T_acom = %g | Sobrs = %g | Margfase = %g',k,S.RiseTime,S.SettlingTime,S.Overshoot,Pm));
+    disp(sprintf('Geracao %d: Os melhores valores encontrados foram: k_p = %g; k_d = %g; k_i = %g',k,kp,kd,ki));
+    disp(sprintf('Geracao %d: Fitness deste melhor individuo = %g',k,melhor_fitness));
 end
 figure(2);plot(v_melhor_fitness,'k');hold on;plot(v_fitness_medio,'r');hold off;
-title('Melhor fitness (preto) e fitness m�dio (vermelho) da popula��o ao longo das gera��es');
+title('Melhor fitness (preto) e fitness medio (vermelho) da populacao ao longo das geracoes');
 figure(3);plot(v_melhor_ind(:,1),'k');hold on;plot(v_melhor_ind(:,2),'r');plot(v_melhor_ind(:,3),'b');hold off;
-title('Evolu��o dos ganhos do controlador PID: k_p (preto) | k_d (vermelho) | k_i (azul)');
-xlabel('N�mero de gera��es');
+title('Evolucao dos ganhos do controlador PID: k_p (preto) | k_d (vermelho) | k_i (azul)');
+xlabel('Numero de geracoes');
 figure(4);plot(v_delta);
-title('Intensidade da muta��o n�o-uniforme ao longo das gera��es');
+title('Intensidade da mutacao nao-uniforme ao longo das geracoes');
 

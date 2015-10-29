@@ -1,0 +1,78 @@
+\section{Controle Nebuloso e Robótica Evolutiva}
+
+\setcounter{subsection}{-1}
+\subsection{Definição dos Consequentes }
+
+O primeiro passo no controle do robô é a definição dos consequentes das regras
+que serão levadas em conta. Considerando que o robô dispõe de 3 sensores
+(\(d_1\), \(d_2\) e \(d_3\)) e que as funções de pertinência associadas às
+medidas realizadas por eles estão representadas na seção 3 do enunciado, sugestões de consequentes estão
+representadas na tabela \ref{tab:consequentes}, logo abaixo. As regras são da
+forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
+(\(\Delta \Theta\) É w)}.
+
+				\begin{table}[H]
+					\centering
+					\caption{\label{tab:consequentes} Regras que controlarão o robô.}
+					\setlength\tabcolsep{4pt}
+					\begin{minipage}{0.30\textwidth}
+					    \centering
+						\begin{tabular}{| c | c | c | c |} 
+						\hline
+						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \Theta\) \\ \hline
+						P & MP & P & Z  \\ \hline
+						P & MP & M & MP \\ \hline
+						P & MP & G & MP \\ \hline
+						P & PP & P & Z  \\ \hline
+						P & PP & M & MP \\ \hline
+						P & PP & G & MP \\ \hline
+						P & PG & P & Z  \\ \hline
+						P & PG & M & PP \\ \hline
+						P & PG & G & MP \\ \hline
+						P & MG & P & Z  \\ \hline
+						P & MG & M & PP \\ \hline
+						P & MG & G & MP \\ \hline
+						\end{tabular}	
+					\end{minipage}	      
+					\begin{minipage}{0.30\textwidth}
+					    \centering
+						\begin{tabular}{| c | c | c | c |} 
+						\hline
+						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \Theta\) \\ \hline
+						M & MP & P & MN \\ \hline
+						M & MP & M & MN \\ \hline
+						M & MP & G & MP \\ \hline
+						M & PP & P & MN \\ \hline
+						M & PP & M & Z  \\ \hline
+						M & PP & G & MP \\ \hline
+						M & PG & P & MN \\ \hline
+						M & PG & M & Z  \\ \hline
+						M & PG & G & PP \\ \hline
+						M & MG & P & MN \\ \hline
+						M & MG & M & Z  \\ \hline
+						M & MG & G & PP \\ \hline
+						\end{tabular}	
+					\end{minipage}	
+					\begin{minipage}{0.30\textwidth}
+					    \centering
+						\begin{tabular}{| c | c | c | c |} 
+						\hline
+						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \Theta\) \\ \hline
+						G & MP & P & MN \\ \hline
+						G & MP & M & MN \\ \hline
+						G & MP & G & MN \\ \hline
+						G & PP & P & MN \\ \hline
+						G & PP & M & MN \\ \hline
+						G & PP & G & MN  \\ \hline 	  	
+						G & PG & P & MN \\ \hline
+						G & PG & M & PN \\ \hline
+						G & PG & G & Z  \\ \hline
+						G & MG & P & MN \\ \hline
+						G & MG & M & PN \\ \hline
+						G & MG & G & Z  \\ \hline
+						\end{tabular}	
+					\end{minipage}	      
+			    \end{table}
+
+	
+	\FloatBarrier

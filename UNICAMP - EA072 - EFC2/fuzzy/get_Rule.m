@@ -1,0 +1,167 @@
+function rule = get_Rule( d1, d2, d3 )
+
+if d1 == 'P'
+    
+    if d2  ==  'P'
+        
+        if d3 == 'P'
+            rule = 'F';
+            
+        elseif d3 == 'M'
+            rule = 'P';
+            
+        else
+            rule = 'P';
+        end
+        
+    elseif d2  ==  'p'
+        
+        if d3 == 'P'
+            rule = 'Z';
+            
+        elseif d3 == 'M'
+            rule = 'P';
+            
+        else
+            rule = 'P';
+        end
+        
+    elseif d2  ==  'g'
+        
+        if d3 == 'P'
+            rule = 'Z';
+            
+        elseif d3 == 'M'
+            rule = 'p';
+            
+        else
+            rule = 'P';
+            
+        end
+        
+    else
+        
+        if d3 == 'P'
+            rule = 'Z';
+            
+        elseif d3 == 'M'
+            rule = 'p';
+            
+        else
+            rule = 'P';
+            
+        end
+        
+    end
+    
+    
+elseif d1 == 'M'
+    
+    if d2  ==  'P'
+        
+        if d3 == 'P'
+            rule = 'N';
+            
+        elseif d3 == 'M'
+            rule = 'N';
+            
+        else
+            rule = 'P';
+        end
+        
+    elseif d2  ==  'p'
+        
+        if d3 == 'P'
+            rule = 'N';
+            
+        elseif d3 == 'M'
+            rule = 'Z';
+            
+        else
+            rule = 'P';
+        end
+        
+    elseif d2  ==  'g'
+        
+        if d3 == 'P'
+            rule = 'N';
+            
+        elseif d3 == 'M'
+            rule = 'z';
+            
+        else
+            rule = 'p';
+            
+        end
+        
+    else
+        
+        if d3 == 'P'
+            rule = 'N';
+            
+        elseif d3 == 'M'
+            rule = 'Z';
+            
+        else
+            rule = 'p';
+        end
+        
+    end
+    
+else
+    
+    if d2  ==  'P'
+        
+        if d3 == 'P'
+            rule = 'N';
+            
+        elseif d3 == 'M'
+            rule = 'N';
+            
+        else
+            rule = 'N';
+            
+        end
+        
+    elseif d2  ==  'p'
+        
+        if d3 == 'P'
+            rule = 'N';
+            
+        elseif d3 == 'M'
+            rule = 'N';
+            
+        else
+            rule = 'N';
+        end
+        
+    elseif d2  ==  'g'
+        
+        if d3 == 'P'
+            rule = 'N';
+            
+        elseif d3 == 'M'
+            rule = 'n';
+            
+        else
+            rule = 'Z';
+        end
+        
+    else
+        
+        if d3 == 'P'
+            rule = 'N';
+            
+        elseif d3 == 'M'
+            rule = 'n';
+            
+        else
+            rule = 'Z';
+        end
+        
+    end
+    
+end
+
+end
+
