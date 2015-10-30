@@ -20,18 +20,18 @@ forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
 						\begin{tabular}{| c | c | c | c |} 
 						\hline
 						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \Theta\) \\ \hline
-						P & MP & P & Z  \\ \hline
-						P & MP & M & MP \\ \hline
-						P & MP & G & MP \\ \hline
+						P & MP & P & MN  \\ \hline
+						P & MP & M & MN \\ \hline
+						P & MP & G & MN \\ \hline
 						P & PP & P & Z  \\ \hline
-						P & PP & M & MP \\ \hline
-						P & PP & G & MP \\ \hline
+						P & PP & M & MN \\ \hline
+						P & PP & G & MN \\ \hline
 						P & PG & P & Z  \\ \hline
-						P & PG & M & PP \\ \hline
-						P & PG & G & MP \\ \hline
+						P & PG & M & MN \\ \hline
+						P & PG & G & MN \\ \hline
 						P & MG & P & Z  \\ \hline
-						P & MG & M & PP \\ \hline
-						P & MG & G & MP \\ \hline
+						P & MG & M & PN \\ \hline
+						P & MG & G & MN \\ \hline
 						\end{tabular}	
 					\end{minipage}	      
 					\begin{minipage}{0.30\textwidth}
@@ -39,18 +39,18 @@ forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
 						\begin{tabular}{| c | c | c | c |} 
 						\hline
 						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \Theta\) \\ \hline
-						M & MP & P & MN \\ \hline
-						M & MP & M & MN \\ \hline
-						M & MP & G & MP \\ \hline
-						M & PP & P & MN \\ \hline
+						M & MP & P & PP \\ \hline
+						M & MP & M & MP \\ \hline
+						M & MP & G & MN \\ \hline
+						M & PP & P & PP \\ \hline
 						M & PP & M & Z  \\ \hline
-						M & PP & G & MP \\ \hline
-						M & PG & P & MN \\ \hline
+						M & PP & G & PN \\ \hline
+						M & PG & P & PP \\ \hline
 						M & PG & M & Z  \\ \hline
-						M & PG & G & PP \\ \hline
-						M & MG & P & MN \\ \hline
+						M & PG & G & PN \\ \hline
+						M & MG & P & PP \\ \hline
 						M & MG & M & Z  \\ \hline
-						M & MG & G & PP \\ \hline
+						M & MG & G & PN \\ \hline
 						\end{tabular}	
 					\end{minipage}	
 					\begin{minipage}{0.30\textwidth}
@@ -58,21 +58,79 @@ forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
 						\begin{tabular}{| c | c | c | c |} 
 						\hline
 						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \Theta\) \\ \hline
-						G & MP & P & MN \\ \hline
-						G & MP & M & MN \\ \hline
-						G & MP & G & MN \\ \hline
-						G & PP & P & MN \\ \hline
-						G & PP & M & MN \\ \hline
-						G & PP & G & MN  \\ \hline 	  	
-						G & PG & P & MN \\ \hline
-						G & PG & M & PN \\ \hline
+						G & MP & P & MP \\ \hline
+						G & MP & M & MP \\ \hline
+						G & MP & G & MP \\ \hline
+						G & PP & P & MP \\ \hline
+						G & PP & M & MP \\ \hline
+						G & PP & G & MP  \\ \hline 	  	 
+						G & PG & P & MP \\ \hline
+						G & PG & M & PP \\ \hline
 						G & PG & G & Z  \\ \hline
-						G & MG & P & MN \\ \hline
-						G & MG & M & PN \\ \hline
+						G & MG & P & MP \\ \hline
+						G & MG & M & PP \\ \hline
 						G & MG & G & Z  \\ \hline
 						\end{tabular}	
 					\end{minipage}	      
 			    \end{table}
-
-	
 	\FloatBarrier
+	
+	\subsection{Controlando o Robô}
+	
+	Uma vez definidas as regras que deverão ser seguidas, o próximo passo é então
+	simular o comportamento do robô através do \textit{software} MATLAB. Para isso,
+	5 funções foram escritas. A primeira, chamada \texttt{trap\_pertinencia},
+	recebe 6 parâmetros, sendo eles a coordenada \(x\), as informações \(a\), \(b\), \(c\)
+	e \(d\) referentes os trapézios que compõem as funções de pertinência e o valor
+	a ser considerado caso \(x\) esteja fora do intervalo \(\left[a, d\right]\), e
+	retorna o respectivo valor da função de pertinência. O programa
+	\ref{lst:trap_pertinencia} abaixo possui a implementação da respectiva
+	função.
+	
+	\lstinputlisting [language=Matlab, caption={ \texttt{trap\_pertinencia.m} -
+	Avalia pertinência de um regra em função de \(x\).},
+	label={lst:trap_pertinencia}] {fuzzy/trap_pertinencia.m}
+	
+	\vspace{12pt}
+	
+	A segunda função, chamada de \texttt{get\_D1\_D3\_Rule} e representada pelo
+	programa \ref{lst:d1d3}, calcula a pertinência de cada um dos possíveis estados
+	referentes aos sensores \(D_1\) e \(D_3\).	Essa função recebe como parâmetro a
+	distância medida pelo sensor e retorna um vetor com três valores contendo a
+	pertinência para os estados \textbf{P}, \textbf{M} e \textbf{G}. 
+	
+	\lstinputlisting [language=Matlab, caption={
+	Avalia pertinência da regras de \(D_1\) e \(D_3\) em função das distâncias
+	medidas.}, label={lst:d1d3}] {fuzzy/get_D1_D3_Rule.m}
+
+	\vspace{12pt}
+	
+	A função \texttt{get\_D2\_Rule} realiza o mesmo que o descrito anteriormente,
+	mas agora com o sensor \(D_2\). A implementação desta função pode ser
+	encontrada logo abaixo.
+	
+	\lstinputlisting [language=Matlab, caption={
+	Avalia pertinência da regras de \(D_2\) em função das distâncias
+	medidas.}, label={lst:d2}] {fuzzy/get_D2_Rule.m} 
+	
+	\vspace{12pt}
+	
+	A quarta função, \texttt{get\_Angle\_Rule}, implementa as regras descritas na
+	tabela \ref{tab:consequentes}. Por ser extensa, a sua implementação foi
+	colocada na seção \textbf{Anexos} ao fim deste documento no programa
+	\ref{lst:angle_rule}. Em poucas palavras, esta função testa se cada uma das
+	regras está ativa e, caso uma determinada regra esteja, atribui a ela o menor
+	valor dentre as pertinências dos estados que a compõem. Por exemplo, se \(D_1\)
+	é \textbf{P} com 50\%, \(D_2\) é \textbf{MG} com 100\% e \(D_3\) é \textbf{M}
+	com 33\%, então \(\Delta \theta\) é \textbf{PN} com 33\%.
+	
+	\vspace{12pt}
+	
+	A quinta função, \texttt{get\_Angle}, é responsável pelo processo de
+	\textit{defuzzyficação} e está representada pelo programa \ref{lst:angle}. Ela
+	utiliza o método de centro de massa para determinar \(\Delta \theta\) que
+	melhor convém dadas as regras ativas.
+	
+	\lstinputlisting [language=Matlab, caption={
+	Avalia pertinência da regras de \(D_2\) em função das distâncias
+	medidas.}, label={lst:angle}] {fuzzy/get_Angle.m} 

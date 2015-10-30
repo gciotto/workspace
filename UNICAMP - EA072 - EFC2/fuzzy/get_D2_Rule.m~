@@ -1,0 +1,17 @@
+function S = get_D2_Rule( sensor_capture )
+
+% Testar para P
+relevance_MP = trap_pertinencia (sensor_capture, 0, 0, 1, 2, (sensor_capture < 0));
+
+relevance_PP = trap_pertinencia (sensor_capture, 1, 2, 3, 4, 0);
+
+relevance_PG = trap_pertinencia (sensor_capture, 3, 4, 5, 6, 0);
+    
+relevance_MG = trap_pertinencia (sensor_capture, 5, 6, 7, 7);
+
+S = [relevance_MP relevance_PP relevance_PG relevance_MG];
+
+
+end
+
+
