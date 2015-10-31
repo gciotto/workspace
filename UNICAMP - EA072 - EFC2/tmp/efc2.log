@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  30 OCT 2015 14:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  31 OCT 2015 21:37
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -716,7 +716,7 @@ LaTeX Info: Redefining \nameref on input line 61.
 \openout3 = `efc2.out'.
 
 \c@lstlisting=\count133
- (./cover.tex <image/LogoUnicamp.png, id=24, 481.8pt x 481.8pt>
+ (./cover.tex <image/LogoUnicamp.png, id=32, 481.8pt x 481.8pt>
 File: image/LogoUnicamp.png Graphic file (type png)
 
 <use image/LogoUnicamp.png>
@@ -768,14 +768,14 @@ Overfull \hbox (2.85622pt too wide) in paragraph at lines 94--111
  [][][] 
  []
 
-<pid/step_pid_ex_c.png, id=52, 427.5975pt x 313.17pt>
+<pid/step_pid_ex_c.png, id=60, 427.5975pt x 313.17pt>
 File: pid/step_pid_ex_c.png Graphic file (type png)
 
 <use pid/step_pid_ex_c.png>
 Package pdftex.def Info: pid/step_pid_ex_c.png used on input line 156.
 (pdftex.def)             Requested size: 256.07481pt x 187.54504pt.
 
-<pid/melhor_fitness_pid_ex_c.png, id=53, 591.71063pt x 316.18124pt>
+<pid/melhor_fitness_pid_ex_c.png, id=61, 591.71063pt x 316.18124pt>
 File: pid/melhor_fitness_pid_ex_c.png Graphic file (type png)
 
 <use pid/melhor_fitness_pid_ex_c.png>
@@ -783,14 +783,14 @@ Package pdftex.def Info: pid/melhor_fitness_pid_ex_c.png used on input line 162
 .
 (pdftex.def)             Requested size: 256.07481pt x 136.83817pt.
 
-<pid/mutacao_pid_ex_c.png, id=54, 601.4972pt x 472.01344pt>
+<pid/mutacao_pid_ex_c.png, id=62, 601.4972pt x 472.01344pt>
 File: pid/mutacao_pid_ex_c.png Graphic file (type png)
 
 <use pid/mutacao_pid_ex_c.png>
 Package pdftex.def Info: pid/mutacao_pid_ex_c.png used on input line 169.
 (pdftex.def)             Requested size: 256.07481pt x 200.95236pt.
 
-<pid/kp_kd_ki_pid_ex_c.png, id=55, 581.17125pt x 430.60875pt>
+<pid/kp_kd_ki_pid_ex_c.png, id=63, 581.17125pt x 430.60875pt>
 File: pid/kp_kd_ki_pid_ex_c.png Graphic file (type png)
 
 <use pid/kp_kd_ki_pid_ex_c.png>
@@ -804,14 +804,14 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 185.
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 185.
-[2] <pid/step_pid_ex_c_mod.png, id=69, 427.5975pt x 313.17pt>
+[2] <pid/step_pid_ex_c_mod.png, id=77, 427.5975pt x 313.17pt>
 File: pid/step_pid_ex_c_mod.png Graphic file (type png)
 
 <use pid/step_pid_ex_c_mod.png>
 Package pdftex.def Info: pid/step_pid_ex_c_mod.png used on input line 227.
 (pdftex.def)             Requested size: 256.07481pt x 187.54504pt.
 
-<pid/melhor_fitness_pid_ex_c_mod.png, id=70, 708.39656pt x 526.21594pt>
+<pid/melhor_fitness_pid_ex_c_mod.png, id=78, 708.39656pt x 526.21594pt>
 File: pid/melhor_fitness_pid_ex_c_mod.png Graphic file (type png)
 
 <use pid/melhor_fitness_pid_ex_c_mod.png>
@@ -819,14 +819,14 @@ Package pdftex.def Info: pid/melhor_fitness_pid_ex_c_mod.png used on input line
  233.
 (pdftex.def)             Requested size: 256.07481pt x 190.22447pt.
 
-<pid/mutacao_pid_ex_c_mod.png, id=71, 460.72125pt x 360.59718pt>
+<pid/mutacao_pid_ex_c_mod.png, id=79, 460.72125pt x 360.59718pt>
 File: pid/mutacao_pid_ex_c_mod.png Graphic file (type png)
 
 <use pid/mutacao_pid_ex_c_mod.png>
 Package pdftex.def Info: pid/mutacao_pid_ex_c_mod.png used on input line 240.
 (pdftex.def)             Requested size: 256.07481pt x 200.41992pt.
 
-<pid/kp_kd_ki_pid_ex_c_mod.png, id=72, 528.47438pt x 359.84438pt>
+<pid/kp_kd_ki_pid_ex_c_mod.png, id=80, 528.47438pt x 359.84438pt>
 File: pid/kp_kd_ki_pid_ex_c_mod.png Graphic file (type png)
 
 <use pid/kp_kd_ki_pid_ex_c_mod.png>
@@ -854,21 +854,21 @@ Package babel Info: Redefining portuges shorthand "|
 [4 <./pid/step_pid_ex_c_mod.png (PNG copy)> <./pid/melhor_fitness_pid_ex_c_mod.
 png (PNG copy)> <./pid/mutacao_pid_ex_c_mod.png (PNG copy)> <./pid/kp_kd_ki_pid
 _ex_c_mod.png (PNG copy)>]
-<pid/step_pid_ex_d_5.png, id=88, 427.5975pt x 313.17pt>
+<pid/step_pid_ex_d_5.png, id=96, 427.5975pt x 313.17pt>
 File: pid/step_pid_ex_d_5.png Graphic file (type png)
 
 <use pid/step_pid_ex_d_5.png>
 Package pdftex.def Info: pid/step_pid_ex_d_5.png used on input line 316.
 (pdftex.def)             Requested size: 256.07481pt x 187.54504pt.
 
-<pid/mutacao_pid_ex_d_5.png, id=89, 583.42969pt x 369.63094pt>
+<pid/mutacao_pid_ex_d_5.png, id=97, 583.42969pt x 369.63094pt>
 File: pid/mutacao_pid_ex_d_5.png Graphic file (type png)
 
 <use pid/mutacao_pid_ex_d_5.png>
 Package pdftex.def Info: pid/mutacao_pid_ex_d_5.png used on input line 322.
 (pdftex.def)             Requested size: 256.07481pt x 162.23766pt.
 
-<pid/melhor_fitness_pid_ex_d_5.png, id=90, 421.575pt x 316.18124pt>
+<pid/melhor_fitness_pid_ex_d_5.png, id=98, 421.575pt x 316.18124pt>
 File: pid/melhor_fitness_pid_ex_d_5.png Graphic file (type png)
 
 <use pid/melhor_fitness_pid_ex_d_5.png>
@@ -876,7 +876,7 @@ Package pdftex.def Info: pid/melhor_fitness_pid_ex_d_5.png used on input line 3
 29.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
 
-<pid/kp_kd_ki_pid_ex_d_5.png, id=91, 611.28375pt x 402.75468pt>
+<pid/kp_kd_ki_pid_ex_d_5.png, id=99, 611.28375pt x 402.75468pt>
 File: pid/kp_kd_ki_pid_ex_d_5.png Graphic file (type png)
 
 <use pid/kp_kd_ki_pid_ex_d_5.png>
@@ -905,14 +905,14 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 370.
 [5 <./pid/step_pid_ex_d_5.png (PNG copy)> <./pid/mutacao_pid_ex_d_5.png (PNG co
 py)> <./pid/melhor_fitness_pid_ex_d_5.png (PNG copy)> <./pid/kp_kd_ki_pid_ex_d_
-5.png (PNG copy)>] <pid/step_pid_ex_d_mod.png, id=101, 427.5975pt x 313.17pt>
+5.png (PNG copy)>] <pid/step_pid_ex_d_mod.png, id=109, 427.5975pt x 313.17pt>
 File: pid/step_pid_ex_d_mod.png Graphic file (type png)
 
 <use pid/step_pid_ex_d_mod.png>
 Package pdftex.def Info: pid/step_pid_ex_d_mod.png used on input line 406.
 (pdftex.def)             Requested size: 256.07481pt x 187.54504pt.
 
-<pid/melhor_fitness_pid_ex_d_mod.png, id=102, 584.1825pt x 435.12563pt>
+<pid/melhor_fitness_pid_ex_d_mod.png, id=110, 584.1825pt x 435.12563pt>
 File: pid/melhor_fitness_pid_ex_d_mod.png Graphic file (type png)
 
 <use pid/melhor_fitness_pid_ex_d_mod.png>
@@ -920,14 +920,14 @@ Package pdftex.def Info: pid/melhor_fitness_pid_ex_d_mod.png used on input line
  412.
 (pdftex.def)             Requested size: 256.07481pt x 190.7388pt.
 
-<pid/mutacao_pid_ex_d_mod.png, id=103, 421.575pt x 316.18124pt>
+<pid/mutacao_pid_ex_d_mod.png, id=111, 421.575pt x 316.18124pt>
 File: pid/mutacao_pid_ex_d_mod.png Graphic file (type png)
 
 <use pid/mutacao_pid_ex_d_mod.png>
 Package pdftex.def Info: pid/mutacao_pid_ex_d_mod.png used on input line 419.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
 
-<pid/kp_kd_ki_pid_ex_d_mod.png, id=104, 529.22719pt x 395.97937pt>
+<pid/kp_kd_ki_pid_ex_d_mod.png, id=112, 529.22719pt x 395.97937pt>
 File: pid/kp_kd_ki_pid_ex_d_mod.png Graphic file (type png)
 
 <use pid/kp_kd_ki_pid_ex_d_mod.png>
@@ -975,22 +975,56 @@ LaTeX Warning: Reference `lst:angle_rule' on page 9 undefined on input line 121
 
 (./fuzzy/get_Angle.m
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 26.
+(babel)             in language  on input line 28.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 26.
- [9]))
+(babel)             in language  on input line 28.
+ [9]) (./fuzzy/robot_control.m
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 28.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 28.
+ [10]
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 92.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 92.
+ [11])
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 147.
+
+<fuzzy/test1.png, id=379, 421.575pt x 316.18124pt>
+File: fuzzy/test1.png Graphic file (type png)
+ <use fuzzy/test1.png>
+Package pdftex.def Info: fuzzy/test1.png used on input line 170.
+(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
+
+<fuzzy/test2.png, id=380, 421.575pt x 316.18124pt>
+File: fuzzy/test2.png Graphic file (type png)
+ <use fuzzy/test2.png>
+Package pdftex.def Info: fuzzy/test2.png used on input line 177.
+(pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
+
+(./fuzzy/test_robot_control.m
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 15.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 15.
+ [12 <./fuzzy/test1.png (PNG copy)> <./fuzzy/test2.png (PNG copy)>])
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 196.
+)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 83.
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 83.
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 83.
- [10]
+ [13]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 83.
  (./efc2.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 83.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 83.
 Package rerunfilecheck Info: File `efc2.out' has not changed.
-(rerunfilecheck)             Checksum: BC244B6E87D2792D88257538EAF0FC8B;376.
+(rerunfilecheck)             Checksum: C19410B18D36C0DD3F92E9BDBAB90FC0;512.
 
 
 LaTeX Warning: There were undefined references.
@@ -1001,10 +1035,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 83.
  ) 
 Here is how much of TeX's memory you used:
- 10807 strings out of 493089
- 155094 string characters out of 6140694
- 445188 words of memory out of 5000000
- 13938 multiletter control sequences out of 15000+600000
+ 11025 strings out of 493089
+ 158182 string characters out of 6140694
+ 566539 words of memory out of 5000000
+ 13984 multiletter control sequences out of 15000+600000
  15727 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,12n,41p,297b,2430s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1020,10 +1054,10 @@ m/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><
 mf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf-dist/fonts/type1/u
 rw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pf
 b>
-Output written on efc2.pdf (11 pages, 496192 bytes).
+Output written on efc2.pdf (14 pages, 543331 bytes).
 PDF statistics:
- 321 PDF objects out of 1000 (max. 8388607)
- 274 compressed objects within 3 object streams
- 138 named destinations out of 1000 (max. 500000)
- 126 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 544 PDF objects out of 1000 (max. 8388607)
+ 490 compressed objects within 5 object streams
+ 302 named destinations out of 1000 (max. 500000)
+ 152 words of extra memory for PDF output out of 10000 (max. 10000000)
 

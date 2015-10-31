@@ -9,7 +9,7 @@ que serão levadas em conta. Considerando que o robô dispõe de 3 sensores
 medidas realizadas por eles estão representadas na seção 3 do enunciado, sugestões de consequentes estão
 representadas na tabela \ref{tab:consequentes}, logo abaixo. As regras são da
 forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
-(\(\Delta \Theta\) É w)}.
+(\(\Delta \theta\) É w)}.
 
 				\begin{table}[H]
 					\centering
@@ -19,7 +19,7 @@ forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
 					    \centering
 						\begin{tabular}{| c | c | c | c |} 
 						\hline
-						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \Theta\) \\ \hline
+						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \theta\) \\ \hline
 						P & MP & P & MN  \\ \hline
 						P & MP & M & MN \\ \hline
 						P & MP & G & MN \\ \hline
@@ -38,7 +38,7 @@ forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
 					    \centering
 						\begin{tabular}{| c | c | c | c |} 
 						\hline
-						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \Theta\) \\ \hline
+						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \theta\) \\ \hline
 						M & MP & P & PP \\ \hline
 						M & MP & M & MP \\ \hline
 						M & MP & G & MN \\ \hline
@@ -57,7 +57,7 @@ forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
 					    \centering
 						\begin{tabular}{| c | c | c | c |} 
 						\hline
-						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \Theta\) \\ \hline
+						\(d_1\) & \(d_2\) & \(d_3\) & \(\Delta \theta\) \\ \hline
 						G & MP & P & MP \\ \hline
 						G & MP & M & MP \\ \hline
 						G & MP & G & MP \\ \hline
@@ -133,4 +133,64 @@ forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
 	
 	\lstinputlisting [language=Matlab, caption={
 	Avalia pertinência da regras de \(D_2\) em função das distâncias
-	medidas.}, label={lst:angle}] {fuzzy/get_Angle.m} 
+	medidas.}, label={lst:angle}] {fuzzy/get_Angle.m}
+	
+	\vspace{12pt}
+	
+	Enfim, a sexta função, \texttt{robot\_control}, realiza o controle do robô
+	conforme regras especificadas acima. Sua implementação está representada pelo
+	programa \ref{lst:control}.
+	
+	\lstinputlisting [language=Matlab, caption={  
+	Automatiza controle do robô.}, label={lst:control}] {fuzzy/robot_control.m}  
+	
+	\subsection {Resultados}
+	
+	A fim de testar o controlador implementado na seção anterior, dois mapas foram
+	criados. Os resultados das execuções estão representados na figuras
+	\ref{fig:test_fuzzy_1} e \ref{fig:test_fuzzy_2}, em que a trajetória está
+	representada em preto, a parede em cinza claro, os pontos de destino em cinza
+	escuro e as posições livres, em branco. Para ambos, a direção inicial do robô é
+	\(\frac{\pi}{2}\), as coordenadas iniciais são \((3,3)\) e a velocidade é \(v =
+	1 \) \textit{pixel/iteração}. Verifica-se que o controle é bem-sucedido, sendo
+	que o robô é capaz de realizar as curvas presentes nos mapas. É importante
+	comentar que os cantos \textit{suavizados} possuem uma grande importância para o
+	bom resultado, uma vez que o controle nas áreas de ``ponta'' não é tão eficiente
+	visto que, quando o controlador verifica a proximidade a uma parede, ele pode
+	não saber para que lado virar.
+		
+	\FloatBarrier
+			    
+	\begin{figure}[h!]
+	
+	\centering
+	
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[width=1\linewidth]{fuzzy/test1}
+		  \caption{\centering Controle do robô no mapa 1.}
+		  \label{fig:test_fuzzy_1}
+		  
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[width=1\linewidth]{fuzzy/test2}
+		  \caption{\centering Controle do robô no mapa 2.}
+		  \label{fig:test_fuzzy_2} 
+		\end{subfigure}
+	
+	
+	\caption{Resultados para o controle nebuloso do robô
+	para dois mapas distintos.}
+	\end{figure}
+	
+	\FloatBarrier
+		
+	O \textit{script} utilizado nos testes pode ser encontrado no programa
+	\ref{lst:test_fuzzy}.
+	
+	\lstinputlisting [language=Matlab, caption={  
+	\textit{Script} de teste..}, label={lst:test_fuzzy}]
+	{fuzzy/test_robot_control.m}
+
+	\subsection {Controle via Rede Neural MLP}

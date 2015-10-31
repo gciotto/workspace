@@ -1,6 +1,7 @@
 clear all;
 close all;
 
+% Constroi mapa 1.
 labyrinth_matrix = zeros(20,20);
 labyrinth_matrix (1:2, :) = '#';
 labyrinth_matrix (20, :) = '#';
@@ -13,6 +14,7 @@ labyrinth_matrix (18:19, 16:18) = 'F';
 
 robot_control(labyrinth_matrix, 3,3, pi/2, 1);
 
+% Constroi mapa 2.
 labyrinth_matrix = zeros(20,20);
 labyrinth_matrix (1:2, :) = '#';
 labyrinth_matrix (20, :) = '#';
@@ -26,4 +28,4 @@ labyrinth_matrix (12:15, 16:19) = flipud(triu(ones(4)))*'#';
 labyrinth_matrix (10:15, 6:15) = 0;
 labyrinth_matrix (10:15, 6) = 'F';
 
-robot_control(labyrinth_matrix, 3,3, 3*pi/4, 1);
+robot_control(labyrinth_matrix, 3,3, pi/2, 1);
