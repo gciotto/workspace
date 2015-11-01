@@ -70,27 +70,73 @@
 \newlabel{sub@fig:pid_parametros_d_mod}{{d}{6}{\centering Evolução dos parâmetros.\relax }{figure.caption.10}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Resultado para a melhor execu\IeC {\c c}\IeC {\~a}o do algoritmo evolutivo com \textit  {fitness} considerando a margem de fase e par\IeC {\^a}metros modificados.\relax }}{6}{figure.caption.10}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Aproxima\IeC {\c c}\IeC {\~a}o de fun\IeC {\c c}\IeC {\~o}es multidimensionais}{7}{section.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Controle Nebuloso e Rob\IeC {\'o}tica Evolutiva}{7}{section.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.0}Defini\IeC {\c c}\IeC {\~a}o dos Consequentes }{7}{subsection.3.0}}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces  Regras que controlar\IeC {\~a}o o rob\IeC {\^o}.\relax }}{7}{table.caption.11}}
-\newlabel{tab:consequentes}{{6}{7}{Regras que controlarão o robô.\relax }{table.caption.11}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Controlando o Rob\IeC {\^o}}{7}{subsection.3.1}}
-\newlabel{lst:trap_pertinencia}{{1}{7}{\texttt {trap\_pertinencia.m} - Avalia pertinência de um regra em função de \(x\)}{lstlisting.1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}\texttt  {trap\_pertinencia.m} - Avalia pertin\IeC {\^e}ncia de um regra em fun\IeC {\c c}\IeC {\~a}o de \(x\).}{7}{lstlisting.1}}
-\newlabel{lst:d1d3}{{2}{8}{Avalia pertinência da regras de \(D_1\) e \(D_3\) em função das distâncias medidas}{lstlisting.2}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}Avalia pertin\IeC {\^e}ncia da regras de \(D_1\) e \(D_3\) em fun\IeC {\c c}\IeC {\~a}o das dist\IeC {\^a}ncias medidas.}{8}{lstlisting.2}}
-\newlabel{lst:d2}{{3}{8}{Avalia pertinência da regras de \(D_2\) em função das distâncias medidas}{lstlisting.3}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}Avalia pertin\IeC {\^e}ncia da regras de \(D_2\) em fun\IeC {\c c}\IeC {\~a}o das dist\IeC {\^a}ncias medidas.}{8}{lstlisting.3}}
-\newlabel{lst:angle}{{4}{9}{Avalia pertinência da regras de \(D_2\) em função das distâncias medidas}{lstlisting.4}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}Avalia pertin\IeC {\^e}ncia da regras de \(D_2\) em fun\IeC {\c c}\IeC {\~a}o das dist\IeC {\^a}ncias medidas.}{9}{lstlisting.4}}
-\newlabel{lst:control}{{5}{10}{Automatiza controle do robô}{lstlisting.5}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5}Automatiza controle do rob\IeC {\^o}.}{10}{lstlisting.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Resultados}{12}{subsection.3.2}}
-\newlabel{fig:test_fuzzy_1}{{5a}{12}{\centering Controle do robô no mapa 1.\relax }{figure.caption.12}{}}
-\newlabel{sub@fig:test_fuzzy_1}{{a}{12}{\centering Controle do robô no mapa 1.\relax }{figure.caption.12}{}}
-\newlabel{fig:test_fuzzy_2}{{5b}{12}{\centering Controle do robô no mapa 2.\relax }{figure.caption.12}{}}
-\newlabel{sub@fig:test_fuzzy_2}{{b}{12}{\centering Controle do robô no mapa 2.\relax }{figure.caption.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Resultados para o controle nebuloso do rob\IeC {\^o} para dois mapas distintos.\relax }}{12}{figure.caption.12}}
-\newlabel{lst:test_fuzzy}{{6}{12}{\textit {Script} de teste.}{lstlisting.6}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {6}\textit  {Script} de teste..}{12}{lstlisting.6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Controle via Rede Neural MLP}{13}{subsection.3.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Mapeamento y = f(x)}{7}{subsection.2.1}}
+\newlabel{eq:map1}{{1}{7}{Mapeamento y = f(x)}{equation.2.1}{}}
+\newlabel{fig:map1_s_ruido}{{5a}{7}{\centering Mapeamento sem ruídos.\relax }{figure.caption.11}{}}
+\newlabel{sub@fig:map1_s_ruido}{{a}{7}{\centering Mapeamento sem ruídos.\relax }{figure.caption.11}{}}
+\newlabel{fig:map1_c_ruido}{{5b}{7}{\centering Mapeamento com ruídos.\relax }{figure.caption.11}{}}
+\newlabel{sub@fig:map1_c_ruido}{{b}{7}{\centering Mapeamento com ruídos.\relax }{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Mapeamento da fun\IeC {\c c}\IeC {\~a}o \ref  {eq:map1}.\relax }}{7}{figure.caption.11}}
+\newlabel{fig:map1_solucoes_s_ruido}{{6a}{8}{\centering Soluções encontradas pelo software.\relax }{figure.caption.12}{}}
+\newlabel{sub@fig:map1_solucoes_s_ruido}{{a}{8}{\centering Soluções encontradas pelo software.\relax }{figure.caption.12}{}}
+\newlabel{fig:map1_pareto_s_ruido}{{6b}{8}{\centering Compromisso acurácia \textit {x} simplicidade das soluções.\relax }{figure.caption.12}{}}
+\newlabel{sub@fig:map1_pareto_s_ruido}{{b}{8}{\centering Compromisso acurácia \textit {x} simplicidade das soluções.\relax }{figure.caption.12}{}}
+\newlabel{fig:map1_best_s_ruido}{{6c}{8}{\centering Resumo da melhor solução encontrada.\relax }{figure.caption.12}{}}
+\newlabel{sub@fig:map1_best_s_ruido}{{c}{8}{\centering Resumo da melhor solução encontrada.\relax }{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Resultados para mapeamento da fun\IeC {\c c}\IeC {\~a}o \ref  {eq:map1} sem ru\IeC {\'\i }dos.\relax }}{8}{figure.caption.12}}
+\newlabel{eq:map1_r}{{2}{8}{Mapeamento y = f(x)}{equation.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Compara\IeC {\c c}\IeC {\~a}o entre mapeamento com e sem ru\IeC {\'\i }dos.\relax }}{8}{figure.caption.13}}
+\newlabel{fig:comparaca_map1}{{7}{8}{Comparação entre mapeamento com e sem ruídos.\relax }{figure.caption.13}{}}
+\newlabel{fig:map1_solucoes_c_ruido}{{8a}{9}{\centering Soluções encontradas pelo software.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:map1_solucoes_c_ruido}{{a}{9}{\centering Soluções encontradas pelo software.\relax }{figure.caption.14}{}}
+\newlabel{fig:map1_pareto_c_ruido}{{8b}{9}{\centering Compromisso acurácia \textit {x} simplicidade das soluções.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:map1_pareto_c_ruido}{{b}{9}{\centering Compromisso acurácia \textit {x} simplicidade das soluções.\relax }{figure.caption.14}{}}
+\newlabel{fig:map1_best_c_ruido}{{8c}{9}{\centering Resumo da melhor solução encontrada.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:map1_best_c_ruido}{{c}{9}{\centering Resumo da melhor solução encontrada.\relax }{figure.caption.14}{}}
+\newlabel{fig:map1_c_ruido}{{8d}{9}{\centering Resumo do mapeamento encontrado e amostras usadas para treinamento e validação.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:map1_c_ruido}{{d}{9}{\centering Resumo do mapeamento encontrado e amostras usadas para treinamento e validação.\relax }{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Resultados para mapeamento da fun\IeC {\c c}\IeC {\~a}o \ref  {eq:map1} com ru\IeC {\'\i }dos.\relax }}{9}{figure.caption.14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Mapeamento y = f(x\textsubscript  {1}, x\textsubscript  {2}, x\textsubscript  {3})}{9}{subsection.2.2}}
+\newlabel{eq:map2}{{3}{9}{Mapeamento y = f(x\textsubscript {1}, x\textsubscript {2}, x\textsubscript {3})}{equation.2.3}{}}
+\newlabel{eq:map2_s}{{4}{9}{Mapeamento y = f(x\textsubscript {1}, x\textsubscript {2}, x\textsubscript {3})}{equation.2.4}{}}
+\newlabel{fig:map2_solucoes_s_ruido}{{9a}{10}{\centering Soluções encontradas pelo software.\relax }{figure.caption.15}{}}
+\newlabel{sub@fig:map2_solucoes_s_ruido}{{a}{10}{\centering Soluções encontradas pelo software.\relax }{figure.caption.15}{}}
+\newlabel{fig:map2_pareto_s_ruido}{{9b}{10}{\centering Compromisso acurácia \textit {x} simplicidade das soluções.\relax }{figure.caption.15}{}}
+\newlabel{sub@fig:map2_pareto_s_ruido}{{b}{10}{\centering Compromisso acurácia \textit {x} simplicidade das soluções.\relax }{figure.caption.15}{}}
+\newlabel{fig:map2_best_s_ruido}{{9c}{10}{\centering Resumo da melhor solução encontrada.\relax }{figure.caption.15}{}}
+\newlabel{sub@fig:map2_best_s_ruido}{{c}{10}{\centering Resumo da melhor solução encontrada.\relax }{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Resultados para mapeamento da fun\IeC {\c c}\IeC {\~a}o \ref  {eq:map2} sem ru\IeC {\'\i }dos.\relax }}{10}{figure.caption.15}}
+\newlabel{eq:map2_r}{{5}{10}{Mapeamento y = f(x\textsubscript {1}, x\textsubscript {2}, x\textsubscript {3})}{equation.2.5}{}}
+\newlabel{fig:map2_solucoes_c_ruido}{{10a}{11}{\centering Soluções encontradas pelo software.\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:map2_solucoes_c_ruido}{{a}{11}{\centering Soluções encontradas pelo software.\relax }{figure.caption.16}{}}
+\newlabel{fig:map2_pareto_c_ruido}{{10b}{11}{\centering Compromisso acurácia \textit {x} simplicidade das soluções.\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:map2_pareto_c_ruido}{{b}{11}{\centering Compromisso acurácia \textit {x} simplicidade das soluções.\relax }{figure.caption.16}{}}
+\newlabel{fig:map2_best_c_ruido}{{10c}{11}{\centering Resumo da melhor solução encontrada.\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:map2_best_c_ruido}{{c}{11}{\centering Resumo da melhor solução encontrada.\relax }{figure.caption.16}{}}
+\newlabel{fig:map2_c_ruido}{{10d}{11}{\centering Resumo do mapeamento encontrado e amostras usadas para treinamento e validação.\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:map2_c_ruido}{{d}{11}{\centering Resumo do mapeamento encontrado e amostras usadas para treinamento e validação.\relax }{figure.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Resultados para mapeamento da fun\IeC {\c c}\IeC {\~a}o \ref  {eq:map2} com ru\IeC {\'\i }dos.\relax }}{11}{figure.caption.16}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Controle Nebuloso e Rob\IeC {\'o}tica Evolutiva}{11}{section.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.0}Defini\IeC {\c c}\IeC {\~a}o dos Consequentes }{11}{subsection.3.0}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces  Regras que controlar\IeC {\~a}o o rob\IeC {\^o}.\relax }}{11}{table.caption.17}}
+\newlabel{tab:consequentes}{{6}{11}{Regras que controlarão o robô.\relax }{table.caption.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Controlando o Rob\IeC {\^o}}{12}{subsection.3.1}}
+\newlabel{lst:trap_pertinencia}{{1}{12}{\texttt {trap\_pertinencia.m} - Avalia pertinência de um regra em função de \(x\)}{lstlisting.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}\texttt  {trap\_pertinencia.m} - Avalia pertin\IeC {\^e}ncia de um regra em fun\IeC {\c c}\IeC {\~a}o de \(x\).}{12}{lstlisting.1}}
+\newlabel{lst:d1d3}{{2}{12}{Avalia pertinência da regras de \(D_1\) e \(D_3\) em função das distâncias medidas}{lstlisting.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}Avalia pertin\IeC {\^e}ncia da regras de \(D_1\) e \(D_3\) em fun\IeC {\c c}\IeC {\~a}o das dist\IeC {\^a}ncias medidas.}{12}{lstlisting.2}}
+\newlabel{lst:d2}{{3}{13}{Avalia pertinência da regras de \(D_2\) em função das distâncias medidas}{lstlisting.3}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}Avalia pertin\IeC {\^e}ncia da regras de \(D_2\) em fun\IeC {\c c}\IeC {\~a}o das dist\IeC {\^a}ncias medidas.}{13}{lstlisting.3}}
+\newlabel{lst:angle}{{4}{13}{Avalia pertinência da regras de \(D_2\) em função das distâncias medidas}{lstlisting.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}Avalia pertin\IeC {\^e}ncia da regras de \(D_2\) em fun\IeC {\c c}\IeC {\~a}o das dist\IeC {\^a}ncias medidas.}{13}{lstlisting.4}}
+\newlabel{lst:control}{{5}{14}{Automatiza controle do robô}{lstlisting.5}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5}Automatiza controle do rob\IeC {\^o}.}{14}{lstlisting.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Resultados}{16}{subsection.3.2}}
+\newlabel{fig:test_fuzzy_1}{{11a}{16}{\centering Controle do robô no mapa 1.\relax }{figure.caption.18}{}}
+\newlabel{sub@fig:test_fuzzy_1}{{a}{16}{\centering Controle do robô no mapa 1.\relax }{figure.caption.18}{}}
+\newlabel{fig:test_fuzzy_2}{{11b}{16}{\centering Controle do robô no mapa 2.\relax }{figure.caption.18}{}}
+\newlabel{sub@fig:test_fuzzy_2}{{b}{16}{\centering Controle do robô no mapa 2.\relax }{figure.caption.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Resultados para o controle nebuloso do rob\IeC {\^o} para dois mapas distintos.\relax }}{16}{figure.caption.18}}
+\newlabel{lst:test_fuzzy}{{6}{17}{\textit {Script} de teste.}{lstlisting.6}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {6}\textit  {Script} de teste..}{17}{lstlisting.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Controle via Rede Neural MLP}{17}{subsection.3.3}}

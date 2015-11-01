@@ -1,7 +1,9 @@
 \BOOKMARK [1][-]{section.1}{S\355ntese de controle PID}{}% 1
 \BOOKMARK [1][-]{section.2}{Aproxima\347\343o de fun\347\365es multidimensionais}{}% 2
-\BOOKMARK [1][-]{section.3}{Controle Nebuloso e Rob\363tica Evolutiva}{}% 3
-\BOOKMARK [2][-]{subsection.3.0}{Defini\347\343o dos Consequentes }{section.3}% 4
-\BOOKMARK [2][-]{subsection.3.1}{Controlando o Rob\364}{section.3}% 5
-\BOOKMARK [2][-]{subsection.3.2}{Resultados}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.3}{Controle via Rede Neural MLP}{section.3}% 7
+\BOOKMARK [2][-]{subsection.2.1}{Mapeamento y = f\(x\)}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Mapeamento y = f\(x1, x2, x3\)}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Controle Nebuloso e Rob\363tica Evolutiva}{}% 5
+\BOOKMARK [2][-]{subsection.3.0}{Defini\347\343o dos Consequentes }{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Controlando o Rob\364}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Resultados}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.3}{Controle via Rede Neural MLP}{section.3}% 9
