@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  1 NOV 2015 16:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.9.16)  2 NOV 2015 14:03
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -722,7 +722,7 @@ LaTeX Info: Redefining \nameref on input line 61.
 \openout3 = `efc2.out'.
 
 \c@lstlisting=\count133
- (./cover.tex <image/LogoUnicamp.png, id=40, 481.8pt x 481.8pt>
+ (./cover.tex <image/LogoUnicamp.png, id=48, 481.8pt x 481.8pt>
 File: image/LogoUnicamp.png Graphic file (type png)
 
 <use image/LogoUnicamp.png>
@@ -774,14 +774,14 @@ Overfull \hbox (2.85622pt too wide) in paragraph at lines 94--111
  [][][] 
  []
 
-<pid/step_pid_ex_c.png, id=68, 427.5975pt x 313.17pt>
+<pid/step_pid_ex_c.png, id=76, 427.5975pt x 313.17pt>
 File: pid/step_pid_ex_c.png Graphic file (type png)
 
 <use pid/step_pid_ex_c.png>
 Package pdftex.def Info: pid/step_pid_ex_c.png used on input line 156.
 (pdftex.def)             Requested size: 256.07481pt x 187.54504pt.
 
-<pid/melhor_fitness_pid_ex_c.png, id=69, 591.71063pt x 316.18124pt>
+<pid/melhor_fitness_pid_ex_c.png, id=77, 591.71063pt x 316.18124pt>
 File: pid/melhor_fitness_pid_ex_c.png Graphic file (type png)
 
 <use pid/melhor_fitness_pid_ex_c.png>
@@ -789,14 +789,14 @@ Package pdftex.def Info: pid/melhor_fitness_pid_ex_c.png used on input line 162
 .
 (pdftex.def)             Requested size: 256.07481pt x 136.83817pt.
 
-<pid/mutacao_pid_ex_c.png, id=70, 601.4972pt x 472.01344pt>
+<pid/mutacao_pid_ex_c.png, id=78, 601.4972pt x 472.01344pt>
 File: pid/mutacao_pid_ex_c.png Graphic file (type png)
 
 <use pid/mutacao_pid_ex_c.png>
 Package pdftex.def Info: pid/mutacao_pid_ex_c.png used on input line 169.
 (pdftex.def)             Requested size: 256.07481pt x 200.95236pt.
 
-<pid/kp_kd_ki_pid_ex_c.png, id=71, 581.17125pt x 430.60875pt>
+<pid/kp_kd_ki_pid_ex_c.png, id=79, 581.17125pt x 430.60875pt>
 File: pid/kp_kd_ki_pid_ex_c.png Graphic file (type png)
 
 <use pid/kp_kd_ki_pid_ex_c.png>
@@ -810,14 +810,14 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 185.
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 185.
-[2] <pid/step_pid_ex_c_mod.png, id=85, 427.5975pt x 313.17pt>
+[2] <pid/step_pid_ex_c_mod.png, id=93, 427.5975pt x 313.17pt>
 File: pid/step_pid_ex_c_mod.png Graphic file (type png)
 
 <use pid/step_pid_ex_c_mod.png>
 Package pdftex.def Info: pid/step_pid_ex_c_mod.png used on input line 227.
 (pdftex.def)             Requested size: 256.07481pt x 187.54504pt.
 
-<pid/melhor_fitness_pid_ex_c_mod.png, id=86, 708.39656pt x 526.21594pt>
+<pid/melhor_fitness_pid_ex_c_mod.png, id=94, 708.39656pt x 526.21594pt>
 File: pid/melhor_fitness_pid_ex_c_mod.png Graphic file (type png)
 
 <use pid/melhor_fitness_pid_ex_c_mod.png>
@@ -825,14 +825,14 @@ Package pdftex.def Info: pid/melhor_fitness_pid_ex_c_mod.png used on input line
  233.
 (pdftex.def)             Requested size: 256.07481pt x 190.22447pt.
 
-<pid/mutacao_pid_ex_c_mod.png, id=87, 460.72125pt x 360.59718pt>
+<pid/mutacao_pid_ex_c_mod.png, id=95, 460.72125pt x 360.59718pt>
 File: pid/mutacao_pid_ex_c_mod.png Graphic file (type png)
 
 <use pid/mutacao_pid_ex_c_mod.png>
 Package pdftex.def Info: pid/mutacao_pid_ex_c_mod.png used on input line 240.
 (pdftex.def)             Requested size: 256.07481pt x 200.41992pt.
 
-<pid/kp_kd_ki_pid_ex_c_mod.png, id=88, 528.47438pt x 359.84438pt>
+<pid/kp_kd_ki_pid_ex_c_mod.png, id=96, 528.47438pt x 359.84438pt>
 File: pid/kp_kd_ki_pid_ex_c_mod.png Graphic file (type png)
 
 <use pid/kp_kd_ki_pid_ex_c_mod.png>
@@ -860,21 +860,21 @@ Package babel Info: Redefining portuges shorthand "|
 [4 <./pid/step_pid_ex_c_mod.png (PNG copy)> <./pid/melhor_fitness_pid_ex_c_mod.
 png (PNG copy)> <./pid/mutacao_pid_ex_c_mod.png (PNG copy)> <./pid/kp_kd_ki_pid
 _ex_c_mod.png (PNG copy)>]
-<pid/step_pid_ex_d_5.png, id=104, 427.5975pt x 313.17pt>
+<pid/step_pid_ex_d_5.png, id=112, 427.5975pt x 313.17pt>
 File: pid/step_pid_ex_d_5.png Graphic file (type png)
 
 <use pid/step_pid_ex_d_5.png>
 Package pdftex.def Info: pid/step_pid_ex_d_5.png used on input line 316.
 (pdftex.def)             Requested size: 256.07481pt x 187.54504pt.
 
-<pid/mutacao_pid_ex_d_5.png, id=105, 583.42969pt x 369.63094pt>
+<pid/mutacao_pid_ex_d_5.png, id=113, 583.42969pt x 369.63094pt>
 File: pid/mutacao_pid_ex_d_5.png Graphic file (type png)
 
 <use pid/mutacao_pid_ex_d_5.png>
 Package pdftex.def Info: pid/mutacao_pid_ex_d_5.png used on input line 322.
 (pdftex.def)             Requested size: 256.07481pt x 162.23766pt.
 
-<pid/melhor_fitness_pid_ex_d_5.png, id=106, 421.575pt x 316.18124pt>
+<pid/melhor_fitness_pid_ex_d_5.png, id=114, 421.575pt x 316.18124pt>
 File: pid/melhor_fitness_pid_ex_d_5.png Graphic file (type png)
 
 <use pid/melhor_fitness_pid_ex_d_5.png>
@@ -882,7 +882,7 @@ Package pdftex.def Info: pid/melhor_fitness_pid_ex_d_5.png used on input line 3
 29.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
 
-<pid/kp_kd_ki_pid_ex_d_5.png, id=107, 611.28375pt x 402.75468pt>
+<pid/kp_kd_ki_pid_ex_d_5.png, id=115, 611.28375pt x 402.75468pt>
 File: pid/kp_kd_ki_pid_ex_d_5.png Graphic file (type png)
 
 <use pid/kp_kd_ki_pid_ex_d_5.png>
@@ -911,14 +911,14 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 370.
 [5 <./pid/step_pid_ex_d_5.png (PNG copy)> <./pid/mutacao_pid_ex_d_5.png (PNG co
 py)> <./pid/melhor_fitness_pid_ex_d_5.png (PNG copy)> <./pid/kp_kd_ki_pid_ex_d_
-5.png (PNG copy)>] <pid/step_pid_ex_d_mod.png, id=117, 427.5975pt x 313.17pt>
+5.png (PNG copy)>] <pid/step_pid_ex_d_mod.png, id=125, 427.5975pt x 313.17pt>
 File: pid/step_pid_ex_d_mod.png Graphic file (type png)
 
 <use pid/step_pid_ex_d_mod.png>
 Package pdftex.def Info: pid/step_pid_ex_d_mod.png used on input line 406.
 (pdftex.def)             Requested size: 256.07481pt x 187.54504pt.
 
-<pid/melhor_fitness_pid_ex_d_mod.png, id=118, 584.1825pt x 435.12563pt>
+<pid/melhor_fitness_pid_ex_d_mod.png, id=126, 584.1825pt x 435.12563pt>
 File: pid/melhor_fitness_pid_ex_d_mod.png Graphic file (type png)
 
 <use pid/melhor_fitness_pid_ex_d_mod.png>
@@ -926,14 +926,14 @@ Package pdftex.def Info: pid/melhor_fitness_pid_ex_d_mod.png used on input line
  412.
 (pdftex.def)             Requested size: 256.07481pt x 190.7388pt.
 
-<pid/mutacao_pid_ex_d_mod.png, id=119, 421.575pt x 316.18124pt>
+<pid/mutacao_pid_ex_d_mod.png, id=127, 421.575pt x 316.18124pt>
 File: pid/mutacao_pid_ex_d_mod.png Graphic file (type png)
 
 <use pid/mutacao_pid_ex_d_mod.png>
 Package pdftex.def Info: pid/mutacao_pid_ex_d_mod.png used on input line 419.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
 
-<pid/kp_kd_ki_pid_ex_d_mod.png, id=120, 529.22719pt x 395.97937pt>
+<pid/kp_kd_ki_pid_ex_d_mod.png, id=128, 529.22719pt x 395.97937pt>
 File: pid/kp_kd_ki_pid_ex_d_mod.png Graphic file (type png)
 
 <use pid/kp_kd_ki_pid_ex_d_mod.png>
@@ -951,7 +951,7 @@ Package babel Info: Redefining portuges shorthand "|
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 3.
 
-<aproximacao/sem_ruidos_y_fx.png, id=132, 421.575pt x 316.18124pt>
+<aproximacao/sem_ruidos_y_fx.png, id=140, 421.575pt x 316.18124pt>
 File: aproximacao/sem_ruidos_y_fx.png Graphic file (type png)
 
 <use aproximacao/sem_ruidos_y_fx.png>
@@ -959,7 +959,7 @@ Package pdftex.def Info: aproximacao/sem_ruidos_y_fx.png used on input line 29.
 
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
 
-<aproximacao/com_ruidos_y_fx.png, id=133, 421.575pt x 316.18124pt>
+<aproximacao/com_ruidos_y_fx.png, id=141, 421.575pt x 316.18124pt>
 File: aproximacao/com_ruidos_y_fx.png Graphic file (type png)
 
 <use aproximacao/com_ruidos_y_fx.png>
@@ -967,21 +967,21 @@ Package pdftex.def Info: aproximacao/com_ruidos_y_fx.png used on input line 36.
 
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
 
-<aproximacao/solucoes_map1.png, id=140, 623.32875pt x 371.88937pt>
+<aproximacao/solucoes_map1.png, id=148, 623.32875pt x 371.88937pt>
 File: aproximacao/solucoes_map1.png Graphic file (type png)
 
 <use aproximacao/solucoes_map1.png>
 Package pdftex.def Info: aproximacao/solucoes_map1.png used on input line 70.
 (pdftex.def)             Requested size: 230.46576pt x 137.50044pt.
 
-<aproximacao/pareto_map1.png, id=141, 615.0478pt x 261.97874pt>
+<aproximacao/pareto_map1.png, id=149, 615.0478pt x 261.97874pt>
 File: aproximacao/pareto_map1.png Graphic file (type png)
 
 <use aproximacao/pareto_map1.png>
 Package pdftex.def Info: aproximacao/pareto_map1.png used on input line 76.
 (pdftex.def)             Requested size: 281.68385pt x 119.98401pt.
 
-<aproximacao/best_solucao_map1.png, id=142, 622.57594pt x 261.97874pt>
+<aproximacao/best_solucao_map1.png, id=150, 622.57594pt x 261.97874pt>
 File: aproximacao/best_solucao_map1.png Graphic file (type png)
 
 <use aproximacao/best_solucao_map1.png>
@@ -998,7 +998,7 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 92.
 [7 <./aproximacao/sem_ruidos_y_fx.png (PNG copy)> <./aproximacao/com_ruidos_y_f
 x.png (PNG copy)>]
-<aproximacao/comparacao_map1.png, id=157, 522.45187pt x 390.70969pt>
+<aproximacao/comparacao_map1.png, id=165, 522.45187pt x 390.70969pt>
 File: aproximacao/comparacao_map1.png Graphic file (type png)
 
 <use aproximacao/comparacao_map1.png>
@@ -1011,7 +1011,7 @@ Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 127.
  [8 <./aproximacao/solucoes_map1.png> <./aproximacao/pareto_map1.png> <./aproxi
 macao/best_solucao_map1.png> <./aproximacao/comparacao_map1.png (PNG copy)>]
-<aproximacao/best_solucao_map1_r.png, id=169, 623.32875pt x 392.21532pt>
+<aproximacao/best_solucao_map1_r.png, id=178, 623.32875pt x 392.21532pt>
 File: aproximacao/best_solucao_map1_r.png Graphic file (type png)
 
 <use aproximacao/best_solucao_map1_r.png>
@@ -1019,14 +1019,14 @@ Package pdftex.def Info: aproximacao/best_solucao_map1_r.png used on input line
  136.
 (pdftex.def)             Requested size: 230.46576pt x 145.01566pt.
 
-<aproximacao/pareto_map1_r.png, id=170, 614.295pt x 261.22594pt>
+<aproximacao/pareto_map1_r.png, id=179, 614.295pt x 261.22594pt>
 File: aproximacao/pareto_map1_r.png Graphic file (type png)
 
 <use aproximacao/pareto_map1_r.png>
 Package pdftex.def Info: aproximacao/pareto_map1_r.png used on input line 142.
 (pdftex.def)             Requested size: 281.68385pt x 119.78671pt.
 
-<aproximacao/best_solucao_map1_r_info.png, id=171, 621.82312pt x 265.74281pt>
+<aproximacao/best_solucao_map1_r_info.png, id=180, 621.82312pt x 265.74281pt>
 File: aproximacao/best_solucao_map1_r_info.png Graphic file (type png)
 
 <use aproximacao/best_solucao_map1_r_info.png>
@@ -1034,7 +1034,7 @@ Package pdftex.def Info: aproximacao/best_solucao_map1_r_info.png used on input
  line 150.
 (pdftex.def)             Requested size: 256.07481pt x 109.43779pt.
 
-<aproximacao/solucoes_map1_r.png, id=172, 600.74437pt x 365.86688pt>
+<aproximacao/solucoes_map1_r.png, id=181, 600.74437pt x 365.86688pt>
 File: aproximacao/solucoes_map1_r.png Graphic file (type png)
 
 <use aproximacao/solucoes_map1_r.png>
@@ -1080,21 +1080,21 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `subscript' on input line 168.
 
-<aproximacao/solucoes_map2.png, id=179, 627.84563pt x 179.16937pt>
+<aproximacao/solucoes_map2.png, id=188, 627.84563pt x 179.16937pt>
 File: aproximacao/solucoes_map2.png Graphic file (type png)
 
 <use aproximacao/solucoes_map2.png>
 Package pdftex.def Info: aproximacao/solucoes_map2.png used on input line 207.
 (pdftex.def)             Requested size: 230.46576pt x 65.76671pt.
 
-<aproximacao/pareto_map2.png, id=180, 613.54219pt x 258.21469pt>
+<aproximacao/pareto_map2.png, id=189, 613.54219pt x 258.21469pt>
 File: aproximacao/pareto_map2.png Graphic file (type png)
 
 <use aproximacao/pareto_map2.png>
 Package pdftex.def Info: aproximacao/pareto_map2.png used on input line 213.
 (pdftex.def)             Requested size: 281.68385pt x 118.54773pt.
 
-<aproximacao/best_solucao_map2_info.png, id=181, 622.57594pt x 261.22594pt>
+<aproximacao/best_solucao_map2_info.png, id=190, 622.57594pt x 261.22594pt>
 File: aproximacao/best_solucao_map2_info.png Graphic file (type png)
 
 <use aproximacao/best_solucao_map2_info.png>
@@ -1108,7 +1108,7 @@ Package babel Info: Redefining portuges shorthand "|
  [9 <./aproximacao/best_solucao_map1_r.png> <./aproximacao/pareto_map1_r.png> <
 ./aproximacao/best_solucao_map1_r_info.png> <./aproximacao/solucoes_map1_r.png>
 ]
-<aproximacao/solucoes_map2_r.png, id=198, 624.08156pt x 395.22656pt>
+<aproximacao/solucoes_map2_r.png, id=206, 624.08156pt x 395.22656pt>
 File: aproximacao/solucoes_map2_r.png Graphic file (type png)
 
 <use aproximacao/solucoes_map2_r.png>
@@ -1116,14 +1116,14 @@ Package pdftex.def Info: aproximacao/solucoes_map2_r.png used on input line 262
 .
 (pdftex.def)             Requested size: 230.46576pt x 145.94809pt.
 
-<aproximacao/pareto_map2_r.png, id=199, 613.54219pt x 258.21469pt>
+<aproximacao/pareto_map2_r.png, id=207, 613.54219pt x 258.21469pt>
 File: aproximacao/pareto_map2_r.png Graphic file (type png)
 
 <use aproximacao/pareto_map2_r.png>
 Package pdftex.def Info: aproximacao/pareto_map2_r.png used on input line 268.
 (pdftex.def)             Requested size: 281.68385pt x 118.54773pt.
 
-<aproximacao/best_solucao_map2_r_info.png, id=200, 621.82312pt x 263.48438pt>
+<aproximacao/best_solucao_map2_r_info.png, id=208, 621.82312pt x 263.48438pt>
 File: aproximacao/best_solucao_map2_r_info.png Graphic file (type png)
 
 <use aproximacao/best_solucao_map2_r_info.png>
@@ -1131,7 +1131,7 @@ Package pdftex.def Info: aproximacao/best_solucao_map2_r_info.png used on input
  line 276.
 (pdftex.def)             Requested size: 256.07481pt x 108.50772pt.
 
-<aproximacao/best_solucao_map2_r.png, id=201, 614.295pt x 394.47375pt>
+<aproximacao/best_solucao_map2_r.png, id=209, 614.295pt x 394.47375pt>
 File: aproximacao/best_solucao_map2_r.png Graphic file (type png)
 
 <use aproximacao/best_solucao_map2_r.png>
@@ -1197,13 +1197,13 @@ Package babel Info: Redefining portuges shorthand "|
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 147.
 
-<fuzzy/test1.png, id=452, 421.575pt x 316.18124pt>
+<fuzzy/test1.png, id=460, 421.575pt x 316.18124pt>
 File: fuzzy/test1.png Graphic file (type png)
  <use fuzzy/test1.png>
 Package pdftex.def Info: fuzzy/test1.png used on input line 170.
 (pdftex.def)             Requested size: 256.07481pt x 192.05975pt.
 
-<fuzzy/test2.png, id=453, 421.575pt x 316.18124pt>
+<fuzzy/test2.png, id=461, 421.575pt x 316.18124pt>
 File: fuzzy/test2.png Graphic file (type png)
  <use fuzzy/test2.png>
 Package pdftex.def Info: fuzzy/test2.png used on input line 177.
@@ -1217,55 +1217,75 @@ Package babel Info: Redefining portuges shorthand "|
 (./fuzzy/test_robot_control.m)
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 196.
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 83.
+) (./secao4.tex
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 83.
+(babel)             in language  on input line 1.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 83.
+(babel)             in language  on input line 3.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 40.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 40.
  [17]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 83.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 71.
+)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 85.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 85.
+Package babel Info: Redefining portuges shorthand "|
+(babel)             in language  on input line 85.
+ [18]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 85.
  (./efc2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 83.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 83.
-Package rerunfilecheck Info: File `efc2.out' has not changed.
-(rerunfilecheck)             Checksum: 4385381CF0FB5859BB1ACBB6CF7D2D3C;661.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 85.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 85.
 
+
+Package rerunfilecheck Warning: File `efc2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `efc2.out':
+(rerunfilecheck)             Before: 430F69B9D4D6B31C12E466D32DE390F3;826
+(rerunfilecheck)             After:  BDDEFD08340CE5DBF50CB215F3162A08;902.
 
 LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 83.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 85.
  ) 
 Here is how much of TeX's memory you used:
- 11189 strings out of 493089
- 162425 string characters out of 6140694
- 584575 words of memory out of 5000000
- 14109 multiletter control sequences out of 15000+600000
- 20482 words of font info for 75 fonts, out of 8000000 for 9000
+ 11205 strings out of 493089
+ 162617 string characters out of 6140694
+ 584578 words of memory out of 5000000
+ 14113 multiletter control sequences out of 15000+600000
+ 21200 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,12n,41p,297b,1876s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></u
-sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
-/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols
-/msbm10.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/sha
-re/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/t
-ype1/urw/courier/ucrro8a.pfb>
-Output written on efc2.pdf (18 pages, 1182185 bytes).
+cmbxti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.
+pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
+i10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/tex
+mf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf-dist/fonts/type1/u
+rw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pf
+b>
+Output written on efc2.pdf (19 pages, 1209611 bytes).
 PDF statistics:
- 646 PDF objects out of 1000 (max. 8388607)
- 561 compressed objects within 6 object streams
- 319 named destinations out of 1000 (max. 500000)
- 253 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 674 PDF objects out of 1000 (max. 8388607)
+ 586 compressed objects within 6 object streams
+ 327 named destinations out of 1000 (max. 500000)
+ 269 words of extra memory for PDF output out of 10000 (max. 10000000)
 

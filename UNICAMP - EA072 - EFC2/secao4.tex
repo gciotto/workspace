@@ -1,0 +1,71 @@
+\section{Sistema de recomendação empregando \textit{k}-NN}
+
+\subsection {Abordagens \textit{User-based} e \textit{Item-based}}
+
+De acordo com o \textit{paper} \textit{State-of-the-art Recommender Systems},
+sistemas de recomendação que utilizam a abordagem \textit{user-based} exploram
+as similaridades entre usuários que possuam características em comum para
+predizer uma classificação que um usuário faria potencialmente para um item.
+Sendo assim, define-se o conjunto \(\mathbb{U}\) formado pelos usuários , o
+conjunto \(\mathbb{I}\) formado pelos itens e  o conjunto \(\mathbb{R}\) que
+possui todas as classificações dadas.  Uma classificação \(r_{ui}\) é dada pelo
+usuário \(u\in \mathbb{U}\) para o item \(i\in \mathbb{I}\)  e cada usuário
+\(u\) possui um conjunto de itens avaliados \(\mathbb{S}_u \subseteq
+\mathbb{I}\). A predição da classificação que um usuário \(a\in\mathbb{U}\)
+faria para o item \(i \notin \mathbb{S}_a\) e que considere \(K\) elementos do
+conjunto \(\mathbb{T}_a\), que contém \(K\) outros usuários cujas
+preferências sejam as mais parecidas com as de \(a\), é então:
+
+\begin{equation}
+p_{ai} = \frac{\sum_{\{ u\in \mathbb{T}_a | i\in \mathbb{S}_u \}} \left(
+sim(a,u) * r_{ui} \right)}{\sum_{\{ u\in \mathbb{T}_a | i\in \mathbb{S}_u \}}
+\left| sim(a,u)\right|}
+\end{equation}
+
+ou
+
+\begin{equation}
+p_{ai} = \bar{r_a} + \frac{\sum_{\{ u\in \mathbb{T}_a | i\in \mathbb{S}_u \}}
+\left( sim(a,u) * (r_{ui} - \bar{r_u})\right)}{\sum_{\{ u\in \mathbb{T}_a | i\in
+\mathbb{S}_u \}} \left| sim(a,u)\right|}
+\end{equation}
+
+em que \(sim(a,u)\) mede o grau de similaridade entre \(a\) e \(u\) e
+\(\bar{r_v}\) é a média das classificações de um usuário \(v\). A segunda
+expressão leva em consideração as diferenças de intensidade entre os usuários
+(por exemplo, em um sistema de 0 a 5, para \(u\), \textit{muito bom} pode ser
+3.5, mas, para \(a\), isso é 5) Essas equações nos dizem, portanto, que a
+predição realizada se aproximará da classificação feita pelo usuário \(u\) cujas
+características são as mais parecidas em relação a aquelas de \(a\).
+
+\vspace{12pt}
+
+A abordagem \textit{item-based}, por sua vez, utiliza os \textit{ratings} de
+itens \(j\) já classificados pelo usuário para predizer a possível classificação
+que o respectivo usuário daria a um item \(i\), dado o grau de semelhança entre este
+item não avaliado e aqueles avaliados. Define-se também a vizinhança
+\(\mathbb{T}_i\), contendo \(K\) itens próximos de \(i\) em termos de
+características. Assim como no caso anterior, essa predição \(p_{ai}\) pode ser
+realizada de duas maneiras:
+
+
+\begin{equation}
+p_{ai} = \frac{\sum_{\{ j\in \mathbb{S}_a \cap \mathbb{T}_i \}} \left(
+sim(i,j) * r_{aj} \right)}{\sum_{\{ j\in \mathbb{S}_a \cap \mathbb{T}_i \}}
+\left| sim(i,j)\right|}
+\end{equation}
+
+ou
+
+\begin{equation}
+p_{ai} = \bar{r_i} + \frac{\sum_{\{ j\in \mathbb{S}_a \cap \mathbb{T}_i \}}
+\left( sim(i,j) * (r_{aj} - \bar{r_j})\right)}{\sum_{\{ j\in \mathbb{S}_a \cap
+\mathbb{T}_i \}} \left| sim(i,j)\right|}
+\end{equation}
+
+em que \(sim(i,j)\) mede o grau de similaridade entre os itens \(i\) e \(j\) e
+\(\bar{r_k}\) é a média das classificações feitas para o item \(k\). Como na
+abordagem anterior, considera-se que itens muito parecidos terão
+\textit{ratings} também muito parecidos.
+
+\subsection{Exemplo de Aplicação}
