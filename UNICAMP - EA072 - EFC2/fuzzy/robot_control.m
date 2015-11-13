@@ -15,6 +15,8 @@ y_robot = yStart;
 
 m_length = length (labyrinth_matrix);
 
+steps = 0;
+
 % Movimenta o robo ate achar um ponto de destino, isto e, 'F' 
 while (labyrinth_matrix (round(m_length + 1 - y_robot), round(x_robot)) ~= 'F')
     
@@ -33,7 +35,6 @@ while (labyrinth_matrix (round(m_length + 1 - y_robot), round(x_robot)) ~= 'F')
         y_d1 = y_d1 + sin(robot_direction + pi/4);
         
     end
-    
     % Calcula distancia ao obstaculo mais proximo encontrado.
     distance_d1 = sqrt((x_d1 - x_robot)^2 + (y_d1 - y_robot)^2);
     
@@ -88,7 +89,6 @@ while (labyrinth_matrix (round(m_length + 1 - y_robot), round(x_robot)) ~= 'F')
     % Calcula nova posicao.
     x_robot = x_robot + speed*cos(robot_direction);
     y_robot = y_robot + speed*sin(robot_direction);
-    
 end
 
 % Imprime matriz do labirinto.
