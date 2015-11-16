@@ -1,0 +1,51 @@
+\section{Sistema de recomendação – Paradigma alternativo}
+
+\subsection{Funcionamento do SCOAL}
+
+Conforme explorado na seção anterior, o algoritmo \textit{k-NN} primeiramente
+divide a matriz de dados em \textit{co-clusters} e, em seguida, realiza uma
+predição baseada em um desses \textit{co-clusters} gerados. Tal algoritmo,
+portanto, não leva em consideração os atributos dos filmes e dos usuários, isto
+é, a predição é baseada exclusivamente nos \textit{ratings} dos usuários em uma
+vizinhança. O algoritmo \textit{SCOAL}, por sua vez, utiliza ambas as
+informações de vizinhança e atributos para predizer uma nota. A ideia do
+\textit{SCOAL} é dividir toda a matriz em grupos, ou \textit{clusters}, de
+maneira que cada um possa ser bem caracterizado por um único modelo preditivo. A
+similaridade é dada, portanto, pela similiridade dos modelos preditivos e não
+somente dos valores dos \textit{ratings}, como acontece no \textit{k-NN}. Além
+disso, o \textit{SCOAL} realiza o agrupamento, ou \textit{co-clustering}, simultaneamente
+com a obtenção dos respectivos modelos de classificação, a fim de melhorar a
+designação dos dados aos \textit{clusters} e a precisão dos modelos.
+
+\subsection{A base de dados \textit{MovieLens}}
+
+Os dados utilizados nesta seção foram disponibilizados pelo grupo
+\textit{GroupLens} no mês de Abril de 1998. São 100.000 \textit{ratings},
+compreendidas no intervalo \([1,5]\), dadas por 943 usuários em 1682 filmes e
+coletadas durante 7 meses, indo de 19 de setembro de 1997 até 22 de abril de
+1998. É importante dizer que esses dados foram filtrados, de forma que usuários
+com menos de 20 \textit{ratings} ou que não possuíssem informações
+demográficas completas foram eliminados da base. Essas informações demográficas
+são compostas por idade, sexo, ocupação e endereço \textit{zip}. Filmes, além
+de informações sobre título, data de lançamento e \textit{url} do IMDb,
+podem possuir diversos gêneros (ação, comédia, aventura etc).
+
+\vspace{12pt}
+
+Esses dados foram disponibilizados em alguns arquivos, cujos os principais são:
+
+\begin{itemize}
+  \item \texttt{u.data}: arquivo contendo as classificações dos usuários. Cada
+  linha, além de possuir a respectiva \textit{rating}, associa um \textit{id} de
+  usuário a um \textit{id} de filme. Adicionalmente, há um outro atribuot que
+  descreve a data que a respectiva classificação foi dada.
+
+  \item \texttt{u.item}: possui as informações apresentadas acima sobre os
+  filmes.
+  
+  \item \texttt{u.user}: possui as informações apresentadas acima sobre os
+  usuários.
+  
+\end{itemize}
+
+\subsection{Execução do \textit{toolbox} fornecido}

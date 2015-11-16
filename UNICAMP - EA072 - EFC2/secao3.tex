@@ -197,4 +197,192 @@ forma \textbf{SE (\(d_1\) É x) E (\(d_2\) É y) E (\(d_3\) É z) ENTÃO
 	
 	A adaptação do controle do robô via redes neurais exigiu algumas modificações
 	nos programas fornecidos anteriormente nesta seção e também no algoritmo de
-	evolução fornecido pelo professor, que foi utilizado na seção \ref{sec:pid}. 
+	evolução fornecido pelo professor, que foi utilizado na seção \ref{sec:pid}.
+	Foram utilizados, neste caso, \(N = 10\) para a camada intermediária, 100
+	gerações e 100 indivíduos na população.
+	
+	\vspace{12pt}
+	
+	Para o algoritmo evolutivo, foram alteradas a função de \textit{fitness}, a
+	estrutura do cromossomo e as taxas de mutação e \textit{crossover}, conforme
+	explicado a seguir. A função completa pode ser encontrada no programa
+	\ref{lst:mlp_training} na seção \textbf{Anexos}.
+	
+	\begin{itemize}
+	  \item A função de \textit{fitness} utilizada foi
+	  \(f_{fitness}=\frac{1}{n_{colisao} + 1}\). Logo, soluções que obtiverem
+	  muitas colisões serão piores, isto é, terão um \textit{fitness} menor. A
+	  linha adicionada ao código foi, portanto:
+	  
+\begin{lstlisting}[language=Matlab, style=nonumbers]
+fitness(i,1) = 1/(colision_i + 1);
+\end{lstlisting}
+	
+	  \item  Anteriormente, tínhamos apenas 3 parâmetros a evoluir, sendo eles
+	  \(k_d\), \(k_p\) e \(k_i\). Neste caso, o número de parâmetros depende do
+	  número de neurônios na camada intermediária. Sejam \(N\) neurônios nesta
+	  camada, cada um deles terá 4 pesos, sendo um deles para a entrada constante e
+	  o restante para as distâncias dos sensores. Há ainda mais \(N + 1\) pesos a
+	  serem ajustáveis, correpondentes à soma dos resultados de cada neurônio. A
+	  estrutura utilizada foi, portanto:
+	  
+\begin{lstlisting}[language=Matlab, style=nonumbers]
+% Numero de entradas: d1, d2, d3 e termo constante
+E = 3 + 1;
+pop = randn(tam_pop, E * n_neurons + n_neurons + 1);
+\end{lstlisting}	  
+	
+	  Utilizou-se também uma distribuição normal de média 0 e variância 1 para os
+	  pesos iniciais da rede neural.
+	  
+	  \item A fim de maximizar a diversidade na rede, utilizou-se taxas de mutação
+	  \(p_m = 0.8\) e \textit{crossover} \(p_c = 0.9\).
+
+	\end{itemize}
+	
+	O controle do robô, realizado pela \texttt{robot\_control\_mlp}, também foi
+	alterado. A linhas referentes ao controle nebuloso (linhas 75 a 86 do programa
+	\ref{lst:control}) foram retiradas e substituídas pelo trecho de código abaixo.
+	
+\begin{lstlisting}[language=Matlab, caption={Trecho de código do controle do
+robô feito via rede MLP.}, label={lst:control_mlp}] 
+% Constroi vetor das entradas de cada neuronio
+mlp_input = [distance_d1 distance_d2 distance_d3 1];
+
+% middle_layer_output contera as saidas de cada neuronio da camanda
+% intermediaria
+middle_layer_output = zeros (1, n_neurons);
+
+% Calcula a saida de cada neuronio. mlp_weights contem todos os pesos
+% sinapticos da rede 
+for n = 1 : n_neurons
+    
+    middle_layer_output (1, n) = ...
+        tanh(mlp_input * mlp_weights (1 + (n - 1)* 4 : 4 + (n - 1)* 4)');
+    
+end
+
+% a entrada da ultima camada eh a saida da camada intermediaria e uma
+% termo constante.
+last_layer_input = [middle_layer_output 1];
+
+% Calcula o desvio na direcao do robo. Seleciona ultimos n_neurons + 1 pesos
+% sinapticos. 
+d_angle = ...
+ last_layer_input * mlp_weights (1 + 4 * n_neurons : 1 + 4 * n_neurons + n_neurons)';
+
+robot_direction = robot_direction + d_angle;
+
+teste (round(m_length + 1 - y_robot), round(x_robot)) = 'r';
+
+% Calcula nova posicao.
+x_robot = x_robot + speed*cos(robot_direction);
+y_robot = y_robot + speed*sin(robot_direction);
+
+% Verifica se a nova posicao esta dentro do mapa.
+if (round(x_robot) > length(labyrinth_matrix (1,:))) ...
+        || (round(x_robot) < 1) ...
+        || (round(m_length + 1 - y_robot) < 1) ...
+        || (round(m_length + 1 - y_robot) > m_length)
+    
+    % Penalisa movimentos que levam o robo fora do mapa.
+    colisions = colisions + 1000;
+    
+% Detecta colisao.
+elseif (labyrinth_matrix (round(m_length + 1 - y_robot), round(x_robot)) == '#')
+    
+    % Aumenta contador de colisoes.
+    colisions = colisions + 1;
+end
+\end{lstlisting}
+	
+O mapa da figura \ref{fig:test_fuzzy_2} foi utilizado no treinamento da rede
+neural, visto que apresenta situações mais desafiadoras que o mapa da figura
+\ref{fig:test_fuzzy_1}. Sendo assim, acredita-se que se o programa for
+bem-sucedido em calcular os pesos sinápticos para o mapa mais complexo, então,
+os mesmos pesos serão adequados para mapas mais simples. As figuras
+\ref{fig:mlp_2} e \ref{fig:mlp_1} contém resultados para um dos vetores de
+pesos sinápticos encontrado pelo algoritmo evolutivo em que essa afirmação é
+comprovada.
+
+\FloatBarrier
+			    
+	\begin{figure}[h!]
+	
+	\centering
+	
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[width=1\linewidth]{mlp_robot/mlp_2}
+		  \caption{\centering Controle do robô via MLP no mapa 2.}
+		  \label{fig:mlp_2}
+		  
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[width=1\linewidth]{mlp_robot/mlp_1}
+		  \caption{\centering Controle do robô via MLP no mapa 1}
+		  \label{fig:mlp_1} 
+		\end{subfigure}
+	
+	
+	\caption{Resultados para o controle do robô via MLP
+	para dois mapas distintos.}
+	\end{figure} 
+	
+	\FloatBarrier
+	
+	A figura \ref{fig:fitness_mlp} representa a evolução do \textit{fitness} ao
+	decorrer da execução do algoritmo evolutivo. Verifica-se que, apesar da melhor
+	solução ser encontrada nas primeiras gerações, o \textit{fitness} médio é muito
+	pequeno em todas as gerações. Esse fato pode ser explicado pelos valores das
+	taxas de mutação e \textit{crossover}, responsáveis por manter uma grande
+	diversidade na população. Dessa forma, sempre serão adicionados à população
+	indivíduos ruins, isto é, que produzem baixos \textit{fitness}.
+	
+	\FloatBarrier
+	
+	\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.65]{mlp_robot/fitness}
+    \caption{\label{fig:fitness_mlp}Evolução do \textit{fitness} médio e
+    melhor.}
+	\end{figure}  
+	
+	\FloatBarrier
+	
+	As figuras \ref{fig:mlp_2_1} e \ref{fig:mlp_2_2} foram obtidas pelo
+	treinamento da rede neural no mapa da figura \ref{fig:test_fuzzy_1}.  
+	
+	\FloatBarrier
+			    
+	\begin{figure}[h!]
+	
+	\centering
+	
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[width=1\linewidth]{mlp_robot/mlp_1_2}
+		  \caption{\centering Controle do robô via MLP no mapa 1.}
+		  \label{fig:mlp_2_1}
+		  
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[width=1\linewidth]{mlp_robot/mlp_2_2}
+		  \caption{\centering Controle do robô via MLP no mapa 2.}
+		  \label{fig:mlp_2_2} 
+		\end{subfigure}
+	
+	
+	\caption{Resultados para o controle do robô via MLP
+	para dois mapas distintos.}
+	\end{figure} 
+	
+	\FloatBarrier
+	
+Verifica-se que a solução encontrada para o primeiro mapa, que é mais simples,
+controla corretamente o robô. Entretanto, se o mesmo controle fosse utilizado
+para o mapa 2, então o robô colidiria com a parede, conforme mostrado na figura
+\ref{fig:mlp_2_2}. Isso é explicado pelo fato de que o mapa exige um controle
+mais complexo que o primeiro.

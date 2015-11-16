@@ -10,3 +10,7 @@
 \BOOKMARK [1][-]{section.4}{Sistema de recomenda\347\343o empregando k-NN}{}% 10
 \BOOKMARK [2][-]{subsection.4.1}{Abordagens User-based e Item-based}{section.4}% 11
 \BOOKMARK [2][-]{subsection.4.2}{Exemplo de Aplica\347\343o}{section.4}% 12
+\BOOKMARK [1][-]{section.5}{Sistema de recomenda\347\343o \205 Paradigma alternativo}{}% 13
+\BOOKMARK [2][-]{subsection.5.1}{Funcionamento do SCOAL}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.2}{A base de dados MovieLens}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.3}{Execu\347\343o do toolbox fornecido}{section.5}% 16
