@@ -215,9 +215,33 @@ preditores gerados, como. por exemplo, \textit{Precision} e \textit{Recall}.
 \FloatBarrier
 
 
-O programa foi utilizado para prever resultados de um usuário aleatório, cujo
-\textit{id} vale 102.
+O programa foi utilizado para prever resultados de um usuário
+escolhido aleatoriamente, cujo \textit{id} vale 102. Os resultados estão
+presentes na tabela \ref{tab:scoal_102}. Verifica-se que os piores erros são
+realizados para notas baixas dadas pelo usuário, isto é, para os filmes que
+usuário avaliou como 1, os modelos produziram notas superiores a 3. Este fato
+decorre da característica esparsa da matriz: o algoritmo não possui
+\textit{ratings} suficientes para avaliar com qualidade todas as notas.
 
+\FloatBarrier
+	
+	\begin{table}[h]
+	    \centering
+		\caption{\label{tab:scoal_102} Comparação entre valores dados e preditos para
+		o usuário 102.}
+		\begin{tabular}{| c | c | c | }
+			\hline
+			\textbf{Filme} & \textbf{Valor Previsto} & \textbf{Valor Dado} \\ \hline
+			809 & 3.44625 & 3 \\ \hline
+			672 & 3.66343 & 1 \\ \hline
+			986 & 3.18711 & 1 \\ \hline
+			612 & 4.18292 & 4\\ \hline
+			515 & 4.79791 & 1 \\ \hline
+			67  & 3.48557 & 1 \\ \hline
+		\end{tabular}	    
+    \end{table}
+    
+    \FloatBarrier
 
 \subsection {As medidas de qualidade de predição}
 
