@@ -1,5 +1,5 @@
 #TeXlipse project settings
-#Tue Nov 24 09:29:52 BRST 2015
+#Sat Oct 24 12:10:07 BRST 2015
 markTmpDer=true
 builderNum=2
 outputDir=
@@ -7,8 +7,8 @@ makeIndSty=
 bibrefDir=
 outputFormat=pdf
 tempDir=tmp
-mainTexFile=cover letter AIRBUS.tex
-outputFile=Cover letter - CIOTTO PINTON Gustavo.pdf
+mainTexFile=efc2.tex
+outputFile=EFC2 - CIOTTO PINTON Gustavo.pdf
 langSpell=en
 markDer=true
 srcDir=
