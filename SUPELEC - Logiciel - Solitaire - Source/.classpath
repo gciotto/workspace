@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-8-openjdk"/>
 	<classpathentry kind="src" path="generated"/>
-	<classpathentry kind="lib" path="/home/gciotto/workspace/Solitaire_Source_Seq5_2014_C115/score.jar"/>
+	<classpathentry kind="lib" path="score.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
