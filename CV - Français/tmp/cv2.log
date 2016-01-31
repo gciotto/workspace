@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.11.16)  30 JAN 2016 15:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.11.16)  31 JAN 2016 14:33
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -642,26 +642,26 @@ Overfull \hbox (6.56516pt too wide) in paragraph at lines 116--126
  []
 
 
-Overfull \hbox (6.56516pt too wide) in paragraph at lines 132--181
+Overfull \hbox (6.56516pt too wide) in paragraph at lines 132--191
 [][][] 
  []
 
 
-Overfull \hbox (6.56516pt too wide) in paragraph at lines 187--192
+Overfull \hbox (6.56516pt too wide) in paragraph at lines 197--202
 [][][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 195.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 205.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 195.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 205.
  (./cv2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 195.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 195.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 205.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 205.
 Package rerunfilecheck Info: File `cv2.out' has not changed.
 (rerunfilecheck)             Checksum: 1F65DDDD5CCB99B71CF6E2376CF86BD3;290.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 195.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 205.
  ) 
 Here is how much of TeX's memory you used:
  7136 strings out of 493054
@@ -676,7 +676,7 @@ ts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/urw/h
 elvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 </usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-di
 st/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on cv2.pdf (1 page, 50998 bytes).
+Output written on cv2.pdf (1 page, 50898 bytes).
 PDF statistics:
  58 PDF objects out of 1000 (max. 8388607)
  49 compressed objects within 1 object stream
