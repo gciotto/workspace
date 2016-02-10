@@ -48,14 +48,16 @@ def estimate_required_time (amount, iInvestment, iMonth, iYear, stepInvestment )
     
     
 if __name__ == '__main__':
-    iInvestment = 28952.03 + 715 - 350
-    stepInvestment = 650 
+    iInvestment = 29115
+    stepInvestment = 600
     
     iMonth = 3
     iYear = 2016
     
-    nYears = 8
+    nYears = 2
     nMonths = nYears * 12
     
+    target = 3e3
+    
     estimate(nMonths, iInvestment, iMonth, iYear, stepInvestment)
-    estimate_required_time(5e3, iInvestment, iMonth, iYear, stepInvestment)
+    estimate_required_time(target, iInvestment, iMonth, iYear, stepInvestment)

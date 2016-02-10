@@ -1,7 +1,8 @@
 # Learning Python - Part I - Exercise 2
-import os
+string = input('Type in an expression: ')
 
-string = input('Type in an expression: ');
+print(string + '2', type (string), int(string) + 2) 
 
-print(string);
+if type(int(string)) != str:
+    print('coco') 
 

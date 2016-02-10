@@ -32,3 +32,5 @@ if __name__ == '__main__':
     
     d = Dog()
     print (d.reply())
+    
+    print (c.__class__ is Cat)
