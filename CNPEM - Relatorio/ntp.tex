@@ -141,9 +141,172 @@ oferecida pelo NTP. Temos, assim:
 	pode variar durante a execução, sendo modificado pelo algoritmo regulador do
 	relógio, que será discutido posteriormente. 
 	
-	\item \textit{System process}:
+	\item \textit{System process}: inclui algoritmos de seleção, clusterização e
+	combinação que utilizam as diversas estatísticas obtidas de cada servidor para
+	determinar os candidatos mais precisos e confiáveis à sincronização do relógio
+	do sistema. As funções de cada algoritmo são, respectivamente:
+		
+		\begin{itemize}
+  		  \renewcommand\labelitemi{--}
+  		  \item determinar bons candidatos, isto é, determinar quais servidores
+  		  possuem informações de sincronismo efetivamente importantes;
+  		  \item determinar os melhores candidatos dentro do conjunto de servidores
+  		  julgados importantes no passo anterior;
+  		  \item computar estatísticas baseadas nos dados recolhidos dos servidores
+  		  presentes no subconjunto escolhido pelo algoritmo de clusterição.
+  		\end{itemize}
+  	
+  	\item \textit{Clock discipline process}: responsável por controlar o tempo e
+  	frequência do relógio do sistema;
+  	
+  	\item \textit{Clock-adjust process}: roda a cada segundo para comunicar aos
+  	demais processos os resultados das correções realizadas no relógio do
+  	sistema.
+  	
 \end{enumerate}
 
 \subsection {Exemplo}
 
+A rede representada pela figura \ref{fig:redeNTP} foi proposta a fim de testar o
+funcionamento do protocolo NTP. As setas determinam as relações entre os nós e
+as direções representam quais nós fornecem e/ou recebem sincronização. Todos os
+computadores pertencem à mesma rede, isto é, assume-se que há um \textit{router}
+ligando esses nós e responsável pela comunicação com a Internet.
+
+\FloatBarrier
+
+\begin{figure}[h]
+    
+    \centering
+    \includegraphics[scale=0.7]{image/rede_ntp_teste}
+    \caption {Topologia da rede de teste.}
+    \label{fig:redeNTP} 
+\end{figure} 
+
+\FloatBarrier
+
+Têm-se, portanto, conforme a subseção anterior:
+
+\begin{itemize}
+  \renewcommand\labelitemi{--}
+  \item associações cliente/servidor entre \textit{remote servers} e
+  \textit{servers}, e entre \textit{servers} e \textit{clients};
+  \item associações simétricas ativas entre \textit{servers}.
+\end{itemize}
+
+A fim de eliminar a necessidade de implementar essa rede fisicamente,
+utilizou-se o \textit{software virtualbox}. Cada máquina presente na figura, com
+exceção dos \textit{remote servers}, foi substituída por uma máquina virtual,
+cujo sistema operacional é o \textit{Linux Debian 8.2.0 i386}. A escolha deste
+sistema foi baseada nas características previstas para as máquinas que comporão
+a infraestrutura do Sirius. Além disso, como pretende-se isolar completamente a
+rede, isto é, eliminar qualquer comunicação com a Internet, os \textit{remote
+servers} serão substituídos pelos respectivos servidores. Dessa maneira, tais
+servidores utilizarão seus próprios relógios como fonte primária de sincronismo.
+
+\vspace{12pt}
+
+Foi adotado que a rede teria endereço \texttt{10.0.0.0/24}, os servidores
+possuiriam endereços do tipo \texttt{10.0.0.10x}, sendo \textit{x} o dígito que
+caracteriza o servidor (1, 2 ou 3), e \texttt{10.0.0.0y1} para os clientes,
+sendo \textit{y} o equivalente de \textit{x}. 
+
+
+\vspace{12pt}
+
+Após a configuração de rede das respectivas máquinas virtuais, a instalação do
+NTP pode prosseguir. Inicialmente, é necessário fazer a instalação do pacote
+\texttt{ntp} através do comando
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+$ sudo apt-get install ntp
+\end{lstlisting}
+
+Estão incluídos neste pacote, os programas \texttt{ntpd}, \texttt{ntpq}
+e \texttt{ntpqc}. \texttt{ntpd}, ou \textit{NTP Daemon}, roda continuamente no
+sistema e é responsável pela troca de mensagens com os diversos servidores
+ou clientes, de acordo com as configurações, enquanto que \texttt{ntpq}
+e \texttt{ntpqc} (o \textit{q} refere-se a \textit{query}) são utilizados para
+verificar o estado das variáveis e alterar configurações do \textit{daemon}. 
+
+\vspace{12pt}
+
+Quando é iniciado, o \textit{daemon} retira as suas configurações do arquivo
+\texttt{/etc/ntp.conf}. Cada nó da rede deve, portanto,
+configurar esse arquivo de acordo com as funções que desempenha.
+
+\vspace{12pt}
+
+A configuração dos clientes é simples: basta adicionarmos a linha
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+server 10.0.0.10y iburst
+\end{lstlisting}
+
+ao arquivo de configurações. A opção \texttt{iburst} é uma otimização fornecida
+pelo protocolo que agiliza a sincronização inicial. Essa opção faz com que o
+intervalo de envio de pacotes seja reduzido e a quantidade de pacotes
+enviados seja aumentada caso o servidor não esteja acessível. 
+
+\vspace{12pt}
+
+Para o \textit{server 2}, é necessário adicionarmos as duas linhas seguintes.
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+peer 10.0.0.101
+peer 10.0.0.103
+\end{lstlisting}
+
+Essas duas linhas criam associações simétricas ativas entre o \textit{server 2}
+e os outros servidores. Dessa maneira, eles poderão trocar informações de
+sincronização entre si.
+
+\vspace{12pt}
+
+Para os servidores 1 e 3, além das duas linhas contendo a opção \texttt{peer}, é
+necessário também adicionar as duas linhas abaixo:
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+server 127.127.0.0
+fudge 127.127.0.0 stratum 1
+\end{lstlisting}
+
+A primeira opção configura o relógio local do sistema como uma fonte de
+sincronização, enquanto que a segunda aumenta a sua hierarquia. Se o
+atributo \texttt{stratum} vale 1, logo a prioridade do respectivo servidor
+torna-se máxima.
+
+\vspace{12pt}
+
+Para iniciar o \textit{daemon}, basta executar o comando abaixo em cada máquina.
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+$ sudo /etc/init.d/ntp restart
+\end{lstlisting}
+
+Os sistemas levam alguns minutos para se sincronizarem. Para verificar o estado
+das conexões e da sincronização, utiliza-se o programa \texttt{ntpq} através do
+comando 
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+$ ntpq -p
+\end{lstlisting}
+
+A opção \texttt{-p} lista todos os nós utilizados para sincronização do relógio
+local. Para o \textit{Server 1}, espera-se uma saída parecida com a figura
+\ref{fig:sv1} (não há garantias que seja idêntica, visto que os algoritmos que
+determinam as fontes que serão utilizadas para sincronização são baseados em
+fatores que podem variar dependendo do estado da rede). 
+
+\FloatBarrier
+
+\begin{figure}[h]
+    
+    \centering
+    %\includegraphics[scale=0.7]{image/rede_ntp_teste}
+    \caption {Resultado do comando \texttt{ntpq -p} no \textit{Server 1}.}
+    \label{fig:sv1} 
+\end{figure} 
+
+\FloatBarrier
 \subsection {Aplicação ao projeto \textit{Sirius}}
