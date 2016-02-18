@@ -310,6 +310,30 @@ fatores que podem variar dependendo do estado da rede).
 
 \FloatBarrier
 
+O caracter \texttt{*} indica quais dos servidores está sendo usado como fonte de
+sincronismo e o \texttt{+} indica os outros possíveis candidatos válidos (os
+chamados \textit {truechimers}). É possível também encontrar o caracter
+\texttt{-}, representando servidores que provêm fontes de sincronismo inválidas
+(chamadas também de \textit{falsetickers}). \texttt{refid} representa o
+\textit{id} da refêrencia de sincronismo do respectivo servidor. Por exemplo, o
+nó \texttt{10.0.0.103} usa como referência o relógio \texttt{LOCAL(0)}, que o
+próprio relógio da máquina. \texttt{st} é o valor do \textit{stratum}. Conforme
+esperado, servidores secundários, como \texttt{10.0.0.103}, que possuem somente
+uma fonte de sincronismo, têm esse atributo setado para 2. \texttt{when}
+corresponde ao tempo, em segundos, da última troca de pacotes e \texttt{poll} é
+o tempo em segundos até o próximo envio. \texttt{reach}, em representação octal,
+indica se as 8 últimas tentativas de comunicação foram bem-sucedidas ou não. 
+Esse atributo funciona como um registrador que é deslocado para a esquerda a
+cada nova comunicação. Se ela for bem-sucedida, o \textit {bit} mesmo
+significativo é setado para 1, senão, para 0. As demais colunas são as
+estatísticas comentadas na subseção anterior.
+
+\vspace{12pt}
+
+A figura \ref{fig:cl1} é a saída do comando \texttt{ntpq -p} no cliente
+conectado no \textit{server 1}. Conforme esperado, ele obtem corretamente a
+sincronização deste servidor.
+
 \FloatBarrier
 
 \begin{figure}[h]

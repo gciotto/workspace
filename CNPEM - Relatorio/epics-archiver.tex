@@ -351,19 +351,19 @@ export WARSRC_DIR=$INSTALL_DIR/epics-archiver-appliance
 
 E executamos:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[language=bash, style=nonumbers, basicstyle=\scriptsize]
 $ source /home/user/.bashrc
 
-pushd ${DEPLOY_DIR}/mgmt/webapps && rm -rf mgmt*; cp ${WARSRC_DIR}/mgmt.war .; mkdir mgmt; cd mgmt; jar xf ../mgmt.war; popd; 
-pushd ${DEPLOY_DIR}/engine/webapps && rm -rf engine*; cp ${WARSRC_DIR}/engine.war .; mkdir engine; cd engine; jar xf ../engine.war; popd; 
-pushd ${DEPLOY_DIR}/etl/webapps && rm -rf etl*; cp ${WARSRC_DIR}/etl.war .; mkdir etl; cd etl; jar xf ../etl.war; popd; 
-pushd ${DEPLOY_DIR}/retrieval/webapps && rm -rf retrieval*; cp ${WARSRC_DIR}/retrieval.war .; mkdir retrieval; cd retrieval; jar xf ../retrieval.war; popd;
+$ pushd ${DEPLOY_DIR}/mgmt/webapps && rm -rf mgmt*; cp ${WARSRC_DIR}/mgmt.war .; mkdir mgmt; cd mgmt; jar xf ../mgmt.war; popd; 
+$ pushd ${DEPLOY_DIR}/engine/webapps && rm -rf engine*; cp ${WARSRC_DIR}/engine.war .; mkdir engine; cd engine; jar xf ../engine.war; popd; 
+$ pushd ${DEPLOY_DIR}/etl/webapps && rm -rf etl*; cp ${WARSRC_DIR}/etl.war .; mkdir etl; cd etl; jar xf ../etl.war; popd; 
+$ pushd ${DEPLOY_DIR}/retrieval/webapps && rm -rf retrieval*; cp ${WARSRC_DIR}/retrieval.war .; mkdir retrieval; cd retrieval; jar xf ../retrieval.war; popd;
 
 \end{lstlisting}
 
 \item Enfim, lance os 4 \textit{Tomcats}:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[language=bash, style=nonumbers, basicstyle=\scriptsize]
 $ source /home/user/.bashrc
 
 $ export CATALINA_BASE=${DEPLOY_DIR}/mgmt;${CATALINA_HOME}/bin/catalina.sh start 
