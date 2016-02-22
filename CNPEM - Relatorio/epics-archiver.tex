@@ -54,7 +54,10 @@ Archiver Appliance.
 
 A aplicação necessita, além da própria base de bibliotecas EPICS, da
 instalação do \textit{java-jdk 8} e de servidores \textit{MySQL} e
-\textit{Apache Tomcat}.
+\textit{Apache Tomcat}. A instalação do \textit{Apache HTTP Server} é opcional e
+deve ser utilizada somente se o balanceamento de requisições entre as
+\textit{appliances} for pretentida. Nesse caso, vamos utilizar o módulo
+\textit{mod\_proxy\_balancer}.
 
 \begin {enumerate}[i.] 
   \item \textbf{Instalação do EPICS}: é necessário inicialmente fazer o
@@ -138,9 +141,81 @@ adicionadas na instalação do \textit{Java}.
 export CATALINA_HOME = $TOMCAT_DIR/apache-tomcat-8.0.32
 \end{lstlisting}
 
+\item \textbf{Instalação do Apache HTTP Server}: Para instalar o servidor
+\textit{Apache}, faça o \textit{download} do pacote. 
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+$ cd $INSTALL_DIR
+$ wget http://ftp.unicamp.br/pub/apache//httpd/httpd-2.4.18.tar.gz
+$ tar -xvzf httpd-2.4.18.tar.gz
+$ rm httpd-2.4.18.tar.gz
+$ cd httpd-2.4.18
+\end{lstlisting}
+
+Algumas dependências devem ser instaladas:
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+$ sudo apt-get install libapr1-dev libaprutil1-dev
+\end{lstlisting}
+
+Será necessário instalar também a \texttt{libpcre}:
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+$ cd $INSTALL_DIR
+$ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.37.tar.gz
+$ tar -xvzf pcre-8.37.tar.gz
+$ rm pcre-8.37.tar.gz
+$ cd pcre-8.37
+$ ./configure --prefix=$INSTALL_DIR/pcre
+$ make
+$ make install
+\end{lstlisting}
+
+Finalmente, execute os \textit{scripts} para instalar o \textit{Apache http}:
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+$ cd $INSTALL_DIR/httpd-2.4.18
+$ ./configure --prefix=$INSTALL_DIR/httpd --with-pcre=$INSTALL_DIR/pcre
+$ make
+$ make install
+\end{lstlisting}
+
+Para habilitar o módulo \texttt{mod\_proxy\_balancer}, descomente as seguintes
+linhas no arquivo \texttt{\$INSTALL\_DIR/httpd/conf/httpd.conf}:
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+LoadModule lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so
+\end{lstlisting}
+
+Adicione as linhas abaixo no mesmo arquivo. Quando uma requisição for realizada
+pelo endereço \texttt{localhost/lnls-archiver}, um dos endereços dentro da
+\textit{tag} \texttt{\(<\)Proxy\(>\)} será chamado. No nosso exemplo, colocamos
+o endereço do módulo \texttt{retrieval} de apenas uma \textit{appliance}.
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+<Proxy "balancer://appl">
+    BalancerMember "http://localhost:11998/retrieval"
+</Proxy>
+ProxyPass "/lnls-archiver" "balancer://appl"
+ProxyPassReverse "/test" "balancer://appl"
+\end{lstlisting}
+
+Inicie o servidor com o comando:
+
+\begin{lstlisting}[language=bash, style=nonumbers]
+$ sudo $INSTALL_DIR/httpd/bin/apachectl start
+\end{lstlisting}
+
+O servidor \textit{Apache} funciona agora como um divisor de carga entre as
+diversas \textit{appliances} da rede.
+
 \end{enumerate} 
 
 \subsubsection {Instalação do EPICS Archiver Appliance}
+\label{sec:epicsappl}
 
 Tendo instalado todas as dependências, é necessário ainda configurar
 alguns parâmetros e instalar os pacotes referentes ao arquivador. Para tal, crie
@@ -161,24 +236,26 @@ $ rm archappl_v0.0.1_SNAPSHOT_26-January-2016T18-03-47.tar.gz
 	Nesta pasta estão os arquivos \textit{.war}  usados para lançar os módulos e
 	alguns \textit{scripts} sugeridos pelo desenvolvedor para auxiliar na
 	instalação.
-  \item Crie uma pasta onde as instâncias \textit{Tomcat} de cada módulo serão
+  \item \label{item:appl} Crie uma pasta onde as instâncias \textit{Tomcat} de cada módulo serão
   armazenadas e crie o arquivo \textit{lnls\_appliances.xml}. Vamos chamar essa
   pasta de \texttt{epics-appliances/}. 
 \begin{lstlisting}[language=bash, style=nonumbers]
 $ mkdir $INSTALL_DIR/epics-appliances/
 $ nano $INSTALL_DIR/epics-appliances/lnls_appliances.xml
 \end{lstlisting}
-Copie as seguintes linhas para esse arquivo: 
+Copie as seguintes linhas para esse arquivo. Se a configuração do
+\textit{Apache httpd} não foi realizada, então o endereço de
+\texttt{<data\_retrieval\_url>} deve ser igual ao endereço de
+\texttt{<retrieval\_url>}. Senão:
 \begin{lstlisting}[language=bash, style=nonumbers]
-<appliances>
-   <appliance>
+<appliances> <appliance>
      <identity>lnls_epics_appliance</identity>
      <cluster_inetport>localhost:12000</cluster_inetport>
      <mgmt_url>http://localhost:11995/mgmt/bpl</mgmt_url>
      <engine_url>http://localhost:11996/engine/bpl</engine_url>
      <etl_url>http://localhost:11997/etl/bpl</etl_url>
      <retrieval_url>http://localhost:11998/retrieval/bpl</retrieval_url>
-     <data_retrieval_url>http://localhost:11998/retrieval</data_retrieval_url>
+     <data_retrieval_url>http://localhost/lnls-archiver</data_retrieval_url>
    </appliance>
  </appliances>
 \end{lstlisting} 
@@ -351,7 +428,7 @@ export WARSRC_DIR=$INSTALL_DIR/epics-archiver-appliance
 
 E executamos:
 
-\begin{lstlisting}[language=bash, style=nonumbers, basicstyle=\scriptsize]
+\begin{lstlisting}[language=bash, style=nonumbers]
 $ source /home/user/.bashrc
 
 $ pushd ${DEPLOY_DIR}/mgmt/webapps && rm -rf mgmt*; cp ${WARSRC_DIR}/mgmt.war .; mkdir mgmt; cd mgmt; jar xf ../mgmt.war; popd; 
@@ -363,7 +440,7 @@ $ pushd ${DEPLOY_DIR}/retrieval/webapps && rm -rf retrieval*; cp ${WARSRC_DIR}/r
 
 \item Enfim, lance os 4 \textit{Tomcats}:
 
-\begin{lstlisting}[language=bash, style=nonumbers, basicstyle=\scriptsize]
+\begin{lstlisting}[language=bash, style=nonumbers]
 $ source /home/user/.bashrc
 
 $ export CATALINA_BASE=${DEPLOY_DIR}/mgmt;${CATALINA_HOME}/bin/catalina.sh start 
@@ -380,3 +457,24 @@ http://localhost:11995/mgmt/ui/index.html
 \end{lstlisting}
 
 \end{enumerate} 
+
+\subsection{Uso do CS Studio no monitoramento}
+
+O \textit{CS Studio} pode ser usado para monitorar a \textit{appliance}. Para
+isso, entre em \texttt{Edit \(>\) Preferences} e acesse o item \texttt{CSS
+Applications \(>\) Trends \(>\) Data Browser}. No campo \textit{Archive Data
+Server URLs}, adicione o endereço contido em \texttt{<data\_retrieval\_url>} do
+arquivo configurado no item \ref{item:appl} da subseção \ref{sec:epicsappl},
+substituindo o protocolo \texttt{http://} por \texttt{pbraw://}. Escreva
+qualquer \textit{Server alias}. Na tabela \textit{Default Archive Data Sources},
+adicione o mesmo endereço e aperte \textit{Ok} para salvar as alterações.
+
+\vspace{12pt}
+
+É necessário alterar a perspectiva do \textit{CS Studio}. Acesse
+\texttt{Windows \(>\) Open Perspective} e escolha \textbf{Data Browser}. Na aba
+\textit{Archive Search}, escreva a \textit{URL} configurada anteriormente e no
+campo \textit{Pattern}, escreva o nome das variáveis arquivadas que deseja
+monitorar. Por exemplo, se escrevermos \texttt{MTTemp*}, todas as variáveis
+arquivadas com este início poderão ser acessadas. Clique com o botão direito na
+variável desejada e acesse \texttt{Process Variable \(>\) Data Browser}.
