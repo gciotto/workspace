@@ -3,6 +3,7 @@ from numpy import *
 from PySide.QtCore import *
 from PySide.QtGui import *
 import datetime
+import time
 
 app = QApplication(sys.argv)
 
@@ -21,17 +22,24 @@ class Viewer(QMainWindow):
         self.plotview = Plotter(self)
         self.setCentralWidget(self.mainWidget)
 
+        self.combovariables = QComboBox()
+        
         self.titulo = QLabel("Variavel");
         self.variavel = QLineEdit()
 
-        self.year = QLineEdit();
-        self.Lyear = QLabel("Ano");
+        #=======================================================================
+        # self.year = QLineEdit();
+        # self.Lyear = QLabel("Ano");
+        # 
+        # self.month = QLineEdit();
+        # self.Lmonth = QLabel("Mes");
+        # 
+        # self.day = QLineEdit();
+        # self.Lday = QLabel("Dia");
+        #=======================================================================
         
-        self.month = QLineEdit();
-        self.Lmonth = QLabel("Mes");
+        self.calendar = QCalendarWidget()
         
-        self.day = QLineEdit();
-        self.Lday = QLabel("Dia");
         
         self.hours = QLineEdit();
         self.Lhours = QLabel("Horas");
@@ -46,29 +54,46 @@ class Viewer(QMainWindow):
                 
         data_retrieval_url = "http://localhost/lnls-archiver/data/getData.json?pv="
         pv_name = "MBTemp2:Channel1".replace(':', '%3A')
-        initial_date = "&from=2016-02-22T16:30:00.000Z".replace(':', '%3A')
+        initial_date = "&from=2016-02-22T12:30:00.000Z".replace(':', '%3A')
+        
+        #2016-02-22T12:30:00.000Z
         
         url_json = data_retrieval_url + pv_name + initial_date
-        
-        
-        
+                
         req = urllib2.urlopen(url_json)
         data = json.load(req)
-        secs = [(x['secs'])for x in data[0]['data']]
+        secs = [datetime.datetime.fromtimestamp(x['secs']) for x in data[0]['data']]
+        teste = [float(x.day) + (float(x.hour) + float(x.minute)/100 + float(x.second)/10000)/100 for x in secs]
+        
+        for i in range(secs.__len__()):
+            print "%s - %.6f" % (secs[i], teste[i])    
+        
         vals = [x['val'] for x in data[0]['data']]
-        self.plotview.update_data(secs, vals)
+        self.plotview.update_data(teste, vals)
 
+        url_json = 'http://localhost:11995/mgmt/bpl/getPVStatus?pv=*'
+        req = urllib2.urlopen(url_json)
+        data = json.load(req)
+        
+        for i in range(data.__len__()):
+            self.combovariables.insertItem(i, data[i]['pvNameOnly'])
+        
         self.widget2 = QWidget(self)
         
         self.layout2 = QGridLayout(self.widget2)
         self.layout2.addWidget(self.titulo,0, 0,1,1)
-        self.layout2.addWidget(self.variavel,0, 1,1,2)
-        self.layout2.addWidget(self.Lday,1, 0)
-        self.layout2.addWidget(self.day,2, 0)
-        self.layout2.addWidget(self.Lmonth,1,1)
-        self.layout2.addWidget(self.month,2,1)
-        self.layout2.addWidget(self.Lyear,1, 2)
-        self.layout2.addWidget(self.year,2, 2)
+        self.layout2.addWidget(self.combovariables,0, 1,1,2)
+        #=======================================================================
+        # self.layout2.addWidget(self.Lday,1, 0)
+        # self.layout2.addWidget(self.day,2, 0)
+        # self.layout2.addWidget(self.Lmonth,1,1)
+        # self.layout2.addWidget(self.month,2,1)
+        # self.layout2.addWidget(self.Lyear,1, 2)
+        # self.layout2.addWidget(self.year,2, 2)
+        #=======================================================================
+        
+        self.layout2.addWidget(self.calendar,1, 0,2,3)
+        
         self.layout2.addWidget(self.Lhours,3, 0)
         self.layout2.addWidget(self.hours,4, 0)
         self.layout2.addWidget(self.Lminutes,3, 1)
@@ -83,24 +108,23 @@ class Viewer(QMainWindow):
         layout.addWidget(self.widget2,0,0,1,3)
         layout.addWidget(self.plotview.widget,0,3,1,1)
         
-        
         self.setLayout(layout)
 
      
     def update(self):
         print "Ok"
         
-        variavel = self.variavel.text()
-        day = self.day.text()
-        month = self.month.text()
-        year =  self.year.text()
+        variavel = str(self.combovariables.currentText())
+        day = str(self.calendar.selectedDate().day())
+        month = str(self.calendar.selectedDate().month())
+        year =  str(self.calendar.selectedDate().year())
         hours =  self.hours.text()
         minutes =  self.minutes.text()
         seconds =  self.seconds.text()
         
         data_retrieval_url = "http://localhost/lnls-archiver/data/getData.json?pv="
         pv_name = variavel.replace(':', '%3A')
-        initial_date = "&from=" + year + '-' + month + '-' + day +"T"+hours+":"+minutes+":"+seconds+".000Z".replace(':', '%3A')
+        initial_date = "&to=" + year + '-' + month + '-' + day +"T"+hours+":"+minutes+":"+seconds+".000Z".replace(':', '%3A')
         
         url_json = data_retrieval_url + pv_name + initial_date
         
@@ -108,13 +132,10 @@ class Viewer(QMainWindow):
         
         req = urllib2.urlopen(url_json)
         data = json.load(req)
-        secs = [datetime.datetime.utcfromtimestamp(x['secs']) for x in data[0]['data']]
-        
-        aux = secs[0]
-        h = aux.hours
-        
+        secs = [datetime.datetime.fromtimestamp(x['secs']) for x in data[0]['data']]
+        teste = [float(x.day) + (float(x.hour) + float(x.minute)/100 + float(x.second)/10000)/100 for x in secs]
         vals = [x['val'] for x in data[0]['data']]
-        self.plotview.update_data(secs, vals)
+        self.plotview.update_data(teste, vals)
     
 
 class Plotter():
