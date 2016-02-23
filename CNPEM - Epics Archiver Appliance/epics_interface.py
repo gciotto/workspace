@@ -115,9 +115,9 @@ class Viewer(QMainWindow):
         print "Ok"
         
         variavel = str(self.combovariables.currentText())
-        day = str(self.calendar.selectedDate().day())
-        month = str(self.calendar.selectedDate().month())
-        year =  str(self.calendar.selectedDate().year())
+        day = "%02d" % self.calendar.selectedDate().day()
+        month = "%02d" %  self.calendar.selectedDate().month()
+        year =  "%02d" %  self.calendar.selectedDate().year()
         hours =  self.hours.text()
         minutes =  self.minutes.text()
         seconds =  self.seconds.text()
