@@ -25,9 +25,10 @@ class Viewer(QMainWindow):
         self.combovariables = QComboBox()
         
         self.titulo = QLabel("Variavel");
-        self.variavel = QLineEdit()
 
         #=======================================================================
+        #self.variavel = QLineEdit()
+        
         # self.year = QLineEdit();
         # self.Lyear = QLabel("Ano");
         # 
@@ -38,17 +39,32 @@ class Viewer(QMainWindow):
         # self.Lday = QLabel("Dia");
         #=======================================================================
         
-        self.calendar = QCalendarWidget()
+        self.calendar_from = QCalendarWidget()
+        self.calendar_to = QCalendarWidget()
         
         
-        self.hours = QLineEdit();
-        self.Lhours = QLabel("Horas");
+        self.hours_from = QLineEdit();
+        self.hours_from.setMaxLength(2)
+        self.Lhours_from = QLabel("Horas");
         
-        self.minutes = QLineEdit();
-        self.Lminutes = QLabel("Minutos");
+        self.minutes_from = QLineEdit();
+        self.minutes_from.setMaxLength(2)
+        self.Lminutes_from = QLabel("Minutos");
         
-        self.seconds = QLineEdit();
-        self.Lseconds = QLabel("Segundos");
+        self.seconds_from = QLineEdit();
+        self.seconds_from.setMaxLength(2)
+        self.Lseconds_from = QLabel("Segundos");
+        
+        
+        self.hours_to = QLineEdit();
+        self.Lhours_to = QLabel("Horas");
+        
+        self.minutes_to = QLineEdit();
+        self.Lminutes_to = QLabel("Minutos");
+        
+        self.seconds_to = QLineEdit();
+        self.Lseconds_to = QLabel("Segundos");
+        
         self.plotButton = QPushButton("Plot")
         self.plotButton.clicked.connect(self.update) 
                 
@@ -82,25 +98,27 @@ class Viewer(QMainWindow):
         
         self.layout2 = QGridLayout(self.widget2)
         self.layout2.addWidget(self.titulo,0, 0,1,1)
-        self.layout2.addWidget(self.combovariables,0, 1,1,2)
-        #=======================================================================
-        # self.layout2.addWidget(self.Lday,1, 0)
-        # self.layout2.addWidget(self.day,2, 0)
-        # self.layout2.addWidget(self.Lmonth,1,1)
-        # self.layout2.addWidget(self.month,2,1)
-        # self.layout2.addWidget(self.Lyear,1, 2)
-        # self.layout2.addWidget(self.year,2, 2)
-        #=======================================================================
+        self.layout2.addWidget(self.combovariables,0, 1,1,3)
         
-        self.layout2.addWidget(self.calendar,1, 0,2,3)
         
-        self.layout2.addWidget(self.Lhours,3, 0)
-        self.layout2.addWidget(self.hours,4, 0)
-        self.layout2.addWidget(self.Lminutes,3, 1)
-        self.layout2.addWidget(self.minutes,4, 1)      
-        self.layout2.addWidget(self.Lseconds,3, 2)
-        self.layout2.addWidget(self.seconds,4, 2)
-        self.layout2.addWidget(self.plotButton, 5, 0)
+        self.layout2.addWidget(self.calendar_from,1, 0,2,2)
+        self.layout2.addWidget(self.Lhours_from,3, 0)
+        self.layout2.addWidget(self.hours_from,4, 0)
+        self.layout2.addWidget(self.Lminutes_from,3, 1)
+        self.layout2.addWidget(self.minutes_from,4, 1)      
+        self.layout2.addWidget(self.Lseconds_from,3, 2)
+        self.layout2.addWidget(self.seconds_from,4, 2)
+        
+        self.layout2.addWidget(self.calendar_to,1, 2,2,2)
+        self.layout2.addWidget(self.Lhours_to,5, 0)
+        self.layout2.addWidget(self.hours_to,6, 0)
+        self.layout2.addWidget(self.Lminutes_to,5, 1)
+        self.layout2.addWidget(self.minutes_to,6, 1)      
+        self.layout2.addWidget(self.Lseconds_to,5, 2)
+        self.layout2.addWidget(self.seconds_to,6, 2)
+        
+        
+        self.layout2.addWidget(self.plotButton, 7, 0)
         self.widget2.setLayout(self.layout2)
         
         layout = QGridLayout(self.mainWidget)
@@ -115,18 +133,27 @@ class Viewer(QMainWindow):
         print "Ok"
         
         variavel = str(self.combovariables.currentText())
-        day = "%02d" % self.calendar.selectedDate().day()
-        month = "%02d" %  self.calendar.selectedDate().month()
-        year =  "%02d" %  self.calendar.selectedDate().year()
-        hours =  self.hours.text()
-        minutes =  self.minutes.text()
-        seconds =  self.seconds.text()
+        day_from = "%02d" % self.calendar_from.selectedDate().day()
+        month_from = "%02d" %  self.calendar_from.selectedDate().month()
+        year_from =  "%02d" %  self.calendar_from.selectedDate().year()
+        hours_from =  self.hours_from.text()
+        minutes_from =  self.minutes_from.text()
+        seconds_from =  self.seconds_from.text()
+        
+        day_to = "%02d" % self.calendar_to.selectedDate().day()
+        month_to = "%02d" %  self.calendar_to.selectedDate().month()
+        year_to =  "%02d" %  self.calendar_to.selectedDate().year()
+        hours_to =  self.hours_to.text()
+        minutes_to =  self.minutes_to.text()
+        seconds_to =  self.seconds_to.text()
         
         data_retrieval_url = "http://localhost/lnls-archiver/data/getData.json?pv="
         pv_name = variavel.replace(':', '%3A')
-        initial_date = "&to=" + year + '-' + month + '-' + day +"T"+hours+":"+minutes+":"+seconds+".000Z".replace(':', '%3A')
+        to_date = "&to=" + year_to + '-' + month_to + '-' + day_to +"T"+hours_to+":"+minutes_to+":"+seconds_to+".000Z".replace(':', '%3A')
+        from_date = "&from=" + year_from + '-' + month_from + '-' + day_from +"T"+hours_from+":"+minutes_from+":"+seconds_from+".000Z".replace(':', '%3A')
         
-        url_json = data_retrieval_url + pv_name + initial_date
+        
+        url_json = data_retrieval_url + pv_name + from_date + to_date
         
         print url_json
         
@@ -136,13 +163,15 @@ class Viewer(QMainWindow):
         teste = [float(x.day) + (float(x.hour) + float(x.minute)/100 + float(x.second)/10000)/100 for x in secs]
         vals = [x['val'] for x in data[0]['data']]
         self.plotview.update_data(teste, vals)
-    
+            
 
 class Plotter():
     def __init__(self, parent):
         self.plotdata = ArrayPlotData(x=array([]),  y=array([]))
         self.window = self.create_plot(parent)
+        
         self.widget = self.window.control
+    
 
     def update_data(self, x, y):
         self.plotdata.set_data("x", x)
