@@ -15,12 +15,15 @@
 #define EMPTY_BUFFER 2
 #define BUFFER_SIZE 256
 
-struct bsmp_message
-{
-	uint8_t     code;
-	uint16_t    payload_size;
-	uint8_t     payload[BSMP_MAX_PAYLOAD];
+enum print_origin_event {
+
+	CLIENT_SEND,
+	CLIENT_RECEIVE,
+	SERVER_SEND,
+	SERVER_RECEIVE
+
 };
+
 
 uint8_t circular_buffer[BUFFER_SIZE];
 uint8_t start = 0, end = 0, client_message_count = 0, server_message_count = 0, bytes_count = 0;
@@ -48,7 +51,7 @@ void* client_thread (void* args);
 void server_read_raw_packet (struct bsmp_raw_packet *received_packet);
 void server_write_raw_packet (struct bsmp_raw_packet *to_be_sent_packet);
 
-void print_buffer();
+void print_buffer(enum print_origin_event origin_event);
 
 
 int main(){
@@ -112,7 +115,7 @@ void init_curves(struct bsmp_curve **curves, uint32_t* count){
 
 		printf("Type in all the 16 md5 digits: ");
 		for (int i = 0; i < 16; i++) {
-			printf("Type in %d-th digit: ", i + 1);
+			printf("Type in %do. digit: ", i + 1);
 			scanf("%02hhX", &curves[j]->info.checksum[i]);
 		}
 	}
@@ -121,7 +124,7 @@ void init_curves(struct bsmp_curve **curves, uint32_t* count){
 
 void init_variables(struct bsmp_var **variables, uint32_t* count){
 
-	printf ("How many variables? ");
+	printf ("How many variables?..... ");
 	scanf ("%d", count);
 
 	//variables = (struct bsmp_var**) malloc(*count * sizeof(struct bsmp_var*));
@@ -133,17 +136,17 @@ void init_variables(struct bsmp_var **variables, uint32_t* count){
 		memset (variables[j], 0, sizeof (struct bsmp_var));
 
 		variables[j]->info.id = j;
-		printf ("Is it writable? ");
+		printf ("Writable? ..... ");
 		scanf("%d", &variables[j]->info.writable);
 
-		printf ("How many bytes does it have? ");
+		printf ("How many bytes?..... ");
 		scanf("%d", &variables[j]->info.size);
 
 		variables[j]->data = (uint8_t*) malloc (variables[j]->info.size * sizeof(uint8_t));
 		memset (variables[j]->data, 0, variables[j]->info.size * sizeof(uint8_t));
 
 		for (int i = 0; i < variables[j]->info.size; i++) {
-			printf("Type in %d-th byte: ", i + 1);
+			printf("Type in %do. byte: ", i + 1);
 			scanf("%02hhX", &variables[j]->data[i]);
 		}
 
@@ -190,7 +193,7 @@ int client_send_example (uint8_t* data, uint32_t *count) {
 
 	client_message_count++;
 
-	print_buffer();
+	print_buffer(CLIENT_SEND);
 
 	printf("CLIENT send_example - unlock mutex...\n");
 	pthread_mutex_unlock(&lock_buffer);
@@ -206,7 +209,7 @@ int client_receive_example (uint8_t* data, uint32_t *count) {
 	pthread_mutex_lock(&lock_buffer);
 	printf("CLIENT receive_example - lock mutex... ok\n");
 
-	print_buffer();
+	print_buffer(CLIENT_RECEIVE);
 
 	*count = circular_buffer[start];
 	start = (start + 1) % BUFFER_SIZE;
@@ -222,8 +225,6 @@ int client_receive_example (uint8_t* data, uint32_t *count) {
 
 	server_message_count--;
 
-	print_buffer();
-
 	printf("CLIENT receive_example - unlock mutex...\n");
 	pthread_mutex_unlock(&lock_buffer);
 	printf("CLIENT receive_example - unlock mutex... ok\n");
@@ -233,7 +234,7 @@ int client_receive_example (uint8_t* data, uint32_t *count) {
 void* client_thread (void *arg){
 
 
-	printf("Entrou thread client...\n");
+	printf("\nCLIENT thread initialized... ok\n");
 
 	// Client instance
 	bsmp_client_t *client;
@@ -243,46 +244,67 @@ void* client_thread (void *arg){
 
 	while (!isServerReady);
 
-	printf("Server is ready...\n");
+	printf("SERVER initialized... ok\n");
 
 	bsmp_client_init(client, &client_send_example, &client_receive_example);
 
-	printf("Client is ready...\n");
+	printf("CLIENT initialized... ok\n");
 
 	for (;;) {
 
-		int cmd;
-
-		struct bsmp_var_info *var;
+		int cmd, id;
 		uint8_t *value;
-
-		// Prepare message to be sent
-		struct bsmp_message response, request;
 
 		enum bsmp_err err;
 
 		printf ("Command to be sent to server: ");
-		scanf ("%d", cmd);
+		scanf ("%x", &cmd);
 
 		switch (cmd) {
 
-		//		case CMD_VAR_QUERY_LIST:
+		case CMD_VAR_READ:
 
-		//			request.code = CMD_VAR_QUERY_LIST;
-		//			request.payload_size = 0;
-		//
-		//			err = command (client, &request, &response);
-		//
-		//			printf ("Variable's info:\nid = %d");
-		//
-		//			if (response.code == CMD_VAR_LIST) {
-		//
-		//				printf ("TO DO");
-		//
-		//			} else printf ("Deu ruim\n");
-		//
-		//			break;
+			printf ("Variable's ID:...");
+			scanf("%d", &id);
 
+			value = (uint8_t*) malloc (client->vars.list[id].size * sizeof(uint8_t));
+
+			if ((err = bsmp_read_var(client, &client->vars.list[id], value)))
+				printf("%s\n", bsmp_error_str(err));
+			else {
+				printf ("Variable (ID %d) value.....: ", id);
+				for (uint8_t i = 0; i < client->vars.list[id].size; i++)
+					printf ("%02x ", value[i]);
+				printf("\n");
+			}
+
+			break;
+
+		case CMD_VAR_WRITE:
+
+			printf ("Variable's ID:...");
+			scanf("%d", &id);
+
+			value = (uint8_t*) malloc (client->vars.list[id].size * sizeof(uint8_t));
+
+			for (uint8_t i = 0; i < client->vars.list[id].size; i++) {
+				printf ("Type in %io. byte.....: ", i+1);
+				scanf ("%02hhX", &value[i]);
+			}
+
+			if ((err = bsmp_write_var(client, &client->vars.list[id], value)))
+				printf("%s\n", bsmp_error_str(err));
+			else printf ("Variable (ID %d) has been changed.....\n", id);
+
+
+			break;
+
+
+		case CMD_CURVE_BLOCK:
+
+			//bsmp_send_curve_block
+
+			break;
 		}
 
 
@@ -293,7 +315,7 @@ void* client_thread (void *arg){
 
 void* server_thread (void *arg){
 
-	printf("Entrou server thread...\n");
+	printf("\nSERVER thread initialized... ok\n");
 
 	// Server instance
 	bsmp_server_t *server;
@@ -358,7 +380,7 @@ void server_read_raw_packet (struct bsmp_raw_packet *received_packet) {
 	pthread_mutex_lock(&lock_buffer);
 	printf("SERVER read_raw_packet - lock mutex... ok\n");
 
-	print_buffer();
+	print_buffer(SERVER_RECEIVE);
 
 	received_packet->len = circular_buffer[start];
 	start = (start + 1) % BUFFER_SIZE;
@@ -400,7 +422,7 @@ void server_write_raw_packet (struct bsmp_raw_packet *to_be_sent_packet) {
 	}
 
 
-	print_buffer();
+	print_buffer(SERVER_SEND);
 
 	server_message_count++;
 
@@ -410,7 +432,14 @@ void server_write_raw_packet (struct bsmp_raw_packet *to_be_sent_packet) {
 }
 
 
-void print_buffer() {
+void print_buffer(enum print_origin_event origin_event) {
+
+	switch (origin_event) {
+	case CLIENT_RECEIVE: printf ("RECEIVED by CLIENT - "); break;
+	case CLIENT_SEND: printf ("SENT by CLIENT - "); break;
+	case SERVER_RECEIVE: printf ("RECEIVED by SERVER - "); break;
+	case SERVER_SEND: printf ("SENT by SERVER - "); break;
+	}
 
 	uint8_t i_start = start;
 
