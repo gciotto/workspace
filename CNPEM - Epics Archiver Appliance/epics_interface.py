@@ -10,38 +10,40 @@ app = QApplication(sys.argv)
 from traits.etsconfig.etsconfig import ETSConfig
 ETSConfig.toolkit = "qt4"
 from enable.api import Window
-from chaco.api import ArrayPlotData, Plot
+from chaco.api import ArrayPlotData, Plot, PlotAxis
+from chaco.scales.api import CalendarScaleSystem
+from chaco.scales_tick_generator import ScalesTickGenerator
 
 import urllib2
 import json
 
 class Viewer(QMainWindow):
+    
     def __init__(self):
         QMainWindow.__init__(self)
+        
+        self.create_components()
+                
+        data = self.json_requester.json_request_variables('*')
+        
+        for i in range(data.__len__()):
+            self.combovariables.insertItem(i, data[i]['pvNameOnly'])
+        
+        self.put_components()
+    
+    def create_components(self):
+        
         self.mainWidget = QWidget(self) # dummy widget to contain layout manager
         self.plotview = Plotter(self)
         self.setCentralWidget(self.mainWidget)
+        self.json_requester = JsonRequester("http://localhost/lnls-archiver", "http://localhost:11995/mgmt/")
 
         self.combovariables = QComboBox()
         
         self.titulo = QLabel("Variavel");
-
-        #=======================================================================
-        #self.variavel = QLineEdit()
-        
-        # self.year = QLineEdit();
-        # self.Lyear = QLabel("Ano");
-        # 
-        # self.month = QLineEdit();
-        # self.Lmonth = QLabel("Mes");
-        # 
-        # self.day = QLineEdit();
-        # self.Lday = QLabel("Dia");
-        #=======================================================================
         
         self.calendar_from = QCalendarWidget()
         self.calendar_to = QCalendarWidget()
-        
         
         self.hours_from = QLineEdit();
         self.hours_from.setMaxLength(2)
@@ -67,32 +69,9 @@ class Viewer(QMainWindow):
         
         self.plotButton = QPushButton("Plot")
         self.plotButton.clicked.connect(self.update) 
-                
-        data_retrieval_url = "http://localhost/lnls-archiver/data/getData.json?pv="
-        pv_name = "MBTemp2:Channel1".replace(':', '%3A')
-        initial_date = "&from=2016-02-22T12:30:00.000Z".replace(':', '%3A')
+    
         
-        #2016-02-22T12:30:00.000Z
-        
-        url_json = data_retrieval_url + pv_name + initial_date
-                
-        req = urllib2.urlopen(url_json)
-        data = json.load(req)
-        secs = [datetime.datetime.fromtimestamp(x['secs']) for x in data[0]['data']]
-        teste = [float(x.day) + (float(x.hour) + float(x.minute)/100 + float(x.second)/10000)/100 for x in secs]
-        
-        for i in range(secs.__len__()):
-            print "%s - %.6f" % (secs[i], teste[i])    
-        
-        vals = [x['val'] for x in data[0]['data']]
-        self.plotview.update_data(teste, vals)
-
-        url_json = 'http://localhost:11995/mgmt/bpl/getPVStatus?pv=*'
-        req = urllib2.urlopen(url_json)
-        data = json.load(req)
-        
-        for i in range(data.__len__()):
-            self.combovariables.insertItem(i, data[i]['pvNameOnly'])
+    def put_components(self):
         
         self.widget2 = QWidget(self)
         
@@ -121,48 +100,39 @@ class Viewer(QMainWindow):
         self.layout2.addWidget(self.plotButton, 7, 0)
         self.widget2.setLayout(self.layout2)
         
-        layout = QGridLayout(self.mainWidget)
+        self.layout = QGridLayout(self.mainWidget)
         
-        layout.addWidget(self.widget2,0,0,1,3)
-        layout.addWidget(self.plotview.widget,0,3,1,1)
+        self.layout.addWidget(self.widget2,0,0,1,3)
+        self.layout.addWidget(self.plotview.widget,0,3,1,1)
         
-        self.setLayout(layout)
+        self.setLayout(self.layout)
 
      
     def update(self):
         print "Ok"
         
-        variavel = str(self.combovariables.currentText())
-        day_from = "%02d" % self.calendar_from.selectedDate().day()
-        month_from = "%02d" %  self.calendar_from.selectedDate().month()
-        year_from =  "%02d" %  self.calendar_from.selectedDate().year()
-        hours_from =  self.hours_from.text()
-        minutes_from =  self.minutes_from.text()
-        seconds_from =  self.seconds_from.text()
+        variavel = str(self.combovariables.currentText())   
         
-        day_to = "%02d" % self.calendar_to.selectedDate().day()
-        month_to = "%02d" %  self.calendar_to.selectedDate().month()
-        year_to =  "%02d" %  self.calendar_to.selectedDate().year()
-        hours_to =  self.hours_to.text()
-        minutes_to =  self.minutes_to.text()
-        seconds_to =  self.seconds_to.text()
-        
-        data_retrieval_url = "http://localhost/lnls-archiver/data/getData.json?pv="
-        pv_name = variavel.replace(':', '%3A')
-        to_date = "&to=" + year_to + '-' + month_to + '-' + day_to +"T"+hours_to+":"+minutes_to+":"+seconds_to+".000Z".replace(':', '%3A')
-        from_date = "&from=" + year_from + '-' + month_from + '-' + day_from +"T"+hours_from+":"+minutes_from+":"+seconds_from+".000Z".replace(':', '%3A')
+        to_date = time.strptime("%d %d %d %s %s %s" % (self.calendar_to.selectedDate().year(),
+                                                         self.calendar_to.selectedDate().month(), 
+                                                         self.calendar_to.selectedDate().day(), 
+                                                         self.hours_to.text(), self.minutes_to.text(), 
+                                                         self.seconds_to.text()),
+                                     "%Y %m %d %H %M %S")
         
         
-        url_json = data_retrieval_url + pv_name + from_date + to_date
+        from_date = time.strptime("%d %d %d %s %s %s" % (self.calendar_from.selectedDate().year(),
+                                                         self.calendar_from.selectedDate().month(), 
+                                                         self.calendar_from.selectedDate().day(), 
+                                                         self.hours_from.text(), self.minutes_from.text(), 
+                                                         self.seconds_from.text()),
+                                     "%Y %m %d %H %M %S")
+
         
-        print url_json
-        
-        req = urllib2.urlopen(url_json)
-        data = json.load(req)
-        secs = [datetime.datetime.fromtimestamp(x['secs']) for x in data[0]['data']]
-        teste = [float(x.day) + (float(x.hour) + float(x.minute)/100 + float(x.second)/10000)/100 for x in secs]
-        vals = [x['val'] for x in data[0]['data']]
-        self.plotview.update_data(teste, vals)
+        secs, vals = self.json_requester.json_request_data(variavel, 
+                                                           from_date, 
+                                                           to_date)
+        self.plotview.update_data(secs, vals)
             
 
 class Plotter():
@@ -179,10 +149,49 @@ class Plotter():
         
 
     def create_plot(self, parent):
-        plot = Plot(self.plotdata, padding=35, border_visible=True)
+        plot = Plot(self.plotdata, padding=50, border_visible=True)
         plot.plot(("x", "y"), name="data plot", color="green")
+        bottom_axis = PlotAxis(plot, orientation="bottom",# mapper=xmapper,
+                    tick_generator=ScalesTickGenerator(scale=CalendarScaleSystem()))
+        
+        plot.index_axis = bottom_axis
         return Window(parent, -1, component=plot)
+    
 
+class JsonRequester ():
+    
+    def __init__(self, data_retrieval_url, mgmt_url):
+        self.data_retrieval_url = data_retrieval_url
+        self.mgmt_url = mgmt_url
+    
+    def json_request_variables(self, variables_prefix):
+        
+        url_json = self.mgmt_url + 'bpl/getPVStatus?pv=' + variables_prefix
+        req = urllib2.urlopen(url_json)
+        data = json.load(req)
+        
+        return data
+    
+    def json_request_data(self, variable, from_date, to_date):    
+        
+        retrieval_url = self.data_retrieval_url + "/data/getData.json?"
+        pv_name = ("pv=" + variable).replace(':', '%3A')
+        
+        to_date =   ("&to=" + time.strftime("%Y-%m-%dT%H:%M:%S",to_date) + ".000Z").replace(':', '%3A')
+        from_date = ("&from=" + time.strftime("%Y-%m-%dT%H:%M:%S",from_date) + ".000Z").replace(':', '%3A')
+        
+        
+        url_json = retrieval_url + pv_name + from_date + to_date
+        
+        print url_json
+        
+        req = urllib2.urlopen(url_json)
+        data = json.load(req)
+        
+        secs = [x['secs'] for x in data[0]['data']]
+        vals = [x['val'] for x in data[0]['data']]
+        
+        return secs, vals
 
 if __name__ == "__main__":
     

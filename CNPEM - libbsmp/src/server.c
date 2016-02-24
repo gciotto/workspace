@@ -41,6 +41,8 @@ enum bsmp_err bsmp_register_variable (bsmp_server_t *server,
 {
     SERVER_REGISTER(var, BSMP_MAX_VARIABLES);
 
+
+
     // Add to the group containing all variables
     group_add_var(&server->groups.list[GROUP_ALL_ID], var);
 

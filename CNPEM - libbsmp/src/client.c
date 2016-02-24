@@ -333,6 +333,8 @@ enum bsmp_err bsmp_client_init (bsmp_client_t *client,
     if((err = get_version(client)))
         return err;
 
+    printf("Version obtained from server... ok\n");
+
     if((err = update_vars_list(client)))
         return err;
 
