@@ -8,12 +8,14 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdio.h>
-
+#include <math.h>
 #include <pthread.h>
 
 #define FULL_BUFFER 1
 #define EMPTY_BUFFER 2
 #define BUFFER_SIZE 256
+#define BLOCK_SIZE 8
+#define EXIT 0xff
 
 enum print_origin_event {
 
@@ -24,12 +26,13 @@ enum print_origin_event {
 
 };
 
-
 uint8_t circular_buffer[BUFFER_SIZE];
 uint8_t start = 0, end = 0, client_message_count = 0, server_message_count = 0, bytes_count = 0;
 
 pthread_mutex_t lock_buffer;
+
 bool isServerReady = false;
+bool client_finished = false;
 
 bool hasMessageFromClient();
 
@@ -81,11 +84,7 @@ int main(){
 
 bool hasMessageFromClient() {
 
-
-	bool aux = (client_message_count > 0);
-
-	return aux;
-
+	return (client_message_count > 0);
 }
 
 void init_curves(struct bsmp_curve **curves, uint32_t* count){
@@ -104,8 +103,10 @@ void init_curves(struct bsmp_curve **curves, uint32_t* count){
 		printf ("Is it writable? ");
 		scanf("%d", &curves[j]->info.writable);
 
-		printf ("How many bytes does each block contain? ");
-		scanf("%d", &curves[j]->info.block_size);
+		// printf ("How many bytes does each block contain? ");
+		// scanf("%d", &curves[j]->info.block_size);
+
+		curves[j]->info.block_size = BLOCK_SIZE; // each block is a double
 
 		printf ("How many blocks does it contain? ");
 		scanf("%d", &curves[j]->info.nblocks);
@@ -113,9 +114,9 @@ void init_curves(struct bsmp_curve **curves, uint32_t* count){
 		curves[j]->read_block = &read_curve_example;
 		curves[j]->write_block = &write_curve_example;
 
-		printf("Type in all the 16 md5 digits: ");
+		printf("Type in all the 16 md5 digits.... \n");
 		for (int i = 0; i < 16; i++) {
-			printf("Type in %do. digit: ", i + 1);
+			printf("Type in %do. digit:.... ", i + 1);
 			scanf("%02hhX", &curves[j]->info.checksum[i]);
 		}
 	}
@@ -157,14 +158,38 @@ void init_variables(struct bsmp_var **variables, uint32_t* count){
 bool read_curve_example(struct bsmp_curve *curve, uint16_t block, uint8_t *data,
 		uint16_t *len) {
 
+	*len = curve->info.block_size;
 
-	return 0;
+	union {
+		double sin_value;
+		uint8_t sin_bytes[8];
+	} block_aux;
+
+
+	block_aux.sin_value = sin(2*M_PI*((double)block/(double)curve->info.nblocks));
+
+	printf ("read_curve_example:.... %.6f\n", block_aux.sin_value);
+
+	for (int i = 0; i < BLOCK_SIZE; i++)
+		data[i] = block_aux.sin_bytes[i];
+
+	return 1;
 }
 
 bool write_curve_example(struct bsmp_curve *curve, uint16_t block, uint8_t *data,
 		uint16_t len){
 
-	return 0;
+	union {
+		double cos_value;
+		uint8_t cos_bytes[8];
+	} block_aux;
+
+	for (int i = 0; i < BLOCK_SIZE; i++)
+		block_aux.cos_bytes[i] = data[i];
+
+	printf("write_curve_example wrote successfully (%.4f)....\n", block_aux.cos_value);
+
+	return 1;
 }
 
 int client_send_example (uint8_t* data, uint32_t *count) {
@@ -255,9 +280,18 @@ void* client_thread (void *arg){
 		int cmd, id;
 		uint8_t *value;
 
+		struct bsmp_curve_info curve;
+		uint16_t curve_offset;
+		uint32_t len;
+
+		union {
+			double val;
+			uint8_t array[8];
+		} curve_block;
+
 		enum bsmp_err err;
 
-		printf ("Command to be sent to server: ");
+		printf ("Command to be sent to server:..... ");
 		scanf ("%x", &cmd);
 
 		switch (cmd) {
@@ -300,11 +334,54 @@ void* client_thread (void *arg){
 			break;
 
 
-		case CMD_CURVE_BLOCK:
+		case CMD_CURVE_BLOCK_REQUEST:
 
-			//bsmp_send_curve_block
+			printf ("Curve's ID:...");
+			scanf("%d", &id);
+
+			printf ("Offset....: ");
+			scanf("%d", &curve_offset);
+
+			value = (uint8_t*) malloc (client->curves.list[id].block_size * sizeof(uint8_t));
+
+			if ((err = bsmp_request_curve_block (client, &client->curves.list[id],
+					curve_offset, &curve_block.array, &len)))
+				printf("%s\n", bsmp_error_str(err));
+
+			else {
+
+				printf("Curve (ID %d) block n. %d:..... ", id, curve_offset);
+
+				for (uint16_t i = 0; i < len; i++)
+					printf ("%02x ", curve_block.array[i]);
+				printf("(%.4f)\n", curve_block.val);
+			}
 
 			break;
+
+		case CMD_CURVE_BLOCK:
+
+			printf ("Curve's ID:...");
+			scanf("%d", &id);
+
+			printf ("Offset....: ");
+			scanf("%d", &curve_offset);
+
+			curve_block.val = cos (2*M_PI*curve_offset/client->curves.list[id].nblocks);
+
+			if  ((err = bsmp_send_curve_block (client, &client->curves.list[id], curve_offset,
+					&curve_block.array, BLOCK_SIZE)))
+				printf("%s\n", bsmp_error_str(err));
+			else printf("write_curve_example wrote successfully (%.4f)....\n", curve_block.val);
+
+			break;
+
+
+		case EXIT:
+			printf("CLIENT has ended.... ok\n");
+			client_finished = true;
+			pthread_exit(NULL);
+
 		}
 
 
@@ -355,7 +432,7 @@ void* server_thread (void *arg){
 
 	isServerReady = true;
 
-	for (;;) {
+	for (;!client_finished;) {
 
 		if (hasMessageFromClient()) {
 
@@ -371,6 +448,7 @@ void* server_thread (void *arg){
 		}
 	}
 
+	printf("SERVER has ended.... ok\n");
 	pthread_exit(NULL);
 }
 
@@ -420,7 +498,6 @@ void server_write_raw_packet (struct bsmp_raw_packet *to_be_sent_packet) {
 		end = (end + 1) % BUFFER_SIZE;
 		bytes_count++;
 	}
-
 
 	print_buffer(SERVER_SEND);
 
