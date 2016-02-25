@@ -528,5 +528,4 @@ void print_buffer(enum print_origin_event origin_event) {
 	}
 
 	printf("\n");
-
 }
