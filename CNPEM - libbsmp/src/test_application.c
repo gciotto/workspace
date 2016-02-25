@@ -56,7 +56,6 @@ void server_write_raw_packet (struct bsmp_raw_packet *to_be_sent_packet);
 
 void print_buffer(enum print_origin_event origin_event);
 
-
 int main(){
 
 
@@ -114,11 +113,12 @@ void init_curves(struct bsmp_curve **curves, uint32_t* count){
 		curves[j]->read_block = &read_curve_example;
 		curves[j]->write_block = &write_curve_example;
 
-		printf("Type in all the 16 md5 digits.... \n");
+		/*printf("Type in all the 16 md5 digits.... \n");
 		for (int i = 0; i < 16; i++) {
 			printf("Type in %do. digit:.... ", i + 1);
 			scanf("%02hhX", &curves[j]->info.checksum[i]);
-		}
+		}*/
+
 	}
 
 }
@@ -280,9 +280,12 @@ void* client_thread (void *arg){
 		int cmd, id;
 		uint8_t *value;
 
+		struct bsmp_group_list *list_query;
 		struct bsmp_curve_info curve;
 		uint16_t curve_offset;
 		uint32_t len;
+
+		struct bsmp_var_info **list;
 
 		union {
 			double val;
@@ -333,6 +336,63 @@ void* client_thread (void *arg){
 
 			break;
 
+		case CMD_GROUP_QUERY_LIST:
+
+			list_query = (struct bsmp_group_list*) malloc (sizeof(struct bsmp_group_list));
+
+			if ((err = bsmp_get_groups_list(client, &list_query)))
+				printf("%s\n", bsmp_error_str(err));
+
+			else
+				for (int i = 0; i < list_query->count; i++){
+					printf ("Group (ID %d) writable (%d) contains %d byte (s).....\n",
+							list_query->list[i].id, list_query->list[i].writable, list_query->list[i].size);
+				}
+
+			break;
+
+		case CMD_GROUP_QUERY:
+
+			printf ("Group's ID:...");
+			scanf("%d", &id);
+
+			value = (uint8_t*) malloc (client->groups.list[id].size * sizeof(uint8_t));
+
+			if (err = bsmp_read_group (client, &client->groups.list[id], value))
+				printf("%s\n", bsmp_error_str(err));
+
+			else
+				for (int i = 0, j = 0; i < client->groups.list[id].vars.count; i++) {
+
+					struct bsmp_var_info *var_info = client->groups.list[id].vars.list[i];
+					printf ("Variable (ID %d): ....", var_info->id);
+
+					for (int k = 0; k < var_info->size ;j++, k++)
+						printf ("%02x ", value[j]);
+					printf("\n");
+				}
+
+			break;
+
+		case CMD_GROUP_CREATE:
+
+			printf ("# of variables of the new group:.....");
+			scanf ("%d", &len);
+
+			list = (struct bsmp_var_info**)
+							malloc (len * sizeof(struct bsmp_var_info*));
+
+			for (int i = 0; i < len; i++) {
+				printf("Variable ID:....");
+				scanf ("%d", &id);
+				list[i] = &client->vars.list[id];
+			}
+
+
+			if ((err = bsmp_create_group (client, list)))
+				printf("%s\n", bsmp_error_str(err));
+
+			break;
 
 		case CMD_CURVE_BLOCK_REQUEST:
 

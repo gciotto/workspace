@@ -30,13 +30,13 @@ all: CNPEM\ -\ libbsmp
 CNPEM\ -\ libbsmp: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -pthread -lm  -o "CNPEM - libbsmp" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -pthread  -lm  -o "CNPEM - libbsmp" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) "CNPEM - libbsmp"
+	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) "CNPEM - libbsmp"
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -20,6 +20,8 @@
 /* Version info */
 
 #define BSMP_VERSION_STR_MAX_LEN    20
+#define IS_BIG_ENDIAN 0
+
 struct bsmp_version
 {
     uint8_t major;

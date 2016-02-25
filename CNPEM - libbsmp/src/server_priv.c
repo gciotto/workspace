@@ -594,15 +594,15 @@ SERVER_CMD_FUNCTION (curve_block_request)
     // Get curve
     struct bsmp_curve *curve = server->curves.list[curve_id];
 
-    uint16_t block_offset = (recv_msg->payload[1] << 8) + recv_msg->payload[2];
+    uint16_t block_offset =	(IS_BIG_ENDIAN ?
+    						(recv_msg->payload[1] << 8) + recv_msg->payload[2]  :
+							(recv_msg->payload[2] << 8) + recv_msg->payload[1] );
 
     if(block_offset >= curve->info.nblocks)
         MESSAGE_SET_ANSWER_RET(send_msg, CMD_ERR_INVALID_VALUE);
 
     MESSAGE_SET_ANSWER(send_msg, CMD_CURVE_BLOCK);
     send_msg->payload[0] = recv_msg->payload[0];    // Curve ID
-    send_msg->payload[1] = recv_msg->payload[1];    // Offset (most sig.)
-    send_msg->payload[2] = recv_msg->payload[2];    // Offset (less sig.)
 
     bool ok = curve->read_block(curve, block_offset,
                                 send_msg->payload + BSMP_CURVE_BLOCK_INFO,
@@ -614,7 +614,6 @@ SERVER_CMD_FUNCTION (curve_block_request)
     send_msg->payload_size += BSMP_CURVE_BLOCK_INFO;
 }
 
-// VERIFICAR SE CURVA EH DE ESCRITA
 SERVER_CMD_FUNCTION (curve_block)
 {
     // Payload must contain, at least, 4 bytes (1 for ID, 2 for offset, 1 for
@@ -636,7 +635,10 @@ SERVER_CMD_FUNCTION (curve_block)
         MESSAGE_SET_ANSWER_RET(send_msg, CMD_ERR_INVALID_PAYLOAD_SIZE);
 
     // Check offset
-    uint16_t block_offset = (recv_msg->payload[1] << 8) + recv_msg->payload[2];
+    uint16_t block_offset =	(IS_BIG_ENDIAN ?
+							(recv_msg->payload[1] << 8) + recv_msg->payload[2]  :
+							(recv_msg->payload[2] << 8) + recv_msg->payload[1] );
+
     if(block_offset >= curve->info.nblocks)
         MESSAGE_SET_ANSWER_RET(send_msg, CMD_ERR_INVALID_VALUE);
 

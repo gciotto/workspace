@@ -144,7 +144,10 @@ enum bsmp_err bsmp_process_packet (bsmp_server_t *server,
 
     recv_msg.command_code = (enum command_code) recv_raw_msg->command_code;
     recv_msg.payload      = recv_raw_msg->payload;
-    recv_msg.payload_size = (recv_raw_msg->size[0] << 8)+recv_raw_msg->size[1];
+
+    recv_msg.payload_size = IS_BIG_ENDIAN ?
+    						(recv_raw_msg->size[0] << 8) + recv_raw_msg->size[1] :
+							(recv_raw_msg->size[1] << 8) + recv_raw_msg->size[0] ;
 
     send_msg.payload = send_raw_msg->payload;
 
@@ -163,8 +166,8 @@ enum bsmp_err bsmp_process_packet (bsmp_server_t *server,
 
     send_raw_msg->command_code = send_msg.command_code;
 
-    send_raw_msg->size[0] = send_msg.payload_size >> 8;
-    send_raw_msg->size[1] = send_msg.payload_size;
+    send_raw_msg->size[0] = IS_BIG_ENDIAN ? send_msg.payload_size >> 8 : send_msg.payload_size;
+    send_raw_msg->size[1] = IS_BIG_ENDIAN ? send_msg.payload_size : send_msg.payload_size >> 8;
 
     response->len = send_msg.payload_size + BSMP_HEADER_SIZE;
 
