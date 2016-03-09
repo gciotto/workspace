@@ -1,0 +1,122 @@
+\section {Best Ever Alarm System Toolkit - BEAST}
+
+\subsection {Introdução}
+
+Em um ambiente composto por centenas de milhares de variáveis EPICS, como o que
+será implementado no \textit{Sirius}, a necessidade de um sistema capaz de
+monitorar quais variáveis encontram-se em estados errôneos torna-se
+imprescindível. Sendo assim, o monitor de alarmes \textit{BEAST}, do inglês
+\textit{Best Ever Alarm System Toolkit} e desenvolvido pelo laboratório
+americano \textit{Oak Ridge National Laboratory}, representa uma solução capaz
+de gerenciar e controlar os alarmes gerados pelos servidores EPICS disponíveis
+na rede. Tal sistema é implementado em \textit{Java} e é baseado no ambiente
+gráfico de desenvolvimento \textit{Eclipse}. A arquitetura do sistema
+está represetada na figura \ref{fig:best_arquitetura}, logo abaixo.
+
+\FloatBarrier
+
+\begin{figure}[h]
+
+\centering
+\includegraphics[scale=0.55]{image/beast-arquitetura}
+\caption {Implementação do sistema de monitoramento de alarmes
+\textit{BEAST}.}
+\label{fig:best_arquitetura}
+\end{figure}
+
+\FloatBarrier
+
+É possível distinguir diversos componentes na figura acima:
+
+\begin{enumerate}[i.]
+  
+  \item \textit{Alarm server}: o servidor é responsável por tarefas fundamentais
+  no monitoramento de alarmes. Cabe a ele a leitura da configuração dos alarmes
+  armazenada no banco de dados \textit{Alarm Cfg \& State RDB}, conectar-se às
+  respectivas variávies, monitorar suas mudanças de estado e gerar alarmes
+  quando necessário e desativá-los logo que um operador toma conhecimento
+  do problema. Esse módulo permite que um número variável de clientes se conecte
+  a ele. Uma variável pode adotar duas configurações distintas, sendo elas
+  \textit{latch} e \textit{annunciate}. Para a primeira, o servidor mantém o
+  alarme de maior gravidade, mesmo que o estado da variável não seja
+  atualmente errôneo, até que ele seja reconhecido manualmente pelo operador.
+  A fim de impedir um grande volume de alarmes gerados, é possível habilitar
+  as opções \textit{delay}, que aciona o alarme somente se o estado errôneo da
+  variável se mantiver durante o intervalo de tempo especificado, e
+  \textit{count}, que aciona o alarme se tal estado for detectado mais vezes
+  que o valor especificado. A segunda configuração ativa o alarme somente
+  quando a \textit{PV} apresentar valor inválido, sendo que ele é desativado
+  logo que tal variável voltar à sua faixa de operação esperada.
+  
+  \item \textit{Alarm Cfg \& State RDB}: banco de dados relacional, como um
+  servidor \textit{MySQL} por exemplo, onde serão armazenadas as configurações
+  de alarme e o atual estado de todos os alarmes.
+  
+  \item \textit{Java Message Service - JMS}: utilizado para a comunicação entre
+  diferentes módulos. No projeto, foi empregada a implementação realizada pelo
+  \textit{Apache Software Foundation} chamada de  \textit{Apache ActiveMQ}. O
+  sistema utiliza 4 \textit{topics} distintos, sendo eles:
+  
+  \begin{itemize} \renewcommand\labelitemi{--}
+    \item \textit{ALARM\_SERVER}: utilizado pelo servidor para publicar
+    atualizações nos estados dos alarmes de acordo com a configuração de cada
+    variável.
+    
+    \item \textit{ALARM\_CLIENT}: permite que clientes notifiquem atualizações
+    de configuração e reconhecimento de alarmes.
+    
+    \item \textit{TALK}: dedicado para anunciar mensagens.
+    
+  \end{itemize}
+  
+  \item \textit{Alarm Client GUI}: baseado na interface gráfica do
+  \textit{Eclipse}, oferece três opções de monitoramento:
+  
+  \begin{itemize} \renewcommand\labelitemi{--}
+    \item \textit{Alarm table}: mostra os alarmes em duas tabelas distintas
+    contendo aqueles reconhecidos (\textit{acknowledged alarms}) e aqueles que
+    ainda estão acionados (\textit{active alarms}).
+    
+    \item \textit{Alarm tree}: essa opção de visualização oferece
+    uma visão hierarquica dos alarmes, sendo organizada, do nível mais alto para
+    o menor, em áreas, sistemas, subsistemas e variáveis. Oferece opções para
+    configurar, remover ou adicionar variáveis no nível desejado. O estado do
+    alarme de cada item é mostrado por uma cor e por uma anotação, sendo
+    composta por três sentenças entre parênteses, que representam
+    respectivamente a gravidade atual (\textit{current severity}), a
+    maior gravidade detectada anteriormente (\textit{alarm severity}) e o estado
+    atual do alarme (\textit{alarm status}). É sincronizada diretamente ao banco
+    \textit{Alarm Cfg \& State RDB}, o que implica que uma mudança realizada é
+    rapidamente detectada pelo servidor e pelos demais clientes.
+    
+    \item \textit{Alarm area panel}: indicação gráfica do estado do sistema.
+    
+  \end{itemize}
+  
+  É possível, a partir de qualquer uma das \textit{views} presentadas acima,
+  acessar outros recursos, como, por exemplo, gráficos e valores atuais das
+  variáveis desejadas. Para isso, basta apertar com o botão direito acima da
+  \textit{PV} e apertar em \textit{Process variables}.
+  
+  \vspace{12pt}
+  
+  A implementação fornece, ainda, suporte para autenticação de usuários via
+  \textit{LDAP} ou \textit{JAAS}. Caso seja a escolha, somente usuários
+  autorizados podem alterar as configurações de alarmes ou reconhecê-los.
+  
+  \item \textit{Web reports}: é fornecido também um conteúdo \textit{Web} capaz
+  de gerar relatórios, calcular estatísticas (como, por exemplo, totais
+  diários, variáveis que mais disparam alarmes, intervalos de tempo que os
+  alarmes permanecem mais ativos em média \textit{etc.}) e monitorar os alarmes.
+  Assim como os módulos do \textit{EPICS Archiver Appliance}, as páginas devem estar hospedadas em um
+  servidor \textit{Tomcat}.
+  
+\end{enumerate}
+
+\subsection{Instalação}
+
+\textit{BEAST} necessita de uma base de dados relacional, de uma implementação
+\textit{JMS} e de um ambiente gráfico baseado no \textit{Eclipse}. Utilizaremos,
+respectivamente, o \textit{MySQL}, \textit{Apache ActiveMQ} e a versão
+\textit{Eclipse Luna for RCP and Plugin Development}.
+

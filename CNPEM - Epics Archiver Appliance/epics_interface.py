@@ -2,8 +2,12 @@ import sys
 from numpy import *
 from PySide.QtCore import *
 from PySide.QtGui import *
-import datetime
+
+
+from datetime import datetime
 import time
+import pytz # $ pip install pytz
+from tzlocal import get_localzone
 
 app = QApplication(sys.argv)
 
@@ -127,8 +131,7 @@ class Viewer(QMainWindow):
                                                          self.hours_from.text(), self.minutes_from.text(), 
                                                          self.seconds_from.text()),
                                      "%Y %m %d %H %M %S")
-
-        
+       
         secs, vals = self.json_requester.json_request_data(variavel, 
                                                            from_date, 
                                                            to_date)
@@ -180,15 +183,16 @@ class JsonRequester ():
         to_date =   ("&to=" + time.strftime("%Y-%m-%dT%H:%M:%S",to_date) + ".000Z").replace(':', '%3A')
         from_date = ("&from=" + time.strftime("%Y-%m-%dT%H:%M:%S",from_date) + ".000Z").replace(':', '%3A')
         
-        
         url_json = retrieval_url + pv_name + from_date + to_date
         
         print url_json
         
         req = urllib2.urlopen(url_json)
         data = json.load(req)
-        
-        secs = [x['secs'] for x in data[0]['data']]
+         
+        local_tz = get_localzone() 
+         
+        secs = [x['secs'] + 3*3600 for x in data[0]['data']]
         vals = [x['val'] for x in data[0]['data']]
         
         return secs, vals
