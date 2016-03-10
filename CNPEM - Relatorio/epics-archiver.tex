@@ -1,5 +1,5 @@
 \section {EPICS Archiver Appliance}
-
+\label{sec:archiver}
 \subsection {Introdução}
 
 O EPICS Archiver Appliance, desenvolvido pelo instituto americano
@@ -360,16 +360,15 @@ As três últimas variáveis devem ser corretamente configuradas de acordo com a
 disponibilidade de equipamentos, por exemplo. No nosso caso, um único diretório
 é usado para os três tipos de armazenamento, sendo ele \texttt{epics-storage/}.
 
-\item A próxima etapa é a criação de tabelas usadas pelo EPICS Archiver
-Appliance. Vamos criar uma base chamada \texttt{lnls\_appliance\_database} e o
+\item \label{mysql-install}A próxima etapa é a criação de tabelas usadas pelo
+EPICS Archiver Appliance. Vamos criar uma base chamada \texttt{lnls\_appliance\_database} e o
 usuário \texttt{lnls\_user}, com todos os direitos de acesso a ela. No nosso
 caso, a senha do usuário é \texttt{app1}. 
 
 \begin{lstlisting}[language=bash, style=nonumbers]
 $ mysql -u root -p
 >> CREATE DATABASE lnls_appliance_database;
->> GRANT ALL ON lnls_appliance_database.* TO 'lnls_user'@localhost IDENTIFIED BY
-'app1';
+>> GRANT ALL ON lnls_appliance_database.* TO 'lnls_user'@localhost IDENTIFIED BY 'app1';
 \end{lstlisting}
 
 Acesse o servidor \textit{mysql} com esse usuário e execute o \textit{script}
@@ -378,8 +377,7 @@ de criação das tabelas disponibilizado pelo desenvolvedor:
 \begin{lstlisting}[language=bash, style=nonumbers]
 $ mysql -u lnls_user -p
 >> USE lnls_appliance_database
->> source
-$INSTALL_DIR/epics-archiver-appliance/install_scripts/archappl_mysql.sql
+>> source $INSTALL_DIR/epics-archiver-appliance/install_scripts/archappl_mysql.sql
 \end{lstlisting}
 
 \item É necessário fazer o \textit{download} do conector \textit{MySQL} usado
@@ -424,6 +422,9 @@ $ nano $CATALINA_HOME/conf/context.xml
 	 />
 </Context>
 \end{lstlisting}
+
+Note que modificamos os campos \texttt{username}, \texttt{password} e
+\texttt{url} de acordo com a instalação no item \ref{mysql-install}.
 
 \item É necessário copiar e extrair todos os arquivos \textit{.war} presentes em
 \texttt{epics-archiver-appliance/} para os respectivos diretórios
@@ -512,27 +513,21 @@ class JsonRequester ():
         url_json = self.mgmt_url + 'bpl/getPVStatus?pv=' + variables_prefix
         req = urllib2.urlopen(url_json)
         data = json.load(req)
-        
         return data
     
     def json_request_data(self, variable, from_date, to_date):    
         
         retrieval_url = self.data_retrieval_url + "/data/getData.json?"
         pv_name = ("pv=" + variable).replace(':', '%3A')
-        
         to_date =   ("&to=" + time.strftime("%Y-%m-%dT%H:%M:%S",to_date) + 
         				".000Z").replace(':', '%3A')
         from_date = ("&from=" + time.strftime("%Y-%m-%dT%H:%M:%S",from_date) + 
-        				".000Z").replace(':', '%3A')
-                
+        				".000Z").replace(':', '%3A')    
         url_json = retrieval_url + pv_name + from_date + to_date
-        
         req = urllib2.urlopen(url_json)
         data = json.load(req)
-        
         secs = [x['secs'] for x in data[0]['data']]
         vals = [x['val'] for x in data[0]['data']]
-        
         return secs, vals
 \end{lstlisting}
 
