@@ -12,8 +12,8 @@ realizadas, no total, três montagens distintas.
 
 Na primeira, o objetivo foi construir um programa capaz de piscar o \textit{LED}
 vermelho, presente no \textit{kit}, em uma frequência de 1Hz. Para tal, foi
-necessário consultar os manuais do microcontrolador para entender como a
-comunicação entre ele e o diodo poderia ser realizada e como gerar interrupções
+necessário consultar os manuais do microcontrolador [\ref{bib:manual}] para
+entender como a comunicação entre ele e o diodo poderia ser realizada e como gerar interrupções
 em instantes periódicos de tempo. Em seguida, levando em conta que o
 \textit{kit} possui ainda outros dois \textit{LEDs}, extendemos o programa para piscar
 também o \textit{LED} verde, a uma frequência de 2Hz.
@@ -22,8 +22,8 @@ também o \textit{LED} verde, a uma frequência de 2Hz.
 
 A segunda tarefa consistiu na introdução de um \textit{LED} externo, de
 modelo \textit{TLDR490} fabricado pela empresa \textit{Vishay} e cuja
-documentação é disponibilizada no site do curso. Para realizá-la, foi preciso
-escolher um pino disponível do microcontrolador para funcionar como
+documentação é disponibilizada no site do curso [\ref{bib:led}]. Para
+realizá-la, foi preciso escolher um pino disponível do microcontrolador para funcionar como
 \textit{output} e calcular a resistência necessária para limitar a corrente a
 fim de não danificar nenhum dos dois componentes.
 
@@ -35,7 +35,7 @@ isso, tivemos de configurar um pino como entrada, assim como escolher
 uma resistência para limitar a corrente que passa pelo circuito. Essa
 resistência é chamada de \textit{pull} em referência à função que desempenha:
 pode induzir um estado padrão alto (\textit{pull up}) ou baixo (\textit{pull
-down}) no saída, que, nosso caso, é o pino que foi configurado como
+down}) na saída do circuito, que, nosso caso, é o pino que foi configurado como
 \textit{input}.
 
 \vspace{12pt}
