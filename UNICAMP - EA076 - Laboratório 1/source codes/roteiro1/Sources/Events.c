@@ -77,13 +77,13 @@ void TI1_OnInterrupt(void)
 	static int i = 0;
 	state = PUSH_GetVal();
 	
-	if (state==0) 
+	if (!state)
 	{
 		LED2_NegVal();
 		LED_Ext_NegVal();
-		if (i % 2 == 0) 
+		if (i)
 			LED_NegVal();
-		i++;
+		i = !i;
 	}
 	
 }

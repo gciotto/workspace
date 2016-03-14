@@ -20,7 +20,7 @@ função e poderá ser acessado em outras chamadas, cujo valor será 0 ou 1 e, a
 cada interrupção tem seu conteúdo negado. Quando tal variável vale 0, os dois
 \textit{LEDs} estão acesos e quanto vale 1, somente o verde se acende. Dessa
 forma, o \textit{LED} vermelho permanecerá acesso ou apagado por 2 interruções,
-isto é, por 500\textit{ms}, tendo assim um período de 1\textit{s}. O verde fica
+isto é, por 500\textit{ms}, tendo assim um período de 1\textit{s}. O verde
 muda de estado a cada 250ms, obtendo, portanto, um período de 500ms.
 
 \vspace{12pt}
@@ -127,7 +127,7 @@ O diagrama desta montagem é muito simples: logo que o programa é iniciado, o
 \textit{LED} externo é aceso. O bloco \textit{LED Externo} engloba todo o
 circuito (resistência, diodo, fios) que foram necessários para a sua
 implementação. Observa-se igualmente que este bloco poderia ser facilmente
-substituídos por um dos blocos \textit{LED vermelho} ou \textit{LED verde} das
+substituído por um dos blocos \textit{LED vermelho} ou \textit{LED verde} das
 figuras \ref{fig:m1} e \ref{fig:m2}. Esta característica demonstra que programas
 feitos para este microcontrolador não dependem estritamente de componentes
 específicos, isto é, são capazes de garantir soluções genéricas que funcionam
@@ -150,8 +150,8 @@ corrente, potência \textit{etc}.
 
 A última montagem envolve a utilização de um pino de entrada e de um
 \textit{push button}, cuja função é controlar a atividade dos \textit{LEDs}, de
-forma a permitir que eles pisquem o botão estiver apertado e apagá-los, caso
-contrário. Para isso, utilizamos um circuito representado na figura
+forma a permitir que eles pisquem quando o botão estiver apertado e apagá-los,
+caso contrário. Para isso, utilizamos um circuito representado na figura
 \ref{fig:circ} a seguir, em que \textbf{P3V3} é um pino que fornece uma tensão
 de 3.3V, \textbf{GND} é a referência do terro na placa e \textbf{PTD4} é o pino
 escolhido como \textit{input}.
@@ -167,7 +167,7 @@ escolhido como \textit{input}.
 O resistor \textbf{R} é chamado de \textit{pull up resistor}, visto que ele
 induz um estado padrão alto na saída do circuito, isto é, \textbf{PTD4}. O
 circuito pode apresentar dois comportamentos distintos, dependendo do
-estado da chave. Quando a está aberta, praticamente há não passagem de
+estado da chave. Quando está aberta, praticamente há não passagem de
 corrente entre \textbf{P3V3} e \textbf{PTD4}, já que a impedância de entrada do
 pino de entrada é elevada. Por esta razão, o nível lógico deste
 pino é alto nesta configuração. Em oposição, quando a chave é fechada
@@ -187,7 +187,7 @@ Por fim, adicionamos um novo componente \textit{BitIO} ao projeto, o
 configuramos para referenciar \textbf{PTD4} e funcionar como \textit{input}.
 Geramos, em seguida, a função \textit{GetVal}, cujo valor de retorno é o estado
 lógico do respectivo pino. A cada interrupção do \textit{timer}, chamaremos tal
-função para determinar se o botão foi pressionada ou não. Se o retorno for nulo,
+função para determinar se o botão foi pressionado ou não. Se o retorno for nulo,
 isto é, botão apertado, piscamos os \textit{LEDs}, conforme seções anteriores.
 Senão, os apagaremos colocando níveis lógicos altos em \textbf{PTB18} e
 \textbf{PTB19}.
@@ -212,4 +212,4 @@ O diagrama da última montagem é representado na figura \ref{fig:m4}. O bloco
 
 Nota-se que a única diferença entre este diagrama e aquele da figura
 \ref{fig:m2} é a presença do \textit{push button}. Sendo assim, observa-se uma
-grande portabilidade de código e códigos entre diversas aplicações. 
+grande portabilidade de código e componentes entre diversas aplicações. 
