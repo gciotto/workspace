@@ -2,7 +2,7 @@
 
 %=========================== PACKAGES =============================%
 \usepackage[utf8]{inputenc}
-\usepackage[hmargin=1.0cm,vmargin=1.0cm]{geometry}
+\usepackage[hmargin=0.5cm,vmargin=0.7cm]{geometry}
 
 %--- LANGUE--%
 \usepackage[french]{babel}
@@ -19,7 +19,8 @@
 \usepackage{wrapfig}
 %--- PHOTO ----%
 
-
+\usepackage[shortlabels]{enumitem}
+\setlist[itemize]{label=\textbullet}
 {\renewcommand{\arraystretch}{1.3}}
 
 \usepackage{titlesec} % Used to customize the \section command
@@ -51,7 +52,7 @@
 %======== ADRESSE ===============%
 Rua Voluntario Amador Lourenço, 57, Nova Itália, Valinhos
 
-\textit{CEP 13271-393}, São Paulo, Brazil
+\textit{CEP 13271-393}, São Paulo, Brésil
 
 (+55) 19 99898 5633
 
@@ -115,13 +116,17 @@ ITP}}. Date du test \textit{Mars 2015}. \\
 
 \begin{tabular}{p{.16\textwidth} p{.78\textwidth}}
 
- \textbf{Systèmes} & Linux (Ubuntu et ArchLinux), Windows 7.  \\ 
+ \textbf{Systèmes} & Linux (Ubuntu, ArchLinux et \textit{Embedded Linux}),
+ Windows 7.  \\
 
- \textbf{Langages} & Java, C/C++, PHP,  SQL, \LaTeX, notions d’Objective-C. \\ 
+ \textbf{Langages} & C/C++, Python, Java, PHP,  SQL, \LaTeX. \\ 
  
- \textbf{Logiciels} & Eclipse, Matlab, MySQL Workbench,  Microsoft SQL Server
- (2008/2010), Microsoft Visual Studio (2008/2010),  Microsoft Office Software
- Suites (2007/2010), notions de fonctionnement d’ Apple’s XCode. \\
+ \textbf{Logiciels} & Eclipse, Kinetis Design Studio, Control System
+ Studio, Matlab, MySQL Workbench, Microsoft SQL Server (2008/2010), Microsoft
+ Visual Studio (2008/2010),  Microsoft Office Software Suites (2007/2010). \\
+ 
+  \textbf{Systèmes \newline Embarqués} & BeagleBone Black, FRDM-KL25Z,
+  Intel Galileo. \\
 \end{tabular}
 
 %======== COMPETENCES ===============%
@@ -134,22 +139,25 @@ ITP}}. Date du test \textit{Mars 2015}. \\
 \textbf{02/2016 - Présent}  & Stagiaire, \textbf{Centre National de
 Recherche en Énergie et Matériaux - CNPEM, Campinas, Brésil.}
  \\
-  & 
+  & \vspace{-8pt}
   \begin{itemize}
     \item Développement de logiciel et matériel pour le système
     de contrôle de l'accélérateur de particules \textit{Sirius}.
+    Mise en place des systèmes de contrôle (gestion d'alarmes et l'archivage) de
+    variables EPICS. Développement de \textit{Kernel Module Drivers} pour la
+    carte \textit{BeagleBone Black}.
     
 	\end{itemize}\\
 
 \textbf{08/2015 - 12/2015}  & Assistant de laboratoire, \textbf{FEEC
  UNICAMP, Campinas, Brésil.}
  \\
-  &
+  & \vspace{-8pt}
   \begin{itemize}
     \item Assistance pour les élèves lors des études de
     laboratoire du cours \textit{EA871 - Laboratoire de Programmation de
     Systèmes Numériques}. Programmation des ressources 
-    d'une carte d'architecture ARM.
+    d'une carte \textit{FRDM-KL25Z} de \textit{NXP}.
     
 	\end{itemize}\\
 
@@ -162,7 +170,8 @@ Recherche en Énergie et Matériaux - CNPEM, Campinas, Brésil.}
 
  \textbf{02/2013 - 07/2013}   & Assistant de laboratoire, \textbf{IC UNICAMP -
  Institut d 'Informatique, Campinas, Brésil.} \\
-  & \begin{itemize}
+  & \vspace{-8pt}
+  \begin{itemize}
     \item Assistance pour les élèves en première année lors des études de
     laboratoire.
     \item Élaboration et concéption d'outils pédagogiques par rapport
@@ -173,6 +182,7 @@ Recherche en Énergie et Matériaux - CNPEM, Campinas, Brésil.}
  \textbf{08/2011 - 06/2012} & Assistant de recherche, \textbf{IC UNICAMP -
  Institut d'Informatique, Campinas, Brésil}. \\
  & \begin{itemize}
+   \vspace{-8pt}
  	\item Analyse de performance de logiciels distribués sur le réseau  en
  	fonction des systèmes opérationnels, de l’efficience de Java Virtual Machine
  	(JVM) et des conditions matérielles.
@@ -182,7 +192,7 @@ Recherche en Énergie et Matériaux - CNPEM, Campinas, Brésil.}
  
  \textbf{12/2010 - 02/2011} & Stagiaire de TI - \textbf{MOVILE, Campinas,
  Brésil.}
- \\  & Responsable pour la maintenance de:
+ \\ & Responsable pour la maintenance de:
  \begin{itemize}
    \item Base de données (MySQL Server).
    \item Systèmes web (PHP et JavaScript) de l’entreprise.
