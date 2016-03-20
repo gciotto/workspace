@@ -226,7 +226,7 @@ parecida com a figura \ref{img:product-view} seja aberta.
 \begin{figure}[h]
 
 \centering
-\includegraphics[scale=0.40]{image/product-view}
+\includegraphics[scale=0.45]{image/product-view}
 \caption {Configurações do produto \texttt{AlarmServer.product}.}
 \label{img:product-view} 
 \end{figure}
@@ -238,7 +238,9 @@ depedências. Para incluí-las à instalação do \textit{Eclipse}, acesse
 \texttt{Help > Install New Software\ldots > Add\ldots} e adicione a \textit{url}
 \textit{http://download.controlsystemstudio.org/updates/4.1}. Não é necessário
 realizar o \textit{download} de todos os pacotes, somente os espeficados na
-tabela \ref{tab:plugins} abaixo.
+tabela \ref{tab:plugins} abaixo. A instalação também adiciona os componentes que
+permitem o acesso à \textit{appliance}, conforme explicado na seção
+\ref{appliance-csstudio}. 
 
 \FloatBarrier
 \begin{longtable}[h] {| p{0.3\linewidth} | p{0.3\linewidth} | p{0.3\linewidth}   |}
@@ -297,7 +299,7 @@ figura abaixo.
 \begin{figure}[h]
 
 \centering
-\includegraphics[scale=0.40]{image/launch-view}
+\includegraphics[scale=0.45]{image/launch-view}
 \caption {\textit{Launching view} do produto \texttt{AlarmServer.product}.
 Substituir \texttt{\$PATH\_TO\_FILE}} pelo caminho completo do arquivo
 \textit{plugin\_customization.xml}.
@@ -310,8 +312,9 @@ Execute, enfim, o produto apertando no ícone verde no canto superior direito.
 O servidor se encarregará da criação dos \textit{topics} na aplicação
 \textit{JMS}. O resultado esperado está representado na figura
 \ref{fig:server-on}. \textit{Annunciator} é o nome dado à raíz da hierarquia
-criada no item \ref{mysql-alarm} e define, assim, quais tópicos serão
-utilizados na comunicação.
+criada no item \ref{mysql-alarm} (verificar conteúdo do arquivo
+\texttt{ALARM\_MYSQL.sql}) e define, assim, quais tópicos serão utilizados na
+comunicação.
 
 \FloatBarrier
 
@@ -319,9 +322,7 @@ utilizados na comunicação.
 
 \centering
 \includegraphics[scale=0.45]{image/alarmserver-on}
-\caption {\textit{Launching view} do produto \texttt{AlarmServer.product}.
-Substituir \texttt{\$PATH\_TO\_FILE}} pelo caminho completo do arquivo
-\textit{plugin\_customization.xml}.
+\caption {Resultado da execução do produto \textit{AlarmServer}.}
 \label{fig:server-on} 
 \end{figure}
 
@@ -373,4 +374,29 @@ Alguns erros foram encontrados durante a instalação:
 \textit{Eclipse}}
 
 É possível exportar a configuração atual do \textit{Eclipse} como um novo
-produto, que chamaremos de \textit{LNLStudio}.
+produto, que chamaremos de \textit{LNLStudio}. Para isso, criamos um novo um
+novo \textit{Plug-in Project} e adicionamos um novo arquivo do tipo
+\textit{Product Configuration}. Neste arquivo, definimos nome, \textit{id},
+versão e, no campo \textit{Product Definition}, definimos \textit{Product} como
+\texttt{lnlstudio.product} e \textit{Application},
+\texttt{org.eclipse.ui.ide.workbench}. Na aba \textit{Dependencies}, é preciso
+especificar quais \textit{plug-ins} são necessários ao produto. Por questão de
+simplicidade, adicionamos todos aqueles que estão instalados
+(\textit{Add\ldots} e \textit{Ctrl+A} para selecionar todos). Para configurar a
+\textit{splash screen}, clique na aba \textit{Splash} e adicione uma
+\textit{progress bar}, uma \textit{progress message} e um arquivo chamado
+\textit{splash.bmp} ao diretório do projeto. Essa imagem deve possuir dimensões
+455x295. 
+
+\vspace{12pt}
+
+O produto pode ser lançado através do ícone verde presente no canto superior da
+tela.
+
+\vspace{12pt}
+
+Para exportar este produto, clique em \textit{Eclipse Product export wizard} na
+seção \textit{Exporting} da aba \textit{Overview} e escolha o endereço e formato
+(arquivo \textit{.zip} ou pasta) para o qual ele deve ser exportado. Para
+executar, entre na pasta criada (ou extraída do arquivo) e execute o aplicativo
+\texttt{eclipse}.
