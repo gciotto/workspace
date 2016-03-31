@@ -1,1 +1,0 @@
-udpserver.d: ../udpserver.cpp

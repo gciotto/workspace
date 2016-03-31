@@ -1,0 +1,49 @@
+\section {Sincronização via \textit{Ethernet} com a \textit{BeagleBone Black}}
+
+\subsection {Introdução}
+
+A sincronização dos diversos componentes presentes no sistema de controle de um
+acelerador de partículas é um fator fundamental para seu bom funcionamento. Os
+sistemas que necessitam sincronismo, como as fontes de corrente para os imãs,
+controladores de feixe e de injeção, por exemplo, devem exercer as suas
+respectivas funções em momentos especificados por pulsos de sincronismo, que
+podem ser enviados, por exemplo, por geradores de sinais espalhados pela
+infraestrutura local. A precisão com que estes equipamentos recebem tais pulsos
+depende de diversas variáveis como, por exemplo, o tipo de canal de comunicação
+utilizado no envio do pulso e a interface de entrada de dados que eles possuem.
+A precisão pode ser obtida através da medição do \textit{jitter}, ou
+desvio-padrão, do \textit{delay} calculado entre o envio do pulso e a sua
+recepção no equipamento.
+O \textit{Sirius}, por exemplo, possui especificações para diversos sistemas de
+sincronismo, que variam de acordo com a necessidade de precisão dos equipamentos
+e das funções desempenhadas por eles. Para casos mais graves, como o da bomba de
+elétrons do acelerador linear (\textit{LINAC}), os \textit{jitters} não podem
+ultrapassar os \textit{50ps} e soluções especiais devem ser exploradas, como a
+implementação de uma rede \textit{WhiteRabbit}, que está sendo
+desenvolvida e estudada por outros laboratórios no mundo todo.
+
+\vspace{12pt}
+
+Um sistema de sincronismo para as fontes de corrente já
+foi implementado pelo grupo de controle, utilizando as unidades
+\textit{Programmable Realtime Unit}, ou simplesmente \textit{PRU}, presentes na
+\textit{BeagleBone Board}. Tais unidades apresentam \textit{clock} de 200MHz,
+núcleos de memória própria e compartilhada, e módulos dedicados, como o
+\textit{Enhanced GPIO}, que favorecem a implementação de aplicações
+\textit{realtime}, em que a precisão é uma necessidade importante. Soluções
+implementadas para a \textit{PRU} não estão sujeitas a fatores que degradam a
+precisão como o compartilhamento de \textit{CPU} com outros
+processos e preeempção. Aplicações que rodam sobre \textit{Linux} embarcado e
+que, portanto, compartilham recursos com outros processos, apresentam,
+geralmente, desempenho inferior. O sistema desenvolvido utiliza a \textit{PRU}
+para a recepção do sinal de sincronismo e ativa, posteriormente, seus nós
+escravos, conforme figura \ref{fig:pru_sincronismo} abaixo.
+
+\vspace{12pt} 
+
+Nesta seção, serão apresentadas algumas alternativas a esse sistema, que
+utilizam o protocolo \textit{Ethernet} para o envio dos \textit{triggers} de
+sincronismo, e as suas respectivas \textit{performances}.
+
+\subsection {Implementação}
+
