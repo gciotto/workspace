@@ -55,7 +55,7 @@ static int init_GPIO_as_output(int gpio_id);
 /* DMtimer-related variables */
 #define PTV_DM_TIMER 	0x01		/* Valor do prescaler - frequencia sera multiplicada por 2 ^ (1 + 1) */
 //#define LDR_DM_TIMER	0xFFFFF9BF 	/* tick each 100ms */
-#define LDR_DM_TIMER	0xFFFFFFF7 	/* Valor a ser carregado no registrador de LOAD -  interrupcoes a cada 10ms */
+#define LDR_DM_TIMER	0xFFFFFF5F 	/* Valor a ser carregado no registrador de LOAD -  interrupcoes a cada 10ms */
 //#define LDR_DM_TIMER	0xFFFFFFEF
 //#define PTV_DM_TIMER 	0x04
 //#define LDR_DM_TIMER	0xFFFFFC17	/* Valor a ser carregado no registrador de LOAD -  interrupcoes a cada 1s */

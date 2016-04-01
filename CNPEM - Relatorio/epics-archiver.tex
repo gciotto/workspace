@@ -68,13 +68,13 @@ deve ser utilizada somente se o balanceamento de requisições entre as
 \textit{mod\_proxy\_balancer}.
 
 \begin {enumerate}[i.] 
-  \item \textbf{Instalação do EPICS}: é necessário inicialmente fazer o
+  \item \textit{Instalação do EPICS}: é necessário inicialmente fazer o
   \textit{download} e compilar as bibliotecas EPICS. Escolha um diretório de
   acordo com sua preferência (referenciado nesse documento por
   \texttt{\$EPICS\_DIR}) e execute os comandos abaixo. Alguns erros podem
   ocorrer na execução do comando \texttt{make}, resultantes da falta de algumas
   bibliotecas no sistema. Faça as respectivas instalações e repita o processo.
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $EPICS_DIR
 $ wget http://www.aps.anl.gov/epics/download/base/baseR3.14.12.5.tar.gz
 $ tar -xvzf baseR3.14.12.5.tar.gz
@@ -87,7 +87,7 @@ Adicione as seguintes variáveis de ambiente ao arquivo \texttt{.bashrc} do seu
 usuário (geralmente encontrado em \texttt{/home/user/}). Esse arquivo de
 configuração é consultado toda vez que um usuário executa um novo
 \textit{shell}.
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 export PATH=$EPICS_DIR/base-3.14.12.5/bin/linux-x86_64:$PATH
 export EPICS_BASE=$EPICS_DIR/base-3.14.12.5
 export EPICS_HOST_ARCH=linux-x86_64
@@ -95,20 +95,20 @@ export EPICS_HOST_ARCH=linux-x86_64
 
 Enfim, atualize a sessão com
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ source /home/user/.bashrc
 \end{lstlisting}	
 
 Para testar a instalação, use o comando \texttt{caget} com
 alguma variável disponível na sua rede.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ caget variavel
 \end{lstlisting}
 
-\item \textbf{Instalação do Java 8}: execute o comando abaixo para instalar o
+\item \textit{Instalação do Java 8}: execute o comando abaixo para instalar o
 \textit{Java Development Kit}.
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ sudo apt-get install openjdk-8-jdk
 \end{lstlisting}
 
@@ -116,25 +116,25 @@ O EPICS Archiver Appliance necessita de duas variáveis de ambiente referentes a
 \textit{Java}. Adicione-as no arquivo \textit{.bashrc}, após as variáveis de
 ambiente EPICS.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 export JRE_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre"
 \end{lstlisting}
 
-\item \textbf{Instalação do MySQL Server}: para instalar um servidor
+\item \textit{Instalação do MySQL Server}: para instalar um servidor
 \textit{MySQL}, basta executar o comando abaixo. Durante o processo de
 instalação, será requisitada a senha para o usuário \textit{root} do servidor. 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ sudo apt-get install mysql-server
 \end{lstlisting}
 
-\item \textbf{Instalação do Apache Tomcat}: defina um diretório onde os arquivos
+\item \textit{Instalação do Apache Tomcat}: defina um diretório onde os arquivos
 serão instalados e execute os comandos abaixo. Esse diretório será referenciado
 pela variável de ambiente \texttt{\$TOMCAT\_DIR}.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $TOMCAT_DIR
-$ wget http://ftp.unicamp.br/pub/apache/tomcat/tomcat-8/v8.0.32/bin/apache-tomcat-8.0.32.tar.gz
+$ wget http://tinyurl.com/hbsat8m
 $ tar -xvzf apache-tomcat-8.0.32.tar.gz
 $ rm apache-tomcat-8.0.32.tar.gz
 $ cd apache-tomcat-8.0.32/
@@ -145,16 +145,16 @@ referenciar o diretório \textit{apache-tomcat-8.0.32/} recém criado. Adicione 
 seguinte linha no arquivo \texttt{.bashrc} logo abaixo das variáveis de ambiente
 adicionadas na instalação do \textit{Java}.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 export CATALINA_HOME = $TOMCAT_DIR/apache-tomcat-8.0.32
 \end{lstlisting}
 
-\item \textbf{Instalação do Apache HTTP Server}: Para instalar o servidor
+\item \textit{Instalação do Apache HTTP Server}: Para instalar o servidor
 \textit{Apache}, faça o \textit{download} do pacote. 
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $INSTALL_DIR
-$ wget http://ftp.unicamp.br/pub/apache//httpd/httpd-2.4.18.tar.gz
+$ wget http://tinyurl.com/gmvgo3d
 $ tar -xvzf httpd-2.4.18.tar.gz
 $ rm httpd-2.4.18.tar.gz
 $ cd httpd-2.4.18
@@ -162,13 +162,13 @@ $ cd httpd-2.4.18
 
 Algumas dependências devem ser instaladas:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ sudo apt-get install libapr1-dev libaprutil1-dev
 \end{lstlisting}
 
 Será necessário instalar também a \texttt{libpcre}:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $INSTALL_DIR
 $ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.37.tar.gz
 $ tar -xvzf pcre-8.37.tar.gz
@@ -181,7 +181,7 @@ $ make install
 
 Finalmente, execute os \textit{scripts} para instalar o \textit{Apache http}:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $INSTALL_DIR/httpd-2.4.18
 $ ./configure --prefix=$INSTALL_DIR/httpd --with-pcre=$INSTALL_DIR/pcre
 $ make
@@ -191,7 +191,7 @@ $ make install
 Para habilitar o módulo \texttt{mod\_proxy\_balancer}, descomente as seguintes
 linhas no arquivo \texttt{\$INSTALL\_DIR/httpd/conf/httpd.conf}:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 LoadModule proxy_module modules/mod_proxy.so
 LoadModule proxy_http_module modules/mod_proxy_http.so
 LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
@@ -203,7 +203,7 @@ pelo endereço \texttt{localhost/lnls-archiver}, um dos endereços dentro da
 \textit{tag} \texttt{\(<\)Proxy\(>\)} será chamado. No nosso exemplo, colocamos
 o endereço do módulo \texttt{retrieval} de apenas uma \textit{appliance}.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 <Proxy "balancer://appl">
     BalancerMember "http://localhost:11998/retrieval"
 </Proxy>
@@ -213,7 +213,7 @@ ProxyPassReverse "/test" "balancer://appl"
 
 Inicie o servidor com o comando:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ sudo $INSTALL_DIR/httpd/bin/apachectl start
 \end{lstlisting}
 
@@ -233,11 +233,10 @@ uma pasta onde serão instalados os pacotes. Esse diretório será referenciado 
 \begin {enumerate}[i.] 
   \item Crie uma pasta e faça o \textit{download} dos pacotes do arquivador,
   segundo os comandos abaixo. 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ mkdir $INSTALL_DIR/epics-archiver-appliance/
 $ cd $INSTALL_DIR/epics-archiver-appliance/
-$ wget
-https://github.com/slacmshankar/epicsarchiverap/releases/download/v0.0.1_SNAPSHOT_26-January-2016/archappl_v0.0.1_SNAPSHOT_26-January-2016T18-03-47.tar.gz
+$ wget http://tinyurl.com/jbac89o
 $ tar -xvzf archappl_v0.0.1_SNAPSHOT_26-January-2016T18-03-47.tar.gz
 $ rm archappl_v0.0.1_SNAPSHOT_26-January-2016T18-03-47.tar.gz
 \end{lstlisting}
@@ -247,7 +246,7 @@ $ rm archappl_v0.0.1_SNAPSHOT_26-January-2016T18-03-47.tar.gz
   \item \label{item:appl} Crie uma pasta onde as instâncias \textit{Tomcat} de cada módulo serão
   armazenadas e crie o arquivo \textit{lnls\_appliances.xml}. Vamos chamar essa
   pasta de \texttt{epics-appliances/}. 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ mkdir $INSTALL_DIR/epics-appliances/
 $ nano $INSTALL_DIR/epics-appliances/lnls_appliances.xml
 \end{lstlisting}
@@ -255,7 +254,7 @@ Copie as seguintes linhas para esse arquivo. Se a configuração do
 \textit{Apache httpd} não foi realizada, então o endereço de
 \texttt{<data\_retrieval\_url>} deve ser igual ao endereço de
 \texttt{<retrieval\_url>}. Senão:
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 <appliances> <appliance>
      <identity>lnls_epics_appliance</identity>
      <cluster_inetport>localhost:12000</cluster_inetport>
@@ -279,7 +278,7 @@ a fim de enviar e obter requisões HTTP e JSON, conforme figura
 \textit{appliances}. Por fim, adicione as váriaveis de ambiente ao arquivo
 \texttt{.bashrc}.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 export ARCHAPPL_APPLIANCES=$INSTALL_DIR/epics-appliances/lnls_appliances.xml
 export ARCHAPPL_MYIDENTITY="lnls_epics_appliance"
 \end{lstlisting}
@@ -289,7 +288,7 @@ O desenvolvedor sugere também trocar a porta padrão usada pelo \textit{Apache
 Tomcat} pela porta usada pelo módulo \texttt{mgmt}, isto é, 11995, e comentar
 as linhas sobre o uso do conector AJP. Para isso, siga a sequência abaixo.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ nano $CATALINA_HOME/conf/server.xml
 ### Edite a porta de forma a obter
 [...]
@@ -305,7 +304,7 @@ $ nano $CATALINA_HOME/conf/server.xml
 Execute o \textit{script} disponibilizado pelo desenvolvedor para criar as 4
 instâncias do \textit{Apache Tomcat}.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ source /home/user/.bashrc
 $ cd $INSTALL_DIR/epics-archiver-appliance/install_scripts
 $ ./deployMultipleTomcats.py $INSTALL_DIR/epics-appliances
@@ -317,7 +316,7 @@ para cada módulo.
 \item É possível também alteração as configurações de \textit{log}. O
 desenvolvedor sugere que sejam executados os seguintes comandos:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ nano $CATALINA_HOME/lib/log4j.properties
 
 ### Arquivo log4j.properties
@@ -349,7 +348,7 @@ instante vamos usar esse arquivo fornecido, que está disponível na pasta
 \texttt{lnls\_policies.xml}. Enfim, defina variáveis de ambiente usada por este
 arquivo.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 export ARCHAPPL_POLICIES=$INSTALL_DIR/epics-appliances/lnls_policies.py
 export ARCHAPPL_SHORT_TERM_FOLDER=$INSTALL_DIR/epics-storage
 export ARCHAPPL_MEDIUM_TERM_FOLDER=$INSTALL_DIR/epics-storage
@@ -365,7 +364,8 @@ EPICS Archiver Appliance. Vamos criar uma base chamada \texttt{lnls\_appliance\_
 usuário \texttt{lnls\_user}, com todos os direitos de acesso a ela. No nosso
 caso, a senha do usuário é \texttt{app1}. 
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,keywordstyle=\ttfamily,
+style=nonumbers] 
 $ mysql -u root -p
 >> CREATE DATABASE lnls_appliance_database;
 >> GRANT ALL ON lnls_appliance_database.* TO 'lnls_user'@localhost IDENTIFIED BY 'app1';
@@ -374,7 +374,8 @@ $ mysql -u root -p
 Acesse o servidor \textit{mysql} com esse usuário e execute o \textit{script}
 de criação das tabelas disponibilizado pelo desenvolvedor:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,keywordstyle=\ttfamily,
+style=nonumbers] 
 $ mysql -u lnls_user -p
 >> USE lnls_appliance_database
 >> source $INSTALL_DIR/epics-archiver-appliance/install_scripts/archappl_mysql.sql
@@ -383,16 +384,15 @@ $ mysql -u lnls_user -p
 \item É necessário fazer o \textit{download} do conector \textit{MySQL} usado
 pelo \textit{Apache Tomcat}.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
-$ wget
-https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ wget http://tinyurl.com/jf3cadl
 \end{lstlisting} 
 
 Abra este arquivo e extraia \texttt{mysql-connector-java-5.1.38-bin.jar} para o
 diretório \texttt{\$CATALINA\_HOME/lib/}. Abra o arquivo
 \textit{conf/context.xml} e adicione dentro de \texttt{\(<\)Context\(>\)}:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ nano $CATALINA_HOME/conf/context.xml
 
 <Context ...>
@@ -430,28 +430,27 @@ Note que modificamos os campos \texttt{username}, \texttt{password} e
 \texttt{epics-archiver-appliance/} para os respectivos diretórios
 \texttt{webapps/}. Para tal, definimos:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 export DEPLOY_DIR=$INSTALL_DIR/epics-appliances
 export WARSRC_DIR=$INSTALL_DIR/epics-archiver-appliance
 \end{lstlisting}
 
 E executamos o seguinte trecho para extrair os arquivos \textit{.war}:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,keywordstyle=\ttfamily,
+style=nonumbers] 
 $ source /home/user/.bashrc
-
 $ pushd ${DEPLOY_DIR}/mgmt/webapps && rm -rf mgmt*; cp ${WARSRC_DIR}/mgmt.war .; mkdir mgmt; cd mgmt; jar xf ../mgmt.war; popd; 
 $ pushd ${DEPLOY_DIR}/engine/webapps && rm -rf engine*; cp ${WARSRC_DIR}/engine.war .; mkdir engine; cd engine; jar xf ../engine.war; popd; 
 $ pushd ${DEPLOY_DIR}/etl/webapps && rm -rf etl*; cp ${WARSRC_DIR}/etl.war .; mkdir etl; cd etl; jar xf ../etl.war; popd; 
 $ pushd ${DEPLOY_DIR}/retrieval/webapps && rm -rf retrieval*; cp ${WARSRC_DIR}/retrieval.war .; mkdir retrieval; cd retrieval; jar xf ../retrieval.war; popd;
-
 \end{lstlisting}
 
 \item Enfim, lance os 4 \textit{Tomcats}:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,keywordstyle=\ttfamily,
+style=nonumbers]
 $ source /home/user/.bashrc
-
 $ export CATALINA_BASE=${DEPLOY_DIR}/mgmt;${CATALINA_HOME}/bin/catalina.sh start 
 $ export CATALINA_BASE=${DEPLOY_DIR}/engine;${CATALINA_HOME}/bin/catalina.sh start 
 $ export CATALINA_BASE=${DEPLOY_DIR}/etl;${CATALINA_HOME}/bin/catalina.sh start 
@@ -461,13 +460,13 @@ $ export CATALINA_BASE=${DEPLOY_DIR}/retrieval; ${CATALINA_HOME}/bin/catalina.sh
 
 \item O arquivador é acessado através da URL 
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 http://localhost:11995/mgmt/ui/index.html
 \end{lstlisting}
 
 \end{enumerate} 
 
-\subsection{Uso do CS Studio no monitoramento}
+\subsection{Uso do CS Studio no monitoramento} \label{appliance-csstudio}
 
 O \textit{CS Studio} pode ser usado para monitorar a \textit{appliance}. Para
 isso, entre em \texttt{Edit \(>\) Preferences} e acesse o item \texttt{CSS

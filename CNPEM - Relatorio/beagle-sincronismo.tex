@@ -37,13 +37,349 @@ processos e preeempção. Aplicações que rodam sobre \textit{Linux} embarcado 
 que, portanto, compartilham recursos com outros processos, apresentam,
 geralmente, desempenho inferior. O sistema desenvolvido utiliza a \textit{PRU}
 para a recepção do sinal de sincronismo e ativa, posteriormente, seus nós
-escravos, conforme figura \ref{fig:pru_sincronismo} abaixo.
+escravos, conforme figura \ref{fig:pru_sincronismo} abaixo. Esse sistema obteve
+um \textit{jitter} da ordem de 15ns, representando, assim, um valor próximo do
+ótimo, uma vez que os ciclos de processamento de cada um dos componentes estão
+próximos de 5ns.
 
-\vspace{12pt} 
+\FloatBarrier
 
-Nesta seção, serão apresentadas algumas alternativas a esse sistema, que
-utilizam o protocolo \textit{Ethernet} para o envio dos \textit{triggers} de
-sincronismo, e as suas respectivas \textit{performances}.
+\begin{figure}[h]
+
+\centering
+\includegraphics[scale=0.65]{image/pru_bbb_sincronismo}
+\caption {Esquema de sincronismo realizado pelo grupo de controle.}
+\label{fig:pru_sincronismo}
+\end{figure}
+
+\FloatBarrier
+
+Nesta seção, será apresentada a alternativa descrita na figura
+\ref{fig:pru_sincronismo_ethernet}, que utiliza o protocolo \textit{Ethernet} e
+equipamentos padrões na implementação deste tipo de rede, como
+\textit{switches}, para o envio dos \textit{triggers} de sincronismo, e a sua
+respectiva \textit{performance}.
+
+\FloatBarrier
+
+\begin{figure}[h]
+
+\centering
+\includegraphics[scale=0.65]{image/pru_bbb_sincronismo_ethernet}
+\caption {Sistema de sincronismo proposto.}
+\label{fig:pru_sincronismo_ethernet}
+\end{figure}
+
+\FloatBarrier
 
 \subsection {Implementação}
+
+Esta subseção é dedicada à implementação do sistema de sincronismo proposto.
+
+\subsubsection{\textit{Loadable Kernel Modules}}
+
+A principal diferença entre os dois sistemas apresentados na subseção anterior é
+que, no segundo, não utilizamos a unidade \textit{PRU} da \textit{BeagleBone
+Black}. Em seu lugar, implementamos módulos do \textit{kernel} do
+\textit{Linux}, os chamados \textit{Loadable Kernel Modules} (\textit{LKM}).
+Tais módulos são mecanismos que permitem a adição ou remoção de código do \textit{Linux kernel}
+em tempo de execução e, por esta razão, são ideias para a implementação de
+\textit{device drivers}, cujo principal propósito é realizar a comunicação com o
+\textit{hardware} disponível. 
+
+\vspace{12pt}
+
+Sendo essencialmente parte do \textit{kernel}, os \textit{LKMs} são executados
+no \textit{kernel space} e, por isso, possuem endereços de memória e
+\textit{APIs} próprios, que são, por sua vez, separados daqueles
+disponíveis no \textit{user space}. Este último representa o \textit{space} em
+que, na maioria das vezes, escrevemos e executamos as aplicações em C. A figura
+\ref{fig:derek_kernel_user} resume as interações entre os dois espaços: o
+\textit{user space} comunica-se com \textit{kernel space} através de
+\textit{system calls}, que, por sua vez, acessa o \textit{hardware} através de
+\textit{drivers} específicos. O \textit{kernel space} possibilita o tratamento
+de interrupções, que serão utilizadas neste exemplo, ao contrário do
+\textit{user space}.
+
+\FloatBarrier
+
+\begin{figure}[h]
+
+\centering
+\includegraphics[scale=0.55]{image/userspace-kernelspace}
+\caption {Comunicação entre \textit{kernel} e \textit{user spaces}.}
+\label{fig:derek_kernel_user}
+\end{figure}
+
+\FloatBarrier
+
+\vspace{-12pt}
+
+\subsubsection{Descrição das características do projeto}
+
+De maneira geral, serão desenvolvidas duas aplicações, uma para a \textit{Beagle
+BB1} que recebe o \textit{trigger} de sincronismo e prepara o pacote
+\textit{UDP} para envio e a outra, para a placa \textit{BB2}, que é responsável
+pela recepção do respectivo pacote e tratamento. A aplicação que recebe o
+\textit{trigger} mantem um contador interno e o transmite em intervalos
+definidos de tempo, para que o nó escravo possa também manter um contador
+de mesmo tipo. Dessa forma, o nó escravo pode determinar se um pacote foi
+perdido durante a transmissão e corrigir seu contador.
+
+\vspace{12pt}
+
+Em termos de programação, as aplicações apresentam as seguintes características:
+
+\begin{itemize} \renewcommand\labelitemi{--}
+  \item \textit{Kernel Module} em \textit{BB1}: um \textit{timer} gera
+  interrupções a cada 1ms. Na rotina de tratamento desta interrupção, um
+  registro contendo os dados a serem enviados via \textit{Ethernet} é
+  adicionado em um \textit{buffer} circular. Uma outra \textit{thread}
+  é responsável por retirar estes elementos do \textit{buffer}, prepapar os
+  pacotes \textit{UDP} e enviá-los.
+
+  \item \textit{Kernel Module} em \textit{BB2}: uma \textit{thread} é
+  instanciada e espera pacotes \textit{UDP}. Quando recebe, atualiza seu
+  contador e seus pinos de saída.
+\end{itemize}
+
+Por questões de simplicidade, o módulo \textit{PWM} da placa que envia os
+pacotes \textit{UDP} (\textit{BB1}) será utilizado como gerador dos
+\textit{triggers} de sincronismo. A sua configuração será descrita na próxima subseção.
+
+\subsubsection {Configuração do \textit{PWM} com o \textit{Device Tree
+Overlays}}
+
+Os mecanismos de \textit{Cape Manager} e \textit{Device Tree Overlays} permitem
+a modificação do sistema, como, por exemplo, configuração da função dos pinos,
+ativação e carregamento de módulos, em tempo de execução a partir de programas
+sendo executados no \textit{user space}.
+
+\vspace{12pt}
+
+
+Sendo assim, a fim de modificarmos o pino \texttt{P9\_22} (\textit{header P9},
+pino 22) para que atue como uma saída do módulo \textit{PWM}, é necessário
+escrevermos um arquivo de extensão \texttt{.dts} (\textit{device tree source}), contendo as especificações que
+desejamos adotar. Um arquivo deste tipo é disponível em
+\url{http://tinyurl.com/ntkl2w7} e contem todas as possíveis configurações de
+todos os pinos da \textit{BeagleBone Black}. Como vamos utilizar somente as
+linhas referentes ao \texttt{P9\_22}, podemos copiá-las para um arquivo
+separado e adotá-lo em seguida. Após obtermos tal arquivo, é necessário
+compilá-lo a partir do comando \texttt{dtc} e incluir o resultado no diretório
+\texttt{/lib/firmware/}. 
+
+\vspace{12pt}
+
+Para carregar o \textit{overlay}, configuramos duas variáveis de ambiente:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ export SLOTS=/sys/devices/bone_capemgr.9/slots
+$ export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
+\end{lstlisting}
+
+\vspace{12pt}
+
+Executamos, então, os comandos abaixo, em que \texttt{pwm\_P9\_22} referencia o
+arquivo gerado após compilação. \texttt{duty\_ns} e \texttt{period\_ns}
+são utilizados, respectivamente, para configurar o intervalo de tempo em que a
+onda permanecerá em nível lógico alto e o seu período total.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ echo pwm_P9_22 > $SLOTS
+$ echo pwm > /sys/devices/ocp.3/P9_22_pinmux.12/state
+$ cd /sys/class/pwm/
+$ echo 0 > export 
+$ cd pwm0/
+$ echo 2000000 > duty_ns
+$ echo 70000000 > period_ns
+\end{lstlisting}
+
+\subsubsection{Implementação do \textit{Kernel Module} de \texttt{BB1}}
+
+O \textit{module} desenvolvido para a placa \texttt{BB1} instancia duas
+\textit{threads}: uma para inicialização dos componentes e a outra para
+processamento e envio de pacotes \textit{UDP}. No \textit{kernel space}, cada
+\textit{thread} é dada por uma estrutura do tipo \texttt{struct
+task\_struct}, especificada na biblioteca \texttt{linux/kthread.h}, que provê
+também as funções \texttt{kthread\_create} e \texttt{wake\_up\_process}. A
+primeira é reponsável por alocar os recursos necessários à execução de uma
+\textit{thread} e a segunda, por permitir a sua execução. É possível alterar a
+prioridade e a \textit{policy} de uma \textit{thread} através da função
+\texttt{sched\_setscheduler}, disponível em \texttt{linux/sched.h}. Esses dois
+parâmetros são usados pelo \textit{Linux scheduler} para decidir qual
+dos processos interrompidos deterá o processador após a interrupção ou
+bloqueio do processo em curso de execução. O \textit{Linux} fornece duas
+políticas de \textit{real-time}, \texttt{SCHED\_FIFO} e
+\texttt{SCHED\_RR}, que possuem prioridade superior à politíca comum,
+\texttt{SCHED\_NORMAL}. Portanto, processos cujas \textit{scheduler classes} são
+do tipo \textit{real-time} sempre são escolhidos antes daqueles de política
+comum. Quando uma tarefa do tipo \texttt{SCHED\_FIFO} assume a \textit{CPU}, ela
+continua a ser executada até que ela seja bloqueada ou que ela conceda
+explicitamente o processador a outro processo, podendo rodar
+indefinidamente caso nenhuma dessas condições seja atendida. Somente uma tarefa
+\texttt{SCHED\_FIFO} ou \texttt{SCHED\_RR} de maior prioridade pode interromper
+sua execução. Para as tarefas do tipo \texttt{SCHED\_RR}, o princípio é o mesmo,
+porém elas são submetidas a um intervalo de execução, sendo que, ao fim deste
+intervalo, tais tarefas perdem os recursos de processamento e entram na fila
+circular de espera. Em outras palavras, a política \texttt{SCHED\_RR} é
+semelhante à \texttt{SCHED\_FIFO}, exceto no tempo que é
+permitido ao uso de \textit{CPU}. No nosso caso, ambas as \textit{threads} terão
+políticas de \texttt{SCHED\_FIFO}, mas aquela que é interrompida pelo
+\textit{timer} e \textit{GPIOs} possuirá maior prioridade. Em adição, a segunda
+\textit{thread} (aquela responsável pelo envio de pacotes) desiste da
+\textit{CPU} quando o \textit{buffer} circular está vazio e só é ``acordada''
+quando uma interrupção de tempo ocorrer (o \textit{buffer} volta a ser
+preenchido na função de tratamento desta interrupção). Os fluxogramas abaixo
+resumem o funcionamento destas \textit{threads}.
+
+\FloatBarrier
+			    
+	\begin{figure}[h!]
+	
+	\centering
+	
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[scale=0.65]{image/thread_int}
+		  \caption{\centering Fluxograma da \textit{thread} que é interrompida pelo
+		  \textit{timer}.}
+		  \label{fig:thread_int}
+		  
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[scale=0.65]{image/thread_proc}
+		  \caption{\centering Fluxograma da \textit{thread} que envia pacotes à
+		  rede.}
+		  \label{fig:thread_proc} 
+		\end{subfigure}
+	
+	
+	\caption{Fluxogramas das \textit{threads} que compõem \texttt{BB1}.}
+	\end{figure} 
+	
+	\FloatBarrier 
+
+A figura \ref{fig:thread_int} especifica o fluxograma da \textit{thread\_int}
+que preenche o \textit{buffer} circular a cada interrupção do relógio e sinaliza
+para a \textit{thread\_proc} que ele não está mais vazio. A figura
+\ref{fig:thread_proc} evidencia que um pacote é enviado somente o
+\textit{buffer} não estiver vazio. Caso contrário, a \textit{thread\_proc}
+se bloqueia esperando uma interrupção do relógio. As funções \texttt{wake\_up} e
+\texttt{wait\_event} estão disponíveis na biblioteca \texttt{linux/wait.h}. A
+segunda deve receber como parâmetro uma fila, que representa a estrutura de
+dados onde serão colocados os processos que esperam pelo evento. Essa fila é do
+tipo \texttt{wake\_queue\_head\_t} e pode ser criada estaticamente, via
+a \textit{macro} \texttt{DECLARE\_WAITQUEUE()}, ou dinamicamente, via a função
+\texttt{init\_waitqueue\_head()}.
+
+\vspace{12pt}
+
+Os processadores da família \textit{Sitara AM335x} da \textit{Texas Instruments}
+possuem um módulo, chamado de \textit{DMTimer}, composto por 7 \textit{timers}
+configuráveis. Cada um dos \textit{timers} contem um contador de 32
+\textit{bits} crescente com capacidade de \textit{auto reload} e geração de
+interrupção ao atingir seu valor máximo (\texttt{0xFFFFFFFF}), isto é, em caso
+de \textit{overflow}. Além disso, é possível configurar um divisor de frêquencia
+(\textit{prescaler}) e escolher o sinal de \textit{clock} que será usado pelo
+componente. No \textit{kernel space}, a biblioteca \texttt{plat/dmtimer.h}
+fornece as principais operações para configuração do módulo. 
+
+\vspace{12pt}
+
+A função \texttt{omap\_dm\_timer\_request()} retorna uma estrutura do tipo
+\texttt{struct omap\_dm\_timer} que representa um dos \textit{timers}
+disponíveis no módulo. Há mais algumas variantes desta chamada, porém a
+principal é a \texttt{omap\_dm\_timer\_request\_specific(int timer\_id)}, que
+recebe como parâmetro o \textit{id} do \textit{dmtimer} desejado. É necessário
+notar, porém, que talvez seja necessário a configuração de um \textit{overlay}
+para a configuração dos pinos utilizados pelo respectivo \textit{timer}. Em
+seguida, executamos a chamada \texttt{omap\_dm\_timer\_set\_source}, que
+configura o sinal de \textit{clock} de entrada. Utilizamos o \textit{clock} de
+32kHz, portanto passamos a constante \texttt{OMAP\_TIMER\_SRC\_32\_KHZ} como
+parâmetro à função. \texttt{omap\_dm\_timer\_set\_prescaler} permite definir o
+valor do divisor de frequência e \texttt{omap\_dm\_timer\_set\_load\_start}, o
+valor que será carregado no contador quando um \textit{overflow} ocorrer. Tais
+definições dependem do intervalo desejado entre interrupções e são dadas pela
+equação \ref{eq:timer}, em que \textit{TDLR} é o valor a ser carregado no
+contador, \textit{PTV}, o \textit{prescaler} e \(f_{clock}=32kHz\).
+
+\begin{equation} 
+t = (\text{0xFFFFFFFF} - TDLR + 1)*\frac{1}{f_{clock}}*2^{PTV+1}
+\label{eq:timer}
+\end{equation}
+
+No nosso caso, desejamos interrupções a cada \(t=1ms\) com \(PTV=1\). A
+aplicação direta da equação \ref{eq:timer} resulta em \textit{TDLR} =
+0xFFFFFFF7.
+
+\vspace{12pt}
+
+O último passo é ativar a interrupção em caso de \textit{overflow} e associar a
+ela uma função de tratamento. Para configurá-la, utilizamos três funções:
+
+\begin{itemize} \renewcommand\labelitemi{--}
+  \item \texttt{omap\_dm\_timer\_get\_irq()}: retorna o \textit{id} da
+  interrupção associada ao \textit{timer} passado como parâmetro;
+
+  \item \texttt{omap\_dm\_timer\_set\_int\_enable()}: habilita interrupção no
+  módulo. Recebe como parâmetro uma constante que define o evento que deve ser
+  associado à interrupção. No nosso caso, como queremos que uma interrupção seja
+  lançada após \textit{overflow} do contador, passamos o valor
+  \texttt{OMAP\_TIMER\_INT\_OVERFLOW};
+
+  \item \texttt{request\_irq()}, da biblioteca \texttt{linux/interrupt.h}:
+  recebe como parâmetro o \textit{id} da interrupção, a sua função tratadora e
+  o tipo de função. Este último é uma constante definida na biblioteca e vale
+  \path{IRQF_TIMER}. No nosso caso, criamos uma função chamada
+  \path{dmtimer_irq_handler()} que retorna uma estrutura do tipo \texttt{irqreturn\_t}. Para comunicar ao sistema
+  operacional que a interrupção foi corretamente tratada, tal função deve
+  retornar \texttt{IRQ\_HANDLED}. Além desta constante, a função deve atualizar
+  o registrador de \textit{status} do módulo realizando uma escrita. Isso é
+  feito através da função \texttt{omap\_dm\_timer\_write\_status()}, com o
+  parâmetro \path{OMAP_TIMER_INT_OVERFLOW}.
+\end{itemize}
+ 
+Enfim, iniciamos o \textit{timer} com a chamada de \path{omap_dm_timer_start()}.
+
+\vspace{12pt}
+
+A próxima etapa é a configuração dos pinos de entra e saída. A biblioteca
+\texttt{linux/gpio.h} fornece as funções necessárias para definirmos a direção
+(entrada ou saída) e o nível lógico a ser atribuído a um respectivo pino.
+Utilizamos dois pinos de entrada e saída nesta aplicação:
+
+\begin{itemize} \renewcommand\labelitemi{--}
+  \item \texttt{GPIO\_48} (\texttt{P9\_15}): pino de entrada que recebe o
+  \textit{trigger} de sincronismo. A cada borda de subida detectada, uma
+  interrupção é lançada e algumas \textit{flags} responsáveis por armazenar a
+  ocorrência do evento são atualizadas;
+
+  \item \texttt{GPIO\_68} (\texttt{P8\_15}): pino de saída que tem seu valor
+  alterado quando um \textit{trigger} de sincronismo foi detectado. Utilizado
+  para testes da aplicação.
+\end{itemize}
+
+Para verificar se um pino pode ser utilizado, chamamos a função
+\path{gpio_is_valid}, cujo parâmetro é o \textit{id} do respectivo pino. Se o
+retorno for diferente de 0, o \textit{id} é valido podemos continuar a
+configurá-lo. Em seguida, executamos, em sequência,
+\path{gpio_request()}, \path{ gpio_direction_output()} - para saída - ou
+\path{gpio_direction_input()} - para entrada - e \path{gpio_export()}. Tais
+funções são responsáveis por, respectivamente, reservar o pino, configurar sua
+direção e exportá-lo, permitindo ou não que outras aplicações o utilizem. O pino
+de entrada requer adicionalmente que uma interrupção seja relacionada a ele.
+Para tal, repetimos o procedimento realizado para o \textit{timer}, isto é,
+obtemos o \textit{id} da interrupção através de \path{gpio_to_irq} e associamos
+um função tratadora com \path{request_irq}. Entretanto, ao invés de enviarmos o
+parâmetro \path{IRQF_TIMER} para este último, passamos
+\path{IRQF_TRIGGER_RISING}, que detectará as interrupções na borda de subida.
+
+\subsubsection{Implementação do \textit{Kernel Module} de \texttt{BB2}}
+
+\subsection {Resultados}
+
+
+
 

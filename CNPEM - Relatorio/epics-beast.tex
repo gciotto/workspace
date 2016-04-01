@@ -128,7 +128,7 @@ respectivamente, o \textit{MySQL}, \textit{Apache ActiveMQ} e a versão
   arquivos em um diretório. Usaremos aqui o mesmo caminho especificado por
   \texttt{\$INSTALL\_DIR}, utilizado também na seção \ref{sec:archiver}.
   
-  \begin{lstlisting}[language=bash, style=nonumbers]
+  \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $INSTALL_DIR/
 $ wget https://github.com/ControlSystemStudio/cs-studio/archive/master.zip
 $ unzip cs-studio-master.zip
@@ -151,28 +151,27 @@ $ cd cs-studio-master/
    desta sentença criam a hierarquia, que também nos será útil. Execute, então,
    os seguintes comandos:
    
-\begin{lstlisting}[language=bash, style=nonumbers]
-$ mysql -u root -p
+\begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,
+keywordstyle=\ttfamily, style=nonumbers] $ mysql -u root -p
 >> CREATE DATABASE ALARM;
 >> GRANT ALL ON ALARM.* TO 'lnls_alarm_user'@localhost IDENTIFIED BY 'alarm_password';
 >> exit
-
 $ mysql -u lnls_alarm_user -p
 >> source applications/alarm/alarm-plugins/org.csstudio.alarm.beast/dbd/ALARM_MYSQL.sql;
 \end{lstlisting}
 
 Verifique que as tabelas foram criadas corretamente com:
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 >> SHOW TABLES;
 \end{lstlisting}
    
 \item A próxima etapa é configurar o servidor de mensagens \textit{JMS}. Será
 necessário fazer o \textit{download} do pacote \textit{Apache ActiveMQ}.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $INSTALL_DIR/
-$ wget http://www.apache.org/dyn/closer.cgi?path=/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz
+$ wget http://tinyurl.com/htw5tdx
 $ tar -xvzf apache-activemq-5.13.0-bin.tar.gz
 $ rm apache-activemq-5.13.0-bin.tar.gz
 $ cd apache-activemq-5.13.0/
@@ -183,7 +182,7 @@ configurações do servidor. É possível, por exemplo, modificar a porta, que p
 padrão é 61616, ou adicionar autenticação via \textit{jaas}. Para tal, adicione
 as seguintes linhas neste arquivo.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 <plugins>
   <jaasAuthenticationPlugin configuration="PropertiesLogin" />
 </plugins>
@@ -194,7 +193,7 @@ Neste caso, \textit{PropertiesLogin} é o nome da configuração contido no arqu
 arquivos onde estarão armazenados os usuários, suas senhas (\texttt{users.properties}) e grupos
 (\texttt{groups.properties}). Por fim, inicie o servidor com 
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $INSTALL_DIR/apache-activemq-5.13.0/bin/linux-x86-64/
 $ ./activemq start
 \end{lstlisting}
@@ -205,9 +204,9 @@ utilizar a distribuição \textit{Luna} do \textit{Eclipse for RCP and RAP
 Developers}, por apresentar melhor compatibilidade com os pacotes gráficos do
 \textit{CS Studio}. Extraia e inicie a aplicação.
 
-\begin{lstlisting}[language=bash, style=nonumbers]
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $INSTALL_DIR/
-$ wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/luna/SR2/eclipse-rcp-luna-SR2-linux-gtk-x86_64.tar.gz
+$ wget http://tinyurl.com/jbmmue7
 $ tar -xvzf eclipse-rcp-luna-SR2-linux-gtk-x86_64.tar.gz
 $ rm eclipse-rcp-luna-SR2-linux-gtk-x86_64.tar.gz
 $ cd eclipse/
@@ -370,7 +369,7 @@ Alguns erros foram encontrados durante a instalação:
   alterar configurações de alarmes a partir de agora.
 \end{enumerate}
 
-\subsubsection {Obtendo um \textit{LNLStudio} a partir configuração do
+\subsubsection {Obtendo um \textit{LNLStudio} a partir da configuração do
 \textit{Eclipse}}
 
 É possível exportar a configuração atual do \textit{Eclipse} como um novo
