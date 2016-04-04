@@ -200,38 +200,43 @@ $ echo 70000000 > period_ns
 O \textit{module} desenvolvido para a placa \texttt{BB1} instancia duas
 \textit{threads}: uma para inicialização dos componentes e a outra para
 processamento e envio de pacotes \textit{UDP}. No \textit{kernel space}, cada
-\textit{thread} é dada por uma estrutura do tipo \texttt{struct
-task\_struct}, especificada na biblioteca \texttt{linux/kthread.h}, que provê
-também as funções \texttt{kthread\_create} e \texttt{wake\_up\_process}. A
-primeira é reponsável por alocar os recursos necessários à execução de uma
-\textit{thread} e a segunda, por permitir a sua execução. É possível alterar a
-prioridade e a \textit{policy} de uma \textit{thread} através da função
+\textit{thread} é dada por uma estrutura do tipo \texttt{struct task\_struct},
+especificada na biblioteca \texttt{linux/kthread.h}, que provê também as funções
+\texttt{kthread\_create} e \texttt{wake\_up\_process}. A primeira é reponsável
+por alocar os recursos necessários à execução de uma \textit{thread} e a
+segunda, por permitir a sua execução. É possível alterar a prioridade e a
+\textit{policy} de uma \textit{thread} através da função
 \texttt{sched\_setscheduler}, disponível em \texttt{linux/sched.h}. Esses dois
-parâmetros são usados pelo \textit{Linux scheduler} para decidir qual
-dos processos interrompidos deterá o processador após a interrupção ou
-bloqueio do processo em curso de execução. O \textit{Linux} fornece duas
-políticas de \textit{real-time}, \texttt{SCHED\_FIFO} e
-\texttt{SCHED\_RR}, que possuem prioridade superior à politíca comum,
-\texttt{SCHED\_NORMAL}. Portanto, processos cujas \textit{scheduler classes} são
-do tipo \textit{real-time} sempre são escolhidos antes daqueles de política
-comum. Quando uma tarefa do tipo \texttt{SCHED\_FIFO} assume a \textit{CPU}, ela
-continua a ser executada até que ela seja bloqueada ou que ela conceda
-explicitamente o processador a outro processo, podendo rodar
-indefinidamente caso nenhuma dessas condições seja atendida. Somente uma tarefa
+parâmetros são usados pelo \textit{Linux scheduler} para decidir qual dos
+processos interrompidos deterá o processador após a interrupção ou bloqueio do
+processo em curso de execução. O \textit{Linux} fornece duas políticas de
+\textit{real-time}, \texttt{SCHED\_FIFO} e \texttt{SCHED\_RR}, que possuem
+prioridade superior à politíca comum, \texttt{SCHED\_NORMAL}. Portanto,
+processos cujas \textit{scheduler classes} são do tipo \textit{real-time} sempre
+são escolhidos antes daqueles de política comum. É necessário observar que estas
+classes não são capazes de garantir um comportamento dito \textit{hard
+real-time}, isto é, que asseguram o cumprimento de qualquer requisito dentro de
+um certo limite. As \textit{real-time scheduling policies} fornecem, portanto,
+um comportamento de \textit{soft real-time}, ou seja, o \textit{kernel} fará o
+máximo possível para atender às requisições, mas não pode prometer sempre
+cumpri-las. Quando uma tarefa do tipo \texttt{SCHED\_FIFO} assume a
+\textit{CPU}, ela continua a ser executada até que ela seja bloqueada ou que ela conceda
+explicitamente o processador a outro processo, podendo rodar indefinidamente
+caso nenhuma dessas condições seja atendida. Somente uma tarefa
 \texttt{SCHED\_FIFO} ou \texttt{SCHED\_RR} de maior prioridade pode interromper
 sua execução. Para as tarefas do tipo \texttt{SCHED\_RR}, o princípio é o mesmo,
 porém elas são submetidas a um intervalo de execução, sendo que, ao fim deste
 intervalo, tais tarefas perdem os recursos de processamento e entram na fila
 circular de espera. Em outras palavras, a política \texttt{SCHED\_RR} é
-semelhante à \texttt{SCHED\_FIFO}, exceto no tempo que é
-permitido ao uso de \textit{CPU}. No nosso caso, ambas as \textit{threads} terão
-políticas de \texttt{SCHED\_FIFO}, mas aquela que é interrompida pelo
-\textit{timer} e \textit{GPIOs} possuirá maior prioridade. Em adição, a segunda
-\textit{thread} (aquela responsável pelo envio de pacotes) desiste da
-\textit{CPU} quando o \textit{buffer} circular está vazio e só é ``acordada''
-quando uma interrupção de tempo ocorrer (o \textit{buffer} volta a ser
-preenchido na função de tratamento desta interrupção). Os fluxogramas abaixo
-resumem o funcionamento destas \textit{threads}.
+semelhante à \texttt{SCHED\_FIFO}, exceto no tempo que é permitido ao uso de
+\textit{CPU}. No nosso caso, ambas as \textit{threads} terão políticas de
+\texttt{SCHED\_FIFO}, mas aquela que é interrompida pelo \textit{timer} e
+\textit{GPIOs} possuirá maior prioridade. Em adição, a segunda \textit{thread}
+(aquela responsável pelo envio de pacotes) desiste da \textit{CPU} quando o
+\textit{buffer} circular está vazio e só é ``acordada'' quando uma interrupção
+de tempo ocorrer (o \textit{buffer} volta a ser preenchido na função de
+tratamento desta interrupção). Os fluxogramas abaixo resumem o funcionamento
+destas \textit{threads}.
 
 \FloatBarrier
 			    
@@ -354,7 +359,9 @@ Utilizamos dois pinos de entrada e saída nesta aplicação:
   \item \texttt{GPIO\_48} (\texttt{P9\_15}): pino de entrada que recebe o
   \textit{trigger} de sincronismo. A cada borda de subida detectada, uma
   interrupção é lançada e algumas \textit{flags} responsáveis por armazenar a
-  ocorrência do evento são atualizadas;
+  ocorrência do evento são atualizadas. Quando a \textit{thread\_proc} prepara o
+  próximo pacote, ela consulta essas \textit{flags} e, caso esteja setadas,
+  adiciona ao respectivo pacote o \textit{trigger} recebido;
 
   \item \texttt{GPIO\_68} (\texttt{P8\_15}): pino de saída que tem seu valor
   alterado quando um \textit{trigger} de sincronismo foi detectado. Utilizado
@@ -363,7 +370,7 @@ Utilizamos dois pinos de entrada e saída nesta aplicação:
 
 Para verificar se um pino pode ser utilizado, chamamos a função
 \path{gpio_is_valid}, cujo parâmetro é o \textit{id} do respectivo pino. Se o
-retorno for diferente de 0, o \textit{id} é valido podemos continuar a
+retorno for diferente de 0, o \textit{id} é valido e podemos continuar a
 configurá-lo. Em seguida, executamos, em sequência,
 \path{gpio_request()}, \path{ gpio_direction_output()} - para saída - ou
 \path{gpio_direction_input()} - para entrada - e \path{gpio_export()}. Tais
@@ -371,10 +378,20 @@ funções são responsáveis por, respectivamente, reservar o pino, configurar s
 direção e exportá-lo, permitindo ou não que outras aplicações o utilizem. O pino
 de entrada requer adicionalmente que uma interrupção seja relacionada a ele.
 Para tal, repetimos o procedimento realizado para o \textit{timer}, isto é,
-obtemos o \textit{id} da interrupção através de \path{gpio_to_irq} e associamos
-um função tratadora com \path{request_irq}. Entretanto, ao invés de enviarmos o
-parâmetro \path{IRQF_TIMER} para este último, passamos
-\path{IRQF_TRIGGER_RISING}, que detectará as interrupções na borda de subida.
+obtemos o \textit{id} da interrupção através de \path{gpio_to_irq()} e associamos
+uma função tratadora com \path{request_irq()}. Entretanto, ao invés de enviarmos
+o parâmetro \path{IRQF_TIMER} para esta última, passamos
+\path{IRQF_TRIGGER_RISING}, que lançará as interrupções quando bordas de subida
+forem detectadas. Em relação aos pinos de saída, utiliza-se 
+\path{gpio_set_value()} para modificar o valor de tensão imposta na respectiva
+saída, cujo \textit{id} é passado como parâmetro à função.
+
+\vspace{12pt}
+
+Enfim, o último aspecto a ser discutido neste módulo é a implementação do envio
+de pacotes \textit{UDP}. Três bibliotecas devem ser importadas a fim de
+realizar essa comunicação: \path{linux/netdevice.h}, \path{linux/ip.h} e
+\path{linux/in.h}.
 
 \subsubsection{Implementação do \textit{Kernel Module} de \texttt{BB2}}
 
