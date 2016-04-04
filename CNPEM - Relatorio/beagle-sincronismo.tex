@@ -183,7 +183,8 @@ $ export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
 Executamos, então, os comandos abaixo, em que \texttt{pwm\_P9\_22} referencia o
 arquivo gerado após compilação. \texttt{duty\_ns} e \texttt{period\_ns}
 são utilizados, respectivamente, para configurar o intervalo de tempo em que a
-onda permanecerá em nível lógico alto e o seu período total.
+onda permanecerá em nível lógico alto e o seu período total. Para as próximas
+seções, vamos adotá-los como, respectivamente, 2\textit{ms} e 70\textit{ms}.
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ echo pwm_P9_22 > $SLOTS
@@ -196,6 +197,7 @@ $ echo 70000000 > period_ns
 \end{lstlisting}
 
 \subsubsection{Implementação do \textit{Kernel Module} de \texttt{BB1}}
+\label{sec:bb1}
 
 O \textit{module} desenvolvido para a placa \texttt{BB1} instancia duas
 \textit{threads}: uma para inicialização dos componentes e a outra para
@@ -235,36 +237,10 @@ semelhante à \texttt{SCHED\_FIFO}, exceto no tempo que é permitido ao uso de
 (aquela responsável pelo envio de pacotes) desiste da \textit{CPU} quando o
 \textit{buffer} circular está vazio e só é ``acordada'' quando uma interrupção
 de tempo ocorrer (o \textit{buffer} volta a ser preenchido na função de
-tratamento desta interrupção). Os fluxogramas abaixo resumem o funcionamento
-destas \textit{threads}.
+tratamento desta interrupção). Os fluxogramas da figura \ref{fig:threads_bb1}
+abaixo resumem o funcionamento destas \textit{threads}.
 
-\FloatBarrier
-			    
-	\begin{figure}[h!]
-	
-	\centering
-	
-		\begin{subfigure}{.5\textwidth}
-		  \centering
-		  \includegraphics[scale=0.65]{image/thread_int}
-		  \caption{\centering Fluxograma da \textit{thread} que é interrompida pelo
-		  \textit{timer}.}
-		  \label{fig:thread_int}
-		  
-		\end{subfigure}%
-		\begin{subfigure}{.5\textwidth}
-		  \centering
-		  \includegraphics[scale=0.65]{image/thread_proc}
-		  \caption{\centering Fluxograma da \textit{thread} que envia pacotes à
-		  rede.}
-		  \label{fig:thread_proc} 
-		\end{subfigure}
-	
-	
-	\caption{Fluxogramas das \textit{threads} que compõem \texttt{BB1}.}
-	\end{figure} 
-	
-	\FloatBarrier 
+\vspace{12pt}
 
 A figura \ref{fig:thread_int} especifica o fluxograma da \textit{thread\_int}
 que preenche o \textit{buffer} circular a cada interrupção do relógio e sinaliza
@@ -279,7 +255,34 @@ tipo \texttt{wake\_queue\_head\_t} e pode ser criada estaticamente, via
 a \textit{macro} \texttt{DECLARE\_WAITQUEUE()}, ou dinamicamente, via a função
 \texttt{init\_waitqueue\_head()}.
 
-\vspace{12pt}
+\FloatBarrier
+			    
+	\begin{figure}[h!]
+	
+	\centering
+	
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[scale=0.55]{image/thread_int}
+		  \caption{\centering Fluxograma da \textit{thread} que é interrompida pelo
+		  \textit{timer}.}
+		  \label{fig:thread_int}
+		  
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+		  \centering
+		  \includegraphics[scale=0.55]{image/thread_proc}
+		  \caption{\centering Fluxograma da \textit{thread} que envia pacotes à
+		  rede.}
+		  \label{fig:thread_proc} 
+		\end{subfigure}
+	
+	
+	\caption{Fluxogramas das \textit{threads} que compõem \texttt{BB1}.}
+	\label{fig:threads_bb1}
+	\end{figure} 
+	
+	\FloatBarrier 
 
 Os processadores da família \textit{Sitara AM335x} da \textit{Texas Instruments}
 possuem um módulo, chamado de \textit{DMTimer}, composto por 7 \textit{timers}
@@ -384,19 +387,163 @@ o parâmetro \path{IRQF_TIMER} para esta última, passamos
 \path{IRQF_TRIGGER_RISING}, que lançará as interrupções quando bordas de subida
 forem detectadas. Em relação aos pinos de saída, utiliza-se 
 \path{gpio_set_value()} para modificar o valor de tensão imposta na respectiva
-saída, cujo \textit{id} é passado como parâmetro à função.
+saída, cujo \textit{id} é passado como parâmetro à função. Os recursos
+utilizados por um pino de entrada ou saída são liberados a partir das chamadas
+\path{gpio_unexport()} e \path{gpio_free()}.
 
 \vspace{12pt}
 
 Enfim, o último aspecto a ser discutido neste módulo é a implementação do envio
-de pacotes \textit{UDP}. Três bibliotecas devem ser importadas a fim de
-realizar essa comunicação: \path{linux/netdevice.h}, \path{linux/ip.h} e
-\path{linux/in.h}.
+de pacotes \textit{UDP}. Três bibliotecas devem ser importadas a fim de realizar
+essa comunicação: \path{linux/netdevice.h}, \path{linux/ip.h} e
+\path{linux/in.h}. O primeiro passo é a criação do \textit{socket} de
+comunicações, que é realizado pela chamada à função \path{sock_create()},
+passando como parâmetros algumas constantes e a estrutura \texttt{struct socket}
+que representa um \textit{socket} no \textit{kernel space}. As constantes
+especificam o tipo do respectivo \textit{socket}, sendo que, para aplicações
+\textit{UDP}, utilizamos \path{AF_INET}, \path{SOCK_DGRAM} e \path{IPPROTO_UDP},
+que especificam, respectivamente, o formato dos endereços (endereços
+\textit{Internet Protocol v4}), as camadas de transporte e rede dos pacotes a
+serem enviados. Em seguida, definimos seu endereço e a porta a partir da função
+\path{connect()}, que pode ser acessada através do atributo \path{ops} de
+\texttt{struct socket}. Além do \textit{socket} criado, ela recebe como
+parâmetro um ponteiro para uma variável do tipo \texttt{struct sockaddr}, que,
+por sua vez, possui três atributos importantes: \path{sin_family},
+\path{sin_addr.s_addr} e \path{sin_port}. Recebem, respectivamente,
+\path{AF_INET}, \path{htonl(INADDR_SEND)} e \path{htons(CONNECT_PORT)}, em que
+\path{htonl()} e \path{htons()} são funções pré-definidas que convertem valores
+de \textit{host order} para \textit{network byte order}, \path{INADDR_SEND} é o
+endereço, por exemplo \path{0xc0a80216} para \path{192.168.2.22}, para o qual
+deseja-se enviar o datagramas e \path{CONNECT_PORT} é a porta. \path{connect()}, além de definir tais
+características, também ativa a conexão no \textit{socket}. O envio de pacotes é
+realizado por \path{sock_sendmsg()}, que recebe dois parâmetros: as estruturas
+\texttt{struct socket} e \texttt{struct msghdr}, que contem o conteúdo da
+mensagem. Enfim, para desalocar o \textit{socket}, chama-se a funçao
+\path{sock_release()}.
+
+\vspace{12pt}
+
+Por fim, a compilação do arquivo \path{.c} é realizada por meio de um
+\textit{Makefile}, cujo conteúdo é semelhante ao código abaixo, em que
+\path{timer_kernel_module} é o nome do arquivo do módulo e \texttt{\$(shell
+uname -r)} retorna a versão dos \textit{linux headers} instalados na
+\textit{Beagle}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+obj-m+=timer_kernel_module.o 
+ 
+all:
+	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) modules 
+clean:
+	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) clean
+\end{lstlisting}
+
+\vspace{12pt}
+
+A adição do módulo compilado (arquivo \path{.ko}) é realizado através do comando
+\path{insmod} e a sua remoção, a partir de \path{rmmod}. O arquivo
+de \textit{log} pode ser utilizado para eventual \textit{debug}, sendo acessado
+a partir de \path{/var/log/kern.log}.
 
 \subsubsection{Implementação do \textit{Kernel Module} de \texttt{BB2}}
 
+Uma só \textit{thread} é instanciada no \textit{kernel module} de \texttt{BB2}.
+Ela aguarda a recepção de pacotes \textit{UDP} e os processa. Ela é criada da
+mesma forma descrita na subseção anterior e tem sua \textit{policy} modificada
+para \path{SCHED_FIFO}, a fim de obter tratamento de \textit{real-time}. O
+fluxograma da figura \ref{fig:thread_bb2} destaca a execução do módulo. Quando
+um pacote é recebido, há uma verificação de sua integridade e, caso seja válido,
+o contador e as portas de \textit{gpio} são atualizadas conforme conteúdo.
+Observa-se que o processo de inicialização de tais portas segue o mesmo
+princípio que o descrito em \textbf{Implementação do \textit{Kernel Module} de
+\texttt{BB1}}. A criação do \textit{socket}, no entanto, é ligeiramente
+diferente: ao invés da função \path{connect()}, utiliza-se \path{bind()}, que
+atribui um endereço e porta ao respectivo \textit{socket}, passado como
+parâmetro através de uma estrutura do tipo \texttt{struct sockaddr}, que é
+inicializada com as funções \texttt{htonl} e \texttt{htons}, destacadas
+anteriormente. A recepção dos pacotes é feita via \path{sock_recvmsg()}, que
+bloqueia a \textit{thread} até que um datagrama seja detectado.
+
+\vspace{12pt}
+
+A compilação pode ser feito através de um \textit{Makefile} e a adição e remoção
+do módulo, via os comandos \path{insmod} e \path{rmmod}.
+
+\FloatBarrier
+
+\begin{figure}[h]
+
+\centering
+\includegraphics[scale=0.55]{image/thread_bb2}
+\caption {Fluxograma da \textit{thread} do \textit{kernel module} em
+\texttt{BB2}.}
+\label{fig:thread_bb2}
+\end{figure}
+
+\FloatBarrier
+
 \subsection {Resultados}
 
+Para avaliar os resultados, conectamos o \textit{PWM} ao canal 3 do osciloscópio
+e configuramos o \textit{trigger} para detectar subidas de borda deste canal. O
+módulo de \texttt{BB2} foi configurado para modificar o estado de um pino de
+saída, ao qual conectamos ao canal 2, a fim de gerar um simples pulso quando um
+pacote contendo um \textit{trigger} de sincronismo for recebido. Dessa forma,
+podemos avaliar o \textit{delay} entre a criação do evento inicial e de sua
+recepção no nó escravo, assim como o \textit{jitter} associado. Para tal,
+utilizamos a ferramenta \textit{Histograma} disponibilizada no equipamento e a
+configuramos para adquirir medidas relacionadas ao canal 2, isto é, pulsos
+gerados pela \textit{Beagle} \texttt{BB2}. Modificamos a opção \textit{Tempo de
+Persistência} do \textit{Display Forma de onda} para infinito, de forma a
+garantir que a tela do osciloscópio mantenha os pulsos gerados em instantes
+passados. Enfim, habilitamos o funcionamento do osciloscópio, obtendo o
+resultado presente na figura \ref{fig:osciloscopio_thread}.
 
+\FloatBarrier
 
+\begin{figure}[h]
 
+\centering
+\includegraphics[scale=0.35]{image/tek_com_threads}
+\caption {Captura de tela do osciloscópio.}
+\label{fig:osciloscopio_thread}
+\end{figure}
+
+\FloatBarrier
+
+O desvio padrão, ou \textit{jitter} obtido, é da ordem de 5.7\textit{ms}, muito
+distante daquele adquirido pelo sistema construído pelo grupo de controle, no
+qual utilizou-se a \textit{PRU} e obteve-se um valor próximo de 15\textit{ns}.
+Tal diferença é explicada, basicamente, por dois fatores: o canal utilizado para
+envio da mensagem e o componente de processamento da \textit{Beagle}. Na nossa
+aplicação, utilizamos um \textit{switch HP V1810G}, que apresenta um
+comportamento \textit{não deterministico}, isto é, não é possível prever com
+certitude o tempo necessário para que um pacote seja entregue a um determinado
+\textit{host}. O segundo aspecto a ser considerado é que aplicações rodando na
+\textit{PRU} não dividem recursos com outros processos, ao contrário de
+aplicações que rodam em \textit{embedded linux}. Na seção \ref{sec:bb1},
+comentamos que, apesar do \textit{Linux} fornecer políticas de preempção
+\textit{real-time}, o comportamento chamado de \textit{hard real-time} não
+poderia ser alcançado pelo \textit{kernel}. Em oposição, as unidades
+\textit{PRUs} da \textit{Beagle} foram desenvolvidas para este propósito.
+
+\subsection{Alternativa de solução: \textit{Industrial Ethernet}}
+
+Alguns protocolos foram desenvolvidos a fim de alcançar exigências de
+\textit{hard real-time} sobre redes \textit{Ethernet}. Um deles é o
+\textit{EtherCAT} (\textit{Ethernet for Control Automation Technology}),
+desenvolvido pela empresa alemã \textit{Beckhoff}, que utiliza as unidades de
+processamento \textit{real-time} (\textit{PRUs}). Um dos incovenientes desta
+aplicação em relação à \textit{BeagleBone Black} é que o seu processador,
+\textit{Sitara AM3358}, não suporta este protocolo, sendo que os únicos da mesma
+família que o suportam são \textit{AM3357} e \textit{AM3359}. A \textit{Texas
+Instruments} fornece um \textit{kit} de desenvolvimento com o último, chamado de
+\textit{AM3359 Industrial Communications Engine}, e uma biblioteca desenvolvida
+para o uso deste protocolo, \textit{SYS/BIOS Industrial Software Development Kit
+(SDK)}.
+
+\vspace{12pt}
+
+Além do \textit{EtherCAT}, outras alternativas para comunicação
+\textit{real-time} sobre \textit{Ethernet} e que são suportadas pelo processador
+AM3358 são \textit{Ethernet/IP}, \textit{PROFINET RT/IRT} e \textit{PROFIBUS}.

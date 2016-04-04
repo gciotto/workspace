@@ -413,7 +413,7 @@ static int init_network() {
 	printk(KERN_INFO "Initializing Network...\n");
 
 	/* create a socket */
-	if ( (err = sock_create_kern(AF_INET, SOCK_DGRAM, IPPROTO_UDP, &sock_send)) < 0 ){
+	if ( (err = sock_create(AF_INET, SOCK_DGRAM, IPPROTO_UDP, &sock_send)) < 0 ){
 
 		printk(KERN_INFO "Could not create a datagram socket, error = %d\n", -ENXIO);
 		return -ENXIO;
