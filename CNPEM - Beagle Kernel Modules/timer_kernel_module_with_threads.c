@@ -55,7 +55,7 @@ static int init_GPIO_as_output(int gpio_id);
 /* DMtimer-related variables */
 #define PTV_DM_TIMER 	0x01		/* Valor do prescaler - frequencia sera multiplicada por 2 ^ (1 + 1) */
 //#define LDR_DM_TIMER	0xFFFFF9BF 	/* tick each 100ms */
-#define LDR_DM_TIMER	0xFFFFFFF7 	/* Valor a ser carregado no registrador de LOAD -  interrupcoes a cada 10ms */
+#define LDR_DM_TIMER	0xFFFFFF5F 	/* Valor a ser carregado no registrador de LOAD -  interrupcoes a cada 10ms */
 //#define LDR_DM_TIMER	0xFFFFFFEF
 //#define PTV_DM_TIMER 	0x04
 //#define LDR_DM_TIMER	0xFFFFFC17	/* Valor a ser carregado no registrador de LOAD -  interrupcoes a cada 1s */
@@ -82,7 +82,7 @@ static int init_DMTimer(void);
 #define INADDR_BROADCAST_NET ((unsigned long int)0xc0a802ff)	/* 192.168.2.255 */
 //#define INADDR_SEND ((unsigned long int)0xc0a80201) 			/* 192.168.2.1 */
 
-static int send_change_cmd = 0;
+static int send_change_cmd = 0, isReady_to_End, canEnd;
 static struct socket *sock_send;
 static struct sockaddr_in addr_send;
 static int ksocket_send(unsigned char *buf, int len);
@@ -133,6 +133,8 @@ static void kthread_int_start(void) {
 		return;
 	}
 
+	printk(KERN_INFO "Initialization KThread exit.\n");
+
 }
 
 static void kthread_start(void) {
@@ -142,7 +144,7 @@ static void kthread_start(void) {
 
 	printk(KERN_INFO "KThread client started.\n");
 
-	for (;;) {
+	while(!isReady_to_End) {
 
 		if (signal_pending(current))
 			break;
@@ -164,6 +166,7 @@ static void kthread_start(void) {
 
 	}
 
+	canEnd = 1;
 	printk(KERN_INFO "KThread client exit.\n");
 
 }
@@ -269,7 +272,10 @@ static irqreturn_t gpio_irq_handler( int irq, void *dev_id) {
 
 static int __init dmtimer_module_init(void){
 
-	int return_err, result_kthread;
+	int  result_kthread;
+
+	isReady_to_End = 0;
+	canEnd = 0;
 
 	thread_int = kthread_create((void *)kthread_int_start, NULL, "KThread_interruption_client");
 	result_kthread = set_priority(thread_int, MAX_RT_PRIO - 2, SCHED_FIFO);
@@ -327,6 +333,14 @@ static void __exit dmtimer_module_exit(void){
 	gpio_unexport(gpioState);
 	gpio_free(gpioState);
 	printk (KERN_INFO "GPIO #%d freed successfully.\n", gpioState);
+
+
+	printk (KERN_INFO "Trying to kill thread.\n");
+	isReady_to_End = 1;
+	start = end + 1;
+	wake_up(&my_queue);
+
+	printk (KERN_INFO "Thread killed.\n");
 
 
 
@@ -592,5 +606,4 @@ static int init_DMTimer() {
 
 module_init(dmtimer_module_init);
 module_exit(dmtimer_module_exit);
-
 

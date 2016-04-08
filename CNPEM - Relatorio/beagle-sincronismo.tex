@@ -160,14 +160,14 @@ sendo executados no \textit{user space}.
 
 Sendo assim, a fim de modificarmos o pino \texttt{P9\_22} (\textit{header P9},
 pino 22) para que atue como uma saída do módulo \textit{PWM}, é necessário
-escrevermos um arquivo de extensão \texttt{.dts} (\textit{device tree source}), contendo as especificações que
-desejamos adotar. Um arquivo deste tipo é disponível em
-\url{http://tinyurl.com/ntkl2w7} e contem todas as possíveis configurações de
-todos os pinos da \textit{BeagleBone Black}. Como vamos utilizar somente as
-linhas referentes ao \texttt{P9\_22}, podemos copiá-las para um arquivo
-separado e adotá-lo em seguida. Após obtermos tal arquivo, é necessário
-compilá-lo a partir do comando \texttt{dtc} e incluir o resultado no diretório
-\texttt{/lib/firmware/}. 
+escrevermos um arquivo de extensão \texttt{.dts} (\textit{device tree source}),
+contendo as especificações que desejamos adotar. Um arquivo deste tipo é
+disponível em \url{http://tinyurl.com/ntkl2w7} e contem todas as possíveis
+configurações de todos os pinos da \textit{BeagleBone Black}. Como vamos
+utilizar somente as linhas referentes ao \texttt{P9\_22}, podemos copiá-las para
+um arquivo separado e adotá-lo em seguida. Após obtermos tal arquivo, é
+necessário compilá-lo a partir do comando \texttt{dtc} e incluir o resultado no
+diretório \texttt{/lib/firmware/}.
 
 \vspace{12pt}
 
@@ -215,16 +215,17 @@ processo em curso de execução. O \textit{Linux} fornece duas políticas de
 \textit{real-time}, \texttt{SCHED\_FIFO} e \texttt{SCHED\_RR}, que possuem
 prioridade superior à politíca comum, \texttt{SCHED\_NORMAL}. Portanto,
 processos cujas \textit{scheduler classes} são do tipo \textit{real-time} sempre
-são escolhidos antes daqueles de política comum. É necessário observar que estas
-classes não são capazes de garantir um comportamento dito \textit{hard
+são escolhidos antes daqueles de política comum. É necessário observar que,  no
+\textit{kernel} padrão do \textit{Linux},  estas classes não são capazes de garantir um comportamento dito \textit{hard
 real-time}, isto é, que asseguram o cumprimento de qualquer requisito dentro de
-um certo limite. As \textit{real-time scheduling policies} fornecem, portanto,
-um comportamento de \textit{soft real-time}, ou seja, o \textit{kernel} fará o
+um certo limite. As \textit{real-time scheduling policies} fornecem, portanto, um comportamento de \textit{soft real-time}, ou seja, o \textit{kernel} fará o
 máximo possível para atender às requisições, mas não pode prometer sempre
-cumpri-las. Quando uma tarefa do tipo \texttt{SCHED\_FIFO} assume a
-\textit{CPU}, ela continua a ser executada até que ela seja bloqueada ou que ela conceda
-explicitamente o processador a outro processo, podendo rodar indefinidamente
-caso nenhuma dessas condições seja atendida. Somente uma tarefa
+cumpri-las. Porém, um \textit{patch}, chamado \path{RT_PREEMPT} e disponível em
+\url{http://tinyurl.com/2fxb3sd}, foi desenvolvido para
+garantir características de \textit{hard real-time}. Sua instalação está
+comentada nas próximas subseções. Quando uma tarefa do tipo \texttt{SCHED\_FIFO}
+assume a \textit{CPU}, ela continua a ser executada até que ela seja bloqueada ou que ela conceda explicitamente o processador a outro processo, podendo rodar
+indefinidamente caso nenhuma dessas condições seja atendida. Somente uma tarefa
 \texttt{SCHED\_FIFO} ou \texttt{SCHED\_RR} de maior prioridade pode interromper
 sua execução. Para as tarefas do tipo \texttt{SCHED\_RR}, o princípio é o mesmo,
 porém elas são submetidas a um intervalo de execução, sendo que, ao fim deste
@@ -481,6 +482,10 @@ do módulo, via os comandos \path{insmod} e \path{rmmod}.
 \end{figure}
 
 \FloatBarrier
+
+\subsubsection{Modificando o \textit{Linux} para \textit{hard real-time}}
+
+
 
 \subsection {Resultados}
 
