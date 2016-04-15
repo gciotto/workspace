@@ -289,7 +289,7 @@ public class Client
                         packet[0] = Command.RAMP_BLOCK.bytecode;  // Command
                         packet[1] = ((packetSize - 3) >> 8) & 0xFF; // Packet
                         packet[2] = (packetSize - 3) & 0xFF;
-                        packet[3] = b.getPosition() - 1;              // Which board
+                        packet[3] = b.getPosition() - 1;          // Which board
                         packet[4] = b.getRampPulses();            // Pulses to wait
                         packet[5] = (rampLength >> 8) & 0xFF;
                         packet[6] = rampLength & 0xFF;

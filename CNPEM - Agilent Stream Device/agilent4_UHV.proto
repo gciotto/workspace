@@ -1,0 +1,52 @@
+# agilent4_UHV.proto (communication protocol for Agilent 4UHV ion pump controllers).
+
+## According to the reference manual, page 73, the communication format must follow:
+# 8 data bit
+# No parity
+# 1 stop bit
+# Baud rate: 9600
+
+## The communication takes place as follows:
+# (1) The host (MASTER) sends a MESSAGE + CRC to the controller (SLAVE)
+# (2) The controller answers with an ANSWER + CRC to the host.
+# (3) The MESSAGE is a string in the following format:
+# (4) <STX>+<ADDR>+<WIN>+<COM>+<DATA>+<ETX>+<CRC>
+# where:
+# <STX> = 0x02 (Start of transmission)
+# <ADDR> (Unit address)  when you select the RS232 communication, this field is not handled 
+# and the controller always answers with its address stored in EEPROM <ADDR> (Unit address) = 0x80 + device number (0 to 31) 
+# (for RS485)
+# <WIN> (Window) = a string of 3 numerics indicating the window number (from ‘000’ to ‘999’); 
+# <COM> (Command) = 0x30 to read the window, 0x31 to write in the window
+# <DATA> = an alphanumeric ASCII string with the data to be written in the window. 
+# In the case of a read command, this field is not present. The field length varies 
+# according to the data type.
+# <ETX> = 0x03 (End of transmission)
+# <CRC> = XOR of all characters following <STX> and including the <ETX> terminator. 
+# The value is hexadecimal coded and represented by two ASCII characters.
+
+## The SLAVE addressed responds with an ANSWER whose structure
+#  depends on the MESSAGE type.
+#  When the MESSAGE is a read command, the SLAVE responds
+#  transmitting a string with the same structure as the MESSAGE.
+
+
+## The Window protocol supported by the device doesn't have any terminator character, 
+# besides the checksum byte.
+
+# TODO Definir timeouts abaixo:
+Terminator = "";
+
+LockTimeout = 10000;
+
+ReadTimeout = 25;
+
+ReplyTimeout = 100;
+
+# Routine for reading variables of a specified pump 
+getTemperature_FAN {
+	# <STX>+<ADDR>+<WIN>+<COM>+<DATA>+<ETX>+<CRC>
+	command_code = 800
+    out 0x02, 0x80, "($command_code)d", 0x30, 0x03, "%<crc8>";
+}
+
