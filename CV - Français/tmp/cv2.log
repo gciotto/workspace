@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.11.16)  20 MAR 2016 19:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.11.16)  19 APR 2016 19:55
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -519,14 +519,14 @@ LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(14.22636pt, 569.05515pt, 14.22636pt)
+* h-part:(L,W,R)=(8.5359pt, 580.43607pt, 8.5359pt)
 * v-part:(T,H,B)=(19.91684pt, 805.21317pt, 19.91684pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=569.05515pt
+* \textwidth=580.43607pt
 * \textheight=805.21317pt
-* \oddsidemargin=-58.04362pt
-* \evensidemargin=-58.04362pt
+* \oddsidemargin=-63.73409pt
+* \evensidemargin=-63.73409pt
 * \topmargin=-89.35315pt
 * \headheight=12.0pt
 * \headsep=25.0pt
@@ -633,7 +633,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 11.39996pt on input line 72.
 
-Overfull \hbox (4.85806pt too wide) in paragraph at lines 74--93
+Overfull \hbox (4.17523pt too wide) in paragraph at lines 74--93
 [][][] 
  []
 
@@ -644,14 +644,14 @@ LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/phv/b/sl' will be
 (Font)              scaled to size 9.49997pt on input line 105.
 
-Overfull \hbox (4.85806pt too wide) in paragraph at lines 101--113
+Overfull \hbox (4.17523pt too wide) in paragraph at lines 101--113
 [][][] 
  []
 
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 6.64998pt on input line 122.
 
-Overfull \hbox (4.85806pt too wide) in paragraph at lines 117--131
+Overfull \hbox (4.17523pt too wide) in paragraph at lines 117--131
 [][][] 
  []
 
@@ -663,12 +663,12 @@ File: omsphv.fd
 LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 144.
 
-Overfull \hbox (4.85806pt too wide) in paragraph at lines 137--201
+Overfull \hbox (4.17523pt too wide) in paragraph at lines 137--201
 [][][] 
  []
 
 
-Overfull \hbox (4.85806pt too wide) in paragraph at lines 207--212
+Overfull \hbox (4.17523pt too wide) in paragraph at lines 207--212
 [][][] 
  []
 
@@ -687,7 +687,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 215.
 Here is how much of TeX's memory you used:
  7428 strings out of 493054
  107615 string characters out of 6140585
- 217972 words of memory out of 5000000
+ 217968 words of memory out of 5000000
  10872 multiletter control sequences out of 15000+600000
  16478 words of font info for 30 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -698,7 +698,7 @@ c/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a
 .pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/te
 xmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1
 /urw/helvetic/uhvro8a.pfb>
-Output written on cv2.pdf (1 page, 59493 bytes).
+Output written on cv2.pdf (1 page, 59812 bytes).
 PDF statistics:
  62 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream

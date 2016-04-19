@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.11.16)  20 MAR 2016 19:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2015.11.16)  19 APR 2016 19:55
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -494,14 +494,14 @@ LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(14.22636pt, 569.05515pt, 14.22636pt)
+* h-part:(L,W,R)=(8.5359pt, 580.43607pt, 8.5359pt)
 * v-part:(T,H,B)=(19.91684pt, 805.21317pt, 19.91684pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=569.05515pt
+* \textwidth=580.43607pt
 * \textheight=805.21317pt
-* \oddsidemargin=-58.04362pt
-* \evensidemargin=-58.04362pt
+* \oddsidemargin=-63.73409pt
+* \evensidemargin=-63.73409pt
 * \topmargin=-89.35315pt
 * \headheight=12.0pt
 * \headsep=25.0pt
@@ -600,7 +600,7 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language append on input line 73.
 
-Overfull \hbox (4.85806pt too wide) in paragraph at lines 75--94
+Overfull \hbox (4.17523pt too wide) in paragraph at lines 75--94
 [][][] 
  []
 
@@ -613,7 +613,7 @@ LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/phv/b/sl' will be
 (Font)              scaled to size 9.49997pt on input line 106.
 
-Overfull \hbox (4.85806pt too wide) in paragraph at lines 102--114
+Overfull \hbox (4.17523pt too wide) in paragraph at lines 102--114
 [][][] 
  []
 
@@ -622,7 +622,7 @@ Package babel Info: Redefining portuges shorthand "|
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 6.64998pt on input line 122.
 
-Overfull \hbox (4.85806pt too wide) in paragraph at lines 118--132
+Overfull \hbox (4.17523pt too wide) in paragraph at lines 118--132
 [][][] 
  []
 
@@ -636,40 +636,33 @@ File: omsphv.fd
 LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 145.
 
-Overfull \hbox (4.85806pt too wide) in paragraph at lines 138--203
+Overfull \hbox (4.17523pt too wide) in paragraph at lines 138--204
 [][][] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language append on input line 208.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 218.
+(babel)             in language append on input line 209.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 219.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language append on input line 218.
+(babel)             in language append on input line 219.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language append on input line 218.
+(babel)             in language append on input line 219.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 218.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 219.
  (./document.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 218.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 218.
-
-
-Package rerunfilecheck Warning: File `document.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `document.out':
-(rerunfilecheck)             Before: 1629F2AE3389AFDC64EDD710C5CEE9E6;256
-(rerunfilecheck)             After:  EBBA158B3FA89499B9708907640FF6C5;310.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 218.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 219.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 219.
+Package rerunfilecheck Info: File `document.out' has not changed.
+(rerunfilecheck)             Checksum: EBBA158B3FA89499B9708907640FF6C5;310.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 219.
  ) 
 Here is how much of TeX's memory you used:
- 6559 strings out of 493054
- 93773 string characters out of 6140585
- 202785 words of memory out of 5000000
- 10001 multiletter control sequences out of 15000+600000
+ 6560 strings out of 493054
+ 93784 string characters out of 6140585
+ 202781 words of memory out of 5000000
+ 10002 multiletter control sequences out of 15000+600000
  22128 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  29i,12n,35p,205b,336s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -679,10 +672,10 @@ c/amsfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a
 .pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/te
 xmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1
 /urw/helvetic/uhvro8a.pfb>
-Output written on document.pdf (1 page, 59485 bytes).
+Output written on document.pdf (1 page, 59825 bytes).
 PDF statistics:
- 60 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 63 PDF objects out of 1000 (max. 8388607)
+ 53 compressed objects within 1 object stream
  7 named destinations out of 1000 (max. 500000)
- 33 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

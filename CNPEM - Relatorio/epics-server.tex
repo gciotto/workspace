@@ -1,0 +1,98 @@
+\section{Servidores de variáveis EPICS}
+
+\subsection{Introdução}
+
+\textit{EPICS}, do inglês \textit{Experimental Physics and Industrial Control
+System}, é um conjunto de ferramentas e aplicações que permitem monitorar e
+controlar sistemas que possuem, além de milhares de variáveis, uma larga e
+complexa rede ligando centenas de computadores e equipamentos. Tal sistema já é
+utilizado em diversos outros síncrotons e laboratórios no mundo todo e o seu
+desenvolvimento é realizado cooperativamente entre tais organizações. O
+principal intuito é proporcionar aos operadores de sistemas de grande porte uma
+visão global dos diversos módulos, facilitando, desta maneira, a identificação e
+previsão de problemas, assim como a escolha da melhor ação corretora. Entre as
+ferramentas oferecidas, destaca-se, por exemplo, arquivadores de variáveis,
+monitores de alarmes e suporte para construção de \textit{interfaces} gráficas
+específicas para determinadas aplicações, que serão discutidos nas próximas
+seções deste documento.
+
+\vspace{12pt}
+
+Atualmente, no \textit{UVX}, o controle é realizado através de módulos
+independentes, muitas vezes implementados em linguagens de programação
+distintas, que fornecem soluções específicas para um determinado equipamento e
+baixo grau de interação com outros programas. A identificação de problemas é,
+portanto, dificultada e depende muito mais de experiências anteriores dos
+operadores. Sendo assim, a implementação de \textit{EPICS} para o sistema
+controle do \textit{Sirius} está sendo considerada fortemente. Além disso, o
+acelerador linear de eléctrons, que está sendo atualmente desenvolvido por uma
+empresa chinesa, a ser utilizado neste novo síncroton também oferecerá  uma
+\textit{interface} de comunicação com total compatibilidade com aplicações
+\textit{EPICS}.
+
+\vspace{12pt}
+
+De maneira simples, um sistema \textit{EPICS} é composto por diversos
+servidores e clientes espalhados pela rede, capazes, respectivamente, de
+publicar ou obter os estados dos diversos dispositivos pertencentes à estrutura.
+Tais estados são chamados de variáveis, ou somente \texttt{PVs}, e podem
+assumir vários tipos (binário, inteiro, \textit{float} \ldots), faixas de
+operação e taxas de aquisição que dependem principalmente da maneira de como os
+equipamentos proveêm tais dados. Cabe aos servidores (chamados também de
+\textit{Input/Output Controllers} ou \textit{IOCs}), portanto, realizar as
+operações de escrita ou leitura no \textit{mundo real} ou obter tais informações
+de outros dispositivos, como osciloscópios e sensores, e publicá-las aos
+clientes. A comuncicação entre clientes e servidores é realizado através do
+protocolo de rede \textit{Channel Access}, implementado para redes que oferecem
+grande largura de bandura, capaz de garantir o atendimento de especificações de
+\textit{soft real-time} (consultar seção \ref{sec:bb1} para mais informações).
+
+\vspace{12pt}
+
+As próximas subseções serão dedicadas ao detalhamento de duas possíveis
+implementação de servidores de variáveis. A primeira utiliza a biblioteca
+\path{pcaspy} de \textit{Python}, enquanto que a outra, um módulo chamado
+\path{StreamDevice}.
+
+\subsection{Utilizando a biblioteca \texttt{PCASpy}}
+
+O módulo \path{PCASpy} (\path{PCAS} do inglês \textit{Python Channel Access
+Server}) fornece classes que realizam tanto a comunicação com um cliente
+\textit{Channel Access} quanto com os dispositivos medidores. Esse módulo
+oferece quatro classes, porém, em princípio, utiliza-se apenas duas, sendo elas
+\path{SimpleServer} e \path{Driver}.
+
+\vspace{12pt}
+
+A classe \path{SimpleServer} abstrai os detalhes da comunicação entre servidor e
+clientes e redireciona requisições de leitura e escrita para um objeto da classe
+\path{Driver}, que por sua vez, se comunica com o dispositivo medidor. Um objeto
+da classe \path{SimpleServer}, portanto, é a ponte entre os clientes e tais
+equipamentos. Entre seus métodos, destaca-se:
+
+\begin{itemize}
+  \renewcommand\labelitemi{--}
+  \item \texttt{createPV(\textit{prefix}, \textit{pvdb})}: registra e torna
+  disponível as variáveis contidas no dicionário \texttt{\textit{pvdb}}. A
+  documentação do módulo na \textit{Internet} contem os campos válidos para
+  configuração de uma \texttt{\textit{PV}}.
+
+  \item \texttt{process(\textit{time})}: o servidor processa requisições dos
+  clientes a cada \texttt{\textit{time}} segundos.
+\end{itemize}
+
+A classe \texttt{Driver} deve ser redefinida a fim de refletir os detalhes de
+comunicação e protocolo.  Para tal, através de mecanismos de herança,
+redefine-se os métodos \texttt{\textit{read()}} e \texttt{\textit{write()}}, que
+realizam, respectivamente, a leitura e escrita de variáveis. Além destas duas
+funções, essa classe mantém um registro interno dos valores das variáveis. Para
+modificá-lo, dois outros métodos são usados, sendo eles
+\texttt{\textit{getParam()}} e \texttt{\textit{setParam()}}. Enfim, a função
+\texttt{\textit{updatePV()}} é chamada para comunicar ao objeto
+\path{SimpleServer} que uma \textit{PV} foi modificada.
+
+\subsection{\textit{EPICS StreamDevice}}
+
+
+
+ 
