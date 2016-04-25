@@ -93,6 +93,59 @@ modificá-lo, dois outros métodos são usados, sendo eles
 
 \subsection{\textit{EPICS StreamDevice}}
 
+O EPICS \textit{StreamDevice} oferece suporte para a comunicação com
+dispositivos que podem ser controlados através do envio de \textit{strings},
+isto é, cadeias de \textit{bytes}. Dessa forma, dispositivos que possuem
+interface \textit{serial} de dados, como os padrões RS-232 e RS-485, podem se
+comunicar com um \textit{StreamDevice} e fornecer os valores para as diversas
+variáveis EPICS configuradas.
 
+\vspace{12pt}
 
- 
+A configuração de um \textit{StreamDevice} é realizada a partir de arquivos
+ditos do tipo \textit{protocolo}. Tais arquivos especificam os formatos e os
+padrões que são entendidos pelo dispositivo e determinam, portanto, os
+\textit{bytes} que devem ser enviados para cada tipo de operação. Muitas opções
+de comandos e formatos são disponíveis nesta ferramenta, sendo que as principais
+serão detalhadas nas próximas subseções. As variáveis que são disponibilizadas à
+rede são, por sua vez, especificadas no arquivo \textit{database}, que é lido
+durante a inicialização de um \textit{StreamDevice}. As operações de leitura e
+escrita destas respectivas variáveis devem estar presentes em um dos arquivos de
+\textit{protocolo}.
+
+\vspace{12pt}
+
+A comunicação das mensagens para o meio físico propriamente dita não é realizada
+pelo \textit{StreamDevice}. Por padrão, tal ferramenta possui uma
+\textit{interface} com um \textit{driver} de comunicação assíncrona chamado
+\textit{asynDriver}, que deve ser instalado separadamente. De modo prático, o
+módulo \textit{StreamDevice} é responsável por converter os \textit{bytes}
+recebidos e enviados em variáveis EPICS, enquanto que o \textit{asynDriver}
+realiza a comunicação física com os dispositivos. É importante notar que é
+o uso do \textit{asynDriver} não é imposto pelo \textit{StreamDriver}: é
+possível, portanto, substituí-lo por qualquer outro \textit{driver} de
+comunicação caso desejado.
+
+\vspace{12pt}
+
+As próximas subseções são dedicadas ao processo de instalação e configuração de
+um \textit{StreamDevice} para a bomba de vácuo \textit{Agilent 4UHV}, que será
+utilizada no projeto \textit{Sirius}.
+
+\subsubsection{Instalação do \textit{StreamDevice}}
+
+A primeira etapa consiste na instalação do \textit{asynDriver}. Para isso, é
+necessário seguir os seguintes itens abaixo. Supõe-se que a biblioteca de
+funções EPICS já foi instalada conforme será apresentado na seção
+\ref{ref:epics-install}. O diretório onde os arquivos do \textit{asynDriver}
+serão instalados será referenciado por \path{$INSTALL_DIR/asyn4-29/}.
+
+\begin{itemize}
+  \renewcommand\labelitemi{--}
+  \item Faça o \textit{download} do pacote através de 
+  \url{http://tinyurl.com/hy3sra7} e descompacte-o.
+  \item Execute o arquivo \path{Makefile} através do comando \path{make}. Os
+  diversos que compõem o \textit{driver} serão compilados nesta fase.
+\end{itemize}
+
+O \textit{StreamDevice} é disponível em
