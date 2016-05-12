@@ -49,7 +49,6 @@
 #include "BitIoLdd4.h"
 #include "Conversor.h"
 #include "AdcLdd1.h"
-#include "UTIL1.h"
 #include "C1.h"
 #include "BitIoLdd5.h"
 #include "C2.h"
@@ -70,12 +69,11 @@
 #include "EE241.h"
 #include "GI2C1.h"
 #include "CI2C1.h"
-#include "CLS1.h"
-#include "CS1.h"
 #include "ConversorDA.h"
 #include "DacLdd1.h"
+#include "KSDK1.h"
 
-#define INTERRUPT_PERIOD 60.0
+#define INTERRUPT_PERIOD 50.0
 
 #ifdef __cplusplus
 extern "C" {

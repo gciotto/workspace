@@ -575,13 +575,13 @@ PE_DEBUGHALT();
     <Enabled v="Y" />
     <Properties>
       <Component_name v="timer" />
-      <Periodic_interrupt_source v="LPTMR0_CMR" />
-      <Counter v="LPTMR0_CNR" />
+      <Periodic_interrupt_source v="TPM0_MOD" />
+      <Counter v="TPM0_CNT" />
       <boolgroup name="Interrupt service/event" v="Enabled">
-        <Interrupt v="INT_LPTimer" />
+        <Interrupt v="INT_TPM0" />
         <Interrupt_priority v="medium priority" />
       </boolgroup>
-      <Interrupt_period v="60 &amp;#181;s" />
+      <Interrupt_period v="50 &amp;#181;s" />
       <Same_period_in_modes v="yes" />
       <Component_uses_entire_timer v="no" />
       <group name="Initialization">
@@ -598,13 +598,13 @@ PE_DEBUGHALT();
           <Enabled v="Y" />
           <Properties>
             <Component_name v="TimerIntLdd1" />
-            <Periodic_interrupt_source v="LPTMR0_CMR" />
-            <Counter v="LPTMR0_CNR" />
+            <Periodic_interrupt_source v="TPM0_MOD" />
+            <Counter v="TPM0_CNT" />
             <boolgroup name="Interrupt service/event" v="Enabled">
-              <Interrupt v="INT_LPTimer" />
+              <Interrupt v="INT_TPM0" />
               <Interrupt_priority v="medium priority" />
             </boolgroup>
-            <Interrupt_period v="60 &amp;#181;s" />
+            <Interrupt_period v="50 &amp;#181;s" />
             <group name="Initialization">
               <Enabled_in_init__code v="yes" />
               <list name="Auto Initialization" v="1">
@@ -688,8 +688,8 @@ PE_DEBUGHALT();
     <Enabled v="Y" />
     <Properties>
       <Component_name v="TU1" />
-      <Module_name v="LPTMR0" />
-      <Counter v="LPTMR0_CNR" />
+      <Module_name v="TPM0" />
+      <Counter v="TPM0_CNT" />
       <Counter_direction v="Up" />
       <Counter_width v="16 bits" />
       <Value_type v="uint16_t" />
@@ -697,10 +697,10 @@ PE_DEBUGHALT();
         <Counter_frequency v="Auto select" />
       </enumgroup>
       <enumgroup name="Counter restart" v="On-match">
-        <Period_device v="LPTMR0_CMR" />
-        <Period v="60 &amp;#181;s" />
+        <Period_device v="TPM0_MOD" />
+        <Period v="50 &amp;#181;s" />
         <boolgroup name="Interrupt" v="Enabled">
-          <Interrupt v="INT_LPTimer" />
+          <Interrupt v="INT_TPM0" />
           <Interrupt_priority v="medium priority" />
         </boolgroup>
       </enumgroup>
@@ -1086,70 +1086,6 @@ Autoselect
         <Event_procedure_name v="Conversor_OnCalibrationEnd" />
         <Priority v="same as interrupt" />
       </event>
-    </Events>
-  </Bean>
-  <Bean name="UTIL1" type="Utility">
-    <Enabled v="Y" />
-    <Properties>
-      <Component_name v="UTIL1" />
-    </Properties>
-    <Methods>
-      <strcpy v="generate code" />
-      <strcat v="generate code" />
-      <chcat v="generate code" />
-      <Num8sToStr v="generate code" />
-      <Num8uToStr v="generate code" />
-      <Num16sToStr v="generate code" />
-      <Num16uToStr v="generate code" />
-      <Num32uToStr v="generate code" />
-      <Num32sToStr v="generate code" />
-      <Num16sToStrFormatted v="generate code" />
-      <Num16uToStrFormatted v="generate code" />
-      <Num32uToStrFormatted v="generate code" />
-      <Num32sToStrFormatted v="generate code" />
-      <strcatNum8u v="generate code" />
-      <strcatNum8s v="generate code" />
-      <strcatNum16u v="generate code" />
-      <strcatNum16s v="generate code" />
-      <strcatNum32u v="generate code" />
-      <strcatNum32s v="generate code" />
-      <strcatNum16uFormatted v="generate code" />
-      <strcatNum16sFormatted v="generate code" />
-      <strcatNum32uFormatted v="generate code" />
-      <strcatNum32sFormatted v="generate code" />
-      <strcatNum8Hex v="generate code" />
-      <strcatNum16Hex v="generate code" />
-      <strcatNum24Hex v="generate code" />
-      <strcatNum32Hex v="generate code" />
-      <strcatNum32sDotValue100 v="generate code" />
-      <IsLeapYear v="generate code" />
-      <WeekDay v="generate code" />
-      <ReadEscapedName v="generate code" />
-      <xatoi v="generate code" />
-      <ScanDate v="generate code" />
-      <ScanTime v="generate code" />
-      <ScanDecimal8uNumber v="generate code" />
-      <ScanDecimal8sNumber v="generate code" />
-      <ScanDecimal16uNumber v="generate code" />
-      <ScanDecimal16sNumber v="generate code" />
-      <ScanDecimal32uNumber v="generate code" />
-      <ScanDecimal32sNumber v="generate code" />
-      <ScanDecimal32sDotNumber v="generate code" />
-      <ScanHex8uNumber v="generate code" />
-      <ScanHex8uNumberNoPrefix v="generate code" />
-      <ScanHex16uNumber v="generate code" />
-      <ScanHex32uNumber v="generate code" />
-      <ScanSeparatedNumbers v="generate code" />
-      <ScanDoubleQuotedString v="generate code" />
-      <strcmp v="generate code" />
-      <strncmp v="generate code" />
-      <strFind v="generate code" />
-      <strtailcmp v="generate code" />
-      <strlen v="generate code" />
-      <strCutTail v="generate code" />
-    </Methods>
-    <Events>
-      <EmptySection_DummyValue />
     </Events>
   </Bean>
   <Bean name="C1" type="BitIO">
@@ -1658,6 +1594,7 @@ Autoselect
     <Enabled v="Y" />
     <Properties>
       <Component_name v="WAIT1" />
+      <SDK v="KSDK1" />
       <boolgroup name="Manual Clock Values" v="Disabled" />
       <Delay100usFunction v="Delay100US" />
       <boolgroup name="RTOS" v="Disabled" />
@@ -1694,10 +1631,7 @@ Autoselect
         <boolgroup name="Write Protection Pin" v="Disabled" />
       </group>
       <boolgroup name="Timeout" v="Disabled" />
-      <boolgroup name="Shell" v="Enabled">
-        <Shell v="CLS1" />
-        <Utility v="UTIL1" />
-      </boolgroup>
+      <boolgroup name="Shell" v="Disabled" />
     </Properties>
     <Methods>
       <ReadByte v="generate code" />
@@ -1709,7 +1643,7 @@ Autoselect
       <SelectDevice v="generate code" />
       <GetSelectedDevice v="don&amp;apos;t generate code" />
       <Test v="generate code" />
-      <ParseCommand v="generate code" />
+      <ParseCommand v="don&amp;apos;t generate code" />
     </Methods>
     <Events>
       <EmptySection_DummyValue />
@@ -1735,8 +1669,9 @@ Autoselect
       <UnselectSlave v="generate code" />
       <RequestBus v="generate code" />
       <ReleaseBus v="generate code" />
-      <ReadBlock v="generate code" />
       <WriteBlock v="generate code" />
+      <ReadBlock v="generate code" />
+      <ReadBlockGeneric v="don&amp;apos;t generate code" />
       <ReadAddress v="generate code" />
       <WriteAddress v="generate code" />
       <ReadByteAddress8 v="generate code" />
@@ -1885,81 +1820,6 @@ Autoselect
       <event name="OnBusStopDetected" v="don&amp;apos;t generate code" />
     </Events>
   </Bean>
-  <Bean name="CLS1" type="Shell">
-    <Enabled v="Y" />
-    <Properties>
-      <Component_name v="CLS1" />
-      <Echo v="no" />
-      <Prompt v="&amp;quot;CMD&amp;gt; &amp;quot;" />
-      <Project_Name v="My Project Name" />
-      <Silent_Mode_Prefix v="#" />
-      <boolgroup name="Blocking Send" v="Enabled">
-        <Wait v="WAIT1" />
-        <Wait_Time__ms_ v="10" />
-        <RTOS_Wait v="yes" />
-      </boolgroup>
-      <Status_Colon_Pos v="13" />
-      <Help_Semicolon_Pos v="26" />
-      <boolgroup name="Multi Command" v="Disabled" />
-      <Utility v="UTIL1" />
-      <boolgroup name="Default Serial" v="Disabled" />
-      <Semaphore v="no" />
-      <Critical_Section v="CS1" />
-      <boolgroup name="History" v="no" />
-    </Properties>
-    <Methods>
-      <PrintPrompt v="generate code" />
-      <SendNum8u v="generate code" />
-      <SendNum8s v="generate code" />
-      <SendNum16u v="generate code" />
-      <SendNum16s v="generate code" />
-      <SendNum32u v="generate code" />
-      <SendNum32s v="generate code" />
-      <SendStr v="generate code" />
-      <SendData v="generate code" />
-      <PrintStatus v="generate code" />
-      <ParseCommand v="generate code" />
-      <IsHistoryCharacter v="generate code" />
-      <ReadLine v="generate code" />
-      <PrintCommandFailed v="generate code" />
-      <IterateTable v="generate code" />
-      <SetStdio v="generate code" />
-      <GetStdio v="generate code" />
-      <RequestSerial v="generate code" />
-      <ReleaseSerial v="generate code" />
-      <ReadAndParseWithCommandTable v="generate code" />
-      <ParseWithCommandTable v="generate code" />
-      <GetSemaphore v="generate code" />
-      <SendStatusStr v="generate code" />
-      <SendHelpStr v="generate code" />
-      <ReadChar v="generate code" />
-      <SendChar v="generate code" />
-      <KeyPressed v="generate code" />
-      <Init v="generate code" />
-      <Deinit v="generate code" />
-    </Methods>
-    <Events>
-      <Event_module_name v="Events" />
-      <event name="OnBeforeIterateCmd" v="don&amp;apos;t generate code" />
-      <event name="OnAfterIterateCmd" v="don&amp;apos;t generate code" />
-    </Events>
-  </Bean>
-  <Bean name="CS1" type="CriticalSection">
-    <Enabled v="Y" />
-    <Properties>
-      <Component_name v="CS1" />
-      <Use_Processor_Expert_Default v="yes" />
-      <Use_FreeRTOS v="no" />
-    </Properties>
-    <Methods>
-      <CriticalVariable v="generate code" />
-      <EnterCritical v="generate code" />
-      <ExitCritical v="generate code" />
-    </Methods>
-    <Events>
-      <EmptySection_DummyValue />
-    </Events>
-  </Bean>
   <Bean name="ConversorDA" type="DAC">
     <Enabled v="Y" />
     <Properties>
@@ -2054,6 +1914,19 @@ Autoselect
       <SetValue v="generate code" />
       <SetValue8 v="don&amp;apos;t generate code" />
       <SetValue16 v="don&amp;apos;t generate code" />
+    </Methods>
+    <Events>
+      <EmptySection_DummyValue />
+    </Events>
+  </Bean>
+  <Bean name="KSDK1" type="KinetisSDK">
+    <Enabled v="Y" />
+    <Properties>
+      <Component_name v="KSDK1" />
+      <SDK_Version v="none" />
+    </Properties>
+    <Methods>
+      <EmptySection_DummyValue />
     </Methods>
     <Events>
       <EmptySection_DummyValue />

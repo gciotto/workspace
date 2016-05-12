@@ -6,7 +6,7 @@
 **     Component   : TimerInt_LDD
 **     Version     : Component 01.018, Driver 01.02, CPU db: 3.00.000
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2016-04-26, 17:48, # CodeGen: 48
+**     Date/Time   : 2016-04-28, 20:31, # CodeGen: 61
 **     Abstract    :
 **          This TimerInt component implements a periodic interrupt.
 **          When the component and its events are enabled, the "OnInterrupt"
@@ -17,12 +17,12 @@
 **          component.
 **     Settings    :
 **          Component name                                 : TimerIntLdd1
-**          Periodic interrupt source                      : LPTMR0_CMR
-**          Counter                                        : LPTMR0_CNR
+**          Periodic interrupt source                      : TPM0_MOD
+**          Counter                                        : TPM0_CNT
 **          Interrupt service/event                        : Enabled
-**            Interrupt                                    : INT_LPTimer
+**            Interrupt                                    : INT_TPM0
 **            Interrupt priority                           : medium priority
-**          Interrupt period                               : 60 µs
+**          Interrupt period                               : 50 µs
 **          Initialization                                 : 
 **            Enabled in init. code                        : yes
 **            Auto initialization                          : yes
@@ -113,7 +113,7 @@ extern "C" {
 
 
 /*! Peripheral base address of a device allocated by the component. This constant can be used directly in PDD macros. */
-#define TimerIntLdd1_PRPH_BASE_ADDRESS  0x40040000U
+#define TimerIntLdd1_PRPH_BASE_ADDRESS  0x40038000U
   
 /*! Device data structure pointer used when auto initialization property is enabled. This constant can be passed as a first parameter to all component's methods. */
 #define TimerIntLdd1_DeviceData  ((LDD_TDeviceData *)PE_LDD_GetDeviceStructure(PE_LDD_COMPONENT_TimerIntLdd1_ID))

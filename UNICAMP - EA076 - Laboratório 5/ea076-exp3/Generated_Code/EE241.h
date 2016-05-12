@@ -4,9 +4,9 @@
 **     Project     : ea076-exp3
 **     Processor   : MKL25Z128VLK4
 **     Component   : 24AA_EEPROM
-**     Version     : Component 01.031, Driver 01.00, CPU db: 3.00.000
+**     Version     : Component 01.032, Driver 01.00, CPU db: 3.00.000
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2016-04-19, 16:30, # CodeGen: 26
+**     Date/Time   : 2016-04-28, 19:43, # CodeGen: 57
 **     Abstract    :
 **         Driver for Microchip 24_AA/LC EEPROMs
 **     Settings    :
@@ -21,9 +21,7 @@
 **            I2C                                          : GI2C1
 **            Write Protection Pin                         : Disabled
 **          Timeout                                        : Disabled
-**          Shell                                          : Enabled
-**            Shell                                        : CLS1
-**            Utility                                      : UTIL1
+**          Shell                                          : Disabled
 **     Contents    :
 **         ReadByte     - byte EE241_ReadByte(EE241_Address addr, byte *data);
 **         WriteByte    - byte EE241_WriteByte(EE241_Address addr, byte data);
@@ -31,7 +29,6 @@
 **         WriteBlock   - byte EE241_WriteBlock(EE241_Address addr, byte *data, word dataSize);
 **         SelectDevice - byte EE241_SelectDevice(byte addrI2C);
 **         Test         - byte EE241_Test(void);
-**         ParseCommand - byte EE241_ParseCommand(const unsigned char *cmd, bool *handled, const...
 **
 **     License   :  Open Source (LGPL)
 **     Copyright : (c) Copyright Erich Styger, 2013, all rights reserved.
@@ -65,25 +62,29 @@
 /* Include inherited components */
 #include "WAIT1.h"
 #include "GI2C1.h"
-#include "CLS1.h"
-#include "UTIL1.h"
 
 #include "Cpu.h"
 
 /* supported device ID's */
 #define EE241_DEVICE_ID_8       8 /* 24AA08, 24LC08 */
-#define EE241_DEVICE_ID_32     32 /* 24AA08, 24LC32 */
+#define EE241_DEVICE_ID_16     16 /* 24AA16, 24LC16 */
+#define EE241_DEVICE_ID_32     32 /* 24AA32, 24LC32 */
 #define EE241_DEVICE_ID_256   256 /* 24AA256, 24LC256, 24FC256 */
 #define EE241_DEVICE_ID_512   512 /* 24AA512, 24LC512, 24FC256 */
 #define EE241_DEVICE_ID_1025 1025 /* 24AA1025, 24LC1025, 24FC1025 */
 /* actual device */
-  #define EE241_DEVICE_ID      EE241_DEVICE_ID_8
+#define EE241_DEVICE_ID      EE241_DEVICE_ID_8
 
 #define EE241_BLOCK_BUF_SIZE 32         /* buffer used for block read/write. Max is 128. Keep it small to reduce stack consumption. */
 
 #if EE241_DEVICE_ID==EE241_DEVICE_ID_8
   #define EE241_MAX_I2C_ADDR_MASK 0     /* A2|A1|A0 are not used */
   #define EE241_MAX_ADDRESS       0x03FF /* 8 kBit is 1KByte */
+  #define EE241_ADDRT             word  /* a word/16bit is enough to hold the address */
+  #define EE241_PAGE_SIZE         16    /* maximum page size (for page/block operation) */
+#elif EE241_DEVICE_ID==EE241_DEVICE_ID_16
+  #define EE241_MAX_I2C_ADDR_MASK 0     /* A2|A1|A0 are not used */
+  #define EE241_MAX_ADDRESS       0x07FF /* 16 kBit is 2KByte */
   #define EE241_ADDRT             word  /* a word/16bit is enough to hold the address */
   #define EE241_PAGE_SIZE         16    /* maximum page size (for page/block operation) */
 #elif EE241_DEVICE_ID==EE241_DEVICE_ID_32
@@ -119,7 +120,7 @@
   typedef  EE241_ADDRT EE241_Address;  /* A type large enought to hold the address, depending on the EEPROM used. */
 #endif
 
-#define EE241_PARSE_COMMAND_ENABLED  1  /* set to 1 if method ParseCommand() is present, 0 otherwise */
+#define EE241_PARSE_COMMAND_ENABLED  0 /* set to 1 if method ParseCommand() is present, 0 otherwise */
 
 byte EE241_WriteByte(EE241_Address addr, byte data);
 /*
@@ -232,25 +233,6 @@ byte EE241_SelectDevice(byte addrI2C);
 **                           ERR_OK - OK
 **                           ERR_VALUE - address exceeds address pins of
 **                           device type used
-** ===================================================================
-*/
-
-byte EE241_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_StdIOType *io);
-/*
-** ===================================================================
-**     Method      :  EE241_ParseCommand (component 24AA_EEPROM)
-**     Description :
-**         Shell Command Line parser. This method is enabled/disabled
-**         depending on if you have the Shell enabled/disabled in the
-**         properties.
-**     Parameters  :
-**         NAME            - DESCRIPTION
-**       * cmd             - Pointer to command string
-**       * handled         - Pointer to variable which tells if
-**                           the command has been handled or not
-**       * io              - Pointer to I/O structure
-**     Returns     :
-**         ---             - Error code
 ** ===================================================================
 */
 

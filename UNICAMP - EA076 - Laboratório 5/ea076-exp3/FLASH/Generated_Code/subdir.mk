@@ -24,8 +24,6 @@ C_SRCS_QUOTED += \
 "../Generated_Code/C2.c" \
 "../Generated_Code/C3.c" \
 "../Generated_Code/CI2C1.c" \
-"../Generated_Code/CLS1.c" \
-"../Generated_Code/CS1.c" \
 "../Generated_Code/Conversor.c" \
 "../Generated_Code/ConversorDA.c" \
 "../Generated_Code/Cpu.c" \
@@ -36,6 +34,7 @@ C_SRCS_QUOTED += \
 "../Generated_Code/Enable.c" \
 "../Generated_Code/ExtIntLdd1.c" \
 "../Generated_Code/GI2C1.c" \
+"../Generated_Code/KSDK1.c" \
 "../Generated_Code/L1.c" \
 "../Generated_Code/L2.c" \
 "../Generated_Code/L3.c" \
@@ -45,7 +44,6 @@ C_SRCS_QUOTED += \
 "../Generated_Code/RS.c" \
 "../Generated_Code/TU1.c" \
 "../Generated_Code/TimerIntLdd1.c" \
-"../Generated_Code/UTIL1.c" \
 "../Generated_Code/Vectors.c" \
 "../Generated_Code/WAIT1.c" \
 "../Generated_Code/timer.c" \
@@ -69,8 +67,6 @@ C_SRCS += \
 ../Generated_Code/C2.c \
 ../Generated_Code/C3.c \
 ../Generated_Code/CI2C1.c \
-../Generated_Code/CLS1.c \
-../Generated_Code/CS1.c \
 ../Generated_Code/Conversor.c \
 ../Generated_Code/ConversorDA.c \
 ../Generated_Code/Cpu.c \
@@ -81,6 +77,7 @@ C_SRCS += \
 ../Generated_Code/Enable.c \
 ../Generated_Code/ExtIntLdd1.c \
 ../Generated_Code/GI2C1.c \
+../Generated_Code/KSDK1.c \
 ../Generated_Code/L1.c \
 ../Generated_Code/L2.c \
 ../Generated_Code/L3.c \
@@ -90,7 +87,6 @@ C_SRCS += \
 ../Generated_Code/RS.c \
 ../Generated_Code/TU1.c \
 ../Generated_Code/TimerIntLdd1.c \
-../Generated_Code/UTIL1.c \
 ../Generated_Code/Vectors.c \
 ../Generated_Code/WAIT1.c \
 ../Generated_Code/timer.c \
@@ -114,8 +110,6 @@ OBJS += \
 ./Generated_Code/C2.o \
 ./Generated_Code/C3.o \
 ./Generated_Code/CI2C1.o \
-./Generated_Code/CLS1.o \
-./Generated_Code/CS1.o \
 ./Generated_Code/Conversor.o \
 ./Generated_Code/ConversorDA.o \
 ./Generated_Code/Cpu.o \
@@ -126,6 +120,7 @@ OBJS += \
 ./Generated_Code/Enable.o \
 ./Generated_Code/ExtIntLdd1.o \
 ./Generated_Code/GI2C1.o \
+./Generated_Code/KSDK1.o \
 ./Generated_Code/L1.o \
 ./Generated_Code/L2.o \
 ./Generated_Code/L3.o \
@@ -135,7 +130,6 @@ OBJS += \
 ./Generated_Code/RS.o \
 ./Generated_Code/TU1.o \
 ./Generated_Code/TimerIntLdd1.o \
-./Generated_Code/UTIL1.o \
 ./Generated_Code/Vectors.o \
 ./Generated_Code/WAIT1.o \
 ./Generated_Code/timer.o \
@@ -159,8 +153,6 @@ C_DEPS += \
 ./Generated_Code/C2.d \
 ./Generated_Code/C3.d \
 ./Generated_Code/CI2C1.d \
-./Generated_Code/CLS1.d \
-./Generated_Code/CS1.d \
 ./Generated_Code/Conversor.d \
 ./Generated_Code/ConversorDA.d \
 ./Generated_Code/Cpu.d \
@@ -171,6 +163,7 @@ C_DEPS += \
 ./Generated_Code/Enable.d \
 ./Generated_Code/ExtIntLdd1.d \
 ./Generated_Code/GI2C1.d \
+./Generated_Code/KSDK1.d \
 ./Generated_Code/L1.d \
 ./Generated_Code/L2.d \
 ./Generated_Code/L3.d \
@@ -180,7 +173,6 @@ C_DEPS += \
 ./Generated_Code/RS.d \
 ./Generated_Code/TU1.d \
 ./Generated_Code/TimerIntLdd1.d \
-./Generated_Code/UTIL1.d \
 ./Generated_Code/Vectors.d \
 ./Generated_Code/WAIT1.d \
 ./Generated_Code/timer.d \
@@ -204,8 +196,6 @@ OBJS_QUOTED += \
 "./Generated_Code/C2.o" \
 "./Generated_Code/C3.o" \
 "./Generated_Code/CI2C1.o" \
-"./Generated_Code/CLS1.o" \
-"./Generated_Code/CS1.o" \
 "./Generated_Code/Conversor.o" \
 "./Generated_Code/ConversorDA.o" \
 "./Generated_Code/Cpu.o" \
@@ -216,6 +206,7 @@ OBJS_QUOTED += \
 "./Generated_Code/Enable.o" \
 "./Generated_Code/ExtIntLdd1.o" \
 "./Generated_Code/GI2C1.o" \
+"./Generated_Code/KSDK1.o" \
 "./Generated_Code/L1.o" \
 "./Generated_Code/L2.o" \
 "./Generated_Code/L3.o" \
@@ -225,7 +216,6 @@ OBJS_QUOTED += \
 "./Generated_Code/RS.o" \
 "./Generated_Code/TU1.o" \
 "./Generated_Code/TimerIntLdd1.o" \
-"./Generated_Code/UTIL1.o" \
 "./Generated_Code/Vectors.o" \
 "./Generated_Code/WAIT1.o" \
 "./Generated_Code/timer.o" \
@@ -249,8 +239,6 @@ C_DEPS_QUOTED += \
 "./Generated_Code/C2.d" \
 "./Generated_Code/C3.d" \
 "./Generated_Code/CI2C1.d" \
-"./Generated_Code/CLS1.d" \
-"./Generated_Code/CS1.d" \
 "./Generated_Code/Conversor.d" \
 "./Generated_Code/ConversorDA.d" \
 "./Generated_Code/Cpu.d" \
@@ -261,6 +249,7 @@ C_DEPS_QUOTED += \
 "./Generated_Code/Enable.d" \
 "./Generated_Code/ExtIntLdd1.d" \
 "./Generated_Code/GI2C1.d" \
+"./Generated_Code/KSDK1.d" \
 "./Generated_Code/L1.d" \
 "./Generated_Code/L2.d" \
 "./Generated_Code/L3.d" \
@@ -270,7 +259,6 @@ C_DEPS_QUOTED += \
 "./Generated_Code/RS.d" \
 "./Generated_Code/TU1.d" \
 "./Generated_Code/TimerIntLdd1.d" \
-"./Generated_Code/UTIL1.d" \
 "./Generated_Code/Vectors.d" \
 "./Generated_Code/WAIT1.d" \
 "./Generated_Code/timer.d" \
@@ -294,8 +282,6 @@ OBJS_OS_FORMAT += \
 ./Generated_Code/C2.o \
 ./Generated_Code/C3.o \
 ./Generated_Code/CI2C1.o \
-./Generated_Code/CLS1.o \
-./Generated_Code/CS1.o \
 ./Generated_Code/Conversor.o \
 ./Generated_Code/ConversorDA.o \
 ./Generated_Code/Cpu.o \
@@ -306,6 +292,7 @@ OBJS_OS_FORMAT += \
 ./Generated_Code/Enable.o \
 ./Generated_Code/ExtIntLdd1.o \
 ./Generated_Code/GI2C1.o \
+./Generated_Code/KSDK1.o \
 ./Generated_Code/L1.o \
 ./Generated_Code/L2.o \
 ./Generated_Code/L3.o \
@@ -315,7 +302,6 @@ OBJS_OS_FORMAT += \
 ./Generated_Code/RS.o \
 ./Generated_Code/TU1.o \
 ./Generated_Code/TimerIntLdd1.o \
-./Generated_Code/UTIL1.o \
 ./Generated_Code/Vectors.o \
 ./Generated_Code/WAIT1.o \
 ./Generated_Code/timer.o \
@@ -466,25 +452,9 @@ Generated_Code/CI2C1.o: ../Generated_Code/CI2C1.c
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Generated_Code/CLS1.o: ../Generated_Code/CLS1.c
-	@echo 'Building file: $<'
-	@echo 'Executing target #24 $<'
-	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
-	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/CLS1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/CLS1.o"
-	@echo 'Finished building: $<'
-	@echo ' '
-
-Generated_Code/CS1.o: ../Generated_Code/CS1.c
-	@echo 'Building file: $<'
-	@echo 'Executing target #25 $<'
-	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
-	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/CS1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/CS1.o"
-	@echo 'Finished building: $<'
-	@echo ' '
-
 Generated_Code/Conversor.o: ../Generated_Code/Conversor.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #26 $<'
+	@echo 'Executing target #24 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/Conversor.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/Conversor.o"
 	@echo 'Finished building: $<'
@@ -492,7 +462,7 @@ Generated_Code/Conversor.o: ../Generated_Code/Conversor.c
 
 Generated_Code/ConversorDA.o: ../Generated_Code/ConversorDA.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #27 $<'
+	@echo 'Executing target #25 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/ConversorDA.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/ConversorDA.o"
 	@echo 'Finished building: $<'
@@ -500,7 +470,7 @@ Generated_Code/ConversorDA.o: ../Generated_Code/ConversorDA.c
 
 Generated_Code/Cpu.o: ../Generated_Code/Cpu.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #28 $<'
+	@echo 'Executing target #26 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/Cpu.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/Cpu.o"
 	@echo 'Finished building: $<'
@@ -508,7 +478,7 @@ Generated_Code/Cpu.o: ../Generated_Code/Cpu.c
 
 Generated_Code/DacLdd1.o: ../Generated_Code/DacLdd1.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #29 $<'
+	@echo 'Executing target #27 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/DacLdd1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/DacLdd1.o"
 	@echo 'Finished building: $<'
@@ -516,7 +486,7 @@ Generated_Code/DacLdd1.o: ../Generated_Code/DacLdd1.c
 
 Generated_Code/DataCmd.o: ../Generated_Code/DataCmd.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #30 $<'
+	@echo 'Executing target #28 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/DataCmd.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/DataCmd.o"
 	@echo 'Finished building: $<'
@@ -524,7 +494,7 @@ Generated_Code/DataCmd.o: ../Generated_Code/DataCmd.c
 
 Generated_Code/EE241.o: ../Generated_Code/EE241.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #31 $<'
+	@echo 'Executing target #29 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/EE241.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/EE241.o"
 	@echo 'Finished building: $<'
@@ -532,7 +502,7 @@ Generated_Code/EE241.o: ../Generated_Code/EE241.c
 
 Generated_Code/EInt1.o: ../Generated_Code/EInt1.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #32 $<'
+	@echo 'Executing target #30 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/EInt1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/EInt1.o"
 	@echo 'Finished building: $<'
@@ -540,7 +510,7 @@ Generated_Code/EInt1.o: ../Generated_Code/EInt1.c
 
 Generated_Code/Enable.o: ../Generated_Code/Enable.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #33 $<'
+	@echo 'Executing target #31 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/Enable.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/Enable.o"
 	@echo 'Finished building: $<'
@@ -548,7 +518,7 @@ Generated_Code/Enable.o: ../Generated_Code/Enable.c
 
 Generated_Code/ExtIntLdd1.o: ../Generated_Code/ExtIntLdd1.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #34 $<'
+	@echo 'Executing target #32 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/ExtIntLdd1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/ExtIntLdd1.o"
 	@echo 'Finished building: $<'
@@ -556,15 +526,23 @@ Generated_Code/ExtIntLdd1.o: ../Generated_Code/ExtIntLdd1.c
 
 Generated_Code/GI2C1.o: ../Generated_Code/GI2C1.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #35 $<'
+	@echo 'Executing target #33 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/GI2C1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/GI2C1.o"
 	@echo 'Finished building: $<'
 	@echo ' '
 
+Generated_Code/KSDK1.o: ../Generated_Code/KSDK1.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #34 $<'
+	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/KSDK1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/KSDK1.o"
+	@echo 'Finished building: $<'
+	@echo ' '
+
 Generated_Code/L1.o: ../Generated_Code/L1.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #36 $<'
+	@echo 'Executing target #35 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/L1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/L1.o"
 	@echo 'Finished building: $<'
@@ -572,7 +550,7 @@ Generated_Code/L1.o: ../Generated_Code/L1.c
 
 Generated_Code/L2.o: ../Generated_Code/L2.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #37 $<'
+	@echo 'Executing target #36 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/L2.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/L2.o"
 	@echo 'Finished building: $<'
@@ -580,7 +558,7 @@ Generated_Code/L2.o: ../Generated_Code/L2.c
 
 Generated_Code/L3.o: ../Generated_Code/L3.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #38 $<'
+	@echo 'Executing target #37 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/L3.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/L3.o"
 	@echo 'Finished building: $<'
@@ -588,7 +566,7 @@ Generated_Code/L3.o: ../Generated_Code/L3.c
 
 Generated_Code/L4.o: ../Generated_Code/L4.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #39 $<'
+	@echo 'Executing target #38 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/L4.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/L4.o"
 	@echo 'Finished building: $<'
@@ -596,7 +574,7 @@ Generated_Code/L4.o: ../Generated_Code/L4.c
 
 Generated_Code/LED.o: ../Generated_Code/LED.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #40 $<'
+	@echo 'Executing target #39 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/LED.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/LED.o"
 	@echo 'Finished building: $<'
@@ -604,7 +582,7 @@ Generated_Code/LED.o: ../Generated_Code/LED.c
 
 Generated_Code/PE_LDD.o: ../Generated_Code/PE_LDD.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #41 $<'
+	@echo 'Executing target #40 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/PE_LDD.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/PE_LDD.o"
 	@echo 'Finished building: $<'
@@ -612,7 +590,7 @@ Generated_Code/PE_LDD.o: ../Generated_Code/PE_LDD.c
 
 Generated_Code/RS.o: ../Generated_Code/RS.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #42 $<'
+	@echo 'Executing target #41 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/RS.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/RS.o"
 	@echo 'Finished building: $<'
@@ -620,7 +598,7 @@ Generated_Code/RS.o: ../Generated_Code/RS.c
 
 Generated_Code/TU1.o: ../Generated_Code/TU1.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #43 $<'
+	@echo 'Executing target #42 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/TU1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/TU1.o"
 	@echo 'Finished building: $<'
@@ -628,23 +606,15 @@ Generated_Code/TU1.o: ../Generated_Code/TU1.c
 
 Generated_Code/TimerIntLdd1.o: ../Generated_Code/TimerIntLdd1.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #44 $<'
+	@echo 'Executing target #43 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/TimerIntLdd1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/TimerIntLdd1.o"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Generated_Code/UTIL1.o: ../Generated_Code/UTIL1.c
-	@echo 'Building file: $<'
-	@echo 'Executing target #45 $<'
-	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
-	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/UTIL1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/UTIL1.o"
-	@echo 'Finished building: $<'
-	@echo ' '
-
 Generated_Code/Vectors.o: ../Generated_Code/Vectors.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #46 $<'
+	@echo 'Executing target #44 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/Vectors.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/Vectors.o"
 	@echo 'Finished building: $<'
@@ -652,7 +622,7 @@ Generated_Code/Vectors.o: ../Generated_Code/Vectors.c
 
 Generated_Code/WAIT1.o: ../Generated_Code/WAIT1.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #47 $<'
+	@echo 'Executing target #45 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/WAIT1.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/WAIT1.o"
 	@echo 'Finished building: $<'
@@ -660,7 +630,7 @@ Generated_Code/WAIT1.o: ../Generated_Code/WAIT1.c
 
 Generated_Code/timer.o: ../Generated_Code/timer.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #48 $<'
+	@echo 'Executing target #46 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Generated_Code/timer.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Generated_Code/timer.o"
 	@echo 'Finished building: $<'

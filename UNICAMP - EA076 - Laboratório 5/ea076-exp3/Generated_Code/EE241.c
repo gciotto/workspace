@@ -4,9 +4,9 @@
 **     Project     : ea076-exp3
 **     Processor   : MKL25Z128VLK4
 **     Component   : 24AA_EEPROM
-**     Version     : Component 01.031, Driver 01.00, CPU db: 3.00.000
+**     Version     : Component 01.032, Driver 01.00, CPU db: 3.00.000
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2016-04-18, 10:47, # CodeGen: 17
+**     Date/Time   : 2016-04-28, 19:43, # CodeGen: 57
 **     Abstract    :
 **         Driver for Microchip 24_AA/LC EEPROMs
 **     Settings    :
@@ -21,9 +21,7 @@
 **            I2C                                          : GI2C1
 **            Write Protection Pin                         : Disabled
 **          Timeout                                        : Disabled
-**          Shell                                          : Enabled
-**            Shell                                        : CLS1
-**            Utility                                      : UTIL1
+**          Shell                                          : Disabled
 **     Contents    :
 **         ReadByte     - byte EE241_ReadByte(EE241_Address addr, byte *data);
 **         WriteByte    - byte EE241_WriteByte(EE241_Address addr, byte data);
@@ -31,7 +29,6 @@
 **         WriteBlock   - byte EE241_WriteBlock(EE241_Address addr, byte *data, word dataSize);
 **         SelectDevice - byte EE241_SelectDevice(byte addrI2C);
 **         Test         - byte EE241_Test(void);
-**         ParseCommand - byte EE241_ParseCommand(const unsigned char *cmd, bool *handled, const...
 **
 **     License   :  Open Source (LGPL)
 **     Copyright : (c) Copyright Erich Styger, 2013, all rights reserved.
@@ -60,7 +57,7 @@ static byte EE241_I2CAddress = (0&EE241_MAX_I2C_ADDR_MASK); /* current I2C addre
 
 /* macros for the control byte: */
 #define EE241_CTRL_NBL       (0x0A<<3)  /* control byte high nibble. Typically this is 1010 (shifted by one to the right) */
-#if EE241_DEVICE_ID==EE241_DEVICE_ID_8
+#if (EE241_DEVICE_ID==EE241_DEVICE_ID_8) || (EE241_DEVICE_ID==EE241_DEVICE_ID_16)
   #define EE241_CTRL_ADDR      0        /* no additional address bits */
   /* define control byte as 1010|Bx|B1|B0 */
   #define EE241_BANK_0         (0<<2)   /* B0 bit (0) inside the CTRL_BYTE: 1010|B0|A1|A0 */
@@ -72,7 +69,7 @@ static byte EE241_I2CAddress = (0&EE241_MAX_I2C_ADDR_MASK); /* current I2C addre
     (((addr)&0x400)? \
         (EE241_CTRL_BYTE|EE241_BANK_1) \
       : (EE241_CTRL_BYTE|EE241_BANK_0) ) /* 7bit address of device used to select device */
-  #endif        
+  #endif
 #elif (EE241_DEVICE_ID==EE241_DEVICE_ID_32) || (EE241_DEVICE_ID==EE241_DEVICE_ID_256) || (EE241_DEVICE_ID==EE241_DEVICE_ID_512)
   #define EE241_CTRL_ADDR      EE241_I2CAddress /* address inside control byte */
   /* define control byte as 1010|A2|A1|A0 */
@@ -89,31 +86,6 @@ static byte EE241_I2CAddress = (0&EE241_MAX_I2C_ADDR_MASK); /* current I2C addre
         (EE241_CTRL_BYTE|EE241_BANK_1) \
       : (EE241_CTRL_BYTE|EE241_BANK_0) ) /* 7bit address of device used to select device */
 #endif
-
-static uint8_t PrintStatus(const CLS1_StdIOType *io) {
-  unsigned char buf[32];
-
-  CLS1_SendStatusStr((unsigned char*)"EE241", (unsigned char*)"\r\n", io->stdOut);
-
-  UTIL1_strcpy(buf, sizeof(buf), (unsigned char*)"0x");
-  UTIL1_strcatNum8Hex(buf, sizeof(buf), (uint8_t)EE241_DEVICE_ADDR(0));
-  UTIL1_strcat(buf, sizeof(buf), (unsigned char*)" (for memory @0x00)\r\n");
-  CLS1_SendStatusStr((unsigned char*)"  I2C Addr", buf, io->stdOut);
-
-  UTIL1_Num16uToStr(buf, sizeof(buf), (uint16_t)EE241_DEVICE_ID);
-  UTIL1_strcat(buf, sizeof(buf), (unsigned char*)"\r\n");
-  CLS1_SendStatusStr((unsigned char*)"  Type", buf, io->stdOut);
-
-  return ERR_OK;
-}
-
-static uint8_t PrintHelp(const CLS1_StdIOType *io) {
-  CLS1_SendHelpStr((unsigned char*)"EE241", (unsigned char*)"Group of EE241 commands\r\n", io->stdOut);
-  CLS1_SendHelpStr((unsigned char*)"  help|status", (unsigned char*)"Print help or status information\r\n", io->stdOut);
-  CLS1_SendHelpStr((unsigned char*)"  read 0x<addr>", (unsigned char*)"Read a byte from an address\r\n", io->stdOut);
-  CLS1_SendHelpStr((unsigned char*)"  write 0x<addr> 0x<value>", (unsigned char*)"Write a byte to an address\r\n", io->stdOut);
-  return ERR_OK;
-}
 
 /*
 ** ===================================================================
@@ -140,7 +112,7 @@ byte EE241_WriteByte(EE241_Address addr, byte data)
     (void)GI2C1_UnselectSlave();
     return res;
   }
-  #if EE241_DEVICE_ID==EE241_DEVICE_ID_8  
+  #if (EE241_DEVICE_ID==EE241_DEVICE_ID_8) || (EE241_DEVICE_ID==EE241_DEVICE_ID_16)
     block[0] = (uint8_t)(addr&0xff);    /* low byte of address */
     block[1] = data; /* switch to read mode */
     res = GI2C1_WriteBlock(block, 2, GI2C1_SEND_STOP); /* send address and data */
@@ -189,12 +161,12 @@ byte EE241_WriteByte(EE241_Address addr, byte data)
 byte EE241_ReadByte(EE241_Address addr, byte *data)
 {
   uint8_t res;
-  #if EE241_DEVICE_ID==EE241_DEVICE_ID_8
+  #if (EE241_DEVICE_ID==EE241_DEVICE_ID_8) || (EE241_DEVICE_ID==EE241_DEVICE_ID_16)
     uint8_t addr8;
     addr8 = (uint8_t)(addr&0xff); // low address byte
   #else
     uint8_t addr16[2];                  /* big endian address on I2C bus needs to be 16bit */
-  
+
     addr16[0] = (uint8_t)(addr>>8); /* 16 bit address must be in big endian format */
     addr16[1] = (uint8_t)(addr&0xff);
   #endif
@@ -204,7 +176,7 @@ byte EE241_ReadByte(EE241_Address addr, byte *data)
     (void)GI2C1_UnselectSlave();
     return res;
   }
-  #if EE241_DEVICE_ID==EE241_DEVICE_ID_8
+  #if (EE241_DEVICE_ID==EE241_DEVICE_ID_8) || (EE241_DEVICE_ID==EE241_DEVICE_ID_16)
     res = GI2C1_WriteBlock(&addr8, 1, GI2C1_DO_NOT_SEND_STOP); /* send 8bit address */
   #else /* use 16bit address */
     res = GI2C1_WriteBlock(addr16, 2, GI2C1_DO_NOT_SEND_STOP); /* send 16bit address */
@@ -243,10 +215,10 @@ byte EE241_ReadByte(EE241_Address addr, byte *data)
 byte EE241_ReadBlock(EE241_Address addr, byte *data, word dataSize)
 {
   uint8_t res;
-  #if EE241_DEVICE_ID==EE241_DEVICE_ID_8
+  #if (EE241_DEVICE_ID==EE241_DEVICE_ID_8) || (EE241_DEVICE_ID==EE241_DEVICE_ID_16)
     uint8_t addr8;
     addr8 = (uint8_t)(addr&0xff);
-  #else  
+  #else
     uint8_t addr16[2];                  /* big endian address on I2C bus needs to be 16bit */
     addr16[0] = (uint8_t)(addr>>8); /* 16 bit address must be in big endian format */
     addr16[1] = (uint8_t)(addr&0xff);
@@ -257,7 +229,7 @@ byte EE241_ReadBlock(EE241_Address addr, byte *data, word dataSize)
     (void)GI2C1_UnselectSlave();
     return res;
   }
-  #if EE241_DEVICE_ID==EE241_DEVICE_ID_8
+  #if (EE241_DEVICE_ID==EE241_DEVICE_ID_8) || (EE241_DEVICE_ID==EE241_DEVICE_ID_16)
     res = GI2C1_WriteBlock(&addr8, 1, GI2C1_DO_NOT_SEND_STOP); /* send 8bit address */
   #else
     res = GI2C1_WriteBlock(addr16, 2, GI2C1_DO_NOT_SEND_STOP); /* send 16bit address */
@@ -330,7 +302,7 @@ byte EE241_WriteBlockPage(EE241_Address addr, byte *data, word dataSize)
       (void)GI2C1_UnselectSlave();
       return res;
     }
-    #if EE241_DEVICE_ID==EE241_DEVICE_ID_8 
+    #if (EE241_DEVICE_ID==EE241_DEVICE_ID_8) || (EE241_DEVICE_ID==EE241_DEVICE_ID_16)
       /* 8 bit address byte, high byte of address have been place in SelectSlave(addr) */
       block[0] = (uint8_t)(addr&0xff);  /* low byte of address */
       p = &block[1]; i = (uint8_t)dataSize;
@@ -345,8 +317,8 @@ byte EE241_WriteBlockPage(EE241_Address addr, byte *data, word dataSize)
       *p++ = *data++;
       i--;
     }
-    res = GI2C1_WriteBlock(block, 
-        dataSize+((EE241_DEVICE_ID==EE241_DEVICE_ID_8)? 1:2), GI2C1_SEND_STOP); /* send address and data */
+    res = GI2C1_WriteBlock(block,
+        dataSize+((EE241_DEVICE_ID==EE241_DEVICE_ID_8)||(EE241_DEVICE_ID==EE241_DEVICE_ID_16)? 1:2), GI2C1_SEND_STOP); /* send address and data */
     if (res != ERR_OK) {
       (void)GI2C1_UnselectSlave();
       return res;
@@ -604,68 +576,6 @@ byte EE241_SelectDevice(byte addrI2C)
     return ERR_VALUE;                   /* Device address too large for device address pins available. */
   }
   EE241_I2CAddress = addrI2C;
-  return ERR_OK;
-}
-
-/*
-** ===================================================================
-**     Method      :  EE241_ParseCommand (component 24AA_EEPROM)
-**     Description :
-**         Shell Command Line parser. This method is enabled/disabled
-**         depending on if you have the Shell enabled/disabled in the
-**         properties.
-**     Parameters  :
-**         NAME            - DESCRIPTION
-**       * cmd             - Pointer to command string
-**       * handled         - Pointer to variable which tells if
-**                           the command has been handled or not
-**       * io              - Pointer to I/O structure
-**     Returns     :
-**         ---             - Error code
-** ===================================================================
-*/
-byte EE241_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_StdIOType *io)
-{
-  const unsigned char *p;
-  uint16_t addr16;
-  uint8_t val8, buf[8];
-
-  if (UTIL1_strcmp((char*)cmd, CLS1_CMD_HELP)==0 || UTIL1_strcmp((char*)cmd, "EE241 help")==0) {
-    *handled = TRUE;
-    return PrintHelp(io);
-  } else if ((UTIL1_strcmp((char*)cmd, CLS1_CMD_STATUS)==0) || (UTIL1_strcmp((char*)cmd, "EE241 status")==0)) {
-    *handled = TRUE;
-    return PrintStatus(io);
-  } else if (UTIL1_strncmp((char*)cmd, (char*)"EE241 read ", sizeof("EE241 read ")-1)==0) {
-    p = cmd+sizeof("EE241 read ")-1;
-    if (UTIL1_ScanHex16uNumber(&p, &addr16)==ERR_OK) {
-      if (EE241_ReadByte(addr16, &val8)==ERR_OK) {
-        UTIL1_strcpy(buf, sizeof(buf), (unsigned char*)"0x");
-        UTIL1_strcatNum8Hex(buf, sizeof(buf), val8);
-        UTIL1_strcat(buf, sizeof(buf), (unsigned char*)"\r\n");
-        CLS1_SendStr(buf, io->stdOut);
-      } else {
-        CLS1_SendStr((unsigned char*)"**** read failed!\r\n", io->stdErr);
-      }
-    } else {
-      CLS1_SendStr((unsigned char*)"**** wrong address\r\n", io->stdErr);
-    }
-    *handled = TRUE;
-  } else if (UTIL1_strncmp((char*)cmd, (char*)"EE241 write ", sizeof("EE241 write ")-1)==0) {
-    p = cmd+sizeof("EE241 write ")-1;
-    if (UTIL1_ScanHex16uNumber(&p, &addr16)==ERR_OK) {
-      if (UTIL1_ScanHex8uNumber(&p, &val8)==ERR_OK) {
-        if (EE241_WriteByte(addr16, val8)!=ERR_OK) {
-          CLS1_SendStr((unsigned char*)"**** write failed!\r\n", io->stdErr);
-        }
-      } else {
-        CLS1_SendStr((unsigned char*)"**** wrong value\r\n", io->stdErr);
-      }
-    } else {
-      CLS1_SendStr((unsigned char*)"**** wrong address\r\n", io->stdErr);
-    }
-    *handled = TRUE;
-  }
   return ERR_OK;
 }
 

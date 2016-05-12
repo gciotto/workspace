@@ -45,7 +45,6 @@
 #include "BitIoLdd4.h"
 #include "Conversor.h"
 #include "AdcLdd1.h"
-#include "UTIL1.h"
 #include "C1.h"
 #include "BitIoLdd5.h"
 #include "C2.h"
@@ -66,10 +65,9 @@
 #include "EE241.h"
 #include "GI2C1.h"
 #include "CI2C1.h"
-#include "CLS1.h"
-#include "CS1.h"
 #include "ConversorDA.h"
 #include "DacLdd1.h"
+#include "KSDK1.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -78,6 +76,8 @@
 #include "math.h"
 #include "stdlib.h"
 #include "string.h"
+
+#define M_PI 3.14
 
 union Temperatura {
 	float temp_as_float;
@@ -104,9 +104,10 @@ uint16_t getDigitalTension();
 char read_keys();
 int test_memory();
 void do_memory_with_sensor();
-void generate_square_wave(int T);
-void generate_triangular_wave(int T);
-void generate_sinoidal_wave(int T);
+void generate_square_wave(int T, float V);
+void generate_triangular_wave(int T, float V);
+void generate_sinoidal_wave(int T, float V);
+void generate_dente_serra_wave(int T, float V);
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
@@ -133,19 +134,73 @@ int main(void)
 
 	send_string("LCD works");
 
+	//char r = 0;
+	//while (1) 
+	//if ((r = read_keys()) != 0 )
+	//send_data(r);
 
 	for (;;) {
-		send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
-		send_string("QUAD");
-
+		char buffer [16];
+		/*
 		int i = 0;
-		for (i = 10*INTERRUPT_PERIOD; i < 1000*INTERRUPT_PERIOD; i *= 10)
+		for (i = INTERRUPT_PERIOD; i <= 1000*INTERRUPT_PERIOD; i += 99*INTERRUPT_PERIOD) {
+			send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
+			memset(buffer, 0, 16);
+			sprintf(buffer,"QUAD: %d us", i);
+			send_string(buffer);
+			generate_square_wave(i, 3.3);
+
+		}
 
 
-		generate_square_wave(2);
-		send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
-		send_string("TR");
-		generate_triangular_wave(2);
+		for (i = 10*INTERRUPT_PERIOD; i < 1000*INTERRUPT_PERIOD; i += 99*INTERRUPT_PERIOD) {
+			send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
+			memset(buffer, 0, 16);
+			sprintf(buffer,"TRIAN: %d us", i);
+			send_string(buffer);
+			generate_triangular_wave(i, 3.3);
+
+		}
+
+
+		for (i = 10*INTERRUPT_PERIOD; i < 1000*INTERRUPT_PERIOD; i += 99*INTERRUPT_PERIOD) {
+			send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
+			memset(buffer, 0, 16);
+			sprintf(buffer,"SIN: %d us", i);
+			send_string(buffer);
+			generate_sinoidal_wave(i, 3.3);
+
+		}*/
+
+
+		for (;;) {
+			char wave = read_keys();
+
+			switch (wave) {
+			case '1':
+				send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
+				send_string("Onda Quad.");
+				generate_square_wave(250000, 3.3);
+				send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
+				send_string("Fim onda Quad.");
+				break;
+			case '2':
+				send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
+				send_string("Onda Triang.");
+				generate_triangular_wave(250000, 3.3);
+				send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
+				send_string("Fim onda Triang.");
+				break;
+			case '3':
+				send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
+				send_string("Onda Senoi.");
+				generate_sinoidal_wave(250000, 3.3);
+				send_cmd(0x01, ceil(1535 / INTERRUPT_PERIOD));
+				send_string("Fim onda Senoi.");
+				break;
+			}
+
+		}
 
 	}
 
@@ -165,109 +220,229 @@ int main(void)
 
 /* END main */
 
-void generate_square_wave(int T) {
+void generate_square_wave(int T, float V) {
 
-	int level = 0, count;
-	
-	ConversorDA_SetValue(level);
-	while (!isReady) {
+	int level = 0, count, max_level = ceil (V/3.3 * 4095);
+	char p = 0 ;
+	p  = read_keys();
+
+	ConversorDA_SetValue(&level);
+	/* Gera onda ateh usuario pressionar tecla 0 */
+	while (p != '0') {
 
 		count = 0;
-		while ( count < (T / (2 * INTERRUPT_PERIOD)) && !isReady) {
+		/* Quantidade de iteracoes a serem executadas. */
+		int aux = T / (2 * INTERRUPT_PERIOD);
+		while ( count < aux && p !='0') {
 
+			if (p != '0' && p != '#'&& p != '*') p  = read_keys();
 			count++;
+			/* Espera uma interrupcao de 1us */
 			wait_n_interruptions(1);
 		}
 
-		level = (level == 0 ? 4095 : 0);
-		ConversorDA_SetValue(level);
+		/* Ajusta amplitude */
+		level = (level == 0 ? max_level : 0);
+		ConversorDA_SetValue(&level);
 
+		/* Suporte as teclas do LCD. */
+		if (p != '0' && p != '#'&& p != '*') p  = read_keys();
+
+		/* Aumenta periodo */
+		if (p == '*') {
+			T += 25000;
+			p = 0;
+		} /* Diminui periodo */
+		else if (p == '#') {
+			T -= 25000;
+			p = 0;
+		}
 	}
-	isReady = 0;
 }
 
-void generate_sinoidal_wave(int T) {
+void generate_sinoidal_wave(int T, float V) {
 
-	float level = 0, x, x_3, x_5, x_7;
-	ConversorDA_SetValue((int) level);
+	float level = 0, x, x_3, x_5, x_7, x0, max_level = V/3.3 * 4095;
+	int signal = 1, count, period_count = (T / INTERRUPT_PERIOD);
+
+	unsigned int level_int = 0;
+	ConversorDA_SetValue(&level_int);
 	
+	char p  = read_keys();
+	while (p != '0') {
 
-	int signal = 1, count;
-	while (!isReady) {
-
+		/* Reinicializa variaveis importantes */
 		level = 0;
 		signal = 1;
 		count = 0;
 		x = 0;
-		while ( count < (T / INTERRUPT_PERIOD) && !isReady) {
+		x0 = 0;
+		period_count = (T / INTERRUPT_PERIOD);
+		
+		while ( count < period_count && p != '0') {
 
-			x_3 = x*x*x;
-			x_5 = x_3 * x_3 / x;
+			if (p != '0' && p != '#'&& p != '*') p  = read_keys();
+
+			x_3 = (x + x0)*(x + x0)*(x + x0);
+			x_5 = x_3 * x_3 / (x + x0);
 			x_7 = x_5 * x_5 / x_3;
-			level[0] = signal * (x - x_3/6 + x_5/120 - x_7/5040);
-						
-			ConversorDA_SetValue(level);
+			
+			level = max_level/2 + (max_level/2 - 1) * signal * 
+					(x + x0 - x_3/6 + x_5/120 - x_7/5040);
+
+			level_int = ceil(level);
+			ConversorDA_SetValue(&level_int);
 
 			count++;
 
+			/* Avanca x */
 			x = x + (2*INTERRUPT_PERIOD*M_PI)/T;
 
-			if (count < (T / 2*INTERRUPT_PERIOD))
+			/* Ver explicacao no relatorio */
+			if (count < period_count/2) {
 				signal = 1;
+				x0 = 0;
+			}
 			else {
-				x -= M_PI;
+				x0 = -M_PI;
 				signal = -1;
 			}
-		
-			wait_n_interruptions(1);
+
+			wait_n_interruptions(1); /* Espera 1us */
 		}
 
+		/* Suporte as teclas do LCD. */
+		if (p != '0' && p != '#'&& p != '*') p  = read_keys();
+
+		/* Aumenta periodo */
+		if (p == '*') {
+			T += 25000;
+			p = 0;
+		} /* Diminui periodo */
+		else if (p == '#') {
+			T -= 25000;
+			p = 0;
+		}
 	}
 
-	level = 0;
-	ConversorDA_SetValue(level);
-
-	isReady = 0;
-
+	level_int = 0;
+	ConversorDA_SetValue(&level_int);
 }
 
+void generate_dente_serra_wave(int T, float V) {
 
-void generate_triangular_wave(int T) {
+	float level, max_level = V/3.3 * 4095;
+	int level_int = 0;
+	ConversorDA_SetValue(&level_int);
 
-	int level = 0;
-	ConversorDA_SetValue(level);
-	
-	while (!isReady) {
+	/* Gera onda ateh usuario pressionar tecla 0 */
+	char p  = read_keys();
+	while (p != '0') {
 
 		level = 0;
-		while ( level  < 4096 && !isReady) {
+		while ( level < max_level && p != '0') {
 
-			level[0] += 4095 * T / (2*INTERRUPT_PERIOD);
-						
-			ConversorDA_SetValue(level);
-		
-			wait_n_interruptions(1);
+			if (p != '0' && p != '#'&& p != '*') p  = read_keys();
+
+			/* max_level * INTERRUPT_PERIOD / T eh o coeficiente angular */
+			level += max_level * INTERRUPT_PERIOD / T;
+
+			if (level > max_level)	level = max_level;
+
+			level_int = ceil(level);
+			ConversorDA_SetValue(&level_int);
+
+			wait_n_interruptions(1); /* Espera 1us */
 		}
 
-		while ( level > 0 && !isReady) {
+		/* Suporte as teclas do LCD. */
+		if (p != '0' && p != '#'&& p != '*') p  = read_keys();
 
-			level[0] -= 4095 * T / (2*INTERRUPT_PERIOD);
-
-			ConversorDA_SetValue(level);
-
-			wait_n_interruptions(1);
+		/* Aumenta periodo */
+		if (p == '*') {
+			T += 25000;
+			p = 0;
+		} /* Diminui periodo */
+		else if (p == '#') {
+			T -= 25000;
+			p = 0;
 		}
-
-
 	}
 
 	level = 0;
-	ConversorDA_SetValue(level);
-
-	isReady = 0;
-
+	ConversorDA_SetValue(&level);
 }
 
+void generate_triangular_wave(int T, float V) {
+
+	float level, max_level = V/3.3 * 4095;
+	int level_int = 0;
+	ConversorDA_SetValue(&level_int);
+
+	/* Gera onda ateh usuario pressionar tecla 0 */
+	char p  = read_keys();
+	while (p != '0') {
+
+		level = 0;
+		while ( level < max_level && p != '0') {
+
+			if (p != '0' && p != '#'&& p != '*') p  = read_keys();
+
+			/* max_level * (2*INTERRUPT_PERIOD) / T eh o coeficiente angular */
+			level += max_level * (2*INTERRUPT_PERIOD) / T;
+
+			if (level > max_level)	level = max_level;
+
+			level_int = ceil(level);
+			ConversorDA_SetValue(&level_int);
+
+			wait_n_interruptions(1); /* Espera 1us */
+		}
+
+		/* Suporte as teclas do LCD. */
+		if (p != '0' && p != '#'&& p != '*') p  = read_keys();
+
+		/* Aumenta periodo */
+		if (p == '*') {
+			T += 25000;
+			p = 0;
+		} /* Diminui periodo */
+		else if (p == '#') {
+			T -= 25000;
+			p = 0;
+		}
+
+		while ( level > 0 && p != '0') {
+
+			if (p != '0' && p != '#'&& p != '*') p  = read_keys();
+
+			level -= max_level * (2*INTERRUPT_PERIOD) / T ;
+
+			if (level < 0)	level = 0;
+
+			level_int = ceil(level);
+			ConversorDA_SetValue(&level_int);
+
+			wait_n_interruptions(1); /* Espera 1us */
+		}
+
+		/* Suporte as teclas do LCD. */
+		if (p != '0' && p != '#'&& p != '*') p  = read_keys();
+
+		/* Aumenta periodo */
+		if (p == '*') {
+			T += 25000;
+			p = 0;
+		} /* Diminui periodo */
+		else if (p == '#') {
+			T -= 25000;
+			p = 0;
+		}
+	}
+
+	level = 0;
+	ConversorDA_SetValue(&level);
+}
 int test_memory() {
 
 	int address;
@@ -430,26 +605,26 @@ void write_all_letters(char start_letter, char end_letter) {
 
 	while (caracter <= end_letter) {
 		//while (1) {
-			send_data(caracter);
-			caracter++;
-			char_count++;
+		send_data(caracter);
+		caracter++;
+		char_count++;
 
-			if (!( char_count % 16 ) ) {
-				//			char_count = 0;
-				//			  if (line) {
-				//			  	send_cmd(0xC0, 10);
-				//			  	line = 0;	
-				//			  }
-				//			   else  {
-				//				   send_cmd(0x80, 10);
-				//				   line = 1;
-				//			   }
-				//
-				//			line = !line;
-				for (i = 0; i < 24; i++)
-					send_data(' ');
+		if (!( char_count % 16 ) ) {
+			//			char_count = 0;
+			//			  if (line) {
+			//			  	send_cmd(0xC0, 10);
+			//			  	line = 0;	
+			//			  }
+			//			   else  {
+			//				   send_cmd(0x80, 10);
+			//				   line = 1;
+			//			   }
+			//
+			//			line = !line;
+			for (i = 0; i < 24; i++)
+				send_data(' ');
 
-			}
+		}
 	}
 
 }

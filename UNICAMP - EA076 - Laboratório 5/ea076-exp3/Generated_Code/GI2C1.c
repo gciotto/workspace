@@ -4,9 +4,9 @@
 **     Project     : ea076-exp3
 **     Processor   : MKL25Z128VLK4
 **     Component   : GenericI2C
-**     Version     : Component 01.023, Driver 01.00, CPU db: 3.00.000
+**     Version     : Component 01.027, Driver 01.00, CPU db: 3.00.000
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2016-04-15, 15:37, # CodeGen: 10
+**     Date/Time   : 2016-04-28, 19:42, # CodeGen: 56
 **     Abstract    :
 **         This component implements a generic I2C driver wrapper to work both with LDD and non-LDD I2C components.
 **     Settings    :
@@ -25,8 +25,8 @@
 **         UnselectSlave     - byte GI2C1_UnselectSlave(void);
 **         RequestBus        - void GI2C1_RequestBus(void);
 **         ReleaseBus        - void GI2C1_ReleaseBus(void);
-**         ReadBlock         - byte GI2C1_ReadBlock(void* data, word dataSize, GI2C1_EnumSendFlags flags);
 **         WriteBlock        - byte GI2C1_WriteBlock(void* data, word dataSize, GI2C1_EnumSendFlags flags);
+**         ReadBlock         - byte GI2C1_ReadBlock(void* data, word dataSize, GI2C1_EnumSendFlags flags);
 **         ReadAddress       - byte GI2C1_ReadAddress(byte i2cAddr, byte *memAddr, byte memAddrSize, byte...
 **         WriteAddress      - byte GI2C1_WriteAddress(byte i2cAddr, byte *memAddr, byte memAddrSize, byte...
 **         ReadByteAddress8  - byte GI2C1_ReadByteAddress8(byte i2cAddr, byte memAddr, byte *data);
@@ -38,7 +38,7 @@
 **         Init              - void GI2C1_Init(void);
 **
 **     License   :  Open Source (LGPL)
-**     Copyright : (c) Copyright Erich Styger, 2013-2014, all rights reserved.
+**     Copyright : (c) Copyright Erich Styger, 2013-2015, all rights reserved.
 **     http          : www.mcuoneclipse.com
 **     This an open source software implementing software using Processor Expert.
 **     This is a free software and is opened for education,  research  and commercial developments under license policy of following terms:
@@ -83,6 +83,8 @@ static GI2C1_TDataState GI2C1_deviceData;
 */
 void GI2C1_RequestBus(void)
 {
+  /*lint -save -e522 function lacks side effect  */
+  /*lint -restore */
 }
 
 /*
@@ -96,6 +98,8 @@ void GI2C1_RequestBus(void)
 */
 void GI2C1_ReleaseBus(void)
 {
+  /*lint -save -e522 function lacks side effect  */
+  /*lint -restore */
 }
 
 /*
@@ -491,7 +495,9 @@ byte GI2C1_ProbeACK(void* data, word dataSize, GI2C1_EnumSendFlags flags, word W
   if (res!=ERR_OK) {
     return res;
   }
+  /*lint -save -e522 Lacks side effect */
   WAIT1_Waitus(WaitTimeUS);
+  /*lint -restore */
   if (!GI2C1_deviceData.dataTransmittedFlg) {
     return ERR_FAILED; /* no ACK received? */
   }

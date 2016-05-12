@@ -7,7 +7,7 @@
 **     Version     : Component 01.025, Driver 01.04, CPU db: 3.00.000
 **     Datasheet   : KL25P80M48SF0RM, Rev.3, Sep 2012
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2016-04-26, 17:48, # CodeGen: 48
+**     Date/Time   : 2016-04-28, 20:09, # CodeGen: 58
 **     Abstract    :
 **
 **     Settings    :
@@ -75,7 +75,6 @@
 #include "BitIoLdd4.h"
 #include "Conversor.h"
 #include "AdcLdd1.h"
-#include "UTIL1.h"
 #include "C1.h"
 #include "BitIoLdd5.h"
 #include "C2.h"
@@ -96,10 +95,9 @@
 #include "EE241.h"
 #include "GI2C1.h"
 #include "CI2C1.h"
-#include "CLS1.h"
-#include "CS1.h"
 #include "ConversorDA.h"
 #include "DacLdd1.h"
+#include "KSDK1.h"
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
@@ -171,8 +169,6 @@ void __init_hardware(void)
                SIM_SCGC5_PORTC_MASK |
                SIM_SCGC5_PORTB_MASK |
                SIM_SCGC5_PORTA_MASK;   /* Enable clock gate for ports to enable pin routing */
-  /* SIM_SCGC5: LPTMR=1 */
-  SIM_SCGC5 |= SIM_SCGC5_LPTMR_MASK;
   if ((PMC_REGSC & PMC_REGSC_ACKISO_MASK) != 0x0U) {
     /* PMC_REGSC: ACKISO=1 */
     PMC_REGSC |= PMC_REGSC_ACKISO_MASK; /* Release IO pads after wakeup from VLLS mode. */
@@ -315,13 +311,12 @@ void PE_low_level_init(void)
   (void)BitIoLdd11_Init(NULL);
   /* ### ExtInt_LDD "ExtIntLdd1" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)ExtIntLdd1_Init(NULL);
+  /* ### KinetisSDK "KSDK1" init code ... */
+  /* Write code here ... */
   /* ### I2C_LDD "CI2C1" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)CI2C1_Init(NULL);
   /* ### GenericI2C "GI2C1" init code ... */
   GI2C1_Init();
-  /* ### CriticalSection "CS1" init code ... */
-  /* ### Shell "CLS1" init code ... */
-  CLS1_Init(); /* initialize shell */
   /* ### 24AA_EEPROM "EE241" init code ... */
   /* Write code here ... */
   /* ### DAC_LDD "DacLdd1" component auto initialization. Auto initialization feature can be disabled by component's property "Auto initialization". */

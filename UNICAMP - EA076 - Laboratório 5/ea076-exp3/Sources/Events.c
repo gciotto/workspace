@@ -137,7 +137,7 @@ void EInt1_OnInterrupt(void)
 {
 	static unsigned int last_tick = 0;
 	
-	if (tick_counter - last_tick > ceil(500000 / INTERRUPT_PERIOD) ) {
+	if (tick_counter - last_tick > ceil(100000 / INTERRUPT_PERIOD) ) {
 	/* Write your code here ... */
 		get_keys(buttons);
 		isReady = 1;

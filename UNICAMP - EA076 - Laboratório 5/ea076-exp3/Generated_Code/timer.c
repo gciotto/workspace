@@ -6,7 +6,7 @@
 **     Component   : TimerInt
 **     Version     : Component 02.161, Driver 01.02, CPU db: 3.00.000
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2016-04-26, 17:48, # CodeGen: 48
+**     Date/Time   : 2016-04-28, 20:31, # CodeGen: 61
 **     Abstract    :
 **         This component "TimerInt" implements a periodic interrupt.
 **         When the component and its events are enabled, the "OnInterrupt"
@@ -15,8 +15,8 @@
 **         The source of periodic interrupt can be timer compare or reload
 **         register or timer-overflow interrupt (of free running counter).
 **     Settings    :
-**         Timer name                  : LPTMR0_CNR (16-bit)
-**         Compare name                : LPTMR0_CMR
+**         Timer name                  : TPM0_CNT (16-bit)
+**         Compare name                : TPM0_MOD
 **         Counter shared              : No
 **
 **         High speed mode
@@ -24,10 +24,10 @@
 **             Clock                   : [driven by slave component] Hz
 **           Initial period/frequency
 **             Xtal ticks              : ---
-**             microseconds            : 60
+**             microseconds            : 50
 **             milliseconds            : ---
 **             seconds                 : ---
-**             seconds (real)          : 60
+**             seconds (real)          : 50
 **             Hz                      : ---
 **             kHz                     : ---
 **             MHz                     : ---
@@ -39,15 +39,16 @@
 **              Events                 : Enabled
 **
 **         Timer registers
-**              Counter                : LPTMR0_CNR [0x4004000C]
-**              Mode                   : LPTMR0_CSR [0x40040000]
-**              Run                    : LPTMR0_CSR [0x40040000]
-**              Prescaler              : LPTMR0_PSR [0x40040004]
+**              Counter                : TPM0_CNT  [0x40038004]
+**              Mode                   : TPM0_SC   [0x40038000]
+**              Run                    : TPM0_SC   [0x40038000]
+**              Prescaler              : TPM0_SC   [0x40038000]
 **
 **         Compare registers
-**              Compare                : LPTMR0_CMR [0x40040008]
+**              Compare                : TPM0_MOD  [0x40038008]
 **
 **         Flip-flop registers
+**              Mode                   : TPM0_SC   [0x40038000]
 **     Contents    :
 **         Enable  - byte timer_Enable(void);
 **         Disable - byte timer_Disable(void);

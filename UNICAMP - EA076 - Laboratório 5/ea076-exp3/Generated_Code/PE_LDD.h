@@ -5,7 +5,7 @@
 **     Processor   : MKL25Z128VLK4
 **     Version     : Component 01.025, Driver 01.04, CPU db: 3.00.000
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2016-04-25, 16:09, # CodeGen: 44
+**     Date/Time   : 2016-04-28, 19:43, # CodeGen: 57
 **     Abstract    :
 **
 **     Settings    :
@@ -75,7 +75,6 @@
 #include "BitIoLdd4.h"
 #include "Conversor.h"
 #include "AdcLdd1.h"
-#include "UTIL1.h"
 #include "C1.h"
 #include "BitIoLdd5.h"
 #include "C2.h"
@@ -96,10 +95,9 @@
 #include "EE241.h"
 #include "GI2C1.h"
 #include "CI2C1.h"
-#include "CLS1.h"
-#include "CS1.h"
 #include "ConversorDA.h"
 #include "DacLdd1.h"
+#include "KSDK1.h"
 
 
 /*

@@ -21,21 +21,11 @@ Generated_Code/PE_LDD.o: ../Generated_Code/PE_LDD.c \
  ../Generated_Code/BitIoLdd1.h ../Generated_Code/RS.h \
  ../Generated_Code/BitIoLdd2.h ../Generated_Code/timer.h \
  ../Generated_Code/TimerIntLdd1.h ../Generated_Code/TU1.h \
- C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/LPTMR_PDD.h \
+ C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/TPM_PDD.h \
  ../Generated_Code/LED.h ../Generated_Code/BitIoLdd3.h \
  ../Generated_Code/Button.h ../Generated_Code/BitIoLdd4.h \
  ../Generated_Code/Conversor.h ../Generated_Code/AdcLdd1.h \
  C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/ADC_PDD.h \
- ../Generated_Code/UTIL1.h \
- C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/string.h \
- C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstring \
- C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/null.h \
- C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/size_t.h \
- C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/ewl_rsize_t.h \
- C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/string_api.h \
- C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/stddef.h \
- C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstddef \
- C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/wchar_t.h \
  ../Generated_Code/C1.h ../Generated_Code/BitIoLdd5.h \
  ../Generated_Code/C2.h ../Generated_Code/BitIoLdd6.h \
  ../Generated_Code/C3.h ../Generated_Code/BitIoLdd7.h \
@@ -45,10 +35,11 @@ Generated_Code/PE_LDD.o: ../Generated_Code/PE_LDD.c \
  ../Generated_Code/L4.h ../Generated_Code/BitIoLdd11.h \
  ../Generated_Code/EInt1.h ../Generated_Code/ExtIntLdd1.h \
  C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/PORT_PDD.h \
- ../Generated_Code/WAIT1.h ../Generated_Code/EE241.h \
- ../Generated_Code/GI2C1.h ../Generated_Code/CI2C1.h \
- ../Generated_Code/CLS1.h ../Generated_Code/CS1.h \
- ../Generated_Code/ConversorDA.h ../Generated_Code/DacLdd1.h \
+ ../Generated_Code/WAIT1.h ../Generated_Code/KSDK1.h \
+ C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/stdbool.h \
+ ../Generated_Code/EE241.h ../Generated_Code/GI2C1.h \
+ ../Generated_Code/CI2C1.h ../Generated_Code/ConversorDA.h \
+ ../Generated_Code/DacLdd1.h \
  C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/DAC_PDD.h
 
 C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/lib_ewl.prefix:
@@ -109,7 +100,7 @@ C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/PDD_Types.h:
 
 ../Generated_Code/TU1.h:
 
-C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/LPTMR_PDD.h:
+C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/TPM_PDD.h:
 
 ../Generated_Code/LED.h:
 
@@ -124,26 +115,6 @@ C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/LPTMR_PDD.h:
 ../Generated_Code/AdcLdd1.h:
 
 C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/ADC_PDD.h:
-
-../Generated_Code/UTIL1.h:
-
-C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/string.h:
-
-C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstring:
-
-C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/null.h:
-
-C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/size_t.h:
-
-C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/ewl_rsize_t.h:
-
-C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/string_api.h:
-
-C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/stddef.h:
-
-C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstddef:
-
-C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/wchar_t.h:
 
 ../Generated_Code/C1.h:
 
@@ -181,15 +152,15 @@ C:/Freescale/CW_MCU_v10.6/MCU/ProcessorExpert/lib/Kinetis/pdd/inc/PORT_PDD.h:
 
 ../Generated_Code/WAIT1.h:
 
+../Generated_Code/KSDK1.h:
+
+C:/Freescale/CW_MCU_v10.6/MCU/ARM_GCC_Support/ewl/EWL_C/include/stdbool.h:
+
 ../Generated_Code/EE241.h:
 
 ../Generated_Code/GI2C1.h:
 
 ../Generated_Code/CI2C1.h:
-
-../Generated_Code/CLS1.h:
-
-../Generated_Code/CS1.h:
 
 ../Generated_Code/ConversorDA.h:
 
