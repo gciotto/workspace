@@ -4,13 +4,13 @@ import javax.swing.SpinnerListModel;
 import main.Board;
 import main.Client;
 
-public class Locon extends javax.swing.JPanel {
+public class Rux extends javax.swing.JPanel {
 
     private Board board;
     
     private String[] spinnerValues = {"5 ms", "10 ms", "50 ms", "100 ms", "250 ms", "500 ms", "1000 ms"};
     
-    public Locon() {
+    public Rux() {
         initComponents();
         
         setSkips((String)spinner.getValue());
@@ -27,6 +27,9 @@ public class Locon extends javax.swing.JPanel {
             txtName.setText(b.getModule().name);
             txtPosition.setText(String.valueOf(b.getPosition()));
             this.setVisible(true);
+            
+            this.board.setWillCycle(false);
+            this.board.setWillRamp(false);
         }
         
     }
@@ -46,26 +49,21 @@ public class Locon extends javax.swing.JPanel {
         
         int[] readBytes = board.getReadBytes();
         
-        int analog = (readBytes[2] << 8) + readBytes[3];
-        int digital = readBytes[4];
+        int analogCh1 = (readBytes[2] << 8) + readBytes[3],
+        	analogCh2 = (readBytes[4] << 8) + readBytes[5],
+        	analogCh3 = (readBytes[6] << 8) + readBytes[7],
+        	analogCh4 = (readBytes[8] << 8) + readBytes[9];
+        int digital = readBytes[10];
         
-        txtReadAnalog.setText(String.valueOf(analog));
+        txtReadAnalogChannel1.setText(String.valueOf(analogCh1));
+        txtReadAnalogChannel2.setText(String.valueOf(analogCh2));
+        txtReadAnalogChannel3.setText(String.valueOf(analogCh3));
+        txtReadAnalogChannel4.setText(String.valueOf(analogCh4));
         txtReadDigital.setText(String.valueOf(digital));
         
-        canvas.addMeasure(txtReadAnalog.getText()); 
-        
+        canvas.addMeasure(txtReadAnalogChannel1.getText());
+       
         int[] writeBytes = board.getWriteBytes();
-        
-        try
-        {
-            analog  = Integer.parseInt(txtWriteAnalog.getText());
-            
-        }
-        catch(NumberFormatException ex)
-        {
-            analog = 0;
-            txtWriteAnalog.setText("0");
-        }
         
         try
         {
@@ -78,53 +76,14 @@ public class Locon extends javax.swing.JPanel {
         }
             
         
-        /*if(analog > 4095)
-            analog = 4095;
-        else */if (analog < 0)
-            analog = 0;
         
         if(digital > 255)
             digital = 255;
         else if (digital < 0)
             digital = 0;
         
-        
-        writeBytes[2] = (analog >> 8) & 0xFF;
-        writeBytes[3] = analog & 0xFF;
-        writeBytes[4] = digital;
-        
-        int cycleCurve = cbCycle.getSelectedIndex();
-        
-        if(cycleCurve == 0)
-        {
-            board.setWillCycle(false);
-            board.setCycleCurve(0x80);
-        }
-        else
-        {
-            board.setWillCycle(true);
-            board.setCycleCurve(cycleCurve - 1);
-        }
-        
-        writeBytes[1] = board.getCycleCurve();       
-        
-        int rampCurve = cbRamp.getSelectedIndex();
-        
-        if(rampCurve == 0)
-        {
-            board.setWillRamp(false);
-            //board.setRampCurve(0x80);
-        }
-        else
-        {
-            board.setWillRamp(true);
-            board.setRampCurve(rampCurve - 1);
-                       
-    
-            board.setRampPulses(Integer.parseInt(String.valueOf(spinnerPulses.getValue())));
-        }
-                 
-        
+        writeBytes[2] = digital;  
+        writeBytes[1] = 128;
         
     }
     
@@ -181,42 +140,43 @@ public class Locon extends javax.swing.JPanel {
     
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         txtName = new javax.swing.JLabel();
-        txtWriteAnalog = new javax.swing.JTextField();
         txtWriteDigital = new javax.swing.JTextField();
-        lblAnalog = new javax.swing.JLabel();
+        lblAnalogChannel1 = new javax.swing.JLabel();
         lblDigital = new javax.swing.JLabel();
-        cbRamp = new javax.swing.JComboBox();
-        cbCycle = new javax.swing.JComboBox();
         spinner = new javax.swing.JSpinner();
         canvas = new gui.Canvas();
-        spinnerPulses = new javax.swing.JSpinner();
-        txtReadAnalog = new javax.swing.JLabel();
+        txtReadAnalogChannel1 = new javax.swing.JLabel();
         txtReadDigital = new javax.swing.JLabel();
         txtPosition = new javax.swing.JLabel();
+        lblAnalogChannel2 = new javax.swing.JLabel();
+        txtReadAnalogChannel2 = new javax.swing.JLabel();
+        lblAnalogChannel3 = new javax.swing.JLabel();
+        txtReadAnalogChannel3 = new javax.swing.JLabel();
+        lblAnalogChannel4 = new javax.swing.JLabel();
+        txtReadAnalogChannel4 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         txtName.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         txtName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtName.setText("LCN12BMP");
-
-        txtWriteAnalog.setText("2000");
+        txtName.setText("RUX12BBP");
 
         txtWriteDigital.setText("128");
+        txtWriteDigital.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtWriteDigitalActionPerformed(evt);
+            }
+        });
 
-        lblAnalog.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
-        lblAnalog.setText("A");
+        lblAnalogChannel1.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
+        lblAnalogChannel1.setText("Channel 1");
 
         lblDigital.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
         lblDigital.setText("D");
-
-        cbRamp.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Não Rampa", "Rampa 0", "Rampa 1" ,"Rampa 2" }));
-
-        cbCycle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Não Cicla", "Cicla 0", "Cicla 1", "Cicla 2", "Cicla 3", "Cicla 4" }));
 
         spinner.setModel(new SpinnerListModel(spinnerValues));
         spinner.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -236,10 +196,8 @@ public class Locon extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        spinnerPulses.setModel(new javax.swing.SpinnerNumberModel(1, 1, 4, 1));
-
-        txtReadAnalog.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtReadAnalog.setText("65535");
+        txtReadAnalogChannel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtReadAnalogChannel1.setText("65535");
 
         txtReadDigital.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtReadDigital.setText("255");
@@ -247,6 +205,24 @@ public class Locon extends javax.swing.JPanel {
         txtPosition.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         txtPosition.setText("99");
         txtPosition.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblAnalogChannel2.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
+        lblAnalogChannel2.setText("Channel 2");
+
+        txtReadAnalogChannel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtReadAnalogChannel2.setText("65535");
+
+        lblAnalogChannel3.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
+        lblAnalogChannel3.setText("Channel 3");
+
+        txtReadAnalogChannel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtReadAnalogChannel3.setText("65535");
+
+        lblAnalogChannel4.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
+        lblAnalogChannel4.setText("Channel 4");
+
+        txtReadAnalogChannel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtReadAnalogChannel4.setText("65535");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -258,84 +234,94 @@ public class Locon extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtPosition)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                        .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
                     .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblDigital)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblDigital, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtReadDigital)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(txtWriteDigital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblAnalog)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAnalogChannel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtReadAnalog, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtReadAnalogChannel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAnalogChannel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtWriteAnalog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cbCycle, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(cbRamp, 0, 1, Short.MAX_VALUE)
+                        .addComponent(txtReadAnalogChannel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAnalogChannel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spinnerPulses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(spinner))
-                .addContainerGap())
+                        .addComponent(txtReadAnalogChannel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAnalogChannel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtReadAnalogChannel4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spinner, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 3, Short.MAX_VALUE))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtWriteAnalog, txtWriteDigital});
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtReadAnalog, txtReadDigital});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtName)
-                    .addComponent(txtWriteAnalog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPosition)
-                    .addComponent(txtReadAnalog)
-                    .addComponent(lblAnalog))
+                    .addComponent(lblAnalogChannel1)
+                    .addComponent(txtReadAnalogChannel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtWriteDigital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtReadDigital)
-                            .addComponent(lblDigital))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbCycle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtReadAnalogChannel2)
+                            .addComponent(lblAnalogChannel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(spinnerPulses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbRamp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblAnalogChannel3)
+                            .addComponent(txtReadAnalogChannel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblAnalogChannel4)
+                            .addComponent(txtReadAnalogChannel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDigital)
+                            .addComponent(txtReadDigital)
+                            .addComponent(txtWriteDigital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(5, 5, 5))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                         
 
-    private void spinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerStateChanged
+    private void spinnerStateChanged(javax.swing.event.ChangeEvent evt) {                                     
         setSkips((String) spinner.getValue());
-    }//GEN-LAST:event_spinnerStateChanged
+    }                                    
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private void txtWriteDigitalActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        // TODO add your handling code here:
+    }                                               
+
+    // Variables declaration - do not modify                     
     private gui.Canvas canvas;
-    private javax.swing.JComboBox cbCycle;
-    private javax.swing.JComboBox cbRamp;
-    private javax.swing.JLabel lblAnalog;
+    private javax.swing.JLabel lblAnalogChannel1;
+    private javax.swing.JLabel lblAnalogChannel2;
+    private javax.swing.JLabel lblAnalogChannel3;
+    private javax.swing.JLabel lblAnalogChannel4;
     private javax.swing.JLabel lblDigital;
     private javax.swing.JSpinner spinner;
-    private javax.swing.JSpinner spinnerPulses;
     private javax.swing.JLabel txtName;
     private javax.swing.JLabel txtPosition;
-    private javax.swing.JLabel txtReadAnalog;
+    private javax.swing.JLabel txtReadAnalogChannel1;
+    private javax.swing.JLabel txtReadAnalogChannel2;
+    private javax.swing.JLabel txtReadAnalogChannel3;
+    private javax.swing.JLabel txtReadAnalogChannel4;
     private javax.swing.JLabel txtReadDigital;
-    private javax.swing.JTextField txtWriteAnalog;
     private javax.swing.JTextField txtWriteDigital;
-    // End of variables declaration//GEN-END:variables
-
+    // End of variables declaration                   
 }

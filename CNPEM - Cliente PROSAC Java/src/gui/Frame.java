@@ -1,10 +1,13 @@
 package gui;
 
 import java.util.List;
+
+import javax.swing.JFrame;
+
 import main.Board;
 import main.Command;
 
-public class Frame extends javax.swing.JFrame {
+public class Frame extends JFrame {
 
     public Frame() {
         //<editor-fold defaultstate="collapsed" desc=" GTK+ Look and feel ">
@@ -25,22 +28,27 @@ public class Frame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        
     }
 
     public void createAndShowGUI() 
     {        
         initComponents();
         
+        this.commandsPanel.disableAll();
         this.setVisible(true);
-        boardsPanel.clearBoards();
+        //boardsPanel.clearBoards();
     }
 
     
     public void setBoardsList(List<Board> list)
     {
-        boardsPanel.setBoardsList(list);
+        //boardsPanel.setBoardsList(list);
+        
+        for (Board b : list) {
+        	this.boardsFrame.addBoard(b);
+        }
+        
+        this.boardsFrame.setVisible(true);
     }
     
     public void setStatus(String message)
@@ -48,9 +56,9 @@ public class Frame extends javax.swing.JFrame {
         txtStatus.setText(message);
     }
     
-    public void refresh()
-    {
-        boardsPanel.refresh();
+    public void refresh()  {
+    	
+        boardsFrame.refresh();
     }
     
     
@@ -123,11 +131,16 @@ public class Frame extends javax.swing.JFrame {
     public void setDisconnected() 
     {
         connectionPanel.setDisconnected();
+        commandsPanel.disableAll();
+        
+        this.boardsFrame.clearBoards();
+        this.boardsFrame.setVisible(false);
     }
     
     public void setConnected()
     {
         connectionPanel.setConnected();
+        commandsPanel.setNormal();
     }
     
     
@@ -136,10 +149,14 @@ public class Frame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+    	this.setResizable(false);
+    	
+    	boardsFrame = new gui.BoardsFrame();
+    	boardsFrame.setVisible(false);
+    	
         connectionPanel = new gui.Connection();
         commandsPanel = new gui.Commands();
         txtStatus = new javax.swing.JLabel();
-        boardsPanel = new gui.Boards();
         txtLastRecv = new javax.swing.JLabel();
         txtLastSend = new javax.swing.JLabel();
 
@@ -153,7 +170,7 @@ public class Frame extends javax.swing.JFrame {
         txtStatus.setText("status");
         txtStatus.setBorder(javax.swing.BorderFactory.createTitledBorder("Status"));
 
-        boardsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Placas"));
+        //boardsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Placas"));
 
         txtLastRecv.setText("recv");
         txtLastRecv.setBorder(javax.swing.BorderFactory.createTitledBorder("Último comando recebido (exceto 00h)"));
@@ -172,7 +189,6 @@ public class Frame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(connectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(boardsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(commandsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(txtLastRecv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -184,8 +200,6 @@ public class Frame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(connectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boardsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(commandsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -200,16 +214,14 @@ public class Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private gui.Boards boardsPanel;
     private gui.Commands commandsPanel;
     private gui.Connection connectionPanel;
     private javax.swing.JLabel txtLastRecv;
     private javax.swing.JLabel txtLastSend;
     private javax.swing.JLabel txtStatus;
+    private gui.BoardsFrame boardsFrame;
     // End of variables declaration//GEN-END:variables
-
-    
 }

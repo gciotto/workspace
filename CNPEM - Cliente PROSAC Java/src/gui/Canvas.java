@@ -16,19 +16,16 @@ public class Canvas extends JPanel {
     
     private int skipped = 0;
     
-    private int max = 4095;
+    private int max = 4095, zero_y;
     
     public Canvas() {
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
     
-    public void setMax(int max)
-    {
+    public void setMax(int max) {
         this.max = max;
     }
 
-    
-    
     public void addMeasure(String m)
     {
         if(points == null)
@@ -59,6 +56,10 @@ public class Canvas extends JPanel {
         this.repaint();
     }
     
+    public void setZero(int zero){
+    	this.zero_y = zero;
+    }
+    
     public void setSkip(int skip)
     {
         this.skip = skip;
@@ -73,7 +74,7 @@ public class Canvas extends JPanel {
             points = new int[this.getWidth()];
         
         g.setColor(Color.GRAY);
-        g.drawLine(0, this.getHeight()/2, this.getWidth(), this.getHeight()/2);
+        g.drawLine(0, this.zero_y * this.getHeight() / this.max , this.getWidth(), this.zero_y * this.getHeight() / this.max);
         
         //g.drawLine(0, (int) (0.707*this.getHeight()), this.getWidth(), (int) (0.707*this.getHeight()));
         

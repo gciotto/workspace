@@ -6,9 +6,14 @@ public enum Module
     LCN12BMP            (0x01, 3,  3, "LCN12BMP"),
     LCN12BBP            (0x02, 3,  3, "LCN12BBP"),
     LCN16BMP            (0x03, 3,  3, "LCN16BMP"),
+    LCN16V32M           (0x1D, 3,  3, "LCN16V32M"),
     LCN16BBP            (0x04, 3,  3, "LCN16BBP"),
-    MUX16BBP            (0x11, 21, 4, "MUX16BBP");
-
+    MUX16BBP            (0x11, 21, 4, "MUX16BBP"),
+    RUX12BBP            (0x17, 9,  1, "RUX12BBP"),
+    STATFNT	            (0x14, 3,  1, "STATFNT"),
+    DIGINT	            (0x09, 8,  0, "DIGINT");
+    
+    
     public final int    type;   
     public final int    readBytesCount;
     public final int    writeBytesCount;

@@ -24,8 +24,9 @@ public class Board
         this.module = m;
         
         this.readBytes  = new int[m.readBytesCount + 2]; // PRIORITY and FLAGS
-        this.writeBytes = new int[m.writeBytesCount + 2];  
+        this.writeBytes = new int[m.writeBytesCount + 2]; 
         
+        //this.writeBytes[1] = 0x80;
     }
 
     public int getPosition() {

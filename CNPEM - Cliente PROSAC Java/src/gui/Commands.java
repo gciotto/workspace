@@ -7,6 +7,24 @@ public class Commands extends javax.swing.JPanel {
         setNormal();
     }
     
+    public void disableAll(){
+    	
+    	btCmd00.setEnabled(false);
+        btCmd01.setEnabled(false);
+        btCmd02.setEnabled(false);
+        btCmd03.setEnabled(false);
+        btCmd04.setEnabled(false);
+        btCmd05.setEnabled(false);
+        btCmdC8.setEnabled(false);
+        btCmdC9.setEnabled(false);
+        btCmdCB.setEnabled(false);
+        btCmdCC.setEnabled(false);
+        btCmdD0.setEnabled(false);
+        btCmdE0.setEnabled(false);
+        btCmdE1.setEnabled(false);
+        btCmdCF.setEnabled(false);
+    }
+    
     public void setCyclingEnabled()
     {
         btCmd00.setEnabled(false);
@@ -93,7 +111,7 @@ public class Commands extends javax.swing.JPanel {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         panelBasic = new javax.swing.JPanel();
@@ -120,6 +138,8 @@ public class Commands extends javax.swing.JPanel {
         lblCmdCC = new javax.swing.JLabel();
         btCmdD0 = new javax.swing.JButton();
         lblCmdD0 = new javax.swing.JLabel();
+        btCmdCF = new javax.swing.JButton();
+        lblCmdCF = new javax.swing.JLabel();
         panelCycle = new javax.swing.JPanel();
         btCmdE0 = new javax.swing.JButton();
         lblCmdE0 = new javax.swing.JLabel();
@@ -295,6 +315,15 @@ public class Commands extends javax.swing.JPanel {
 
         lblCmdD0.setText("Hab. Rampa Cíclica");
 
+        btCmdCF.setText("CFh");
+        btCmdCF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCmdCFActionPerformed(evt);
+            }
+        });
+
+        lblCmdCF.setText("Hab. Leituras");
+
         javax.swing.GroupLayout panelRampLayout = new javax.swing.GroupLayout(panelRamp);
         panelRamp.setLayout(panelRampLayout);
         panelRampLayout.setHorizontalGroup(
@@ -319,14 +348,20 @@ public class Commands extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelRampLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelRampLayout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(btCmdD0)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCmdD0))
-                            .addGroup(panelRampLayout.createSequentialGroup()
                                 .addComponent(btCmdCC)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCmdCC)))))
+                                .addComponent(lblCmdCC))
+                            .addGroup(panelRampLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(panelRampLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelRampLayout.createSequentialGroup()
+                                        .addComponent(btCmdCF)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblCmdCF))
+                                    .addGroup(panelRampLayout.createSequentialGroup()
+                                        .addComponent(btCmdD0)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblCmdD0)))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelRampLayout.setVerticalGroup(
@@ -353,7 +388,10 @@ public class Commands extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelRampLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCmdCB)
-                    .addComponent(lblCmdCB))
+                    .addComponent(lblCmdCB)
+                    .addGroup(panelRampLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btCmdCF)
+                        .addComponent(lblCmdCF)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -431,61 +469,65 @@ public class Commands extends javax.swing.JPanel {
                     .addComponent(panelCycle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void btCmd00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmd00ActionPerformed
+    private void btCmd00ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0x00);
-    }//GEN-LAST:event_btCmd00ActionPerformed
+    }                                       
 
-    private void btCmd01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmd01ActionPerformed
+    private void btCmd01ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0x01);
-    }//GEN-LAST:event_btCmd01ActionPerformed
+    }                                       
 
-    private void btCmd02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmd02ActionPerformed
+    private void btCmd02ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0x02);
-    }//GEN-LAST:event_btCmd02ActionPerformed
+    }                                       
 
-    private void btCmd03ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmd03ActionPerformed
+    private void btCmd03ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0x03);
-    }//GEN-LAST:event_btCmd03ActionPerformed
+    }                                       
 
-    private void btCmd04ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmd04ActionPerformed
+    private void btCmd04ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0x04);
-    }//GEN-LAST:event_btCmd04ActionPerformed
+    }                                       
 
-    private void btCmd05ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmd05ActionPerformed
+    private void btCmd05ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0x05);
-    }//GEN-LAST:event_btCmd05ActionPerformed
+    }                                       
 
-    private void btCmdC8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmdC8ActionPerformed
+    private void btCmdC8ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0xC8);
-    }//GEN-LAST:event_btCmdC8ActionPerformed
+    }                                       
 
-    private void btCmdC9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmdC9ActionPerformed
+    private void btCmdC9ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0xC9);
-    }//GEN-LAST:event_btCmdC9ActionPerformed
+    }                                       
 
-    private void btCmdCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmdCBActionPerformed
+    private void btCmdCBActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0xCB);
-    }//GEN-LAST:event_btCmdCBActionPerformed
+    }                                       
 
-    private void btCmdCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmdCCActionPerformed
+    private void btCmdCCActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0xCC);
-    }//GEN-LAST:event_btCmdCCActionPerformed
+    }                                       
 
-    private void btCmdD0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmdD0ActionPerformed
+    private void btCmdD0ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0xD0);
-    }//GEN-LAST:event_btCmdD0ActionPerformed
+    }                                       
 
-    private void btCmdE0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmdE0ActionPerformed
+    private void btCmdE0ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0xE0);
-    }//GEN-LAST:event_btCmdE0ActionPerformed
+    }                                       
 
-    private void btCmdE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCmdE1ActionPerformed
+    private void btCmdE1ActionPerformed(java.awt.event.ActionEvent evt) {                                        
         main.Client.btCommand(0xE1);
-    }//GEN-LAST:event_btCmdE1ActionPerformed
+    }                                       
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private void btCmdCFActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        main.Client.btCommand(0xCF);
+    }                                       
+
+    // Variables declaration - do not modify                     
     private javax.swing.JButton btCmd00;
     private javax.swing.JButton btCmd01;
     private javax.swing.JButton btCmd02;
@@ -496,6 +538,7 @@ public class Commands extends javax.swing.JPanel {
     private javax.swing.JButton btCmdC9;
     private javax.swing.JButton btCmdCB;
     private javax.swing.JButton btCmdCC;
+    private javax.swing.JButton btCmdCF;
     private javax.swing.JButton btCmdD0;
     private javax.swing.JButton btCmdE0;
     private javax.swing.JButton btCmdE1;
@@ -509,11 +552,12 @@ public class Commands extends javax.swing.JPanel {
     private javax.swing.JLabel lblCmdC9;
     private javax.swing.JLabel lblCmdCB;
     private javax.swing.JLabel lblCmdCC;
+    private javax.swing.JLabel lblCmdCF;
     private javax.swing.JLabel lblCmdD0;
     private javax.swing.JLabel lblCmdE0;
     private javax.swing.JLabel lblCmdE1;
     private javax.swing.JPanel panelBasic;
     private javax.swing.JPanel panelCycle;
     private javax.swing.JPanel panelRamp;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }
