@@ -7,11 +7,11 @@
  */
 #include "interface.h"
 
-const module_t NONE 	= { .type = 0x3F, .name = "NONE", .readBytesCount = 0, .writeBytesCount = 0, .background_color = LCD_COLOR_LIGHTBLUE, .pushed_background_color = LCD_COLOR_DARKBLUE};
-const module_t EEPROM	= { .type = 0x01, .name = "Read EEPROM", .readBytesCount = 3, .writeBytesCount = 3, .background_color = LCD_COLOR_LIGHTGREEN, .pushed_background_color = LCD_COLOR_DARKGREEN};
-const module_t TEMP		= { .type = 0x02, .name = "Temperature", .readBytesCount = 3, .writeBytesCount = 3, .background_color = LCD_COLOR_LIGHTRED, .pushed_background_color = LCD_COLOR_DARKRED };
-const module_t ADC_O	= { .type = 0x03, .name = "Use ADC", .readBytesCount = 3, .writeBytesCount = 3, .background_color = LCD_COLOR_LIGHTCYAN, .pushed_background_color = LCD_COLOR_DARKCYAN };
-const module_t DAC_O		= { .type = 0x04, .name = "Use DAC", .readBytesCount = 3, .writeBytesCount = 3, .background_color = LCD_COLOR_LIGHTMAGENTA, .pushed_background_color = LCD_COLOR_DARKMAGENTA };
+const module_t NONE 	= { .type = 0x3F, .name = "NONE", .background_color = LCD_COLOR_LIGHTBLUE, .pushed_background_color = LCD_COLOR_DARKBLUE};
+const module_t EEPROM	= { .type = 0x01, .name = "Read EEPROM", .background_color = LCD_COLOR_LIGHTGREEN, .pushed_background_color = LCD_COLOR_DARKGREEN};
+const module_t TEMP		= { .type = 0x02, .name = "Temperature", .background_color = LCD_COLOR_LIGHTRED, .pushed_background_color = LCD_COLOR_DARKRED };
+const module_t ADC_O	= { .type = 0x03, .name = "Use ADC", .background_color = LCD_COLOR_LIGHTCYAN, .pushed_background_color = LCD_COLOR_DARKCYAN };
+const module_t DAC_O		= { .type = 0x04, .name = "Use DAC", .background_color = LCD_COLOR_LIGHTMAGENTA, .pushed_background_color = LCD_COLOR_DARKMAGENTA };
 
 module_t findModule(uint8_t code) {
 
@@ -31,65 +31,7 @@ void processCommand(enum command command, uint8_t *buffer, uint16_t length) {
 
 	case IDENT:
 
-		for(int i = 2; i < 32 + 2; ++i)
-		{
-			module_t m = findModule(buffer[i]);
-
-			if(m.type != NONE.type)
-			{
-				pboards[pboards_c].board.module = m;
-
-				pboards[pboards_c].board.readBytes = (uint8_t*) pvPortMalloc((m.readBytesCount + 2)* sizeof(uint8_t));
-				pboards[pboards_c].board.writeBytes = (uint8_t*) pvPortMalloc ((m.writeBytesCount + 2) * sizeof(uint8_t));
-
-				pboards[pboards_c].board.writeBytes [0] = 0;
-				pboards[pboards_c].board.writeBytes [1] = 128;
-
-				pboards[pboards_c].board.id = i - 2;
-				pboards[pboards_c].order = pboards_c;
-
-				pboards[pboards_c].isEnabled = 1;
-				pboards[pboards_c].isPressed = 0;
-
-				switch (m.type) {
-
-				case 1:
-				case 2:
-				case 3:
-				case 4:
-					//pboards[pboards_c].draw_initial_screen = draw_LOCON;
-					//pboards[pboards_c].refresh_function = refresh_LOCON;
-					break;
-				}
-
-				pboards_c++;
-
-			}
-		}
-
-		if(buffer[1] > 32) {
-
-			for (int i = 0; i < 6; i++)
-				version[i] = buffer[34 + i];
-
-		}
-
-		break;
-
 	default:
-
-		j = 2;
-
-		for (int i = 0; i < pboards_c; i++){
-
-			if (j + pboards[i].board.module.readBytesCount + 2 <= length)
-				for (int w = 0; w < pboards[i].board.module.readBytesCount + 2; w++) {
-					pboards[i].board.readBytes[w] = buffer[j];
-					int t = buffer[j];
-					j = j + 1;
-				}
-		}
-
 		break;
 	}
 }
@@ -101,70 +43,15 @@ void receiveCommand(uint8_t *buffer, uint16_t *length) {
 
 void prepareCommand(enum command command, uint8_t** buffer, uint16_t *length) {
 
-	int j, length_without_headers, packet_length;
 
 	switch (command) {
 
 	case RAMP_BLOCK:
-
-		*length  = 2* 1021 + 7;
-
-		*buffer = (uint8_t*) pvPortMalloc(*length * sizeof(uint8_t));
-
-		**buffer = command;
-		*(*buffer + 1) = ((*length  - 3) >> 8) & 0xFF;
-		*(*buffer + 2) = (*length - 3) & 0xFF;
-
-		*(*buffer + 3)  = selected_board->order + 2;
-
-		*(*buffer + 4)  = 1;
-		*(*buffer + 5) = (1021 >> 8) & 0xFF;
-		*(*buffer + 6) = 1021 & 0xFF;
-
-		// Data
-		j = 0;
-		for(int k = 7; k < *length ; k+=2) {
-
-			if (j < 1021) {
-				//uint16_t value = ramps[rampSelected][j++];
-				//*(*buffer + k) = (value >> 8) & 0xFF;
-				//*(*buffer + k + 1) = value & 0xFF;
-			}
-			else  {
-				*(*buffer + k) = 0;
-				*(*buffer + k + 1) = 0;
-			}
-		}
-
-		break;
-
 	case RAMP_ENABLE:
 	case RAMP_ENABLE_CYCLIC:
 	case RAMP_INIT:
 	case CYCLE_ENABLE:
 	case ADJUST:
-
-		length_without_headers = 0;
-		j = 2;
-
-		for (int i = 0; i < pboards_c; i++)
-			length_without_headers += 2 + pboards[i].board.module.writeBytesCount;
-
-		*buffer = (uint8_t*) pvPortMalloc((length_without_headers + 2) * sizeof(uint8_t));
-
-		for (int i = 0; i < pboards_c; i++)
-			for (int w = 0; w < 2 + pboards[i].board.module.writeBytesCount; w++) {
-				*(*buffer + j) = pboards[i].board.writeBytes[w];
-				j++;
-			}
-
-
-		*(*buffer + 1)  = length_without_headers;
-		**buffer = (uint8_t) command;
-
-		*length = length_without_headers + 2;
-		break;
-
 	case IDENT:
 	case END_IDENT:
 	default:
@@ -201,7 +88,6 @@ void executeCommand(enum command command) {
 	}
 
 }
-
 
 void refreshConnectState(TS_StateTypeDef ts_event) {
 
@@ -437,6 +323,70 @@ void setEEPROM_status(enum EEPROM_status status) {
 
 }
 
+void setADC_Temperature(union EEPROM_data temperature) {
+
+	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(375, 85, 70, 20);
+
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+
+	char buffer[7];
+	memset(buffer, 0, 7);
+
+	sprintf(buffer, "= %1.2f", temperature.data_as_float);
+
+	BSP_LCD_DisplayStringAt(375, 85, buffer, LEFT_MODE);
+
+	xSemaphoreGive(mutex_drawer);
+
+}
+
+void setADC_Pressure(union EEPROM_data pressure) {
+
+	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(375, 230, 70, 20);
+
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+
+	char buffer[7];
+	memset(buffer, 0, 7);
+
+	sprintf(buffer, "= %1.2f", pressure.data_as_float);
+
+	BSP_LCD_DisplayStringAt(375, 230, buffer, LEFT_MODE);
+
+	xSemaphoreGive(mutex_drawer);
+
+}
+
+
+void setADC_Tension(union EEPROM_data tension) {
+
+	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(375, 159, 70, 20);
+
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+
+	char buffer[7];
+	memset(buffer, 0, 7);
+
+	sprintf(buffer, "= %1.2f", tension.data_as_float);
+
+	BSP_LCD_DisplayStringAt(375, 159, buffer, LEFT_MODE);
+
+	xSemaphoreGive(mutex_drawer);
+
+}
+
 
 
 void setDAC_Tension() {
@@ -444,7 +394,7 @@ void setDAC_Tension() {
 	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(330, 170, 50, 20);
+	BSP_LCD_FillRect(330, 175, 50, 20);
 
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -456,7 +406,7 @@ void setDAC_Tension() {
 		sprintf(buffer, "%1.1f", dac_set_new_value);
 	else sprintf(buffer, "0.0");
 
-	BSP_LCD_DisplayStringAt(330, 170, buffer, LEFT_MODE);
+	BSP_LCD_DisplayStringAt(330, 175, buffer, LEFT_MODE);
 
 	xSemaphoreGive(mutex_drawer);
 
@@ -563,14 +513,6 @@ void draw_EEPROM(void* board) {
 	buttons[EEPROM_STATS].isEnabled = 0;
 	buttons[EEPROM_STATE].isEnabled = 0;
 
-	buttons[TEMP_READ].isEnabled = 0;
-	buttons[TEMP_SAVE].isEnabled = 0;
-
-	buttons[DAC_SIN].isEnabled = 0;
-	buttons[DAC_TRI].isEnabled = 0;
-	buttons[DAC_QUAD].isEnabled = 0;
-	buttons[DAC_SET].isEnabled = 0;
-
 	xSemaphoreGive(mutex_drawer);
 
 	union EEPROM_data teste;
@@ -623,17 +565,23 @@ void draw_DAC(void* board) {
 	BSP_LCD_SetTextColor(LCD_COLOR_RED);
 	BSP_LCD_DisplayStringAt(350, 50, (uint8_t*) "NO WAVE", LEFT_MODE);
 
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+	BSP_LCD_DrawRect(225, 75, 250 , 60);
+
 	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGREEN);
 	BSP_LCD_DisplayStringAt(230, 80, (uint8_t*) "PERIOD (ms) :", LEFT_MODE);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	BSP_LCD_DisplayStringAt(330, 112, (uint8_t*) "250", LEFT_MODE);
 
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+	BSP_LCD_DrawRect(225, 140, 250 , 60);
+
 	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTYELLOW);
-	BSP_LCD_DisplayStringAt(230, 140, (uint8_t*) "NEW VALUE (V) :", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(230, 145, (uint8_t*) "NEW VALUE (V) :", LEFT_MODE);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(330, 170, (uint8_t*) "1.1", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(330, 175, (uint8_t*) "1.1", LEFT_MODE);
 
 
 	buttons[DAC_SIN].isEnabled = 1;
@@ -684,45 +632,44 @@ void draw_ADC (void* board) {
 
 	BSP_LCD_SetFont(&Font20);
 
-	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTRED);
-	BSP_LCD_DisplayStringAt(230, 50, (uint8_t*) "STATUS :", LEFT_MODE);
-
-	BSP_LCD_SetTextColor(LCD_COLOR_RED);
-	BSP_LCD_DisplayStringAt(350, 50, (uint8_t*) "NO WAVE", LEFT_MODE);
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+	BSP_LCD_DrawRect(225, 50, 250 , 60);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGREEN);
-	BSP_LCD_DisplayStringAt(230, 80, (uint8_t*) "PERIOD (ms) :", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(230, 55, (uint8_t*) "Temperature (oC):", LEFT_MODE);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(330, 112, (uint8_t*) "250", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(375, 85, (uint8_t*) "= 250", LEFT_MODE);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+	BSP_LCD_DrawRect(225, 124, 250 , 60);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTYELLOW);
-	BSP_LCD_DisplayStringAt(230, 140, (uint8_t*) "NEW VALUE (V) :", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(230, 129, (uint8_t*) "Tension (V) :", LEFT_MODE);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(330, 170, (uint8_t*) "1.1", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(375, 159, (uint8_t*) "= 1.1", LEFT_MODE);
 
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+	BSP_LCD_DrawRect(225, 194, 250 , 60);
 
-	buttons[DAC_SIN].isEnabled = 1;
-	buttons[DAC_QUAD].isEnabled = 1;
-	buttons[DAC_TRI].isEnabled = 1;
-	buttons[DAC_SET].isEnabled = 1;
-	buttons[DAC_SET].isEnabled = 1;
-	buttons[DAC_PERIOD_DECREASE].isEnabled = 1;
-	buttons[DAC_PERIOD_INCREASE].isEnabled = 1;
-	buttons[DAC_TENSION_DECREASE].isEnabled = 1;
-	buttons[DAC_TENSION_INCREASE].isEnabled = 1;
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTMAGENTA);
+	BSP_LCD_DisplayStringAt(230, 199, (uint8_t*) "Pressure (Pa?) :", LEFT_MODE);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_DisplayStringAt(375, 230, (uint8_t*) "= 1.1", LEFT_MODE);
+
+	buttons[ADC_TEMP_READ].isEnabled = 1;
+	buttons[ADC_POT_READ].isEnabled = 1;
+	buttons[ADC_PRESS_READ].isEnabled = 1;
+	buttons[ADC_SEND_BLUETOOTH].isEnabled = 1;
 
 	xSemaphoreGive(mutex_drawer);
 
-	placeButton(buttons[DAC_SIN], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[DAC_QUAD], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[DAC_TRI], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[DAC_SET], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[DAC_PERIOD_DECREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
-	placeButton(buttons[DAC_PERIOD_INCREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
-	placeButton(buttons[DAC_TENSION_DECREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
-	placeButton(buttons[DAC_TENSION_INCREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
+	placeButton(buttons[ADC_TEMP_READ], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+	placeButton(buttons[ADC_POT_READ], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+	placeButton(buttons[ADC_PRESS_READ], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+	placeButton(buttons[ADC_SEND_BLUETOOTH], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
 
 	placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
 
@@ -971,45 +918,6 @@ void print_initial_screen(){
 
 }
 
-void print_new_ramp() {
-
-	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
-
-	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-
-	if (rampSelected == 128) {
-		BSP_LCD_SetTextColor(LCD_COLOR_RED);
-		BSP_LCD_DisplayChar(380, 210, 'N');
-	}
-
-	else {
-		BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
-		BSP_LCD_DisplayChar(380, 210, '0' + rampSelected);
-	}
-
-	xSemaphoreGive(mutex_drawer);
-}
-
-void print_new_cycle() {
-
-	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
-
-	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-
-	if (cycleSelected == 128){
-
-		BSP_LCD_SetTextColor(LCD_COLOR_RED);
-		BSP_LCD_DisplayChar(380, 240, 'N');
-	}
-
-	else {
-		BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
-		BSP_LCD_DisplayChar(380, 240, '0' + cycleSelected);
-	}
-
-	xSemaphoreGive(mutex_drawer);
-
-}
 
 void repaintButtons() {
 
@@ -1471,6 +1379,38 @@ void DAC_Set_handler (void* button) {
 
 }
 
+void ADC_Temp_handler (void* button) {
+
+	union EEPROM_data teste;
+	teste.data_as_float = 23.4;
+
+	setADC_Temperature(teste);
+
+}
+
+void ADC_Potent_handler (void* button) {
+
+	union EEPROM_data teste;
+	teste.data_as_float = 2.4;
+
+	setADC_Tension(teste);
+
+}
+
+void ADC_Pressure_handler (void* button) {
+
+	union EEPROM_data teste;
+	teste.data_as_float = 21.4;
+
+	setADC_Pressure(teste);
+
+}
+
+void ADC_Bluetooth_handler (void* button) {
+
+
+}
+
 void init_interface(void) {
 
 	BSP_LCD_Init();
@@ -1527,6 +1467,38 @@ void init_interface(void) {
 	buttons[EEPROM_STATE].buttonPressedHandler = EEPROM_List_Handler;
 	memcpy(buttons[EEPROM_STATE].title, "List Values.\0", 13);
 
+
+	buttons[ADC_TEMP_READ].x_pos = ADC_TEMP_READ_X;
+	buttons[ADC_TEMP_READ].y_pos = ADC_TEMP_READ_Y;
+	buttons[ADC_TEMP_READ].isPushed = 0;
+	buttons[ADC_TEMP_READ].hasBeenAcknowledged = 0;
+	buttons[ADC_TEMP_READ].isEnabled = 0;
+	buttons[ADC_TEMP_READ].buttonPressedHandler = ADC_Temp_handler;
+	memcpy(buttons[ADC_TEMP_READ].title, "Get Temper.\0", 12);
+
+	buttons[ADC_POT_READ].x_pos = ADC_POT_READ_X;
+	buttons[ADC_POT_READ].y_pos = ADC_POT_READ_Y;
+	buttons[ADC_POT_READ].isPushed = 0;
+	buttons[ADC_POT_READ].hasBeenAcknowledged = 0;
+	buttons[ADC_POT_READ].isEnabled = 0;
+	buttons[ADC_POT_READ].buttonPressedHandler = ADC_Potent_handler;
+	memcpy(buttons[ADC_POT_READ].title, "Get Potent.\0", 12);
+
+	buttons[ADC_PRESS_READ].x_pos = ADC_PRESS_READ_X;
+	buttons[ADC_PRESS_READ].y_pos = ADC_PRESS_READ_Y;
+	buttons[ADC_PRESS_READ].isPushed = 0;
+	buttons[ADC_PRESS_READ].hasBeenAcknowledged = 0;
+	buttons[ADC_PRESS_READ].isEnabled = 0;
+	buttons[ADC_PRESS_READ].buttonPressedHandler = ADC_Pressure_handler;
+	memcpy(buttons[ADC_PRESS_READ].title, "Get Pressure\0", 13);
+
+	buttons[ADC_SEND_BLUETOOTH].x_pos = ADC_SEND_BLUETOOTH_X;
+	buttons[ADC_SEND_BLUETOOTH].y_pos = ADC_SEND_BLUETOOTH_Y;
+	buttons[ADC_SEND_BLUETOOTH].isPushed = 0;
+	buttons[ADC_SEND_BLUETOOTH].hasBeenAcknowledged = 0;
+	buttons[ADC_SEND_BLUETOOTH].isEnabled = 0;
+	buttons[ADC_SEND_BLUETOOTH].buttonPressedHandler = ADC_Bluetooth_handler;
+	memcpy(buttons[ADC_SEND_BLUETOOTH].title, "Send Bluet.\0", 12);
 
 	buttons[DAC_SIN].x_pos = DAC_SIN_X;
 	buttons[DAC_SIN].y_pos = DAC_SIN_Y;
@@ -1621,6 +1593,7 @@ void init_interface(void) {
 	pboards[1].y = 180;
 
 	pboards[2].board.module = ADC_O;
+	pboards[2].draw_initial_screen = draw_ADC;
 	pboards[2].x = 240;
 	pboards[2].y = 90;
 

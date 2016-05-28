@@ -908,6 +908,14 @@ void StartDefaultTask(void const * argument)
 			refreshButtonState(ts_event, &button_home, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
 
 		}
+		else if (aScreen == ADC_SELECTED) {
+
+			for (int i = ADC_TEMP_READ; i <= ADC_SEND_BLUETOOTH; i++ )
+				refreshButtonState(ts_event, &buttons[i], BUTTON_WIDTH, BUTTON_HEIGTH);
+
+			refreshButtonState(ts_event, &button_home, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+
+		}
 
 
 		BSP_TS_ResetTouchData(&ts_event);

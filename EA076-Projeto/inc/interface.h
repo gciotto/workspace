@@ -13,7 +13,7 @@
 #include "stm32746g_discovery.h"
 #include "cmsis_os.h"
 
-#define NUMBER_OF_BUTTONS 	18
+#define NUMBER_OF_BUTTONS 	22
 #define NUMBER_OF_BOARDS	4
 
 #define STATUS_Y			60
@@ -41,12 +41,15 @@
 #define EEPROM_STATE_X		10
 #define EEPROM_STATE_Y		225
 
-/* TEMPERATURE Buttons */
-#define TEMP_READ_X			135
-#define TEMP_READ_Y			180
-
-#define TEMP_SAVE_X			135
-#define TEMP_SAVE_Y			180
+/* ADC Buttons */
+#define ADC_TEMP_READ_X			25
+#define ADC_TEMP_READ_Y			90
+#define ADC_POT_READ_X			25
+#define ADC_POT_READ_Y			135
+#define ADC_PRESS_READ_X		25
+#define ADC_PRESS_READ_Y		180
+#define ADC_SEND_BLUETOOTH_X	25
+#define ADC_SEND_BLUETOOTH_Y	225
 
 /* DAC Buttons */
 
@@ -63,9 +66,9 @@
 #define DAC_PERIOD_INCREASE_X 430
 #define DAC_PERIOD_INCREASE_Y 105
 #define DAC_TENSION_DECREASE_X 390
-#define DAC_TENSION_DECREASE_Y 165
+#define DAC_TENSION_DECREASE_Y 170
 #define DAC_TENSION_INCREASE_X 430
-#define DAC_TENSION_INCREASE_Y 165
+#define DAC_TENSION_INCREASE_Y 170
 
 #define CONNECT_BUTTON_X	340
 #define CONNECT_BUTTON_Y	STATUS_Y - 8
@@ -103,8 +106,10 @@ enum button_index {
 	EEPROM_STOP,
 	EEPROM_STATS,
 	EEPROM_STATE,
-	TEMP_READ,
-	TEMP_SAVE,
+	ADC_TEMP_READ,
+	ADC_POT_READ,
+	ADC_PRESS_READ,
+	ADC_SEND_BLUETOOTH,
 	DAC_SIN,
 	DAC_TRI,
 	DAC_QUAD,
@@ -152,7 +157,6 @@ typedef struct {
 
 	uint8_t type;
 	char name[12];
-	int readBytesCount, writeBytesCount;
 
 	uint32_t background_color, pushed_background_color;
 
@@ -160,7 +164,6 @@ typedef struct {
 
 typedef struct {
 
-	uint8_t *readBytes, *writeBytes;
 	uint8_t id;
 
 	module_t module;
@@ -186,7 +189,8 @@ button_t buttons[NUMBER_OF_BUTTONS], button_home;
 uint8_t pboards_c;
 pboard_t pboards [NUMBER_OF_BOARDS];
 
-uint8_t isConnected, isReady, version[6], rampSelected, cycleSelected;
+uint8_t isConnected, isReady;
+
 uint16_t dac_period;
 float dac_set_new_value;
 
