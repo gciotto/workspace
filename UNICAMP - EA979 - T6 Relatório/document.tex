@@ -64,7 +64,7 @@ cujos eixos X, Y e Z variam no intervalo de [-1,1]. A fim de mapear tais
 eixos em coordenadas da janela de visualização, é necessário aplicarmos a
 transformação \textit{viewport transform} a partir da chamada
 \texttt{glViewport()}, passando como parâmetro a largura e altura da respectiva
-janela. No nosso caso, essa função é chamada dentro do escopo de
+janela. No caso do exerício proposto, essa função é chamada dentro do escopo de
 \path{reshape()}, que é, por sua vez, chamada toda vez que a janela é
 redimensionada.  
 
@@ -72,39 +72,40 @@ redimensionada.
 
 As transformações, chamadas de \textit{projection transform}, realizam a
 conversão de cenas 3D, renderizadas pela biblioteca, em projeções 2D, a fim de
-que tais cenas sejam possíveis de ser visualizadas em uma tela de monitor. Este
-tipo de transformação deve, portanto, ser capaz de lidar com as idéias de
+que tais cenas sejam possíveis de serem visualizadas em uma tela de monitor.
+Este tipo de transformação deve, portanto, ser capaz de lidar com as idéias de
 profundidade e redimensionamento de objetos que estejam em planos distintos.
 Duas variedades de \textit{projection transform} são implementadas:
 \textit{orthographic} e \textit{perspective}, sendo esta última a mais
-importante e a que foi usada neste exercício. A \textit{perspective transform}
-imita o funcionamento do olho humano e é chamada através da função
+importante e a que foi utilizada na execução deste exercício. A
+\textit{perspective transform} imita o funcionamento do olho humano e é chamada através da função
 \path{gluPerspective}, que recebe como parâmetro as posições do planos no eixo Z
 \texttt{zNear} e \texttt{zFar}. Essa função define uma pirâmide cujo topo é
 posicionado nas coordenadas do \textit{olho} do visualizador da cena, que está
 olhando na direção negativa de Z. \texttt{zNear} e \texttt{zFar} definem,
 portanto, as coordenadas de Z consideradas pelo visualizador como perto e longe,
-respectivamente. No nosso caso, a função \path{gluPerspective} recebe os
+respectivamente. No caso do exerício proposto, a função \path{gluPerspective} recebe os
 parâmetros 1 e 20 para \texttt{zNear} e \texttt{zFar} e também é chamada a cada
 redimensionamento da janela (\path{resize()}).
 
 \vspace{12pt}
 
-Enfim, a última transformação, chamada de \textit{model-view transform}, é
+A última transformação, chamada de \textit{model-view transform}, é
 responsável por mover as \textbf{coordenadas do sistema}, de maneira que o
 resultado seja conforme à \textit{pirâmide} posicionada no \textit{olho} do
-observador. Esta transformação é capaz de simular translações, rotações e
-redimensionamentos, por exemplo. Faremos uso justamente deste tipo de
+observador. Esta transformação é capaz de simular, por exemplo, translações,
+rotações e redimensionamentos. Faremos o uso justamente deste tipo de
 tranformação para desenharmos diversas esferas ao redor da esfera maior, que
-encontra-se no centro. Para desenharmos uma esfera, cujo centro encontra-se no
-ponto \((x,y)\), realizamos as seguintes operações dentro da função
+encontra-se no centro. Para desenharmos uma esfera, cujo centro encontra-se em
+um ponto \((x,y)\), realizamos as seguintes operações dentro da função
 \path{display()} do programa:
 
 \begin{enumerate} [i.]
   \item Modificamos a cor a partir do comando \path{glColor3f()}, passando como
   parâmetro as frações de cada cor RGB;
-  \item Deslocamos o \textbf{sistema de coordenadas} a partir da função
-  \path{glTranslatef()}, que recebe os \textit{offsets} de cada coordenada;
+  \item Deslocamos o \textbf{sistema de coordenadas} de \((\Delta x ,
+  \Delta y)\) a partir da função \path{glTranslatef()}, que recebe os
+  \textit{offsets} de cada coordenada;
   \item Desenhamos a esfera no centro do novo sistema de coordenadas, obtido da
   translação realizada no passo anterior. A função \path{glutWireSphere()} é
   responsável por fazê-lo, recebendo como parâmetro o raio da esfera e a
