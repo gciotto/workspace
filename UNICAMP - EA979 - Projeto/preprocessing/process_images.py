@@ -15,7 +15,10 @@ images_path = "/home/gciotto/Mes Travails/UNICAMP/EA979/mirflickr"
 n_images = 25000
 
 # Parametros utilizados pelo KMEANS
-kCentroids = 200
+kCentroids_features = 100
+cIter_features = 50
+
+kCentroids = 50
 cIter = 50
 
 # Escolha dos FEATURES
@@ -23,13 +26,20 @@ useGreyScale = True
 useTamuraCoarseness = False
 useTamuraContrast = True
 useTamuraDirectionality = True
+useGarbor = True
 
 if useGreyScale:
-    n_columns_histogram = 256
+    n_columns_histogram = 256    
 else: 
     n_columns_histogram = 768
 
+n_colums_features = 0
+n_kernels = 0
+
+
 if useTamuraCoarseness:
+
+    n_colums_features = n_colums_features + 1
     
     tamura_coarseness_hasBeenCalculated = os.path.isfile(os.path.join(images_path, 'tamura_coarseness.npy'))
     
@@ -38,6 +48,8 @@ if useTamuraCoarseness:
     else : tamura_coarseness_v = np.zeros(25000)
     
 if useTamuraContrast:
+    
+    n_colums_features = n_colums_features + 1
     
     tamura_contrast_hasBeenCalculated = os.path.isfile(os.path.join(images_path, 'tamura_contrast.npy'))
     
@@ -48,12 +60,28 @@ if useTamuraContrast:
     
 if useTamuraDirectionality:
     
+    n_colums_features = n_colums_features + 1
+    
     tamura_directionality_hasBeenCalculated = os.path.isfile(os.path.join(images_path, 'tamura_directionality.npy'))
     
     if tamura_directionality_hasBeenCalculated:
         tamura_directionality_v = np.load('%s/tamura_directionality.npy' % images_path)
     else : tamura_directionality_v = np.zeros(25000)
 
+
+if useGarbor:
+    
+    from garbor import garbor_features, kernels
+    
+    n_kernels = len(kernels)
+    
+    n_colums_features = n_colums_features + len(kernels) * 2
+    
+    garbor_hasBeenCalculated = os.path.isfile(os.path.join(images_path, 'garbor.npy'))
+    
+    if garbor_hasBeenCalculated:
+        garbor_v = np.load('%s/garbor.npy' % images_path)
+    else : garbor_v = np.zeros( 25000 * len(kernels) * 2)
     
 
 if __name__ == '__main__':
@@ -134,45 +162,126 @@ if __name__ == '__main__':
                         np.save(os.path.join(images_path, 'tamura_directionality_%d.npy' % (r + 1)),tamura_directionality_v[r])
                     
                     print tamura_directionality_v[r]
+            
+            if useGarbor:
+                
+                start_i = len(kernels)*r * 2
+                stop_i = start_i + len(kernels) * 2
+                
+                if not garbor_hasBeenCalculated:
+                    
+                    if os.path.isfile(os.path.join(images_path, 'garbor_%d.npy' % (r + 1))):
+                        garbor_v[ start_i : stop_i ] = np.load(os.path.join(images_path, 'garbor_%d.npy' % (r + 1)))
+                    
+                    else:
+                        
+                        print 'Calculating GARBOR for file ', os.path.join(images_path, 'im%d.jpg' % (r + 1))
+                        
+                        start_time = time.time()   
+                        garbor_v[ start_i : stop_i ] = np.resize(garbor_features(img, kernels) , (1, len(kernels) * 2))
+                        elapsed_time = time.time() - start_time
+                        
+                        print 'It took %ds to calculate GARBOR...' % elapsed_time
+                        
+                        np.save(os.path.join(images_path, 'garbor_%d.npy' % (r + 1)), garbor_v[ start_i : stop_i ])
+                        
                 
     
     if useTamuraCoarseness: 
         if not tamura_coarseness_hasBeenCalculated:
             np.save('%s/tamura_coarseness.npy' % images_path, tamura_coarseness_v)
+            tamura_coarseness_hasBeenCalculated = True
     
     if useTamuraContrast: 
         if not tamura_contrast_hasBeenCalculated:
             np.save('%s/tamura_contrast.npy' % images_path, tamura_contrast_v)
+            tamura_contrast_hasBeenCalculated = True
     
     if useTamuraDirectionality: 
         if not tamura_directionality_hasBeenCalculated:
             np.save('%s/tamura_directionality.npy' % images_path, tamura_directionality_v)
+            tamura_directionality_hasBeenCalculated = True
+    
+    if useGarbor: 
+        if not garbor_hasBeenCalculated:
+            np.save('%s/garbor.npy' % images_path, garbor_v)
+            garbor_hasBeenCalculated = True
             
     print '%d images successfully preprocessed...' % (r+1)
     
-    print 'Calculating k = %d centroids...' % kCentroids
-    start_time = time.time()   
+    ##################################################################################################
+    # Calculating 1o LEVEL K-means - Only features considered
+    ##################################################################################################
+       
+    learning_set_features = np.zeros((n_images, n_colums_features))
     
-    whitenned_learning_set = spy.vq.whiten(learning_set)
+    for i in range(n_images):
+        
+        j = 0
+        
+        if useTamuraCoarseness:
+            learning_set_features[i, j] = tamura_coarseness_v[i]
+            j = j + 1
     
-    standard_deviations = np.zeros ((1, n_columns_histogram))
+        if useTamuraContrast:
+            learning_set_features[i, j] = tamura_contrast_v[i]
+            j = j + 1
+            
+        if useTamuraDirectionality:
+            learning_set_features[i, j] = tamura_directionality_v[i]
+            j = j + 1
+            
+        if useGarbor:
+            
+            start_i = i * len(kernels) * 2
+            stop_i = start_i + len(kernels) * 2 
+            
+            learning_set_features[i, j : j + len(kernels) * 2] = garbor_v[ start_i : stop_i ]
+            j = j + len(kernels) * 2
     
-    for i in range(n_columns_histogram):
-        standard_deviations[0, i] = learning_set[0, i] / whitenned_learning_set [0, i]
+    whitenned_learning_set_features = spy.vq.whiten(learning_set_features)
     
-    (centroids_codebook, distortion) = spy.vq.kmeans(whitenned_learning_set, kCentroids, cIter)
+    standard_deviations_features = np.zeros ((1, n_colums_features))
     
-    (codes, dist) = spy.vq.vq(whitenned_learning_set, centroids_codebook)
+    for i in range(n_colums_features):
+        standard_deviations_features[0, i] = learning_set_features[0, i] / whitenned_learning_set_features [0, i]
+        
+    (centroids_codebook_features, distortion_features) = spy.vq.kmeans(whitenned_learning_set_features, kCentroids_features, cIter_features)
     
-    elapsed_time = time.time() - start_time
+    (codes_features, dist_features) = spy.vq.vq(whitenned_learning_set_features, centroids_codebook_features)
     
-    np.save(os.path.join(images_path, 'centroids_codebook'), centroids_codebook)
-    np.save(os.path.join(images_path, 'standard_deviations'), standard_deviations)
-    np.save(os.path.join(images_path, 'vq_codes_obs'), codes)
-    np.save(os.path.join(images_path, 'vq_dist'), dist)
+    np.save(os.path.join(images_path, 'centroids_codebook_features'), centroids_codebook_features)
+    np.save(os.path.join(images_path, 'standard_deviations_features'), standard_deviations_features)
+    np.save(os.path.join(images_path, 'vq_codes_obs_features'), codes_features)
+    np.save(os.path.join(images_path, 'vq_dist_features'), dist_features)
     
-    print 'It took %ds to calculate and save files' % elapsed_time
+    ##################################################################################################
+    # Calculating 2o LEVEL K-means - Histograms considered
+    ##################################################################################################
+      
+    for i in range(kCentroids_features):
+        
+        images_i = np.where(codes_features == i)
+        
+        learning_set_histograms_i = learning_set[images_i, :]
+        
+        whitenned_learning_set_histograms_i = spy.vq.whiten(learning_set_histograms_i)
     
+        standard_deviations_histograms_i = np.zeros ((1, n_columns_histogram))
+        
+        for i in range(n_columns_histogram):
+            standard_deviations_histograms_i[0, i] = learning_set_histograms_i[0, i] / whitenned_learning_set_histograms_i [0, i]
+            
+        (centroids_codebook_histograms_i, distortion_histograms_i) = spy.vq.kmeans(whitenned_learning_set_histograms_i, kCentroids, cIter)
+    
+        (codes_histograms_i, dist_histograms_i) = spy.vq.vq(whitenned_learning_set_histograms_i, centroids_codebook_histograms_i)
+        
+        np.save(os.path.join(images_path, 'centroids_codebook_histogram_%d' % i), centroids_codebook_histograms_i)
+        np.save(os.path.join(images_path, 'standard_deviations_histogram_%d' % i), standard_deviations_histograms_i)
+        np.save(os.path.join(images_path, 'vq_codes_obs_histogram_%d' % i), codes_histograms_i)
+        np.save(os.path.join(images_path, 'vq_dist_histogram_%d' % i), dist_histograms_i)
+          
+        
 
 #### Function getRGBMatrix
 #    Gets R, G and B matrixes for all images in image_path

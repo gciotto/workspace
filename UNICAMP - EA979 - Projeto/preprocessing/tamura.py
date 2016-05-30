@@ -1,3 +1,8 @@
+################################################
+# References
+# https://www.cs.auckland.ac.nz/courses/compsci708s1c/lectures/Glect-html/topic4c708FSC.htm#tamura
+# http://people.kmi.open.ac.uk/stefan/www-pub/howarth-rueger-2004-civr-texture.pdf 
+
 import numpy as np
 from scipy.stats import kurtosis
 from scipy.signal import convolve2d
