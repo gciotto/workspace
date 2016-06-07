@@ -5,10 +5,11 @@ http://people.kmi.open.ac.uk/stefan/www-pub/howarth-rueger-2004-civr-texture.pdf
 
 import numpy as np
 from PIL import Image
+from scipy import misc
 import scipy.cluster as spy
 import os
 import time
-from tamura import tamura_coarseness, tamura_contrast, tamura_directionality
+from tamura import contrast, degreeDirect, coarseness, threshold, neigh, rgb2gray
 
 images_path = "/home/gciotto/Mes Travails/UNICAMP/EA979/mirflickr"
 
@@ -16,10 +17,10 @@ n_images = 25000
 
 # Parametros utilizados pelo KMEANS
 kCentroids_features = 100
-cIter_features = 50
+cIter_features = 30
 
 kCentroids = 50
-cIter = 50
+cIter = 20
 
 # Escolha dos FEATURES
 useGreyScale = True
@@ -36,6 +37,16 @@ else:
 n_colums_features = 0
 n_kernels = 0
 
+failures_directionality = []
+failures_contrast = []
+failures_coarseness = []
+failures_garbor = []
+
+histogram_hasBeenCalculated = os.path.isfile(os.path.join(images_path, 'histograms.npy'))
+
+if histogram_hasBeenCalculated:
+    learning_set = np.load('%s/histograms.npy' % images_path)
+else : learning_set = np.zeros((n_images, n_columns_histogram))
 
 if useTamuraCoarseness:
 
@@ -86,23 +97,27 @@ if useGarbor:
 
 if __name__ == '__main__':
 
-    learning_set = np.zeros((n_images, n_columns_histogram))
+    
     r = 0;
     
     for r in range (25000):
             
             print 'Calculating histogram for file ', os.path.join(images_path, 'im%d.jpg' % (r + 1))
             
-            img = Image.open(os.path.join(images_path, 'im%d.jpg' % (r + 1) ))
+            img = misc.imread(os.path.join(images_path, 'im%d.jpg' % (r + 1) ))
             
             if useGreyScale:
-                img = img.convert('L')
+                img = rgb2gray(img)
             
-            tamura_directionality(img)
-            
-            hist_RGB = img.histogram()
-                    
-            learning_set[r, :] = hist_RGB[:]
+            if not histogram_hasBeenCalculated:
+                
+                if os.path.isfile(os.path.join(images_path, 'hist_%d.npy' % (r + 1))):
+                    hist_RGB = np.load(os.path.join(images_path, 'hist_%d.npy' % (r + 1)))
+                else:
+                    hist_RGB, bins = np.histogram(img, 256)
+                    np.save(os.path.join(images_path, 'hist_%d.npy' % (r + 1)), hist_RGB)
+                        
+                learning_set[r, :] = hist_RGB[:]
                        
             if useTamuraCoarseness:
                            
@@ -113,13 +128,15 @@ if __name__ == '__main__':
                 
                         print 'Calculating Tamura COARSENESS for file ', os.path.join(images_path, 'im%d.jpg' % (r + 1))
                         
-                        start_time = time.time()   
-                        tamura_coarseness_v[r] = tamura_coarseness(img)
-                        elapsed_time = time.time() - start_time
-                        
-                        print 'It took %ds to calculate COARSENESS...' % elapsed_time
-                        
-                        np.save(os.path.join(images_path, 'tamura_coarseness_%d.npy' % (r + 1)),tamura_coarseness_v[r])
+                        try:
+                            start_time = time.time()   
+                            tamura_coarseness_v[r] = coarseness(img)
+                            elapsed_time = time.time() - start_time
+                            #print 'It took %ds to calculate COARSENESS...' % elapsed_time
+                            np.save(os.path.join(images_path, 'tamura_coarseness_%d.npy' % (r + 1)),tamura_coarseness_v[r])
+                            
+                        except:
+                            failures_coarseness.append(r+1)
                     
                     print tamura_coarseness_v[r] 
                     
@@ -133,15 +150,16 @@ if __name__ == '__main__':
                         
                         print 'Calculating Tamura CONTRAST for file ', os.path.join(images_path, 'im%d.jpg' % (r + 1))
                         
-                        start_time = time.time()   
-                        tamura_contrast_v[r] = tamura_contrast(hist_RGB)
-                        elapsed_time = time.time() - start_time
-                        
-                        print 'It took %ds to calculate CONTRAST...' % elapsed_time
-                        
-                        np.save(os.path.join(images_path, 'tamura_contrast_%d.npy' % (r + 1)),tamura_contrast_v[r])
+                        try:
+                            start_time = time.time()   
+                            tamura_contrast_v[r] = contrast(img)
+                            elapsed_time = time.time() - start_time
+                            #print 'It took %ds to calculate CONTRAST...' % elapsed_time
+                            np.save(os.path.join(images_path, 'tamura_contrast_%d.npy' % (r + 1)),tamura_contrast_v[r])
+                        except:
+                            failures_contrast.append(r+1)
                     
-                    print tamura_contrast_v[r]
+                    #print tamura_contrast_v[r]
             
             if useTamuraDirectionality:
                                                 
@@ -153,15 +171,22 @@ if __name__ == '__main__':
                         
                         print 'Calculating Tamura DIRECTIONALITY for file ', os.path.join(images_path, 'im%d.jpg' % (r + 1))
                         
-                        start_time = time.time()   
-                        tamura_directionality_v[r] = tamura_directionality(img)
-                        elapsed_time = time.time() - start_time
                         
-                        print 'It took %ds to calculate DIRECTIONALITY...' % elapsed_time
+                        try:                        
+                            start_time = time.time()   
+                            tamura_directionality_v[r] = degreeDirect(img, threshold, neigh)
+                            elapsed_time = time.time() - start_time
+                            np.save(os.path.join(images_path, 'tamura_directionality_%d.npy' % (r + 1)),tamura_directionality_v[r])
+                            
+                        except:
+                            failures_directionality.append(r+1)
+                            
                         
-                        np.save(os.path.join(images_path, 'tamura_directionality_%d.npy' % (r + 1)),tamura_directionality_v[r])
+                        #print 'It took %ds to calculate DIRECTIONALITY...' % elapsed_time
+                        
+                        
                     
-                    print tamura_directionality_v[r]
+                    #print tamura_directionality_v[r]
             
             if useGarbor:
                 
@@ -177,35 +202,48 @@ if __name__ == '__main__':
                         
                         print 'Calculating GARBOR for file ', os.path.join(images_path, 'im%d.jpg' % (r + 1))
                         
-                        start_time = time.time()   
-                        garbor_v[ start_i : stop_i ] = np.resize(garbor_features(img, kernels) , (1, len(kernels) * 2))
-                        elapsed_time = time.time() - start_time
-                        
-                        print 'It took %ds to calculate GARBOR...' % elapsed_time
-                        
-                        np.save(os.path.join(images_path, 'garbor_%d.npy' % (r + 1)), garbor_v[ start_i : stop_i ])
-                        
-                
+                        try:
+                            start_time = time.time()   
+                            garbor_v[ start_i : stop_i ] = np.resize(garbor_features(img, kernels) , (1, len(kernels) * 2))
+                            elapsed_time = time.time() - start_time
+                            
+                            #print 'It took %ds to calculate GARBOR...' % elapsed_time
+                            
+                            np.save(os.path.join(images_path, 'garbor_%d.npy' % (r + 1)), garbor_v[ start_i : stop_i ])
+                            
+                        except:
+                            failures_garbor.append(r+1) 
+    
+    print 'Failures COARSENESS ', failures_coarseness
+    print 'Failures CONTRAST ', failures_contrast
+    print 'Failures DIRECTIONALITY ', failures_directionality
+    print 'Failures GARBOR ', failures_garbor   
+    
+    if not histogram_hasBeenCalculated:
+        np.save(os.path.join(images_path, 'histograms.npy'), learning_set)
+        histogram_hasBeenCalculated = True
     
     if useTamuraCoarseness: 
-        if not tamura_coarseness_hasBeenCalculated:
+        if not tamura_coarseness_hasBeenCalculated and not failures_coarseness:
             np.save('%s/tamura_coarseness.npy' % images_path, tamura_coarseness_v)
             tamura_coarseness_hasBeenCalculated = True
     
     if useTamuraContrast: 
-        if not tamura_contrast_hasBeenCalculated:
+        if not tamura_contrast_hasBeenCalculated and not failures_contrast:
             np.save('%s/tamura_contrast.npy' % images_path, tamura_contrast_v)
             tamura_contrast_hasBeenCalculated = True
     
     if useTamuraDirectionality: 
-        if not tamura_directionality_hasBeenCalculated:
+        if not tamura_directionality_hasBeenCalculated and not failures_directionality:
             np.save('%s/tamura_directionality.npy' % images_path, tamura_directionality_v)
             tamura_directionality_hasBeenCalculated = True
     
     if useGarbor: 
-        if not garbor_hasBeenCalculated:
+        if not garbor_hasBeenCalculated and not failures_garbor:
             np.save('%s/garbor.npy' % images_path, garbor_v)
             garbor_hasBeenCalculated = True
+            
+    
             
     print '%d images successfully preprocessed...' % (r+1)
     
@@ -241,10 +279,10 @@ if __name__ == '__main__':
     
     whitenned_learning_set_features = spy.vq.whiten(learning_set_features)
     
-    standard_deviations_features = np.zeros ((1, n_colums_features))
+    standard_deviations_features = np.zeros (n_colums_features)
     
     for i in range(n_colums_features):
-        standard_deviations_features[0, i] = learning_set_features[0, i] / whitenned_learning_set_features [0, i]
+        standard_deviations_features[i] = learning_set_features[0, i] / whitenned_learning_set_features [0, i]
         
     (centroids_codebook_features, distortion_features) = spy.vq.kmeans(whitenned_learning_set_features, kCentroids_features, cIter_features)
     
@@ -263,14 +301,14 @@ if __name__ == '__main__':
         
         images_i = np.where(codes_features == i)
         
-        learning_set_histograms_i = learning_set[images_i, :]
+        learning_set_histograms_i = learning_set[images_i]
         
         whitenned_learning_set_histograms_i = spy.vq.whiten(learning_set_histograms_i)
     
-        standard_deviations_histograms_i = np.zeros ((1, n_columns_histogram))
+        standard_deviations_histograms_i = np.zeros (n_columns_histogram)
         
         for i in range(n_columns_histogram):
-            standard_deviations_histograms_i[0, i] = learning_set_histograms_i[0, i] / whitenned_learning_set_histograms_i [0, i]
+            standard_deviations_histograms_i[i] = learning_set_histograms_i[0, i] / whitenned_learning_set_histograms_i [0, i]
             
         (centroids_codebook_histograms_i, distortion_histograms_i) = spy.vq.kmeans(whitenned_learning_set_histograms_i, kCentroids, cIter)
     
