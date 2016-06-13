@@ -9,9 +9,28 @@
 
 const module_t NONE 	= { .type = 0x3F, .name = "NONE", .background_color = LCD_COLOR_LIGHTBLUE, .pushed_background_color = LCD_COLOR_DARKBLUE};
 const module_t EEPROM	= { .type = 0x01, .name = "Read EEPROM", .background_color = LCD_COLOR_LIGHTGREEN, .pushed_background_color = LCD_COLOR_DARKGREEN};
-const module_t TEMP		= { .type = 0x02, .name = "Temperature", .background_color = LCD_COLOR_LIGHTRED, .pushed_background_color = LCD_COLOR_DARKRED };
+const module_t TEMP		= { .type = 0x02, .name = "Accelerom.", .background_color = LCD_COLOR_LIGHTRED, .pushed_background_color = LCD_COLOR_DARKRED };
 const module_t ADC_O	= { .type = 0x03, .name = "Use ADC", .background_color = LCD_COLOR_LIGHTCYAN, .pushed_background_color = LCD_COLOR_DARKCYAN };
 const module_t DAC_O		= { .type = 0x04, .name = "Use DAC", .background_color = LCD_COLOR_LIGHTMAGENTA, .pushed_background_color = LCD_COLOR_DARKMAGENTA };
+
+void send_UART(uint8_t* b, uint16_t len) {
+
+	while (!isReadyToSend);
+
+	isReadyToSend = 0;
+	HAL_UART_Transmit_IT(&huart6, b, len);
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+
+	isReadyToSend = 1;
+
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+
+	hasReceivedByte = 1;
+}
 
 module_t findModule(uint8_t code) {
 
@@ -23,49 +42,7 @@ module_t findModule(uint8_t code) {
 	return NONE;
 }
 
-void processCommand(enum command command, uint8_t *buffer, uint16_t length) {
 
-	int j;
-
-	switch(command) {
-
-	case IDENT:
-
-	default:
-		break;
-	}
-}
-
-void receiveCommand(uint8_t *buffer, uint16_t *length) {
-
-
-}
-
-void prepareCommand(enum command command, uint8_t** buffer, uint16_t *length) {
-
-
-	switch (command) {
-
-	case RAMP_BLOCK:
-	case RAMP_ENABLE:
-	case RAMP_ENABLE_CYCLIC:
-	case RAMP_INIT:
-	case CYCLE_ENABLE:
-	case ADJUST:
-	case IDENT:
-	case END_IDENT:
-	default:
-		*buffer = (uint8_t*) pvPortMalloc(sizeof(uint8_t));
-		**buffer = command;
-		*length = 1;
-	}
-
-}
-
-void sendCommand(uint8_t* buffer, uint16_t length ) {
-
-	setStatus(CONNECTED);
-}
 
 void executeCommand(enum command command) {
 
@@ -151,35 +128,50 @@ void buttonConnectPressed(void* source){
 
 	((button_t*)source)->hasBeenAcknowledged = 1;
 
-	setStatus(CONNECTING);
+	uint8_t connect_byte;
+
 
 	if (!isConnected) {
 
-		/* TO DO: Se conexao bem-sucedida. */
-		if (1) {
-			isConnected = 1;
+		connect_byte = CONNECT_CMD;
 
-			/* TO DO - I2C */
+		uint8_t *connect_answer = pvPortMalloc(3*sizeof(uint8_t));
+
+		setStatus(CONNECTING);
+		connect_byte = 'C';
+		send_UART(&connect_byte, 1);
+
+		memset(connect_answer, 0, 3);
+
+		hasReceivedByte = 0;
+		HAL_StatusTypeDef status = HAL_UART_Receive(&huart6, &connect_answer[0], 2, 4000);
+
+		//if (status == HAL_OK && !strcmp(connect_answer, "OK")) {
+		if (1) {
+
+			isConnected = 1;
 
 			setStatus(CONNECTED);
 
 		}
 		else {
+
 			isConnected = 0;
 			setStatus(DISCONNECTED);
 		}
+
+		vPortFree(connect_answer);
 
 
 	}
 	else {
 
-		/* TO DO: Se desconexao bem sucedida. */
-		if (1) {
-			setStatus(DISCONNECTED);
-			isConnected = 0;
+		connect_byte = DISCONNECT_CMD;
+		send_UART(&connect_byte, 1);
 
-			//resetBoards();
-		}
+		setStatus(DISCONNECTED);
+		isConnected = 0;
+
 	}
 
 	refreshBoards();
@@ -204,7 +196,7 @@ void refreshButtonState (TS_StateTypeDef ts_event,  button_t *button, uint16_t w
 	}
 	else {
 
-		if (button->isPushed)
+		if (button->isPushed && isConnected)
 			unpaintPushedButton(*button, width, heigth);
 
 		button->hasBeenAcknowledged = 0;
@@ -220,6 +212,18 @@ void paintPushedBoard(pboard_t *board) {
 
 void unpaintPushedBoard(pboard_t *board) {
 	placeBoard(board, board->board.module.background_color, LCD_COLOR_BLACK);
+}
+
+void clearEEPROMValues() {
+
+
+	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(212, 45, 260, 160);
+
+	xSemaphoreGive(mutex_drawer);
+
 }
 
 void addEEPROMValueAt(uint16_t address, union EEPROM_data value) {
@@ -243,6 +247,7 @@ void addEEPROMValueAt(uint16_t address, union EEPROM_data value) {
 
 	sprintf(buffer, "0x%02x", address);
 
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGREEN);
 	BSP_LCD_DisplayStringAt(base_address_x, y_n, (uint8_t*) buffer, LEFT_MODE);
 
@@ -265,6 +270,7 @@ void setEEPROM_max(union EEPROM_data max) {
 
 	sprintf(buffer, "%02.2f", max.data_as_float);
 
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_DARKGREEN);
 	BSP_LCD_DisplayStringAt(265, 220, (uint8_t*) buffer, LEFT_MODE);
 
@@ -280,6 +286,7 @@ void setEEPROM_min(union EEPROM_data max) {
 
 	sprintf(buffer, "%02.2f", max.data_as_float);
 
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_DARKBLUE);
 	BSP_LCD_DisplayStringAt(265, 245, (uint8_t*) buffer, LEFT_MODE);
 
@@ -295,6 +302,7 @@ void setEEPROM_mean(union EEPROM_data max) {
 
 	sprintf(buffer, "%02.2f", max.data_as_float);
 
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_DARKGRAY);
 	BSP_LCD_DisplayStringAt(405, 220, (uint8_t*) buffer, LEFT_MODE);
 
@@ -317,6 +325,93 @@ void setEEPROM_status(enum EEPROM_status status) {
 
 		BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 		BSP_LCD_DisplayStringAt(330, 10, (uint8_t*) "STARTED", LEFT_MODE);
+	}
+
+	xSemaphoreGive(mutex_drawer);
+
+}
+
+void setACCEL_X(union EEPROM_data x) {
+
+	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(230, 90, 200, 20);
+
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+
+	char buffer[16];
+	memset(buffer, 0, 16);
+
+	sprintf(buffer, "= %.5f g", x.data_as_float/4096);
+
+	BSP_LCD_DisplayStringAt(230, 90, buffer, LEFT_MODE);
+
+	xSemaphoreGive(mutex_drawer);
+
+}
+
+void setACCEL_Y(union EEPROM_data y) {
+
+	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(230, 120, 200, 20);
+
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+
+	char buffer[16];
+	memset(buffer, 0, 16);
+
+	sprintf(buffer, "= %.5f g", y.data_as_float/4096);
+
+	BSP_LCD_DisplayStringAt(230, 120, buffer, LEFT_MODE);
+
+	xSemaphoreGive(mutex_drawer);
+
+}
+
+void setACCEL_Z(union EEPROM_data z) {
+
+	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(230, 150, 200, 20);
+
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+
+	char buffer[16];
+	memset(buffer, 0, 16);
+
+	sprintf(buffer, "= %.5f g", z.data_as_float/4096);
+
+	BSP_LCD_DisplayStringAt(230, 150, buffer, LEFT_MODE);
+
+	xSemaphoreGive(mutex_drawer);
+
+}
+
+void setACCEL_status(enum EEPROM_status status) {
+
+	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(330, 50, 150, 20);
+
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+
+	if (status == STARTED) {
+		BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+		BSP_LCD_DisplayStringAt(330, 50, "STARTED", LEFT_MODE);
+	}
+	else {
+
+		BSP_LCD_SetTextColor(LCD_COLOR_RED);
+		BSP_LCD_DisplayStringAt(330, 50, "STOPPED", LEFT_MODE);
+
 	}
 
 	xSemaphoreGive(mutex_drawer);
@@ -515,22 +610,65 @@ void draw_EEPROM(void* board) {
 
 	xSemaphoreGive(mutex_drawer);
 
-	union EEPROM_data teste;
-	teste.data_as_float = 22.5;
-	addEEPROMValueAt(0, teste);
-	addEEPROMValueAt(4, teste);
-	addEEPROMValueAt(0x1c, teste);
-	addEEPROMValueAt(0x24, teste);
-
-	teste.data_as_float = 22.5;
-	setEEPROM_max(teste);
-	setEEPROM_mean(teste);
-	setEEPROM_min(teste);
-
 	placeButton(buttons[EEPROM_START], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
 	placeButton(buttons[EEPROM_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
 	placeButton(buttons[EEPROM_STATS], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
 	placeButton(buttons[EEPROM_STATE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+	placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+
+}
+
+
+void draw_ACCEL(void* board) {
+
+	pboard_t *aBoard = (pboard_t*) board;
+
+	aScreen = ACCEL_SELECTED;
+
+	counterAccelerometerWorking = 0;
+	isAccelerometerWorking = 0;
+
+	xSemaphoreTake(mutex_drawer, portMAX_DELAY);
+
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+
+	BSP_LCD_SetFont(&Font24);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+
+	BSP_LCD_SetTextColor(aBoard->board.module.background_color);
+	BSP_LCD_DisplayStringAt(10, 50, aBoard->board.module.name, LEFT_MODE);
+
+	BSP_LCD_SetFont(&Font20);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTRED);
+	BSP_LCD_DisplayStringAt(210, 50, (uint8_t*) "STATUS :", LEFT_MODE);
+
+	/* STATUS X = 370, Y = 10 */
+	BSP_LCD_SetTextColor(LCD_COLOR_RED);
+	BSP_LCD_DisplayStringAt(330, 50, (uint8_t*) "STOPPED", LEFT_MODE);
+
+	/* MAX, MIN and MEAN */
+
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGREEN);
+	BSP_LCD_DisplayStringAt(210, 90, (uint8_t*) "X:", LEFT_MODE);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+	BSP_LCD_DisplayStringAt(210, 120, (uint8_t*) "Y:", LEFT_MODE);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTBLUE);
+	BSP_LCD_DisplayStringAt(210, 150, (uint8_t*) "Z:", LEFT_MODE);
+
+	buttons[ACCEL_START].isEnabled = 1;
+	buttons[ACCEL_STOP].isEnabled = 0;
+
+	xSemaphoreGive(mutex_drawer);
+
+	placeButton(buttons[ACCEL_START], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+	placeButton(buttons[ACCEL_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
 
 	placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
 
@@ -541,6 +679,8 @@ void draw_DAC(void* board) {
 	pboard_t *aBoard = (pboard_t*) board;
 	dac_period = 250;
 	dac_set_new_value = 1.1;
+
+	dac_isDrawing = 0;
 
 	aScreen = DAC_SELECTED;
 
@@ -593,6 +733,7 @@ void draw_DAC(void* board) {
 	buttons[DAC_PERIOD_INCREASE].isEnabled = 1;
 	buttons[DAC_TENSION_DECREASE].isEnabled = 1;
 	buttons[DAC_TENSION_INCREASE].isEnabled = 1;
+	buttons[DAC_STOP].isEnabled = 0;
 
 	xSemaphoreGive(mutex_drawer);
 
@@ -604,6 +745,7 @@ void draw_DAC(void* board) {
 	placeButton(buttons[DAC_PERIOD_INCREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
 	placeButton(buttons[DAC_TENSION_DECREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
 	placeButton(buttons[DAC_TENSION_INCREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
+	placeButton(buttons[DAC_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
 
 	placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
 
@@ -611,6 +753,7 @@ void draw_DAC(void* board) {
 
 void draw_ADC (void* board) {
 
+	adc_temp = 0; adc_press = 0; adc_pot = 0;
 	pboard_t *aBoard = (pboard_t*) board;
 	dac_period = 250;
 	dac_set_new_value = 1.1;
@@ -639,7 +782,7 @@ void draw_ADC (void* board) {
 	BSP_LCD_DisplayStringAt(230, 55, (uint8_t*) "Temperature (oC):", LEFT_MODE);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(375, 85, (uint8_t*) "= 250", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(375, 85, (uint8_t*) "= ", LEFT_MODE);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
 	BSP_LCD_DrawRect(225, 124, 250 , 60);
@@ -648,7 +791,7 @@ void draw_ADC (void* board) {
 	BSP_LCD_DisplayStringAt(230, 129, (uint8_t*) "Tension (V) :", LEFT_MODE);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(375, 159, (uint8_t*) "= 1.1", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(375, 159, (uint8_t*) "= ", LEFT_MODE);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
 	BSP_LCD_DrawRect(225, 194, 250 , 60);
@@ -657,7 +800,7 @@ void draw_ADC (void* board) {
 	BSP_LCD_DisplayStringAt(230, 199, (uint8_t*) "Pressure (Pa?) :", LEFT_MODE);
 
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(375, 230, (uint8_t*) "= 1.1", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(375, 230, (uint8_t*) "= ", LEFT_MODE);
 
 	buttons[ADC_TEMP_READ].isEnabled = 1;
 	buttons[ADC_POT_READ].isEnabled = 1;
@@ -889,32 +1032,34 @@ uint8_t isTouched(TS_StateTypeDef ts_event,  button_t *button, uint16_t width, u
 
 void print_initial_screen(){
 
+	aScreen = BOARD_SELECTION;
+
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+
 	setTitle("Projeto EA076 2016");
 
 	setSubTitle("Gustavo C. e Anderson U.");
 
 	setStatus(isConnected);
 
-	/*placeButton(buttons[BUTTON_E0], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[BUTTON_E1], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[BUTTON_01], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[BUTTON_05], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[BUTTON_C8], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[BUTTON_C9], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[BUTTON_CB], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
-	placeButton(buttons[BUTTON_CC], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);*/
-
 	uint32_t color_connect;
-	if (isConnected)
+	uint8_t willBeEnabled = 0;
+	if (isConnected) {
 		color_connect = LCD_COLOR_LIGHTRED;
-	else color_connect = LCD_COLOR_LIGHTGREEN;
+		willBeEnabled = 1;
+		strcpy(buttons[BUTTON_CONNECT].title, "Disc.");
+	}
+	else {
+		color_connect = LCD_COLOR_LIGHTGREEN;
+		strcpy(buttons[BUTTON_CONNECT].title, "Conn.");
+	}
 
 	placeButton(buttons[BUTTON_CONNECT], color_connect, LCD_COLOR_BLACK, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
 
-	placeBoard(&pboards[0], pboards[0].board.module.background_color, LCD_COLOR_BLACK);
-	placeBoard(&pboards[1], pboards[1].board.module.background_color, LCD_COLOR_BLACK);
-	placeBoard(&pboards[2], pboards[2].board.module.background_color, LCD_COLOR_BLACK);
-	placeBoard(&pboards[3], pboards[3].board.module.background_color, LCD_COLOR_BLACK);
+	for (uint8_t i = 0; i < 4; i++) {
+		pboards[i].isEnabled = willBeEnabled;
+		placeBoard(&pboards[i], pboards[i].board.module.background_color, LCD_COLOR_BLACK);
+	}
 
 }
 
@@ -933,293 +1078,6 @@ void repaintButtons() {
 	 */
 }
 
-/*
-void E0_pressed (void* button) {
-
-	if (cycleSelected != 128) {
-
-		((button_t*) button)->hasBeenAcknowledged = 1;
-
-		buttons[BUTTON_E0].isEnabled = 0;
-		buttons[BUTTON_E1].isEnabled = 1;
-		buttons[BUTTON_01].isEnabled = 0;
-		buttons[BUTTON_05].isEnabled = 0;
-		buttons[BUTTON_C8].isEnabled = 0;
-		buttons[BUTTON_C9].isEnabled = 0;
-		buttons[BUTTON_CB].isEnabled = 0;
-		buttons[BUTTON_CC].isEnabled = 0;
-
-		repaintButtons();
-
-		executeCommand(CYCLE_ENABLE);
-	}
-
-}
-
-void E1_pressed (void* button) {
-
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	buttons[BUTTON_E0].isEnabled = 1;
-	buttons[BUTTON_E1].isEnabled = 0;
-	buttons[BUTTON_01].isEnabled = 1;
-	buttons[BUTTON_05].isEnabled = 1;
-	buttons[BUTTON_C8].isEnabled = 1;
-	buttons[BUTTON_C9].isEnabled = 0;
-	buttons[BUTTON_CB].isEnabled = 0;
-	buttons[BUTTON_CC].isEnabled = 0;
-
-	repaintButtons();
-
-	executeCommand(CYCLE_ABORT);
-
-}
- */
-
-void Confirm_pressed (void* button) {
-
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	executeCommand(MSG_CONFIRM);
-}
-
-void Adjust_pressed (void* button) {
-
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	executeCommand(ADJUST);
-}
-
-/*
-void C8_pressed (void* button) {
-
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	if (rampSelected != 128) {
-
-		buttons[BUTTON_E0].isEnabled = 0;
-		buttons[BUTTON_E1].isEnabled = 0;
-		buttons[BUTTON_01].isEnabled = 0;
-		buttons[BUTTON_05].isEnabled = 0;
-		buttons[BUTTON_C8].isEnabled = 0;
-		buttons[BUTTON_C9].isEnabled = 1;
-		buttons[BUTTON_CB].isEnabled = 0;
-		buttons[BUTTON_CC].isEnabled = 0;
-
-		repaintButtons();
-
-		executeCommand(RAMP_INIT);
-
-	}
-
-}
-
-void C9_pressed (void* button) {
-
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	executeCommand(RAMP_BLOCK);
-
-	buttons[BUTTON_E0].isEnabled = 0;
-	buttons[BUTTON_E1].isEnabled = 0;
-	buttons[BUTTON_01].isEnabled = 0;
-	buttons[BUTTON_05].isEnabled = 0;
-	buttons[BUTTON_C8].isEnabled = 0;
-	buttons[BUTTON_C9].isEnabled = 0;
-	buttons[BUTTON_CB].isEnabled = 1;
-	buttons[BUTTON_CC].isEnabled = 0;
-
-	repaintButtons();
-
-}
-
-void CB_pressed (void* button) {
-
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	executeCommand(RAMP_ENABLE);
-
-	buttons[BUTTON_E0].isEnabled = 0;
-	buttons[BUTTON_E1].isEnabled = 0;
-	buttons[BUTTON_01].isEnabled = 0;
-	buttons[BUTTON_05].isEnabled = 0;
-	buttons[BUTTON_C8].isEnabled = 0;
-	buttons[BUTTON_C9].isEnabled = 0;
-	buttons[BUTTON_CB].isEnabled = 0;
-	buttons[BUTTON_CC].isEnabled = 1;
-
-	repaintButtons();
-
-}
-
-void CC_pressed (void* button) {
-
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	executeCommand(RAMP_ABORT);
-
-	buttons[BUTTON_E0].isEnabled = 1;
-	buttons[BUTTON_E1].isEnabled = 0;
-	buttons[BUTTON_01].isEnabled = 1;
-	buttons[BUTTON_05].isEnabled = 1;
-	buttons[BUTTON_C8].isEnabled = 1;
-	buttons[BUTTON_C9].isEnabled = 0;
-	buttons[BUTTON_CB].isEnabled = 0;
-	buttons[BUTTON_CC].isEnabled = 0;
-
-	repaintButtons();
-
-}
- */
-
-void increaseRamp (void* button) {
-	/*
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	if (rampSelected == 128)
-		rampSelected = 0;
-
-	else if (rampSelected < 2 )
-		rampSelected++;
-
-	else {
-		rampSelected = 2;
-		((button_t*) button)->isEnabled = 0;
-	}
-
-	if (!buttons_ramp_cycle[0].isEnabled) {
-		buttons_ramp_cycle[0].isEnabled = 1;
-		placeButton(buttons_ramp_cycle[0], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
-	}
-
-	print_new_ramp();
-	 */
-}
-
-void increaseCycle (void* button) {
-	/*
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	if (cycleSelected == 128) {
-		cycleSelected = 0;
-	}
-
-	else if (cycleSelected < 4 ) {
-		cycleSelected++;
-	}
-
-	else {
-		cycleSelected = 4;
-		((button_t*) button)->isEnabled = 0;
-	}
-
-	if (!buttons_ramp_cycle[2].isEnabled) {
-		buttons_ramp_cycle[2].isEnabled = 1;
-		placeButton(buttons_ramp_cycle[2], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
-	}
-
-	print_new_cycle();
-	 */
-
-}
-
-
-void increaseAnalogIn (void* button) {
-	/*
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	uint16_t max = 4095;
-
-	if (selected_board->board.module.type == 3 ||
-			selected_board->board.module.type == 4 )
-		max = 65535;
-
-	if (analogIn < max) {
-		analogIn += 256;
-	}
-
-	else {
-		analogIn = max;
-		((button_t*) button)->isEnabled = 0;
-	}
-
-	if (!buttons_ramp_cycle[4].isEnabled) {
-		buttons_ramp_cycle[4].isEnabled = 1;
-		placeButton(buttons_ramp_cycle[4], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
-	}
-
-	print_new_analog_in();*/
-}
-
-void decreaseAnalogIn (void* button) {
-
-	/*
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-
-	if (analogIn > 256) {
-		analogIn -= 256;
-	}
-
-	else {
-		analogIn = 0;
-		((button_t*) button)->isEnabled = 0;
-	}
-
-	if (!buttons_ramp_cycle[5].isEnabled) {
-		buttons_ramp_cycle[5].isEnabled = 1;
-		placeButton(buttons_ramp_cycle[5], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
-	}
-
-	print_new_analog_in();**/
-}
-
-void decreaseCycle (void* button) {
-
-	/*
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-
-	if (cycleSelected >= 1)
-		cycleSelected--;
-
-	else {
-		cycleSelected = 128;
-		((button_t*) button)->isEnabled = 0;
-	}
-
-	if (!buttons_ramp_cycle[3].isEnabled ) {
-		buttons_ramp_cycle[3].isEnabled = 1;
-		placeButton(buttons_ramp_cycle[3], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
-	}
-
-	print_new_cycle();
-	 */
-}
-
-void decreaseRamp (void* button) {
-
-	/*
-	((button_t*) button)->hasBeenAcknowledged = 1;
-
-	if (rampSelected >= 1)
-		rampSelected--;
-
-	else {
-		rampSelected = 128;
-		((button_t*) button)->isEnabled = 0;
-
-	}
-
-	if (!buttons_ramp_cycle[1].isEnabled ) {
-		buttons_ramp_cycle[1].isEnabled = 1;
-		placeButton(buttons_ramp_cycle[1], LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
-	}
-
-	print_new_ramp();
-	 */
-}
-
 void back_initial_screen (void* button) {
 
 	((button_t*) button)->hasBeenAcknowledged = 1;
@@ -1233,50 +1091,265 @@ void back_initial_screen (void* button) {
 
 void EEPROM_Start_Handler (void* button) {
 
-	setEEPROM_status(STARTED);
+	uint8_t command = EEPROM_START_CMD, answer_bytes[3];
+	send_UART(&command, 1);
 
-	buttons[EEPROM_START].isEnabled = 0;
-	placeButton(buttons[EEPROM_START], LCD_COLOR_LIGHTBLUE, LCD_COLOR_BLACK, BUTTON_WIDTH, BUTTON_HEIGTH);
+	memset(answer_bytes, 0, 3);
 
-	buttons[EEPROM_STOP].isEnabled = 1;
-	placeButton(buttons[EEPROM_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_BLACK, BUTTON_WIDTH, BUTTON_HEIGTH);
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
 
-	buttons[EEPROM_STATS].isEnabled = 1;
-	placeButton(buttons[EEPROM_STATS], LCD_COLOR_LIGHTBLUE, LCD_COLOR_BLACK, BUTTON_WIDTH, BUTTON_HEIGTH);
+	if (ans == HAL_OK && !strcmp(answer_bytes, "OK")) {
 
-	buttons[EEPROM_STATE].isEnabled = 1;
-	placeButton(buttons[EEPROM_STATE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_BLACK, BUTTON_WIDTH, BUTTON_HEIGTH);
+		setEEPROM_status(STARTED);
 
+		button_home.isEnabled = 0;
+		placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
 
+		buttons[EEPROM_START].isEnabled = 0;
+		placeButton(buttons[EEPROM_START], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+		buttons[EEPROM_STOP].isEnabled = 1;
+		placeButton(buttons[EEPROM_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+		buttons[EEPROM_STATS].isEnabled = 0;
+		placeButton(buttons[EEPROM_STATS], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+		buttons[EEPROM_STATE].isEnabled = 0;
+		placeButton(buttons[EEPROM_STATE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+	}
+	else {
+
+		isConnected = 0;
+		print_initial_screen();
+	}
 }
 
 void EEPROM_Stop_Handler (void* button) {
 
-	setEEPROM_status(STOPPED);
+	uint8_t command = EEPROM_STOP_CMD, answer_bytes[3];
+	send_UART(&command, 1);
 
-	buttons[EEPROM_START].isEnabled = 1;
-	placeButton(buttons[EEPROM_START], LCD_COLOR_LIGHTBLUE, LCD_COLOR_BLACK, BUTTON_WIDTH, BUTTON_HEIGTH);
+	memset(answer_bytes, 0, 3);
 
-	buttons[EEPROM_STOP].isEnabled = 0;
-	placeButton(buttons[EEPROM_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_BLACK, BUTTON_WIDTH, BUTTON_HEIGTH);
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
 
-	buttons[EEPROM_STATS].isEnabled = 0;
-	placeButton(buttons[EEPROM_STATS], LCD_COLOR_LIGHTBLUE, LCD_COLOR_BLACK, BUTTON_WIDTH, BUTTON_HEIGTH);
+	if (ans == HAL_OK && !strcmp(answer_bytes, "OK")) {
+		setEEPROM_status(STOPPED);
 
-	buttons[EEPROM_STATE].isEnabled = 0;
-	placeButton(buttons[EEPROM_STATE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_BLACK, BUTTON_WIDTH, BUTTON_HEIGTH);
+		button_home.isEnabled = 1;
+		placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+
+		buttons[EEPROM_START].isEnabled = 1;
+		placeButton(buttons[EEPROM_START], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+		buttons[EEPROM_STOP].isEnabled = 0;
+		placeButton(buttons[EEPROM_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+		buttons[EEPROM_STATS].isEnabled = 1;
+		placeButton(buttons[EEPROM_STATS], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+		buttons[EEPROM_STATE].isEnabled = 1;
+		placeButton(buttons[EEPROM_STATE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+	}
+	else {
+
+		isConnected = 0;
+		print_initial_screen();
+	}
+
 }
 
 void EEPROM_Print_Handler (void* button) {
 
+	uint8_t command = EEPROM_STATS_CMD, answer_bytes[5], mustDisconnect = 0;
+	union EEPROM_data data_ee;
+
+	send_UART(&command, 1);
+
+	memset(answer_bytes, 0, 5);
+
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 4, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "SEND")) {
+
+		ans = HAL_UART_Receive(&huart6, data_ee.data_as_bytes, 4, 4000);
+
+		if (ans == HAL_OK)
+			setEEPROM_max(data_ee);
+		else mustDisconnect = 1;
+
+		ans = HAL_UART_Receive(&huart6, data_ee.data_as_bytes, 4, 4000);
+
+		if (ans == HAL_OK)
+			setEEPROM_min(data_ee);
+		else mustDisconnect = 1;
+
+		ans = HAL_UART_Receive(&huart6, data_ee.data_as_bytes, 4, 4000);
+
+		if (ans == HAL_OK)
+			setEEPROM_mean(data_ee);
+		else mustDisconnect = 1;
+
+	}
+	else mustDisconnect = 1;
+
+	if (mustDisconnect) {
+
+		isConnected = 0;
+		print_initial_screen();
+	}
 }
 
 void EEPROM_List_Handler (void* button) {
+
+	uint8_t command = EEPROM_STATUS_CMD, answer_bytes[5], mustDisconnect = 0;
+	union EEPROM_data data_ee;
+	uint16_t count, values;
+
+	clearEEPROMValues();
+
+	send_UART(&command, 1);
+
+	memset(answer_bytes, 0, 5);
+
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 4, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "SEND")) {
+
+		// Receive number of saved values in EEPROM
+		memset(answer_bytes, 0, 5);
+		ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+		if (ans != HAL_OK)
+			mustDisconnect = 1;
+		else {
+
+			count = (answer_bytes[1] << 8) + answer_bytes[0];
+
+			for (uint16_t i = 0; i < count; i++) {
+
+				command = '>';
+				send_UART(&command, 1);
+
+				ans = HAL_UART_Receive(&huart6, data_ee.data_as_bytes, 4, 4000);
+
+
+				if (ans == HAL_OK)
+					addEEPROMValueAt(i*4, data_ee);
+				else {
+					mustDisconnect = 1;
+					break;
+				}
+
+			}
+
+		}
+
+	}
+	else mustDisconnect = 1;
+
+	if (mustDisconnect){
+
+		isConnected = 0;
+		print_initial_screen();
+	}
+
+}
+
+
+void ACCEL_Start_Handler (void* button) {
+
+	uint8_t command = ACCEL_START_CMD, answer_bytes[3];
+	send_UART(&command, 1);
+
+	memset(answer_bytes, 0, 3);
+
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "OK")) {
+
+		setACCEL_status(STARTED);
+
+		isAccelerometerWorking = 1;
+
+		button_home.isEnabled = 0;
+		buttons[ACCEL_START].isEnabled = 0;
+		buttons[ACCEL_STOP].isEnabled = 1;
+
+		placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+		placeButton(buttons[ACCEL_START], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+		placeButton(buttons[ACCEL_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+	}
+	else {
+
+		isConnected = 0;
+		print_initial_screen();
+	}
+}
+
+void ACCEL_Stop_Handler (void* button) {
+
+	uint8_t command = ACCEL_STOP_CMD, answer_bytes[3];
+	send_UART(&command, 1);
+
+	memset(answer_bytes, 0, 3);
+
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "OK")) {
+
+		setACCEL_status(STOPPED);
+
+		isAccelerometerWorking = 0;
+
+		button_home.isEnabled = 1;
+		buttons[ACCEL_START].isEnabled = 1;
+		buttons[ACCEL_STOP].isEnabled = 0;
+
+		placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+		placeButton(buttons[ACCEL_START], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+		placeButton(buttons[ACCEL_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+
+	}
+	else {
+
+		isConnected = 0;
+		print_initial_screen();
+	}
+
+}
+
+void DAC_Stop_handler (void* button) {
+
+	uint8_t command = DAC_STOP_CMD;
+
+	dac_isDrawing = 0;
+
+	send_UART(&command, 1);
+
+	buttons[DAC_SIN].isEnabled = 1;
+	buttons[DAC_TRI].isEnabled = 1;
+	buttons[DAC_QUAD].isEnabled = 1;
+	buttons[DAC_SET].isEnabled = 1;
+	buttons[DAC_STOP].isEnabled = 0;
+	button_home.isEnabled = 1;
+
+	placeButton(buttons[DAC_SIN], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+	placeButton(buttons[DAC_QUAD], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+	placeButton(buttons[DAC_TRI], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+	placeButton(buttons[DAC_SET], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+	placeButton(buttons[DAC_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+	placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+
+	setDAC_Status(DAC_STOP);
 
 }
 
 void DAC_Decrease_Period_handler (void* button) {
 
+	uint8_t command = DAC_PERIOD_DECREASE_CMD;
 
 	((button_t*) button)->hasBeenAcknowledged = 1;
 
@@ -1294,11 +1367,28 @@ void DAC_Decrease_Period_handler (void* button) {
 		placeButton(buttons[DAC_PERIOD_INCREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
 	}
 
-	setDAC_Period();
+
+	if (dac_isDrawing) {
+
+		send_UART(&command, 1);
+
+		uint8_t answer_bytes[5];
+		memset(answer_bytes, 0, 5);
+		HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+		if (ans == HAL_OK && !strcmp(answer_bytes, "OK")) {
+
+			setDAC_Period();
+		}
+
+	}
+	else setDAC_Period();
+
 }
 
 void DAC_Increase_Period_handler (void* button) {
 
+	uint8_t command = DAC_PERIOD_INCREASE_CMD;
 
 	((button_t*) button)->hasBeenAcknowledged = 1;
 
@@ -1309,7 +1399,23 @@ void DAC_Increase_Period_handler (void* button) {
 		placeButton(buttons[DAC_PERIOD_DECREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
 	}
 
-	setDAC_Period();
+
+	if (dac_isDrawing) {
+		send_UART(&command, 1);
+
+		uint8_t answer_bytes[5];
+		memset(answer_bytes, 0, 5);
+		HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+		if (ans == HAL_OK && !strcmp(answer_bytes, "OK")) {
+
+			setDAC_Period();
+		}
+	}
+	else setDAC_Period();
+
+
+
 }
 
 void DAC_Decrease_Tension_handler (void* button) {
@@ -1331,7 +1437,24 @@ void DAC_Decrease_Tension_handler (void* button) {
 		placeButton(buttons[DAC_TENSION_INCREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
 	}
 
-	setDAC_Tension();
+	uint8_t command = DAC_TENSION_DECREASE_CMD;
+
+	if (dac_isDrawing) {
+
+		send_UART(&command, 1);
+
+		uint8_t answer_bytes[5];
+		memset(answer_bytes, 0, 5);
+		HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+		if (ans == HAL_OK && !strcmp(answer_bytes, "OK")) {
+
+			setDAC_Tension();
+		}
+
+	}
+	else setDAC_Tension();
+
 }
 
 void DAC_Increase_Tension_handler (void* button) {
@@ -1352,28 +1475,273 @@ void DAC_Increase_Tension_handler (void* button) {
 		placeButton(buttons[DAC_TENSION_DECREASE], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_INCREASE_W, BUTTON_INCREASE_H);
 	}
 
-	setDAC_Tension();
+	uint8_t command = DAC_TENSION_INCREASE_CMD;
+
+	if (dac_isDrawing) {
+
+		send_UART(&command, 1);
+
+		uint8_t answer_bytes[5];
+		memset(answer_bytes, 0, 5);
+		HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+		if (ans == HAL_OK && !strcmp(answer_bytes, "OK")) {
+
+			setDAC_Tension();
+		}
+
+	}
+	else setDAC_Tension();
 }
 
 void DAC_Sin_handler (void* button) {
 
-	setDAC_Status(DAC_SIN);
+	uint8_t command = DAC_SIN_CMD, answer_bytes[5], mustDisconnect = 0;
+	union EEPROM_data data_ee;
+	union DAC_data data_dac;
+
+	send_UART(&command, 1);
+
+	memset(answer_bytes, 0, 5);
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 4, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "SEND")) {
+
+		data_ee.data_as_float = dac_set_new_value;
+		data_dac.data_as_uint32 = dac_period;
+
+		command = 'P';
+		send_UART(&command, 1);
+
+		memset(answer_bytes, 0, 5);
+		ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+		if (ans != HAL_OK || strcmp(answer_bytes, "OK"))
+			mustDisconnect = 1;
+		else {
+
+			for (int i = 0; i < 4; i++)
+				send_UART(&data_dac.data_as_bytes[i], 1);
+
+			command = 'A';
+			send_UART(&command, 1);
+
+			memset(answer_bytes, 0, 5);
+			ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+			if (ans != HAL_OK || strcmp(answer_bytes, "OK"))
+				mustDisconnect = 1;
+			else {
+
+				for (int i = 0; i < 4; i++)
+					send_UART(&data_ee.data_as_bytes[i], 1);
+
+				buttons[DAC_SIN].isEnabled = 0;
+				buttons[DAC_TRI].isEnabled = 0;
+				buttons[DAC_QUAD].isEnabled = 0;
+				buttons[DAC_SET].isEnabled = 0;
+				buttons[DAC_STOP].isEnabled = 1;
+				button_home.isEnabled = 0;
+
+				placeButton(buttons[DAC_SIN], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_QUAD], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_TRI], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_SET], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+				placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+
+				setDAC_Status(DAC_SIN);
+				dac_isDrawing = 1;
+			}
+		}
+
+	}
+	else mustDisconnect = 1;
+
+	if (mustDisconnect){
+
+		dac_isDrawing = 0;
+		isConnected = 0;
+		print_initial_screen();
+	}
 
 }
 
 void DAC_Quad_handler (void* button) {
 
-	setDAC_Status(DAC_QUAD);
+	uint8_t command = DAC_QUAD_CMD, answer_bytes[5], mustDisconnect = 0;
+	union EEPROM_data data_ee;
+	union DAC_data data_dac;
+
+	send_UART(&command, 1);
+
+	memset(answer_bytes, 0, 5);
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 4, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "SEND")) {
+
+		data_ee.data_as_float = dac_set_new_value;
+		data_dac.data_as_uint32 = dac_period;
+
+		command = 'P';
+		send_UART(&command, 1);
+
+		memset(answer_bytes, 0, 5);
+		ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+		if (ans != HAL_OK || strcmp(answer_bytes, "OK"))
+			mustDisconnect = 1;
+		else {
+
+			for (int i = 0; i < 4; i++)
+				send_UART(&data_dac.data_as_bytes[i], 1);
+
+			command = 'A';
+			send_UART(&command, 1);
+
+			memset(answer_bytes, 0, 5);
+			ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+			if (ans != HAL_OK || strcmp(answer_bytes, "OK"))
+				mustDisconnect = 1;
+			else {
+
+				for (int i = 0; i < 4; i++)
+					send_UART(&data_ee.data_as_bytes[i], 1);
+
+				setDAC_Status(DAC_QUAD);
+
+				buttons[DAC_SIN].isEnabled = 0;
+				buttons[DAC_TRI].isEnabled = 0;
+				buttons[DAC_QUAD].isEnabled = 0;
+				buttons[DAC_SET].isEnabled = 0;
+				buttons[DAC_STOP].isEnabled = 1;
+				button_home.isEnabled = 0;
+
+				placeButton(buttons[DAC_SIN], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_QUAD], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_TRI], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_SET], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+				placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+
+				dac_isDrawing = 1;
+			}
+		}
+
+	}
+	else mustDisconnect = 1;
+
+	if (mustDisconnect){
+
+		dac_isDrawing = 0;
+		isConnected = 0;
+		print_initial_screen();
+	}
 
 }
 
 void DAC_Tri_handler (void* button) {
 
-	setDAC_Status(DAC_TRI);
+	uint8_t command = DAC_TRI_CMD, answer_bytes[5], mustDisconnect = 0;
+	union EEPROM_data data_ee;
+	union DAC_data data_dac;
+
+	send_UART(&command, 1);
+
+	memset(answer_bytes, 0, 5);
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 4, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "SEND")) {
+
+		data_ee.data_as_float = dac_set_new_value;
+		data_dac.data_as_uint32 = dac_period;
+
+		command = 'P';
+		send_UART(&command, 1);
+
+		memset(answer_bytes, 0, 5);
+		ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+		if (ans != HAL_OK || strcmp(answer_bytes, "OK"))
+			mustDisconnect = 1;
+		else {
+
+			for (int i = 0; i < 4; i++)
+				send_UART(&data_dac.data_as_bytes[i], 1);
+
+			command = 'A';
+			send_UART(&command, 1);
+
+			memset(answer_bytes, 0, 5);
+			ans = HAL_UART_Receive(&huart6, answer_bytes, 2, 4000);
+
+			if (ans != HAL_OK || strcmp(answer_bytes, "OK"))
+				mustDisconnect = 1;
+			else {
+
+				for (int i = 0; i < 4; i++)
+					send_UART(&data_ee.data_as_bytes[i], 1);
+
+				setDAC_Status(DAC_TRI);
+
+				buttons[DAC_SIN].isEnabled = 0;
+				buttons[DAC_TRI].isEnabled = 0;
+				buttons[DAC_QUAD].isEnabled = 0;
+				buttons[DAC_SET].isEnabled = 0;
+				buttons[DAC_STOP].isEnabled = 1;
+				button_home.isEnabled = 0;
+
+				placeButton(buttons[DAC_SIN], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_QUAD], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_TRI], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_SET], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_WIDTH, BUTTON_HEIGTH);
+				placeButton(buttons[DAC_STOP], LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+				placeButton(button_home, LCD_COLOR_LIGHTBLUE, LCD_COLOR_WHITE, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+
+				dac_isDrawing = 1;
+			}
+		}
+
+	}
+	else mustDisconnect = 1;
+
+	if (mustDisconnect){
+
+		dac_isDrawing = 0;
+		isConnected = 0;
+		print_initial_screen();
+	}
 
 }
 
 void DAC_Set_handler (void* button) {
+
+	uint8_t command = DAC_SET_CMD, answer_bytes[5], mustDisconnect = 0;
+	union EEPROM_data data_ee;
+
+	dac_isDrawing = 0;
+
+	send_UART(&command, 1);
+
+	memset(answer_bytes, 0, 5);
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 4, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "SEND")) {
+
+		data_ee.data_as_float = dac_set_new_value;
+
+		for (int i = 0; i < 4; i++)
+			send_UART(&data_ee.data_as_bytes[i], 1);
+
+	}
+	else mustDisconnect = 1;
+
+	if (mustDisconnect){
+
+		isConnected = 0;
+		print_initial_screen();
+	}
 
 	setDAC_Status(DAC_SET);
 
@@ -1381,32 +1749,112 @@ void DAC_Set_handler (void* button) {
 
 void ADC_Temp_handler (void* button) {
 
-	union EEPROM_data teste;
-	teste.data_as_float = 23.4;
+	uint8_t command = ADC_TEMP_CMD, answer_bytes[5], mustDisconnect = 0;
+	union EEPROM_data data_ee;
 
-	setADC_Temperature(teste);
+	send_UART(&command, 1);
 
+	memset(answer_bytes, 0, 5);
+
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 4, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "SEND")) {
+
+		ans = HAL_UART_Receive(&huart6, data_ee.data_as_bytes, 4, 4000);
+
+		if (ans == HAL_OK) {
+			setADC_Temperature( data_ee);
+			adc_temp = data_ee.data_as_float;
+		}
+		else mustDisconnect = 1;
+
+
+	}
+	else mustDisconnect = 1;
+
+	if (mustDisconnect){
+
+		isConnected = 0;
+		print_initial_screen();
+	}
 }
 
 void ADC_Potent_handler (void* button) {
 
-	union EEPROM_data teste;
-	teste.data_as_float = 2.4;
+	uint8_t command = ADC_POT_CMD, answer_bytes[5], mustDisconnect = 0;
+	union EEPROM_data data_ee;
 
-	setADC_Tension(teste);
+	send_UART(&command, 1);
 
+	memset(answer_bytes, 0, 5);
+
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 4, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "SEND")) {
+
+		ans = HAL_UART_Receive(&huart6, data_ee.data_as_bytes, 4, 4000);
+
+		if (ans == HAL_OK) {
+			setADC_Tension( data_ee);
+			adc_pot = data_ee.data_as_float;
+		}
+		else mustDisconnect = 1;
+
+
+	}
+	else mustDisconnect = 1;
+
+	if (mustDisconnect){
+
+		isConnected = 0;
+		print_initial_screen();
+	}
 }
 
 void ADC_Pressure_handler (void* button) {
 
 	union EEPROM_data teste;
-	teste.data_as_float = 21.4;
+	teste.data_as_float = adc_press;
 
 	setADC_Pressure(teste);
 
 }
 
 void ADC_Bluetooth_handler (void* button) {
+
+	uint8_t command = ADC_BLUE_CMD, answer_bytes[5], mustDisconnect = 0;
+	union EEPROM_data data_ee;
+
+	send_UART(&command, 1);
+
+	memset(answer_bytes, 0, 5);
+
+	HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, answer_bytes, 4, 4000);
+
+	if (ans == HAL_OK && !strcmp(answer_bytes, "SEND")) {
+
+		data_ee.data_as_float = adc_temp;
+
+		for (int i = 0; i < 4; i++)
+			send_UART(&data_ee.data_as_bytes[i], 1);
+
+		data_ee.data_as_float = adc_pot;
+
+		for (int i = 0; i < 4; i++)
+			send_UART(&data_ee.data_as_bytes[i], 1);
+
+		data_ee.data_as_float = adc_press;
+		for (int i = 0; i < 4; i++)
+			send_UART(&data_ee.data_as_bytes[i], 1);
+
+	}
+	else mustDisconnect = 1;
+
+	if (mustDisconnect){
+
+		isConnected = 0;
+		print_initial_screen();
+	}
 
 
 }
@@ -1466,6 +1914,23 @@ void init_interface(void) {
 	buttons[EEPROM_STATE].isEnabled = 0;
 	buttons[EEPROM_STATE].buttonPressedHandler = EEPROM_List_Handler;
 	memcpy(buttons[EEPROM_STATE].title, "List Values.\0", 13);
+
+	buttons[ACCEL_START].x_pos = ACCEL_START_X;
+	buttons[ACCEL_START].y_pos = ACCEL_START_Y;
+	buttons[ACCEL_START].isPushed = 0;
+	buttons[ACCEL_START].hasBeenAcknowledged = 0;
+	buttons[ACCEL_START].isEnabled = 0;
+	buttons[ACCEL_START].buttonPressedHandler = ACCEL_Start_Handler;
+	memcpy(buttons[ACCEL_START].title, "Start!\0", 6);
+
+	buttons[ACCEL_STOP].x_pos = ACCEL_STOP_X;
+	buttons[ACCEL_STOP].y_pos = ACCEL_STOP_Y;
+	buttons[ACCEL_STOP].isPushed = 0;
+	buttons[ACCEL_STOP].hasBeenAcknowledged = 0;
+	buttons[ACCEL_STOP].buttonPressedHandler = ACCEL_Stop_Handler;
+	memcpy(buttons[ACCEL_STOP].title, "Stop!\0", 6);
+	buttons[ACCEL_STOP].isEnabled = 0;
+
 
 
 	buttons[ADC_TEMP_READ].x_pos = ADC_TEMP_READ_X;
@@ -1565,6 +2030,14 @@ void init_interface(void) {
 	buttons[DAC_TENSION_INCREASE].buttonPressedHandler = DAC_Increase_Tension_handler;
 	memcpy(buttons[DAC_TENSION_INCREASE].title, ">>\0", 3);
 
+	buttons[DAC_STOP].x_pos = DAC_STOP_X;
+	buttons[DAC_STOP].y_pos = DAC_STOP_Y;
+	buttons[DAC_STOP].isPushed = 0;
+	buttons[DAC_STOP].hasBeenAcknowledged = 0;
+	buttons[DAC_STOP].isEnabled = 0;
+	buttons[DAC_STOP].buttonPressedHandler = DAC_Stop_handler;
+	memcpy(buttons[DAC_STOP].title, "STOP!\0", 6);
+
 
 	buttons[BUTTON_CONNECT].x_pos = CONNECT_BUTTON_X;
 	buttons[BUTTON_CONNECT].y_pos = CONNECT_BUTTON_Y;
@@ -1589,6 +2062,7 @@ void init_interface(void) {
 	pboards[0].y = 90;
 
 	pboards[1].board.module = TEMP;
+	pboards[1].draw_initial_screen = draw_ACCEL;
 	pboards[1].x = 25;
 	pboards[1].y = 180;
 

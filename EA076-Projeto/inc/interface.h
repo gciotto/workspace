@@ -13,7 +13,7 @@
 #include "stm32746g_discovery.h"
 #include "cmsis_os.h"
 
-#define NUMBER_OF_BUTTONS 	22
+#define NUMBER_OF_BUTTONS 	23
 #define NUMBER_OF_BOARDS	4
 
 #define STATUS_Y			60
@@ -40,6 +40,14 @@
 
 #define EEPROM_STATE_X		10
 #define EEPROM_STATE_Y		225
+
+/* ACCEL. Buttons  */
+#define ACCEL_START_X		10
+#define ACCEL_START_Y		90
+
+#define ACCEL_STOP_X		10
+#define ACCEL_STOP_Y		135
+
 
 /* ADC Buttons */
 #define ADC_TEMP_READ_X			25
@@ -69,30 +77,35 @@
 #define DAC_TENSION_DECREASE_Y 170
 #define DAC_TENSION_INCREASE_X 430
 #define DAC_TENSION_INCREASE_Y 170
+#define DAC_STOP_X 380
+#define DAC_STOP_Y 225
 
 #define CONNECT_BUTTON_X	340
 #define CONNECT_BUTTON_Y	STATUS_Y - 8
 
 enum command {
-	NORMAL 				= 0x00,
-	ADJUST,
-	IDENT,
-	END_IDENT,
-	BOOT,
-	MSG_CONFIRM,
-	RAMP_INIT 			= 0xC8,
-	RAMP_BLOCK,
-	RAMP_ASK_BLOCK,
-	RAMP_ENABLE,
-	RAMP_ABORT,
-	RAMP_ABORTED,
-	RAMP_COMPLETED,
-	ENABLE_READINGS,
-	RAMP_ENABLE_CYCLIC,
-	CYCLE_ENABLE 		= 0xE0,
-	CYCLE_ABORT,
-	CYCLE_ABORTED,
-	CYCLE_COMPLETED
+	CONNECT_CMD = 'C',
+	DISCONNECT_CMD,
+	EEPROM_START_CMD = 0x10,
+	EEPROM_STOP_CMD,
+	EEPROM_STATS_CMD,
+	EEPROM_STATUS_CMD,
+
+	ADC_TEMP_CMD = 0x50,
+	ADC_POT_CMD,
+	ADC_PRESS_CMD,
+	ADC_BLUE_CMD,
+	DAC_SIN_CMD = 0x60,
+	DAC_TRI_CMD,
+	DAC_QUAD_CMD,
+	DAC_SET_CMD,
+	DAC_STOP_CMD,
+	DAC_PERIOD_INCREASE_CMD,
+	DAC_PERIOD_DECREASE_CMD,
+	DAC_TENSION_INCREASE_CMD,
+	DAC_TENSION_DECREASE_CMD,
+	ACCEL_START_CMD = 0x80,
+	ACCEL_STOP_CMD
 };
 
 enum connection_state {
@@ -106,6 +119,8 @@ enum button_index {
 	EEPROM_STOP,
 	EEPROM_STATS,
 	EEPROM_STATE,
+	ACCEL_START,
+	ACCEL_STOP,
 	ADC_TEMP_READ,
 	ADC_POT_READ,
 	ADC_PRESS_READ,
@@ -114,6 +129,7 @@ enum button_index {
 	DAC_TRI,
 	DAC_QUAD,
 	DAC_SET,
+	DAC_STOP,
 	DAC_PERIOD_INCREASE,
 	DAC_PERIOD_DECREASE,
 	DAC_TENSION_INCREASE,
@@ -125,7 +141,7 @@ enum button_index {
 enum screen_s {
 	BOARD_SELECTION,
 	EEPROM_SELECTED,
-	TEMP_SELECTED,
+	ACCEL_SELECTED,
 	DAC_SELECTED,
 	ADC_SELECTED
 };
@@ -138,6 +154,11 @@ enum EEPROM_status {
 union EEPROM_data {
 	uint8_t data_as_bytes[4];
 	float data_as_float;
+};
+
+union DAC_data {
+	uint8_t data_as_bytes[4];
+	uint32_t data_as_uint32;
 };
 
 enum screen_s aScreen;
@@ -184,15 +205,17 @@ typedef struct {
 } pboard_t;
 
 
+LTDC_HandleTypeDef hltdc;
+UART_HandleTypeDef huart6;
+
 button_t buttons[NUMBER_OF_BUTTONS], button_home;
 
 uint8_t pboards_c;
 pboard_t pboards [NUMBER_OF_BOARDS];
 
-uint8_t isConnected, isReady;
-
+uint8_t isConnected, isReady, isReadyToSend, hasReceivedByte, dac_isDrawing, isAccelerometerWorking, counterAccelerometerWorking;
 uint16_t dac_period;
-float dac_set_new_value;
+float dac_set_new_value, adc_temp, adc_pot, adc_press;
 
 pboard_t *selected_board;
 
@@ -216,5 +239,8 @@ void executeCommand(enum command command);
 void print_new_cycle();
 void print_new_ramp();
 void setSubTitle(char *title);
+void setACCEL_Z(union EEPROM_data z);
+void setACCEL_Y(union EEPROM_data y);
+void setACCEL_X(union EEPROM_data x);
 
 #endif /* INTERFACE_H_ */

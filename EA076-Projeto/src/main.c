@@ -40,9 +40,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-I2C_HandleTypeDef hi2c1;
-
-LTDC_HandleTypeDef hltdc;
 
 osThreadId defaultTaskHandle;
 
@@ -54,9 +51,12 @@ osThreadId defaultTaskHandle;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_I2C1_Init(void);
 static void MX_LTDC_Init(void);
+static void MX_USART6_UART_Init(void);
+void HAL_UART_MspInit(UART_HandleTypeDef *huart);
 void StartDefaultTask(void const * argument);
+
+
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -84,8 +84,8 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_I2C1_Init();
 	MX_LTDC_Init();
+	MX_USART6_UART_Init();
 
 	/* USER CODE BEGIN 2 */
 
@@ -137,7 +137,6 @@ int main(void)
 	/* USER CODE END 3 */
 
 }
-
 /** System Clock Configuration
  */
 void SystemClock_Config(void)
@@ -170,14 +169,14 @@ void SystemClock_Config(void)
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 	HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5);
 
-	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC|RCC_PERIPHCLK_I2C1;
+	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC|RCC_PERIPHCLK_USART6;
 	PeriphClkInitStruct.PLLSAI.PLLSAIN = 192;
 	PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
 	PeriphClkInitStruct.PLLSAI.PLLSAIQ = 2;
 	PeriphClkInitStruct.PLLSAI.PLLSAIP = RCC_PLLSAIP_DIV2;
 	PeriphClkInitStruct.PLLSAIDivQ = 1;
 	PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_2;
-	PeriphClkInitStruct.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
+	PeriphClkInitStruct.Usart6ClockSelection = RCC_USART6CLKSOURCE_PCLK2;
 	HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
 
 	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
@@ -186,27 +185,6 @@ void SystemClock_Config(void)
 
 	/* SysTick_IRQn interrupt configuration */
 	HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
-}
-
-/* I2C1 init function */
-void MX_I2C1_Init(void)
-{
-
-	hi2c1.Instance = I2C1;
-	hi2c1.Init.Timing = 0x00A0A3F7;
-	hi2c1.Init.OwnAddress1 = 0;
-	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-	hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-	hi2c1.Init.OwnAddress2 = 0;
-	hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-	hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-	hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-	HAL_I2C_Init(&hi2c1);
-
-	/**Configure Analogue filter
-	 */
-	HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE);
-
 }
 
 /* LTDC init function */
@@ -270,7 +248,89 @@ void MX_LTDC_Init(void)
 
 }
 
-/** Configure pins as 
+/* Definition for USARTx clock resources */
+#define USARTx                           USART6
+#define USARTx_CLK_ENABLE()              __USART6_CLK_ENABLE()
+#define USARTx_RX_GPIO_CLK_ENABLE()      __GPIOC_CLK_ENABLE()
+#define USARTx_TX_GPIO_CLK_ENABLE()      __GPIOC_CLK_ENABLE()
+
+#define USARTx_FORCE_RESET()             __USART6_FORCE_RESET()
+#define USARTx_RELEASE_RESET()           __USART6_RELEASE_RESET()
+
+/* Definition for USARTx Pins */
+#define USARTx_TX_PIN                    GPIO_PIN_6
+#define USARTx_TX_GPIO_PORT              GPIOC
+#define USARTx_TX_AF                     GPIO_AF8_USART6
+#define USARTx_RX_PIN                    GPIO_PIN_7
+#define USARTx_RX_GPIO_PORT              GPIOC
+#define USARTx_RX_AF                     GPIO_AF8_USART6
+
+/* Definition for USARTx's NVIC */
+#define USARTx_IRQn                      USART6_IRQn
+#define USARTx_IRQHandler                USART6_IRQHandler
+
+/* @brief UART MSP Initialization/
+ *        This function configures the hardware resources used in this example:
+ *           - Peripheral's clock enable
+ *           - Peripheral's GPIO Configuration
+ *           - NVIC configuration for UART interrupt request enable
+ * @param huart: UART handle pointer
+ * @retval None
+ */
+void HAL_UART_MspInit(UART_HandleTypeDef *huart)
+{
+	GPIO_InitTypeDef  GPIO_InitStruct;
+
+	/*##-1- Enable peripherals and GPIO Clocks #################################*/
+	/* Enable GPIO TX/RX clock */
+	USARTx_TX_GPIO_CLK_ENABLE();
+	USARTx_RX_GPIO_CLK_ENABLE();
+
+	/* Enable USARTx clock */
+	USARTx_CLK_ENABLE();
+
+	/*##-2- Configure peripheral GPIO ##########################################*/
+	/* UART TX GPIO pin configuration  */
+	GPIO_InitStruct.Pin       = USARTx_TX_PIN;
+	GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull      = GPIO_PULLUP;
+	GPIO_InitStruct.Speed     = GPIO_SPEED_HIGH;
+	GPIO_InitStruct.Alternate = USARTx_TX_AF;
+
+	HAL_GPIO_Init(USARTx_TX_GPIO_PORT, &GPIO_InitStruct);
+
+	/* UART RX GPIO pin configuration  */
+	GPIO_InitStruct.Pin = USARTx_RX_PIN;
+	GPIO_InitStruct.Alternate = USARTx_RX_AF;
+
+	HAL_GPIO_Init(USARTx_RX_GPIO_PORT, &GPIO_InitStruct);
+
+	/*##-3- Configure the NVIC for UART ########################################*/
+	/* NVIC for USART */
+	HAL_NVIC_SetPriority(USARTx_IRQn, 0, 1);
+	HAL_NVIC_EnableIRQ(USARTx_IRQn);
+}
+
+
+/* USART6 init function */
+void MX_USART6_UART_Init(void)
+{
+
+	huart6.Instance = USART6;
+	huart6.Init.BaudRate = 4800;
+	huart6.Init.WordLength = UART_WORDLENGTH_8B;
+	huart6.Init.StopBits = UART_STOPBITS_1;
+	huart6.Init.Parity = UART_PARITY_NONE;
+	huart6.Init.Mode = UART_MODE_TX_RX;
+	huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	huart6.Init.OverSampling = UART_OVERSAMPLING_16;
+	huart6.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+	huart6.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+	HAL_UART_Init(&huart6);
+
+}
+
+/** Configure pins as
  * Analog
  * Input
  * Output
@@ -280,6 +340,7 @@ void MX_LTDC_Init(void)
      PG14   ------> ETH_TXD1
      PE1   ------> FMC_NBL1
      PE0   ------> FMC_NBL0
+     PB8   ------> I2C1_SCL
      PB5   ------> USB_OTG_HS_ULPI_D7
      PB4   ------> S_TIM3_CH1
      PD7   ------> SPDIFRX_IN0
@@ -288,6 +349,7 @@ void MX_LTDC_Init(void)
      PE5   ------> DCMI_D6
      PE6   ------> DCMI_D7
      PG13   ------> ETH_TXD0
+     PB9   ------> I2C1_SDA
      PB7   ------> USART1_RX
      PB6   ------> QUADSPI_BK1_NCS
      PG15   ------> FMC_SDNCAS
@@ -317,11 +379,9 @@ void MX_LTDC_Init(void)
      PA8   ------> S_TIM1_CH1
      PF2   ------> FMC_A2
      PC8   ------> SDMMC1_D0
-     PC7   ------> USART6_RX
      PF3   ------> FMC_A3
      PH4   ------> USB_OTG_HS_ULPI_NXT
      PG8   ------> FMC_SDCLK
-     PC6   ------> USART6_TX
      PF4   ------> FMC_A4
      PH5   ------> FMC_SDNWE
      PH3   ------> FMC_SDNE0
@@ -406,6 +466,18 @@ void MX_GPIO_Init(void)
 	__HAL_RCC_GPIOF_CLK_ENABLE();
 	__HAL_RCC_GPIOH_CLK_ENABLE();
 
+
+	GPIO_InitStruct.Pin = ARDUINO_TX_D1_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+	HAL_GPIO_Init(ARDUINO_TX_D1_GPIO_Port, &GPIO_InitStruct);
+
+	GPIO_InitStruct.Pin = ARDUINO_RX_D0_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(ARDUINO_RX_D0_GPIO_Port, &GPIO_InitStruct);
+
 	/*Configure GPIO pin : OTG_HS_OverCurrent_Pin */
 	GPIO_InitStruct.Pin = OTG_HS_OverCurrent_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
@@ -429,7 +501,7 @@ void MX_GPIO_Init(void)
 	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
 	/*Configure GPIO pins : PE1 PE0 FMC_D5_Pin FMC_D6_Pin
-                           FMC_D8_Pin FMC_D11_Pin FMC_D4_Pin FMC_D7_Pin 
+                           FMC_D8_Pin FMC_D11_Pin FMC_D4_Pin FMC_D7_Pin
                            FMC_D9_Pin FMC_D12_Pin FMC_D10_Pin */
 	GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_0|FMC_D5_Pin|FMC_D6_Pin
 			|FMC_D8_Pin|FMC_D11_Pin|FMC_D4_Pin|FMC_D7_Pin
@@ -439,6 +511,14 @@ void MX_GPIO_Init(void)
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
 	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : ARDUINO_SCL_D15_Pin ARDUINO_SDA_D14_Pin */
+	GPIO_InitStruct.Pin = ARDUINO_SCL_D15_Pin|ARDUINO_SDA_D14_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/*Configure GPIO pins : ULPI_D7_Pin ULPI_D6_Pin ULPI_D5_Pin ULPI_D3_Pin
                            ULPI_D2_Pin ULPI_D1_Pin ULPI_D4_Pin */
@@ -593,7 +673,7 @@ void MX_GPIO_Init(void)
 	HAL_GPIO_Init(uSD_Detect_GPIO_Port, &GPIO_InitStruct);
 
 	/*Configure GPIO pins : PF0 PF1 PF2 PF3
-                           PF4 PF5 PF12 PF15 
+                           PF4 PF5 PF12 PF15
                            PF13 PF14 PF11 */
 	GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
 			|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_12|GPIO_PIN_15
@@ -693,14 +773,6 @@ void MX_GPIO_Init(void)
 	GPIO_InitStruct.Mode = GPIO_MODE_EVT_RISING;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(LCD_INT_GPIO_Port, &GPIO_InitStruct);
-
-	/*Configure GPIO pins : ARDUINO_RX_D0_Pin ARDUINO_TX_D1_Pin */
-	GPIO_InitStruct.Pin = ARDUINO_RX_D0_Pin|ARDUINO_TX_D1_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	GPIO_InitStruct.Alternate = GPIO_AF8_USART6;
-	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 	/*Configure GPIO pin : ULPI_NXT_Pin */
 	GPIO_InitStruct.Pin = ULPI_NXT_Pin;
@@ -850,8 +922,6 @@ void MX_GPIO_Init(void)
 
 }
 
-/* USER CODE BEGIN 4 */
-
 /* USER CODE END 4 */
 
 /* StartDefaultTask function */
@@ -860,6 +930,8 @@ void StartDefaultTask(void const * argument)
 	init_interface();
 
 	isConnected = 0;
+	isReadyToSend = 1;
+	hasReceivedByte = 0;
 
 	/* USER CODE BEGIN 2 */
 
@@ -869,6 +941,7 @@ void StartDefaultTask(void const * argument)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+
 	while (1) {
 
 		/* USER CODE END WHILE */
@@ -879,12 +952,8 @@ void StartDefaultTask(void const * argument)
 
 		if (aScreen == BOARD_SELECTION) {
 
-			/* Polling */
-//			if (isConnected)
-
-				for (int i = 0; i < 4; i++)
-					refreshBoardState(ts_event, &pboards[i]);
-
+			for (int i = 0; i < 4; i++)
+				refreshBoardState(ts_event, &pboards[i]);
 
 			refreshConnectState(ts_event);
 
@@ -897,10 +966,50 @@ void StartDefaultTask(void const * argument)
 			refreshButtonState(ts_event, &button_home, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
 
 		}
+		else if (aScreen == ACCEL_SELECTED){
+
+			for (int i = ACCEL_START; i <= ACCEL_STOP; i++ )
+				refreshButtonState(ts_event, &buttons[i], BUTTON_WIDTH, BUTTON_HEIGTH);
+
+			refreshButtonState(ts_event, &button_home, BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
+
+			if (isAccelerometerWorking && !counterAccelerometerWorking) {
+
+				uint8_t command = '>';
+				union EEPROM_data coord;
+
+				send_UART(&command, 1);
+
+				HAL_StatusTypeDef ans = HAL_UART_Receive(&huart6, coord.data_as_bytes, 4, 4000);
+
+				if (ans == HAL_OK)
+					setACCEL_X(coord);
+
+				send_UART(&command, 1);
+				ans = HAL_UART_Receive(&huart6, coord.data_as_bytes, 4, 4000);
+
+
+				if (ans == HAL_OK)
+					setACCEL_Y(coord);
+
+				send_UART(&command, 1);
+				ans = HAL_UART_Receive(&huart6, coord.data_as_bytes, 4, 4000);
+
+				if (ans == HAL_OK)
+					setACCEL_Z(coord);
+
+			}
+
+			osDelay(100);
+			counterAccelerometerWorking = (counterAccelerometerWorking + 1) % 10;
+
+		}
 		else if (aScreen == DAC_SELECTED){
 
 			for (int i = DAC_SIN; i <= DAC_SET; i++ )
 				refreshButtonState(ts_event, &buttons[i], BUTTON_WIDTH, BUTTON_HEIGTH);
+
+			refreshButtonState(ts_event, &buttons[DAC_STOP], BUTTON_CONNECT_WIDTH, BUTTON_HEIGTH);
 
 			for (int i = DAC_PERIOD_INCREASE; i <= DAC_TENSION_DECREASE; i++ )
 				refreshButtonState(ts_event, &buttons[i], BUTTON_INCREASE_W, BUTTON_INCREASE_H);
