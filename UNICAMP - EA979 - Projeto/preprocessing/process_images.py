@@ -301,6 +301,8 @@ if __name__ == '__main__':
         
         images_i = np.where(codes_features == i)
         
+        
+        
         learning_set_histograms_i = learning_set[images_i]
         
         whitenned_learning_set_histograms_i = spy.vq.whiten(learning_set_histograms_i)
