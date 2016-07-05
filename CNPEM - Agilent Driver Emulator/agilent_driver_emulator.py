@@ -5,15 +5,27 @@ import numpy as np
 from array import array
 import random
 
+'''
+  Agilent_Driver class virtualizes the behavior of a real Agilent vacuum pump. We use some fictitious data in order
+  to test the setup of the EPICS Stream Device software.
+
+  Another version was developed, using Qt framework. Refer to Agilent Qt Driver for further information.
+
+  Gustavo CIOTTO PINTON
+  CNPEM - LNLS 
+'''
 
 class Agilent_Driver():
     
+    # Initializes a new driver. It uses a serial object to send data through a virtual serial port. 
     def __init__(self):
         
-        self.serial_connection = serial.Serial("/dev/pts/5", 9600)
+        self.serial_connection = serial.Serial("/dev/pts/6", 9600)
         
         self.checksum_length = 1
         
+	# Builds fictitious data
+
         T = 100
         self.fan_temperature = [65. +  25. * math.cos(2* math.pi * i / T) for i in range (100)]
         self.fan_indice = 0
@@ -29,6 +41,7 @@ class Agilent_Driver():
         self.hv2_indice = 0
         
     
+    # Get next fan temperature
     def getFanTemperature(self):
         
         temp =  self.fan_temperature[self.fan_indice]
@@ -37,7 +50,7 @@ class Agilent_Driver():
         
         return temp
         
-    
+    # Verifies which command was received and prepares an answer
     def processCommand(self, recv_bytes):
         
         cmd = "%c%c%c" % (recv_bytes[2], recv_bytes[3], recv_bytes[4])
@@ -58,7 +71,7 @@ class Agilent_Driver():
                 print 'Reading HV1 Temperature... %4.3foC' % temp
                 self.hv1_indice = (self.hv1_indice + 1) % 1000
             
-            elif cmd == "802":
+            elif cmd == "802":  
                 
                 temp = self.hv2_temperature[self.hv2_indice]
                 print 'Reading HV2 Temperature... %4.3foC' % temp
@@ -82,6 +95,24 @@ class Agilent_Driver():
             print 'Reading Tension in CH1.... %05d' % vch1
             
             vch1_array = array('B', "%05d" % vch1)
+            
+            for x in vch1_array: s_array.append(x)
+        
+        elif cmd == '820':
+            
+            vch = np.int(2*math.log(random.randint(1, 7000)))
+            print 'Reading Tension in CH2.... %05d' % vch
+            
+            vch_array = array('B', "%05d" % vch)
+            
+            for x in vch_array: s_array.append(x)
+        
+        elif cmd == '811':
+            
+            i = math.cosh(random.randint(80, 100))
+            print 'Reading Current in CH1.... %05d' % i
+            
+            vch1_array = array('B', "%E" % i)
             
             for x in vch1_array: s_array.append(x)
         
@@ -132,7 +163,7 @@ class Agilent_Driver():
     
     def processRequest(self, data): pass
       
-      
+    # Start driver's operation. Waits for bytes and waits answers according to the received commands
     def start(self):
                
         print 'Listening Streaming Device...'
@@ -140,6 +171,7 @@ class Agilent_Driver():
 
             recv_message = []
 
+	    # Waits the beginning-of-message byte
             recv_byte = ord(self.serial_connection.read()[0])
             while recv_byte != 0x02: 
                 recv_byte = ord(self.serial_connection.read()[0])
@@ -148,6 +180,7 @@ class Agilent_Driver():
             
             recv_message.append(np.uint8(0x02))
             
+	    # Gets bytes until it receives a 0x03 byte
             recv_byte = ord(self.serial_connection.read()[0])
             while recv_byte != 0x03:
                 
@@ -178,7 +211,7 @@ class Agilent_Driver():
         print 'Exiting thread...'
 
     
-
+# Builds and starts driver.
 if __name__ == "__main__": 
     
     driver = Agilent_Driver()
