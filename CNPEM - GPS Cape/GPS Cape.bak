@@ -1,0 +1,444 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:stm32
+LIBS:stm8
+LIBS:GPS_Cape
+LIBS:Cape-485-BBB
+LIBS:Cape-485-BBB-cache
+LIBS:Controle
+LIBS:GPS Cape-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "GPS BBB Cape"
+Date "2016-06-30"
+Rev ""
+Comp "CNPEM - LNLS"
+Comment1 "Grupo de Controle"
+Comment2 "Gustavo Ciotto Pinton"
+Comment3 "Adafruit Ultimate GPS Breakout"
+Comment4 "GPS Cape para BeagleBone Black compatível com o módulo receptor "
+$EndDescr
+$Comp
+L R R101
+U 1 1 577534EF
+P 5250 1250
+F 0 "R101" V 5350 1200 50  0000 C CNN
+F 1 "200K" V 5250 1250 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 5180 1250 50  0001 C CNN
+F 3 "" H 5250 1250 50  0000 C CNN
+	1    5250 1250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L C C101
+U 1 1 5775352A
+P 5750 1250
+F 0 "C101" V 5850 1350 50  0000 L CNN
+F 1 "10n" V 5850 1050 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 5788 1100 50  0001 C CNN
+F 3 "" H 5750 1250 50  0000 C CNN
+	1    5750 1250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L +3.3V #PWR01
+U 1 1 57753699
+P 4650 1150
+F 0 "#PWR01" H 4650 1000 50  0001 C CNN
+F 1 "+3.3V" H 4650 1290 50  0000 C CNN
+F 2 "" H 4650 1150 50  0000 C CNN
+F 3 "" H 4650 1150 50  0000 C CNN
+	1    4650 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Adafruit_ultimate_GPS_breakout J101
+U 1 1 57753A05
+P 2850 1800
+F 0 "J101" H 2850 850 60  0000 C CNN
+F 1 "Adafruit_ultimate_GPS_breakout" H 2850 1850 60  0000 C CNN
+F 2 "Controle:Adafruit_Ultimate_GPS_Breakout" H 2900 1250 60  0001 C CNN
+F 3 "" H 2900 1250 60  0000 C CNN
+	1    2850 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L VCC #PWR02
+U 1 1 57751A67
+P 4950 1150
+F 0 "#PWR02" H 4950 1000 50  0001 C CNN
+F 1 "VCC" H 4950 1300 50  0000 C CNN
+F 2 "" H 4950 1150 50  0000 C CNN
+F 3 "" H 4950 1150 50  0000 C CNN
+	1    4950 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR03
+U 1 1 57752120
+P 6700 1250
+F 0 "#PWR03" H 6700 1000 50  0001 C CNN
+F 1 "GND" H 6700 1100 50  0000 C CNN
+F 2 "" H 6700 1250 50  0000 C CNN
+F 3 "" H 6700 1250 50  0000 C CNN
+	1    6700 1250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L 74LS123 U101
+U 1 1 57752C41
+P 5750 2200
+F 0 "U101" H 5750 2150 50  0000 C CNN
+F 1 "74LS123" H 5750 2050 50  0000 C CNN
+F 2 "Housings_DIP:DIP-16_W7.62mm" H 5750 2200 50  0001 C CNN
+F 3 "" H 5750 2200 50  0000 C CNN
+	1    5750 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR04
+U 1 1 57753283
+P 4500 1900
+F 0 "#PWR04" H 4500 1650 50  0001 C CNN
+F 1 "GND" H 4500 1750 50  0000 C CNN
+F 2 "" H 4500 1900 50  0000 C CNN
+F 3 "" H 4500 1900 50  0000 C CNN
+	1    4500 1900
+	1    0    0    -1  
+$EndComp
+Text Label 5000 2000 2    60   ~ 0
+PPS
+Text Label 3300 2550 0    60   ~ 0
+PPS
+Text Notes 5600 1000 0    60   ~ 0
+Alargador de Pulsos de PPS
+$Comp
+L C C102
+U 1 1 57753B5D
+P 6200 3000
+F 0 "C102" V 6150 3100 50  0000 L CNN
+F 1 "0.1u" V 6150 2750 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 6238 2850 50  0001 C CNN
+F 3 "" H 6200 3000 50  0000 C CNN
+	1    6200 3000
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR05
+U 1 1 57754733
+P 3800 2850
+F 0 "#PWR05" H 3800 2600 50  0001 C CNN
+F 1 "GND" H 3800 2700 50  0000 C CNN
+F 2 "" H 3800 2850 50  0000 C CNN
+F 3 "" H 3800 2850 50  0000 C CNN
+	1    3800 2850
+	1    0    0    -1  
+$EndComp
+Text Notes 2900 1000 0    60   ~ 0
+GPS Module Receiver
+$Comp
+L +3.3V #PWR06
+U 1 1 5775477D
+P 3750 1300
+F 0 "#PWR06" H 3750 1150 50  0001 C CNN
+F 1 "+3.3V" H 3750 1440 50  0000 C CNN
+F 2 "" H 3750 1300 50  0000 C CNN
+F 3 "" H 3750 1300 50  0000 C CNN
+	1    3750 1300
+	1    0    0    -1  
+$EndComp
+NoConn ~ 2350 1950
+$Comp
+L CP C103
+U 1 1 57754892
+P 1800 2500
+F 0 "C103" H 1825 2600 50  0000 L CNN
+F 1 "1.0" H 1825 2400 50  0000 L CNN
+F 2 "Controle:SuperCap_pads" H 1838 2350 50  0001 C CNN
+F 3 "" H 1800 2500 50  0000 C CNN
+	1    1800 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L D D101
+U 1 1 57754A32
+P 1800 1650
+F 0 "D101" H 1800 1750 50  0000 C CNN
+F 1 "D" H 1800 1550 50  0000 C CNN
+F 2 "LEDs:LED_0805" H 1800 1650 50  0001 C CNN
+F 3 "" H 1800 1650 50  0000 C CNN
+	1    1800 1650
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R102
+U 1 1 57754BB1
+P 1800 2050
+F 0 "R102" V 1880 2050 50  0000 C CNN
+F 1 "100" V 1800 2050 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1730 2050 50  0001 C CNN
+F 3 "" H 1800 2050 50  0000 C CNN
+	1    1800 2050
+	1    0    0    -1  
+$EndComp
+NoConn ~ 2350 2400
+NoConn ~ 6500 2500
+NoConn ~ 7700 3150
+NoConn ~ 7700 3050
+NoConn ~ 8200 3150
+NoConn ~ 8200 3050
+NoConn ~ 8200 2950
+NoConn ~ 8200 2850
+NoConn ~ 8200 2750
+NoConn ~ 7700 2950
+NoConn ~ 7700 2850
+NoConn ~ 7700 2750
+NoConn ~ 7700 2650
+NoConn ~ 8200 2650
+NoConn ~ 8200 2550
+NoConn ~ 8200 2450
+NoConn ~ 7700 2550
+NoConn ~ 7700 2450
+NoConn ~ 7700 2350
+NoConn ~ 7700 2250
+NoConn ~ 8200 2350
+NoConn ~ 8200 2250
+NoConn ~ 8200 2150
+NoConn ~ 7700 2150
+NoConn ~ 7700 2050
+NoConn ~ 8200 2050
+NoConn ~ 8200 1950
+NoConn ~ 7700 1950
+NoConn ~ 7700 1850
+NoConn ~ 8200 1850
+NoConn ~ 8200 1750
+NoConn ~ 7700 1750
+NoConn ~ 7700 1650
+NoConn ~ 8200 1650
+NoConn ~ 8200 1550
+NoConn ~ 8200 1350
+NoConn ~ 8200 1250
+NoConn ~ 7700 1350
+NoConn ~ 7700 1250
+NoConn ~ 8200 1150
+NoConn ~ 7700 1150
+Text Label 3300 1950 0    60   ~ 0
+TX_GPS
+Text Label 3300 2100 0    60   ~ 0
+RX_GPS
+Text Label 7700 1450 2    60   ~ 0
+TX_GPS
+Text Label 7700 1550 2    60   ~ 0
+RX_GPS
+Text Label 6500 1900 0    60   ~ 0
+PPS_ENL
+$Comp
+L Jumper_NC_Small JP102
+U 1 1 57758151
+P 8450 1600
+F 0 "JP102" H 8450 1680 50  0000 C CNN
+F 1 "Jumper_NC_Small" H 8460 1540 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02" H 8450 1600 50  0001 C CNN
+F 3 "" H 8450 1600 50  0000 C CNN
+	1    8450 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Jumper_NO_Small JP101
+U 1 1 577581B4
+P 8450 1450
+F 0 "JP101" H 8450 1530 50  0000 C CNN
+F 1 "Jumper_NO_Small" H 8460 1390 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02" H 8450 1450 50  0001 C CNN
+F 3 "" H 8450 1450 50  0000 C CNN
+	1    8450 1450
+	1    0    0    -1  
+$EndComp
+Text Label 8550 1450 0    60   ~ 0
+PPS
+Text Label 8550 1600 0    60   ~ 0
+PPS_ENL
+$Comp
+L VCC #PWR07
+U 1 1 5775DB8D
+P 9050 1100
+F 0 "#PWR07" H 9050 950 50  0001 C CNN
+F 1 "VCC" H 9050 1250 50  0000 C CNN
+F 2 "" H 9050 1100 50  0000 C CNN
+F 3 "" H 9050 1100 50  0000 C CNN
+	1    9050 1100
+	-1   0    0    1   
+$EndComp
+$Comp
+L PWR_FLAG #FLG08
+U 1 1 57768B71
+P 8650 950
+F 0 "#FLG08" H 8650 1045 50  0001 C CNN
+F 1 "PWR_FLAG" H 8650 1130 50  0000 C CNN
+F 2 "" H 8650 950 50  0000 C CNN
+F 3 "" H 8650 950 50  0000 C CNN
+	1    8650 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG09
+U 1 1 577694FB
+P 8750 1050
+F 0 "#FLG09" H 8750 1145 50  0001 C CNN
+F 1 "PWR_FLAG" H 8750 1230 50  0000 C CNN
+F 2 "" H 8750 1050 50  0000 C CNN
+F 3 "" H 8750 1050 50  0000 C CNN
+	1    8750 1050
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR010
+U 1 1 5776B4BF
+P 8950 900
+F 0 "#PWR010" H 8950 650 50  0001 C CNN
+F 1 "GND" H 8950 750 50  0000 C CNN
+F 2 "" H 8950 900 50  0000 C CNN
+F 3 "" H 8950 900 50  0000 C CNN
+	1    8950 900 
+	-1   0    0    1   
+$EndComp
+NoConn ~ 7700 950 
+NoConn ~ 7700 1050
+Wire Wire Line
+	4650 1250 5100 1250
+Wire Wire Line
+	4650 1150 4650 3000
+Wire Wire Line
+	5400 1250 5600 1250
+Wire Wire Line
+	5900 1250 6700 1250
+Wire Wire Line
+	5550 1400 5550 1250
+Connection ~ 5550 1250
+Wire Notes Line
+	4350 3150 6950 3150
+Wire Notes Line
+	6950 3150 6950 900 
+Wire Notes Line
+	6950 900  4350 900 
+Wire Wire Line
+	4950 1150 4950 1250
+Connection ~ 4950 1250
+Wire Wire Line
+	5950 1400 5950 1250
+Connection ~ 5950 1250
+Wire Wire Line
+	4500 1900 4500 1850
+Wire Wire Line
+	4500 1850 5000 1850
+Wire Notes Line
+	1450 900  1450 3150
+Wire Notes Line
+	1450 3150 4050 3150
+Wire Notes Line
+	1450 900  4050 900 
+Wire Wire Line
+	4650 3000 6050 3000
+Connection ~ 4650 1250
+Connection ~ 5750 3000
+Wire Wire Line
+	6350 3000 6550 3000
+Wire Wire Line
+	6550 3000 6550 1250
+Connection ~ 6550 1250
+Wire Notes Line
+	4350 900  4350 3150
+Wire Wire Line
+	3300 2250 3800 2250
+Wire Wire Line
+	3800 2250 3800 2850
+Wire Wire Line
+	3750 2400 3300 2400
+Wire Wire Line
+	1800 2650 1800 2800
+Wire Wire Line
+	1800 2800 3800 2800
+Connection ~ 3800 2800
+Wire Wire Line
+	2350 2250 1800 2250
+Connection ~ 1800 2250
+Wire Wire Line
+	1800 1900 1800 1800
+Wire Wire Line
+	1800 1500 1800 1400
+Wire Wire Line
+	1800 2200 1800 2350
+Wire Wire Line
+	2350 2100 2100 2100
+Wire Wire Line
+	2100 2100 2100 1400
+Connection ~ 2100 1400
+Wire Notes Line
+	4050 900  4050 3150
+Wire Wire Line
+	3750 1300 3750 2400
+Wire Wire Line
+	1800 1400 3750 1400
+Connection ~ 3750 1400
+Wire Wire Line
+	8200 1450 8350 1450
+Wire Wire Line
+	8350 1600 8300 1600
+Wire Wire Line
+	8300 1600 8300 1450
+Connection ~ 8300 1450
+Wire Wire Line
+	9050 1050 9050 1100
+Wire Wire Line
+	8950 950  8950 900 
+$Comp
+L BeagleBone Beagle101
+U 2 1 5775593F
+P 7950 2050
+F 0 "Beagle101" H 7950 3300 50  0000 C CNN
+F 1 "BeagleBone" H 8100 800 50  0000 C CNN
+F 2 "Controle:BEAGLEBONEBLACK" H 7950 950 60  0001 C CNN
+F 3 "" H 7950 950 60  0000 C CNN
+	2    7950 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8200 1050 9050 1050
+Connection ~ 8750 1050
+Wire Wire Line
+	8200 950  8950 950 
+Wire Wire Line
+	8200 900  8200 950 
+Connection ~ 8650 950 
+$EndSCHEMATC
