@@ -72,6 +72,7 @@ static int ksocket_send(unsigned char *buf, int len);
 static int init_network(void);
 static void release_socket(void);
 
+/* Changes a thread policy and priority */
 int set_priority() {
 
 	struct task_struct *current_task = current;
@@ -93,10 +94,8 @@ int set_priority() {
 
 }
 
-/*
- * init_GPIO48 inicializa e prepara o pino P9_15 como entrada.
- * Tal pino sera a entrada do trigger de mudanca de estados.
- * */
+/* init_GPIO48 initializes and prepares pin P9_15 as input.
+   Such pin is the trigger source for state changes. */
 static int init_GPIO48(void) {
 
 	int result;
@@ -130,9 +129,8 @@ static int init_GPIO48(void) {
 
 }
 
-/* init_GPIO67 configura o pino P8_10 como saida. Esse pino sera utilizado para
- * indicar uma mudanca de estado, ou seja, uma mudanca de subida de borda foi detectada
- * no pino P9_15. */
+/* init_GPIO67 configures pin P8_10 as output. This pin will be used to
+ * show a state change, that is, a rising edge was detected. */
 static int init_GPIO67(void) {
 
 	int result;
@@ -156,9 +154,7 @@ static int init_GPIO67(void) {
 
 }
 
-/* Funcao de tratamento da interrupcao gerada quando uma subida de borda eh detectada
- * no pino P9_15.
- * */
+/* Handler function generated when a rising edge is detected on pin P9_15. */
 static irqreturn_t gpio_irq_handler( int irq, void *dev_id) {
 
 	//printk(KERN_INFO "GPIO_TEST: Interrupt! (button state is %d)\n", gpio_get_value(gpioButton));
@@ -172,6 +168,7 @@ static irqreturn_t gpio_irq_handler( int irq, void *dev_id) {
 
 }
 
+/* Initialiazes resources used by this module */
 static int __init dmtimer_module_init(void){
 
 	int result_timer, result_network, result_gpio;
@@ -213,7 +210,7 @@ static int __init dmtimer_module_init(void){
 
 }
 
-/* Libera todos os recursos utilizados pelo modulo. */
+/* Free all resources used by the module. */
 static void __exit dmtimer_module_exit(void){
 
 	int result;
@@ -242,7 +239,7 @@ static void __exit dmtimer_module_exit(void){
 
 }
 
-/* Libera socket usado na transmissao de pacotes. */
+/* Releases socket used in packets transmission. */
 static void release_socket() {
 
 	printk (KERN_INFO "Releasing network socket...\n");
@@ -252,8 +249,8 @@ static void release_socket() {
 
 }
 
-/* Funcao tratadora de interrupcao associada ao DMTimer. Envia um pacote ao servidor
- * a cada chamada. */
+/* Function which handles DMTimer interruptions. Sends a packet to server
+ * each timer it is called. */
 static irqreturn_t dmtimer_irq_handler( int irq, void *dev_id) {
 
 	int status = 0, result;
@@ -325,7 +322,7 @@ static irqreturn_t dmtimer_irq_handler( int irq, void *dev_id) {
 	return IRQ_HANDLED;
 }
 
-/* Aloca recursos para a transmissao de pacotes UDP na rede. */
+/* Allocates resources to send UDP packets to the network. */
 static int init_network() {
 
 	int err;
@@ -369,7 +366,7 @@ static int init_network() {
 	return 0;
 }
 
-/* Funcao que constroi o pacote UDP e o envia. */
+/* Function that builds and sends UDP datagrams. */
 static int ksocket_send(unsigned char *buf, int len)
 {
 	struct msghdr msg;
@@ -396,7 +393,7 @@ static int ksocket_send(unsigned char *buf, int len)
 	return size;
 }
 
-/* Inicializacao do modulo de tempo. */
+/* Initialization of this module. */
 static int init_DMTimer() {
 
 	int result_source, result_PRESCALER, result_TLDR, result_ITR,

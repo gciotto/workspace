@@ -89,21 +89,18 @@ static int ksocket_send(unsigned char *buf, int len);
 static int init_network(void);
 static void release_socket(void);
 
+/* Thread which initializes resources */
 static void kthread_int_start(void) {
 
 	int result_timer, result_network, result_gpio;
 
-	//*((int*) data) = 0;
-
 	printk(KERN_INFO "KThread Interruption started.\n");
 
-	//allow_signal(SIGKILL);
-
+	/* Init socket*/
 	result_network = init_network();
 
 	if (result_network) {
 		printk(KERN_INFO "Network initialization failed.\n");
-		//*((int*) data) = result_network;
 		return;
 	}
 
@@ -111,7 +108,6 @@ static void kthread_int_start(void) {
 
 	if (result_gpio) {
 		printk(KERN_INFO "GPIO 67 initialization failed.\n");
-		//*((int*) data) = result_gpio;
 		return;
 	}
 
@@ -119,17 +115,16 @@ static void kthread_int_start(void) {
 
 	if (result_gpio) {
 		printk(KERN_INFO "GPIO 48 initialization failed.\n");
-		//*((int*) data) = result_gpio;
 		return;
 	}
 
 	printk(KERN_INFO "GPIO initialization succeeded.\n");
 
+	/* Init timer to pulse with 1ms period */
 	result_timer = init_DMTimer();
 
 	if (result_timer) {
 		printk(KERN_INFO "DMTimer initialization failed.\n");
-		//*((int*) data) = result_timer;
 		return;
 	}
 
@@ -137,6 +132,7 @@ static void kthread_int_start(void) {
 
 }
 
+/* Starts thread that sends packets to the server  */
 static void kthread_start(void) {
 
 	int result;
@@ -149,6 +145,7 @@ static void kthread_start(void) {
 		if (signal_pending(current))
 			break;
 
+		/* Verifies that circular buffer is not empty */
 		if (start != end) {
 
 			struct buff_element b_elem = circular_buffer[start];
@@ -156,12 +153,12 @@ static void kthread_start(void) {
 
 			/* Constroi buffer para envio.  */
 			sprintf(buffer, "%04d%d", b_elem.count, b_elem.send_change_cmd_flag);
-			//sprintf(buffer, "%04d%d", 0, 0);
 
 			if ((result = ksocket_send(buffer, strlen(buffer))) < 0)
 				printk(KERN_INFO "Sending UDP packet failed .\n");
 
 		}
+		/* Circular buffer is empty. Waits for a event to wake up this thread */
 		else wait_event(my_queue, (start != end) );
 
 	}
@@ -171,6 +168,7 @@ static void kthread_start(void) {
 
 }
 
+/* Changes a thread policy and priority */
 static int set_priority(struct task_struct *task, int priority, int policy){
 
 	struct sched_param sched_parameter;
@@ -185,16 +183,15 @@ static int set_priority(struct task_struct *task, int priority, int policy){
 	}
 
 	printk(KERN_INFO "Current PID #%d\n",task->pid);
-	printk(KERN_INFO "Current (SCHED_RR = %d) policy %d\n",SCHED_RR, task->policy);
+	printk(KERN_INFO "Current (SCHED_FIFO = %d) policy %d\n",SCHED_RR, task->policy);
 
 	return 0;
 
 }
 
-/*
- * init_GPIO48 inicializa e prepara o pino P9_15 como entrada.
- * Tal pino sera a entrada do trigger de mudanca de estados.
- * */
+
+/* init_GPIO48 initializes and prepares pin P9_15 as input.
+   Such pin is the trigger source for state changes. */
 static int init_GPIO_as_input(int gpio_id) {
 
 	int result;
@@ -208,6 +205,7 @@ static int init_GPIO_as_input(int gpio_id) {
 		return -ENODEV;
 	}
 
+	/* Reserves pin */
 	gpio_request(gpio_id, "sysfs");
 	gpio_direction_input(gpio_id);
 	gpio_set_debounce(gpio_id, 200);
@@ -217,6 +215,7 @@ static int init_GPIO_as_input(int gpio_id) {
 
 	printk(KERN_INFO "The button is mapped to IRQ: %d\n", irq_gpio_id);
 
+	/* Sets IRQ handler for interruptions */
 	result = request_irq(irq_gpio_id,   // The interrupt number requested
 			gpio_irq_handler, 			// The pointer to the handler function below
 			IRQF_TRIGGER_RISING,   		// Interrupt on rising edge (button press, not release)
@@ -228,9 +227,8 @@ static int init_GPIO_as_input(int gpio_id) {
 
 }
 
-/* init_GPIO67 configura o pino P8_10 como saida. Esse pino sera utilizado para
- * indicar uma mudanca de estado, ou seja, uma mudanca de subida de borda foi detectada
- * no pino P9_15. */
+/* init_GPIO67 configures pin P8_10 as output. This pin will be used to
+ * show a state change, that is, a rising edge was detected. */
 static int init_GPIO_as_output(int gpio_id) {
 
 	int result;
@@ -254,14 +252,12 @@ static int init_GPIO_as_output(int gpio_id) {
 
 }
 
-/* Funcao de tratamento da interrupcao gerada quando uma subida de borda eh detectada
- * no pino P9_15.
- * */
+/* Handler function generated when a rising edge is detected on pin P9_15. */
 static irqreturn_t gpio_irq_handler( int irq, void *dev_id) {
 
 	//printk(KERN_INFO "GPIO_TEST: Interrupt! (button state is %d)\n", gpio_get_value(gpioButton));
 
-	/* Atualiza variaveis que indicam que o evento ocorreu. */
+	/* Refreshes variables which indicate that event has happened */
 	send_change_cmd = 1;
 	tick_counter = MAX_TICKS;
 	tick_pressed = 1;
@@ -270,6 +266,7 @@ static irqreturn_t gpio_irq_handler( int irq, void *dev_id) {
 
 }
 
+/* Initialiazes resources used by this module */
 static int __init dmtimer_module_init(void){
 
 	int  result_kthread;
@@ -304,7 +301,7 @@ static int __init dmtimer_module_init(void){
 	return 0;
 }
 
-/* Libera todos os recursos utilizados pelo modulo. */
+/* Free all resources used by the module. */
 static void __exit dmtimer_module_exit(void){
 
 	int result;
@@ -346,7 +343,7 @@ static void __exit dmtimer_module_exit(void){
 
 }
 
-/* Libera socket usado na transmissao de pacotes. */
+/* Releases socket used in packets transmission. */
 static void release_socket() {
 
 	printk (KERN_INFO "Releasing network socket...\n");
@@ -356,8 +353,8 @@ static void release_socket() {
 
 }
 
-/* Funcao tratadora de interrupcao associada ao DMTimer. Envia um pacote ao servidor
- * a cada chamada. */
+/* Function which handles DMTimer interruptions. Sends a packet to server
+ * each timer it is called. */
 static irqreturn_t dmtimer_irq_handler( int irq, void *dev_id) {
 
 	int status = 0;
@@ -419,7 +416,7 @@ static irqreturn_t dmtimer_irq_handler( int irq, void *dev_id) {
 	return IRQ_HANDLED;
 }
 
-/* Aloca recursos para a transmissao de pacotes UDP na rede. */
+/* Allocates resources to send UDP packets to the network. */
 static int init_network() {
 
 	int err;
@@ -433,7 +430,7 @@ static int init_network() {
 		return -ENXIO;
 	}
 
-	/* Ativa envio broadcast.
+	/* Enables broadcasting
 	 * if ((err = sock_send->ops->setsockopt(sock_send, SOL_SOCKET, SO_BROADCAST, (char *) &broadcast, sizeof(int))) < 0) {
 		printk("Error, sock_setsockopt(SO_BROADCAST) failed!\n");
 		return err;
@@ -461,7 +458,7 @@ static int init_network() {
 	return 0;
 }
 
-/* Funcao que constroi o pacote UDP e o envia. */
+/* Function that builds and sends UDP datagrams. */
 static int ksocket_send(unsigned char *buf, int len)
 {
 	struct msghdr msg;
@@ -488,7 +485,7 @@ static int ksocket_send(unsigned char *buf, int len)
 	return size;
 }
 
-/* Inicializacao do modulo de tempo. */
+/* Initialization of this module. */
 static int init_DMTimer() {
 
 	int result_source, result_PRESCALER, result_TLDR, result_ITR,
