@@ -28,12 +28,12 @@
 
 #define v0_c  0, 0, 1
 #define v1_c  1, 0, 1
-#define v2_c  0, 0, 1
-#define v3_c  0, 0, 1
+#define v2_c  0, 1, 0
+#define v3_c  0, 1, 1
 #define v4_c  1, 1, 1
 
 
-static int camera = 0;
+static int camera = 40;
 
 void draw_pyramid (void) {
 
@@ -62,6 +62,25 @@ void draw_pyramid (void) {
 void init(void) {
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glShadeModel (GL_FLAT);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT1);
+	//glEnable(GL_DEPTH_TEST);
+
+	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat mat_shininess[] = { 2.0 };
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
+	GLfloat light1_ambient[] = { 0.1, 0.1, 0.1, 1.0 };
+	GLfloat light1_diffuse[] = { 0.0, 0.0, 1.0, 1.0 };
+	GLfloat light1_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light1_position[] = { 5.0, 2.0, 0.0, 1.0 };
+
+	glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
+	glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+
 }
 
 
@@ -86,6 +105,7 @@ void display(void) {
 	glRotatef ((GLfloat) camera, 0.0, 1.0, 0.0);
 	draw_pyramid();
 	glPopMatrix();
+
 
 	glutSwapBuffers();
 }
