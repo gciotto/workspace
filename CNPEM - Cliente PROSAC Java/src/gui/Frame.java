@@ -8,8 +8,8 @@ import main.Board;
 import main.Command;
 
 public class Frame extends JFrame {
-
-    public Frame() {
+/*
+    public Frame() {	
         //<editor-fold defaultstate="collapsed" desc=" GTK+ Look and feel ">
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -27,27 +27,29 @@ public class Frame extends JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        
     }
+*/
 
     public void createAndShowGUI() 
     {        
         initComponents();
         
+        /* Disables all commands before connection is established */
         this.commandsPanel.disableAll();
         this.setVisible(true);
-        //boardsPanel.clearBoards();
     }
 
     
     public void setBoardsList(List<Board> list)
     {
-        //boardsPanel.setBoardsList(list);
-        
+       
+    	/* Updates boards in BoardsFrame */
         for (Board b : list) {
         	this.boardsFrame.addBoard(b);
         }
         
+        /* Sets new window visibles */
         this.boardsFrame.setVisible(true);
     }
     
@@ -143,6 +145,9 @@ public class Frame extends JFrame {
         commandsPanel.setNormal();
     }
     
+    public void clearBoards(){
+    	this.boardsFrame.clearBoards();
+    }
     
     
     @SuppressWarnings("unchecked")

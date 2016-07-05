@@ -9,61 +9,74 @@ public class Canvas extends JPanel {
 
     private final int GAP = 8;
     
-    private int[] points;
+    private int[][] points;
+    private Color[] colors = {  Color.RED, Color.GREEN, Color.BLUE, Color.BLACK, 
+    							Color.CYAN, Color.MAGENTA, Color.ORANGE, Color.PINK };
     
-    private int current = 0;
-    private int skip = 0;
+    private int current[];
+    private int skip[];
+    private int channel_count;
+    private int skipped[];
     
-    private int skipped = 0;
+    private int max[], min[];
     
-    private int max = 4095, zero_y;
-    
-    public Canvas() {
+    public Canvas(int channel_c) {
         setBorder(BorderFactory.createLineBorder(Color.black));
+        this.channel_count = channel_c;
+        this.max = new int[channel_c];
+        this.min = new int[channel_c];
+        this.current = new int[channel_c];
+        this.skipped = new int[channel_c];
+        this.skip = new int[channel_c];
+        
+        for (int i = 0; i < channel_c; i++) {
+        	this.current[i] = 0;
+        	this.skip[i] = 0;
+        	this.skipped[i] = 0;
+        }
     }
     
-    public void setMax(int max) {
-        this.max = max;
+    public void setMaxOfChannel(int max, int index) {
+        this.max[index] = max;
     }
 
-    public void addMeasure(String m)
+    public void addMeasure(int channel, String m)
     {
         if(points == null)
             return;
         
-        if(skipped < skip)
+        if(skipped[channel] < skip[channel] )
         {
-            ++skipped;
+            ++skipped[channel];
             return;
         }
         
-        skipped = 0;
+        skipped[channel] = 0;
         
         int conv = Integer.parseInt(m);
         
-        conv = this.getHeight() - conv*(this.getHeight()-6)/max - 3;
+        conv = this.getHeight() - conv*(this.getHeight()-6)/this.max[channel] - 3;
         
-        if(current >= points.length)
-            current = 0;
-
-        points[current] = conv;
+        points[channel][current[channel]] = conv;
         
         for(int i = 1; i <= GAP; ++i)
-            points[(current+i) % points.length] = -1;
+            points[channel][(current[channel]+i) % points[channel].length] = -1;
         
-        current = (current + 1) % points.length;
+        current[channel] = (current[channel] + 1) % points[channel].length;
 
         this.repaint();
     }
     
-    public void setZero(int zero){
-    	this.zero_y = zero;
+    public void setMinOfChannel(int min, int index){
+    	this.min[index] = min;
     }
     
     public void setSkip(int skip)
     {
-        this.skip = skip;
-        this.skipped = 0;
+        for (int i = 0; i < this.channel_count; i++) {
+        	this.skip[i] = skip;
+        	this.skipped[i] = 0;
+        }
     }
     
     @Override
@@ -71,19 +84,21 @@ public class Canvas extends JPanel {
         super.paintComponent(g);       
 
         if(points == null)
-            points = new int[this.getWidth()];
+            points = new int[this.channel_count][this.getWidth()];
         
-        g.setColor(Color.GRAY);
-        g.drawLine(0, this.zero_y * this.getHeight() / this.max , this.getWidth(), this.zero_y * this.getHeight() / this.max);
-        
+        //g.setColor(Color.GRAY);
+        //g.drawLine(0, this.min * this.getHeight() / this.max , this.getWidth(), this.zero_y * this.getHeight() / this.max);
+               
         //g.drawLine(0, (int) (0.707*this.getHeight()), this.getWidth(), (int) (0.707*this.getHeight()));
         
-        g.setColor(Color.RED);
-
-        for(int i = 0; i < points.length - 1; ++i)
-            if(points[i] >= 0 && points[i+1] >= 0)
-                g.drawLine(i, points[i], i+1, points[i+1]);
-        
+        for (int j = 0; j < channel_count; j++) {
+        	
+	        g.setColor(colors[j]);
+	
+	        for(int i = 0; i < points[j].length - 1; ++i)
+	            if(points[j][i] >= 0 && points[j][i+1] >= 0)
+	                g.drawLine(i, points[j][i], i+1, points[j][i+1]);
+        }
         
     }  
 }

@@ -17,9 +17,6 @@ public class Locomux extends javax.swing.JPanel {
     private int measurei = 0;
     private Complex[] measures;
     
-    
-    
-    
     public Locomux() {
         
         measures  = new Complex[128];
@@ -27,7 +24,8 @@ public class Locomux extends javax.swing.JPanel {
         
         setSkips((String)spinner.getValue());
         
-        canvas.setMax(0xFFFF);
+        canvas.setMaxOfChannel(0xFFFF, 0);
+        canvas.setMinOfChannel(0, 0);
     }
     
     public void setBoard(Board b)
@@ -53,10 +51,8 @@ public class Locomux extends javax.swing.JPanel {
         int[] readBytes = board.getReadBytes();
         int[] writeBytes = board.getWriteBytes();
         
-        
         int[][] data = new int[4][2]; // Four channels. Two values per channel (current and integration)
         int mode, integrations, interval, duration;
-        
         
         for(int i = 0; i < 4; ++i)
         {
@@ -71,36 +67,7 @@ public class Locomux extends javax.swing.JPanel {
         
         integrations = readBytes[20];
         
-        
-        canvas.addMeasure(String.valueOf(data[Integer.parseInt(String.valueOf(spinnerChannel.getValue()))][0]));
-        
-        /*if(measurei < measures.length)
-            measures[measurei++] = new Complex(2.0*data[1][0]/65535.0 - 1.0, 0);
-        
-        if(measurei == measures.length)
-        {
-            Complex[] result = FFT.fft(measures);
-            
-            // Normalize
-           
-            
-            double max = 0.0;
-            int maxi = 0;
-            
-            for (int i = 0; i < result.length/2; i++) {
-                if(result[i].magnitude() > max)
-                {
-                    max = result[i].magnitude();
-                    maxi = i;
-                }                
-            }
-            
-            System.out.println("Max magnitude: "+maxi+":"+max);
-            System.out.println("Freq: "+ (2*maxi*result.length/180.0)+" Hz");
-            //FFT.show(measures, "fft");
-            measurei = 0;
-        }*/
-        
+        canvas.addMeasure(0, String.valueOf(data[Integer.parseInt(String.valueOf(spinnerChannel.getValue()))][0]));      
         
         try
         {
@@ -110,7 +77,6 @@ public class Locomux extends javax.swing.JPanel {
         catch(NumberFormatException ex)
         {
             mode = 0;
-            //txtMode.setText("0");
         }
         
         try
@@ -120,7 +86,6 @@ public class Locomux extends javax.swing.JPanel {
         catch(NumberFormatException ex)
         {
             integrations = 1;
-            //txtIntegrations.setText("1");
         }
         
         try
@@ -130,7 +95,6 @@ public class Locomux extends javax.swing.JPanel {
         catch(NumberFormatException ex)
         {
             interval = 1;
-            //txtInterval.setText("1");
         }
         
         try
@@ -161,40 +125,7 @@ public class Locomux extends javax.swing.JPanel {
         
         
     }
-    
-    
-    
-    /*public String[] getValues()
-    {
-        String[] values = new String[4];
         
-        values[0] = txtWriteAnalog.getText();
-        values[1] = txtWriteDigital.getText();
-        
-        
-        int cycleCurve = cbCycle.getSelectedIndex();       
-        cycleCurve = cycleCurve == 0 ? 0x80 : cycleCurve - 1;
-        
-        int rampCurve = cbRamp.getSelectedIndex();
-        
-        values[2] = String.valueOf(rampCurve);
-        values[3] = String.valueOf(cycleCurve);
-        
-        
-        return values;
-    }
-    
-    public void setValues(String[] values)
-    {
-        return;
-        /*if(values != null)
-        {
-            txtReadAnalog.setText(values[0]);
-            txtReadDigital.setText(values[1]);
-            canvas.addMeasure(values[0]);            
-        }*
-    }*/
-    
     public String getPosition()
     {
         return txtPosition.getText();
@@ -224,7 +155,7 @@ public class Locomux extends javax.swing.JPanel {
         lblMode = new javax.swing.JLabel();
         lblIntegrations = new javax.swing.JLabel();
         spinner = new javax.swing.JSpinner();
-        canvas = new gui.Canvas();
+        canvas = new gui.Canvas(1);
         txtPosition = new javax.swing.JLabel();
         lblInterval = new javax.swing.JLabel();
         txtInterval = new javax.swing.JTextField();

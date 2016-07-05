@@ -13,13 +13,12 @@ import main.Module;
 
 public class BoardsFrame extends JFrame {
 
-	//private gui.Boards boardsPanel;
-
 	private List<Locon>     loconList;
 	private List<Locomux>   locomuxList;
 	private List<Rux>   	ruxList;
 	private List<Statfnt>   statList;
 	private List<Digint>	digintList;
+	private List<PCOR4>		pcorList;
 
 	private JPanel pBoards;
 	
@@ -27,24 +26,6 @@ public class BoardsFrame extends JFrame {
 	
 	public BoardsFrame() {
 
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("GTK+".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-
-			
 		pBoards = new JPanel();
 		pBoards.setLayout(new GridLayout(0, 3, 20, 20));
 		
@@ -60,6 +41,7 @@ public class BoardsFrame extends JFrame {
 		ruxList = new ArrayList<Rux>();
 		statList = new ArrayList<Statfnt>();
 		digintList = new ArrayList<Digint>();
+		pcorList = new ArrayList<PCOR4>();
 		
 		setVisible(false);
 		
@@ -73,6 +55,7 @@ public class BoardsFrame extends JFrame {
 
 	public void updateSize() {
 		
+		/* Updates window height according to the number of boards  */
 		this.setSize(1020, this.usedRows * 320);
 		this.repaint();
 	}
@@ -82,7 +65,7 @@ public class BoardsFrame extends JFrame {
 		if (usedRows == 0)
 			usedRows++;
 		
-		if (usedColumns >= 2) {
+		if (usedColumns >= 3) {
 			usedColumns = 0;
 			usedRows++;
 		}
@@ -93,6 +76,9 @@ public class BoardsFrame extends JFrame {
 		
 		Module m = b.getModule();
 		
+		/* Checks module type, in order to add a new board panel in 
+		 * frame */
+		
 		if(m == Module.LCN16BMP || m == Module.LCN16BBP 
 				|| m == Module.LCN16V32M || m == Module.LCN12BBP 
 				|| m == Module.LCN12BMP) {
@@ -100,22 +86,25 @@ public class BoardsFrame extends JFrame {
 			Locon nloconBoard = new Locon();
 			nloconBoard.setBoard(b);
 
+			nloconBoard.setDigitalCanvasMax(255);
+			nloconBoard.setDigitalCanvasMin(0);
+			
 			if (m == Module.LCN16BMP || m == Module.LCN16BBP 
 					|| m == Module.LCN16V32M) {
 
-				nloconBoard.setCanvasMax(0xFFFF);
-
+				nloconBoard.setAnalogCanvasMax(0xFFFF);
+				
 				if (m == Module.LCN16BBP) 
-					nloconBoard.setCanvasZero(0xFFFF / 2);
-				else nloconBoard.setCanvasZero(0);
+					nloconBoard.setAnalogCanvasMin(0xFFFF / 2);
+				else nloconBoard.setAnalogCanvasMin(0);
 			}
 			else {
 
-				nloconBoard.setCanvasMax(0xFFF);
+				nloconBoard.setAnalogCanvasMax(0xFFF);
 
 				if (b.getModule() == Module.LCN12BBP)
-					nloconBoard.setCanvasZero(0xFFF / 2);
-				else nloconBoard.setCanvasZero(0);
+					nloconBoard.setAnalogCanvasMin(0xFFF / 2);
+				else nloconBoard.setAnalogCanvasMin(0);
 			}
 
 			loconList.add(nloconBoard);
@@ -138,8 +127,12 @@ public class BoardsFrame extends JFrame {
 			nRuxBoard.setBoard(b);
 
 			nRuxBoard.setBoard(b);
-			nRuxBoard.setCanvasMax(0xFFF);
-			nRuxBoard.setCanvasZero(0xFFF / 2);
+			
+			nRuxBoard.setDigitalCanvasMax(255);
+			nRuxBoard.setDigitalCanvasMin(0);
+			
+			nRuxBoard.setAnalogCanvasMax(0xFFF);
+			nRuxBoard.setAnalogCanvasMin(0xFFF / 2);
 
 			ruxList.add(nRuxBoard);
 
@@ -166,11 +159,26 @@ public class BoardsFrame extends JFrame {
 			pBoards.add(nDigIntBoard);
 			
 		}
+		else if (m == Module.PCOR4) {
+			
+			PCOR4 pcorBoard = new PCOR4();
+			pcorBoard.setBoard(b);
+			
+			pcorBoard.setCanvasMax(0xFFF);
+			pcorBoard.setCanvasMin(0);
+			
+			pcorList.add(pcorBoard);
+			
+			pBoards.add(pcorBoard);
+			
+		}
 		
 	}
 
 	public void refresh() {
 
+		/* Refreshes each non-empty list */
+		
 		for(Locon l : loconList)
 			l.refresh();
 
@@ -184,6 +192,9 @@ public class BoardsFrame extends JFrame {
 			l.refresh();
 		
 		for(Digint l : digintList)
+			l.refresh();
+		
+		for(PCOR4 l : pcorList)
 			l.refresh();
 	}
 
@@ -199,6 +210,7 @@ public class BoardsFrame extends JFrame {
 		this.ruxList.clear();
 		this.statList.clear();
 		this.digintList.clear();
+		this.pcorList.clear();
 	}
 
 }

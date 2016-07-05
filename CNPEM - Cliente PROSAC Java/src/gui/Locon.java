@@ -30,13 +30,29 @@ public class Locon extends javax.swing.JPanel {
         }
         
     }
-    
-    public void setCanvasMax(int max){
-    	this.canvas.setMax(max);
+
+    /* Sets biggest value for digital canvas. For 16-bit all Locon boards, 
+     * this value is 128 */
+    public void setDigitalCanvasMax(int max){
+    	this.canvas.setMaxOfChannel(max, 1);
     }
     
-    public void setCanvasZero(int zero) {
-    	this.canvas.setZero(zero);
+    /* Sets smallest value for canvas. For 16-bit all Locon boards, 
+     * this value is 0 */
+    public void setDigitalCanvasMin(int min) {
+    	this.canvas.setMinOfChannel(min, 1);
+    }
+    
+    /* Sets biggest value for analog canvas. For 16-bit monopolar boards, 
+     * this value is 2^16 - 1 = 65535*/
+    public void setAnalogCanvasMax(int max){
+    	this.canvas.setMaxOfChannel(max, 0);
+    }
+    
+    /* Sets smallest value for canvas. For 16-bit bipolar boards, this value is
+     * (2^16 - 1) / 2 = 32767 (truncated, result as integer) */
+    public void setAnalogCanvasMin(int min) {
+    	this.canvas.setMinOfChannel(min, 0);
     }
     
     public void refresh()
@@ -52,7 +68,8 @@ public class Locon extends javax.swing.JPanel {
         txtReadAnalog.setText(String.valueOf(analog));
         txtReadDigital.setText(String.valueOf(digital));
         
-        canvas.addMeasure(txtReadAnalog.getText()); 
+        canvas.addMeasure(0, txtReadAnalog.getText());
+        canvas.addMeasure(1, txtReadDigital.getText());
         
         int[] writeBytes = board.getWriteBytes();
         
@@ -77,17 +94,13 @@ public class Locon extends javax.swing.JPanel {
             txtWriteDigital.setText("0");
         }
             
-        
-        /*if(analog > 4095)
-            analog = 4095;
-        else */if (analog < 0)
+        if (analog < 0)
             analog = 0;
         
         if(digital > 255)
             digital = 255;
         else if (digital < 0)
             digital = 0;
-        
         
         writeBytes[2] = (analog >> 8) & 0xFF;
         writeBytes[3] = analog & 0xFF;
@@ -113,53 +126,15 @@ public class Locon extends javax.swing.JPanel {
         if(rampCurve == 0)
         {
             board.setWillRamp(false);
-            //board.setRampCurve(0x80);
         }
         else
         {
             board.setWillRamp(true);
-            board.setRampCurve(rampCurve - 1);
-                       
+            board.setRampCurve(rampCurve - 1);     
     
             board.setRampPulses(Integer.parseInt(String.valueOf(spinnerPulses.getValue())));
         }
-                 
-        
-        
     }
-    
-    
-    
-    /*public String[] getValues()
-    {
-        String[] values = new String[4];
-        
-        values[0] = txtWriteAnalog.getText();
-        values[1] = txtWriteDigital.getText();
-        
-        
-        int cycleCurve = cbCycle.getSelectedIndex();       
-        cycleCurve = cycleCurve == 0 ? 0x80 : cycleCurve - 1;
-        
-        int rampCurve = cbRamp.getSelectedIndex();
-        
-        values[2] = String.valueOf(rampCurve);
-        values[3] = String.valueOf(cycleCurve);
-        
-        
-        return values;
-    }
-    
-    public void setValues(String[] values)
-    {
-        return;
-        /*if(values != null)
-        {
-            txtReadAnalog.setText(values[0]);
-            txtReadDigital.setText(values[1]);
-            canvas.addMeasure(values[0]);            
-        }*
-    }*/
     
     public String getPosition()
     {
@@ -192,7 +167,7 @@ public class Locon extends javax.swing.JPanel {
         cbRamp = new javax.swing.JComboBox();
         cbCycle = new javax.swing.JComboBox();
         spinner = new javax.swing.JSpinner();
-        canvas = new gui.Canvas();
+        canvas = new gui.Canvas(2);
         spinnerPulses = new javax.swing.JSpinner();
         txtReadAnalog = new javax.swing.JLabel();
         txtReadDigital = new javax.swing.JLabel();
@@ -320,6 +295,7 @@ public class Locon extends javax.swing.JPanel {
 
     private void spinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerStateChanged
         setSkips((String) spinner.getValue());
+        
     }//GEN-LAST:event_spinnerStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

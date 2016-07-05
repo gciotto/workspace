@@ -11,7 +11,8 @@ public enum Module
     MUX16BBP            (0x11, 21, 4, "MUX16BBP"),
     RUX12BBP            (0x17, 9,  1, "RUX12BBP"),
     STATFNT	            (0x14, 3,  1, "STATFNT"),
-    DIGINT	            (0x09, 8,  0, "DIGINT");
+    DIGINT	            (0x09, 8,  0, "DIGINT"),
+    PCOR4	            (0x1E, 16,  0, "PCOR4") ;
     
     
     public final int    type;   

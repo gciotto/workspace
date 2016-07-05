@@ -17,21 +17,18 @@ public class Client
 {
 	// Defines
 	private static final int CONNECT_TIMEOUT = 2000; //miliseconds
-	public  static final int UPDATE_TIMEOUT  = 5;   // miliseconds
+	public  static final int UPDATE_TIMEOUT  = 1;   // miliseconds
 
 	private static final int CYCLE_TIMER = 20000;   // Iterations
 	private static final int RAMP_TIMER =  15000;
-
 
 	// Curves
 	private static short[][] rampCurves;
 
 	private static List<int[]> rampPackets = new ArrayList<int[]>();
 
-
 	// GUI
 	static Frame frame;
-
 
 	// Socket related
 	static Socket socket;
@@ -39,19 +36,14 @@ public class Client
 	private static BufferedInputStream socketIn;
 	private static BufferedOutputStream socketOut;   
 
-
 	// Buffers
 	private static int[] sendBuffer;
 	private static int[] recvBuffer;
 
-
 	// Boards
 	private static List<Board> boardsList = new ArrayList<Board>();
 
-
-
 	// Mutex
-
 	private static final  Object lock = new Object();
 
 
@@ -73,20 +65,11 @@ public class Client
 
 		generateRamps();       
 
-
 		int cycle_count = 0;
 		int ramp_count = 0;
 
-		while(true)
-		{
-			/*if(connected)
-            {
-                if(++cycle_count == CYCLE_TIMER)
-                {
-                    executeCommand(Command.CYCLE_ENABLE);
-                    cycle_count = 0;
-                }
-            }*/
+		while(true)		{
+			
 			if(connected)
 				executeCommand(Command.NORMAL);
 
@@ -95,7 +78,6 @@ public class Client
 	}
 
 	/* Populate ramp curves */
-
 	public static void generateRamps()
 	{
 		rampCurves = new short[3][1021];
@@ -150,11 +132,14 @@ public class Client
 		connected = true;
 		frame.setConnected();
 
-
 		executeCommand(Command.IDENT);
 		executeCommand(Command.END_IDENT);
 		
+		/* Checks if client supports all connected boards. */
 		if (!supportedBoards) {
+			
+			/* Client can't proceed with unsupported boards. Disconnects
+			 * from PROSAC */
 			disconnected();			
 			closeSockets();
 			
@@ -175,11 +160,9 @@ public class Client
 			status += "Erro: ";
 
 		status += message;
-
-
+		
 		frame.setStatus(status);
 	}
-
 
 	/* Connection management */
 	public static int connectTo(String hostname, int port)
@@ -221,9 +204,7 @@ public class Client
 		return 0;
 	}
 
-
 	/* Command management */
-
 	public static void executeCommand(Command cmd)
 	{
 		if(socketOut == null || socketIn == null)
@@ -263,8 +244,8 @@ public class Client
 		case CYCLE_ENABLE:
 			frame.setCyclingEnabled();
 
-		case RAMP_ENABLE:						/* ALTERADO POR GUSTAVO CIOTTO */
-		case RAMP_ENABLE_CYCLIC:
+		case RAMP_ENABLE:						/* RAMP_ENABLE and RAMP_ENABLE_CYCLIC also */
+		case RAMP_ENABLE_CYCLIC:				/* need to run ADJUST block */
 			if (cmd != Command.CYCLE_ENABLE)
 				frame.setRampingEnabled();
 
@@ -317,12 +298,12 @@ public class Client
 
 					int[] packet = new int[packetSize]; 
 
-
 					packet[0] = Command.RAMP_BLOCK.bytecode;  // Command
 					packet[1] = ((packetSize - 3) >> 8) & 0xFF; // Packet
 					packet[2] = (packetSize - 3) & 0xFF;
 
-					packet[3] = boardPosition++;         			/* Ordem da placa no bastidor */
+					packet[3] = boardPosition++;   /* To perform a ramp, PROSAC needs
+					 								  the order in which the board appears, not its ID. */
 
 					packet[4] = b.getRampPulses();            // Pulses to wait
 					packet[5] = (rampLength >> 8) & 0xFF;
@@ -392,13 +373,10 @@ public class Client
 
 			break;
 
-
-
 		default:
 			sendBuffer = new int[1];
 			sendBuffer[0] = cmd.bytecode;
 			break;
-
 
 		}
 	}
@@ -407,14 +385,15 @@ public class Client
 	{
 		Command c = Command.findByCode(recvBuffer[0]);
 
-		switch(c)
-		{ 
+		switch(c){ 
+		
 		case IDENT:
+			
 			boardsList.clear();
+			frame.clearBoards();
 
 			supportedBoards = true;
 
-			//for(int i = 2; i < recvBuffer[1] + 2; ++i)
 			for(int i = 2; i < 32 + 2; ++i)
 			{
 				Module m = Module.findByType(recvBuffer[i]);
@@ -466,8 +445,8 @@ public class Client
 			int i = 2;
 
 			for( Board b : boardsList)                       
-				if (i + b.getReadBytes().length <= recvBuffer.length)	/* Verifica se ha elementos suficientes */
-					for(int j = 0; j < b.getReadBytes().length; ++j)	/* no buffer recebido. */
+				if (i + b.getReadBytes().length <= recvBuffer.length)	/* Checks if there is enough elements */
+					for(int j = 0; j < b.getReadBytes().length; ++j)	/* in received buffer. */
 						b.getReadBytes()[j] = recvBuffer[i++];
 
 			break;

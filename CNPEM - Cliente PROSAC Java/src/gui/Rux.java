@@ -33,13 +33,27 @@ public class Rux extends javax.swing.JPanel {
         }
         
     }
-    
-    public void setCanvasMax(int max){
-    	this.canvas.setMax(max);
+
+    public void setDigitalCanvasMax(int max){
+    	
+    	this.canvas.setMaxOfChannel(max, 4);
     }
     
-    public void setCanvasZero(int zero) {
-    	this.canvas.setZero(zero);
+    public void setDigitalCanvasMin(int min){
+    	
+    	this.canvas.setMinOfChannel(min, 4);
+    }
+    
+    public void setAnalogCanvasMax(int max){
+    	
+    	for (int i =0 ; i < 4; i++)
+    		this.canvas.setMaxOfChannel(max, i);
+    }
+    
+    public void setAnalogCanvasMin(int min) {
+    	
+    	for (int i =0 ; i < 4; i++)
+    		this.canvas.setMinOfChannel(min, i);
     }
     
     public void refresh()
@@ -61,7 +75,11 @@ public class Rux extends javax.swing.JPanel {
         txtReadAnalogChannel4.setText(String.valueOf(analogCh4));
         txtReadDigital.setText(String.valueOf(digital));
         
-        canvas.addMeasure(txtReadAnalogChannel1.getText());
+        canvas.addMeasure(0, txtReadAnalogChannel1.getText());
+        canvas.addMeasure(1, txtReadAnalogChannel2.getText());
+        canvas.addMeasure(2, txtReadAnalogChannel3.getText());
+        canvas.addMeasure(3, txtReadAnalogChannel4.getText());
+        canvas.addMeasure(4, txtReadDigital.getText());
        
         int[] writeBytes = board.getWriteBytes();
         
@@ -75,8 +93,6 @@ public class Rux extends javax.swing.JPanel {
             txtWriteDigital.setText("0");
         }
             
-        
-        
         if(digital > 255)
             digital = 255;
         else if (digital < 0)
@@ -148,7 +164,7 @@ public class Rux extends javax.swing.JPanel {
         lblAnalogChannel1 = new javax.swing.JLabel();
         lblDigital = new javax.swing.JLabel();
         spinner = new javax.swing.JSpinner();
-        canvas = new gui.Canvas();
+        canvas = new gui.Canvas(5);
         txtReadAnalogChannel1 = new javax.swing.JLabel();
         txtReadDigital = new javax.swing.JLabel();
         txtPosition = new javax.swing.JLabel();
@@ -197,7 +213,7 @@ public class Rux extends javax.swing.JPanel {
         );
 
         txtReadAnalogChannel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtReadAnalogChannel1.setText("65535");
+        txtReadAnalogChannel1.setText("2000");
 
         txtReadDigital.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtReadDigital.setText("255");
@@ -210,19 +226,19 @@ public class Rux extends javax.swing.JPanel {
         lblAnalogChannel2.setText("Channel 2");
 
         txtReadAnalogChannel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtReadAnalogChannel2.setText("65535");
+        txtReadAnalogChannel2.setText("2000");
 
         lblAnalogChannel3.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
         lblAnalogChannel3.setText("Channel 3");
 
         txtReadAnalogChannel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtReadAnalogChannel3.setText("65535");
+        txtReadAnalogChannel3.setText("2000");
 
         lblAnalogChannel4.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
         lblAnalogChannel4.setText("Channel 4");
 
         txtReadAnalogChannel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtReadAnalogChannel4.setText("65535");
+        txtReadAnalogChannel4.setText("2000");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

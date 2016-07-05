@@ -14,9 +14,7 @@ public class Board
     private int rampCurve;
     private int rampPulses;
     
-    
     private Module module;
-    
     
     public Board(int pos, Module m)
     {
