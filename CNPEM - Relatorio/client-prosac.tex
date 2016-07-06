@@ -1,0 +1,76 @@
+\section {Manutenção e Implementação de Clientes PROSAC}
+
+\subsection{Introdução}
+
+O \textit{PROSAC} é um \textit{firware} desenvolvido no grupo de controle, cujo
+principal propósito é receber requisões da sala de controle e acionar a
+respectiva placa do bastidor. Esse \textit{firware} apresenta, atualmente,
+suporte a diversas placas que são usadas atualmente no \textit{UVX} para
+controle de fontes e monitoramento de sensores. Exemplos de placas operadas pelo
+\textit{PROSAC} são a \textit{LOCON} de 12 e 16 \textit{bits}, a
+\textit{STATFNT} e a \textit{DIGINT}.
+
+\vspace{12px}
+
+Considerando a sua importância no contexto do sistema controle, dois clientes
+foram implementados a fim de testar seu funcionamento: um em Java e outro,
+utilizando o \textit{kit} de desenvolvimento \textit{STM32F7 Discovery}.
+
+\subsection {Manutenção do cliente \textit{PROSAC} escrito em \textit{Java}}
+
+O cliente \textit{PROSAC} implementado em \textit{Java} foi desenvolvido em 2011
+por Bruno Martins para testes iniciais do \textit{PROSAC}. Desta forma, casos mais
+complexos, como placas desenvolvidas posteriormente ao cliente, produziam
+exceções que interrompiam o programa. As seguintes modificações foram realizadas
+a fim de corrigir tais problemas:
+
+\begin {enumerate} [i.] 
+  \item Função \texttt{processCommand} da classe \texttt{Client}: foi adicionado
+  uma condição para verificar se a quantidade de \textit{bytes} recebidos do
+  \textit{PROSAC} é a mesma que a esperada. Tal condição encontra-se no laço
+  \texttt{for} do bloco \texttt{default} do \texttt{switch}.
+
+  \item Modificação de forma que os \textit{status} das placas apareçam em uma
+  janela distinta daquela onde o painel de comando está inserido. A classe
+  \texttt{Boards} foi substituída pela \texttt{BoardsFrame}.
+  
+  \item Suporte às placas \textit{Statfnt}, \textit{Digint}, \textit{Rux} 12
+  \textit{bits} bipolar e \textit{Mux} 16 \textit{bits}, e implementação das
+  respectivas interfaces gráficas.
+
+  \item Correção nas escalas dos gráficos para as placas monopolares de 12 e 16
+  \textit{bits}.
+  
+  \item Para a operação de rampa, o \textit{PROSAC} necessita da ordem com que
+  as placas aparecem no bastidor, não seus \textit{IDs}. Por exemplo, se duas
+  placas estiverem presentes, cujos \textit{IDs} são 5 e 19, e quisermos
+  executar uma rampa na 5, temos que enviar sua posição do bastidor, isto é 0.
+
+\end{enumerate}
+
+\subsection {Implementação para o \textit{kit} \textit{STM32F7 Discovery}}
+
+O \textit{kit} \textit{STM32F7 Discovery} oferece diversos recursos
+como interface \textit{Ethernet}, \textit{I2C}, \textit{UART} e tela
+\textit{LCD Touch} capacitiva. Os principais passos na implementação desta
+solução foram:
+
+\begin{enumerate} [i.]
+  \item Configuração de plugins para desenvolvimento na \textit{IDE Eclipse}.
+  \item Configuração da interface \textit{OpenOCD}, responsável pela comunicação
+  entre placa e computador.
+  \item Implementação de um projeto na aplicação \textit{STMCubeMX} para
+  inicialização dos pinos dos módulos que serão utilizados no projeto.
+  \item Adição dos \textit{middlewares} \textit{FreeRTOS} e \textit{LwIP} ao
+  projeto.
+  \item Correção do \path{stm32f7_hal_conf.h} com a definição dos
+  registradores corretos do módulo \textit{PHY}.
+  \item Criação de uma interface gráfica, capaz de reconhecer
+  eventos de \textit{touch}.
+\end{enumerate}
+
+A lógica utilizada nesta aplicação foi adaptada do cliente \textit{Java} e,
+portanto, apresenta os mesmos comportamentos. Duas \textit{threads} são criadas,
+sendo que uma envia requisições de leitura de dados a todo momento ao
+\textit{PROSAC} e a outra, comandos requisitados pelo usuário, como ciclagem e
+rampa.
