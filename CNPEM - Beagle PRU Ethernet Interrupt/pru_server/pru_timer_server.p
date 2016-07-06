@@ -1,10 +1,11 @@
 .origin 0
 .entrypoint START
 
-#define PRU0_R31_VEC_VALID 	32	// allows notification of program completion
-#define PRU_EVTOUT_0 		3	// the event number that is sent back
+#define PRU0_R31_VEC_VALID 	32	/* allows notification of program completion */
+#define PRU_EVTOUT_0 		3	/* the event number that is sent back */
 #define PRU_EVTOUT_1		4
 
+/* Network related registers */ 
 #define CPSW_STATERAM_BASE		0x4A100A00
 #define RX0_CP_OFFSET			0x60
 
@@ -52,7 +53,7 @@ CHECK_INTERRUPT:
 		MOV 	r31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_1
 		
 		/* Espera tratamento do pacote:
-		   Faz a leitura da memoria e, aso esteja setada, continua   */
+		   Faz a leitura da memoria e, caso esteja setada, continua   */
 		
 		WBS	r31.t30		
 						
@@ -88,9 +89,3 @@ CLEAR_INTERRUPTION:
 END:
 		MOV 	r31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_0
 		HALT
-
-
-
-
-
-

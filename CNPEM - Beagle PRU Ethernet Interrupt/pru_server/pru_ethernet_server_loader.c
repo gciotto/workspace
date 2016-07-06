@@ -54,7 +54,7 @@ int main(){
 
 		prussdrv_pru_clear_event (PRU_EVTOUT_1, PRU1_ARM_INTERRUPT);
 
-		/* Processa pacote */
+		/* Process packet */
 
 		bzero(message, MESSAGE_LENGTH);
 

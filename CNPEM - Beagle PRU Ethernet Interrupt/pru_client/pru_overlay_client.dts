@@ -14,7 +14,7 @@
       		__overlay__ {
 		
 				pru_pru_pins: pinmux_pru_pru_pins {
-				// The PRU pin modes
+				/* The PRU pin modes */
 					pinctrl-single,pins = <
 					0x1a4 0x05 // P9_27 pr1_pru0_pru_r30_5, Mode5 output pull‐down
 					0x19c 0x26 // P9_28 pr1_pru0_pru_r31_3, Mode6 input pull‐down

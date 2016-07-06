@@ -47,6 +47,7 @@ int main(){
 
 		printf ("Esperando PRU_EVTOUT_1...\n");
 
+		/* Waits for gpio events from PRU */
 		prussdrv_pru_wait_event(PRU_EVTOUT_1);
 
 		printf ("Recebeu evento PRU_EVTOUT_1...\n");
@@ -57,6 +58,7 @@ int main(){
 
 		printf("Enviando comando...\n");
 
+		/* Sends a UDP datagram to server every time an event is detected */
 		n = sendto(sockfd, buff, MESSAGE_LENGTH, 0,(struct sockaddr *) &server_addr, sizeof(server_addr));
 
 		printf("Enviou comando %d...\n", n);
