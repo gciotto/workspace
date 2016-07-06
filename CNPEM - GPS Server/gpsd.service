@@ -1,0 +1,11 @@
+[Unit]
+Description=GPS (Global Positioning System) Daemon
+Requires=gpsd.socket
+
+[Service]
+ExecStartPre=echo overlay_GPS > $SLOTS && sleep 2
+ExecStart=/usr/sbin/gpsd -n -N /dev/ttyO4
+
+[Install]
+Also=gpsd.socket
+WantedBy=ntpd.service

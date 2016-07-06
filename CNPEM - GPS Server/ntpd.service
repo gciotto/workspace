@@ -1,0 +1,12 @@
+[Unit]
+Description=Network Time Service
+Requires=gpsd.service
+After=network.target
+ 
+[Service]
+Type=forking
+PIDFile=/run/ntpd.pid
+ExecStart=/root/gciotto/GPS_server/ntp-install/sbin/ntpd -p /run/ntpd.pid 
+ 
+[Install]
+WantedBy=multi-user.target
