@@ -12,7 +12,7 @@ int main() {
 	char option;
 
 	FILE 	*LEDBrightnessHandle = fopen (PATH "/brightness", "r+"),
-			*LEDTriggerHandle = fopen (PATH "/trigger", "r+");
+		*LEDTriggerHandle = fopen (PATH "/trigger", "r+");
 
 	for (int i = 1 ; ; i++) {
 
