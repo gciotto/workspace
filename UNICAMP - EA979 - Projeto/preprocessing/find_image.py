@@ -1,46 +1,51 @@
 import numpy as np
 from PIL import Image
 import scipy.cluster as spy
+from scipy import misc
 import matplotlib.pyplot as plt
 import sklearn.neighbors as skn
-from tamura import *
-from garbor import * 
-from process_images import n_columns_histogram, n_colums_features, n_kernels, images_path, useGreyScale, useTamuraCoarseness, useTamuraContrast, useTamuraDirectionality, useGarbor
+import os
+from tamura import coarseness, contrast, degreeDirect, threshold, neigh, rgb2gray
+from garbor import garbor_features, kernels
+from process_images import *
+c_neighbors = 3
 
-
-c_neighbors = 7
-
-image = '/home/gciotto/IMG_4532.JPG'
+image = '/home/gciotto/Downloads/rainbow.jpg'
+#image = '/home/gciotto/Downloads/lnls.jpg'
+#image = '/home/gciotto/Downloads/eiffel.jpeg'
 #image = '/home/gciotto/Mes Travails/Images/teste.png'
-#image = '/home/gciotto/Mes Travails/UNICAMP/EA979/mirflickr/im2033.jpg'
+#image = '%s/im24013.jpg' % images_path
 
 # Leitura da imagem
-img_original = Image.open(image)
-
+img = misc.imread(image)
+                
 if useGreyScale:
-    img = img_original.convert('L')
+    img = rgb2gray(img)
+    
 
 # Calculo do histograma 
-hist_RGB_given_image = img.histogram() 
+hist_RGB_given_image, bins = np.histogram(img, n_columns_histogram)
+
+path_1 = "%s/arrays/level1_%d_%d" % (images_path, kCentroids_features, cIter_features)
 
 # Recupera vetores calculados pelo KMEANS
-centroids_codebook_features = np.load('%s/centroids_codebook_features.npy' % images_path)
-vq_codes_obs_features = np.load('%s/vq_codes_obs_features.npy' % images_path)
-standard_deviations_features = np.load('%s/standard_deviations_features.npy' % images_path)
+centroids_codebook_features = np.load('%s/centroids_codebook_features_%d_%d_%s_%s_%s_%s.npy' % (path_1, kCentroids_features, cIter_features, useTamuraCoarseness, useTamuraContrast, useTamuraDirectionality, useGarbor))
+vq_codes_obs_features = np.load('%s/vq_codes_obs_features_%d_%d_%s_%s_%s_%s.npy' % (path_1, kCentroids_features, cIter_features, useTamuraCoarseness, useTamuraContrast, useTamuraDirectionality, useGarbor))
+standard_deviations_features = np.load('%s/standard_deviations_features_%d_%d_%s_%s_%s_%s.npy' % (path_1, kCentroids_features, cIter_features, useTamuraCoarseness, useTamuraContrast, useTamuraDirectionality, useGarbor))
 
 learning_set_features_image = np.zeros(n_colums_features)
 j = 0
 
 if useTamuraCoarseness:
-    learning_set_features_image[j] = tamura_coarseness(img)
+    learning_set_features_image[j] = coarseness(img)
     j = j + 1
 
 if useTamuraContrast:
-    learning_set_features_image[j] = tamura_contrast(hist_RGB_given_image)
+    learning_set_features_image[j] = contrast(img)
     j = j + 1
 
 if useTamuraDirectionality:
-    learning_set_features_image[j] = tamura_directionality(img)
+    learning_set_features_image[j] = degreeDirect(img, threshold, neigh)
     j = j + 1
 
 if useGarbor: 
@@ -51,22 +56,26 @@ if useGarbor:
     learning_set_features_image[start_i : stop_i] = np.resize(garbor_features(img, kernels) , (1, n_kernels * 2)) 
 
 for i in range (n_colums_features):
-    learning_set_features_image[i] = learning_set_features_image[i] / standard_deviations_features[0, i]
+    learning_set_features_image[i] = learning_set_features_image[i] / standard_deviations_features[i]
 
 
-(index, dist) = spy.vq.vq([learning_set_features_image], centroids_codebook_features)
+# Images from 1o level Kmeans
+(index, dist) = spy.vq.vq(np.array([learning_set_features_image]), centroids_codebook_features)
 
-centroids_codebook_histogram = np.load('%s/centroids_codebook_histogram_%d.npy' % (images_path , index[0]))
-vq_codes_obs_histogram = np.load('%s/vq_codes_obs_histogram_%d.npy' % (images_path , index[0]))
-standard_deviations_histogram = np.load('%s/standard_deviations_histogram_%d.npy' % (images_path , index[0]))
+path_2 = "%s/arrays/level2_%d_%d" % (images_path, kCentroids, cIter)
+
+images_index = np.load('%s/centroids_codebook_images_index_%d_%d_%d_%s_%s_%s_%s.npy' % (path_2, index[0] , kCentroids, cIter, useTamuraCoarseness, useTamuraContrast, useTamuraDirectionality, useGarbor))
+centroids_codebook_histogram = np.load('%s/centroids_codebook_histogram_%d_%d_%d_%s_%s_%s_%s.npy' % (path_2, index[0] , kCentroids, cIter, useTamuraCoarseness, useTamuraContrast, useTamuraDirectionality, useGarbor))
+vq_codes_obs_histogram = np.load('%s/vq_codes_obs_histogram_%d_%d_%d_%s_%s_%s_%s.npy' % (path_2, index[0] , kCentroids, cIter, useTamuraCoarseness, useTamuraContrast, useTamuraDirectionality, useGarbor))
+standard_deviations_histogram = np.load('%s/standard_deviations_histogram_%d_%d_%d_%s_%s_%s_%s.npy' % (path_2, index[0] , kCentroids, cIter, useTamuraCoarseness, useTamuraContrast, useTamuraDirectionality, useGarbor))
 
 # Normaliza histograma de acordo com os desvios padroes calculados pela funcao 
 # whitten() antes de realizar o KMEANS.  
 for i in range (n_columns_histogram):
-    hist_RGB_given_image[i] = hist_RGB_given_image[i] / standard_deviations_histogram[0, i]
+    hist_RGB_given_image[i] = hist_RGB_given_image[i] / standard_deviations_histogram[i]
 
 # Calcula CENTROIDE mais proximo
-(index, dist) = spy.vq.vq([hist_RGB_given_image], centroids_codebook_histogram)
+(index, dist) = spy.vq.vq(np.array([hist_RGB_given_image]), centroids_codebook_histogram)
 
 print index
 
@@ -79,15 +88,20 @@ hist_RGB_dataset = []
 w = 0
 for i in same_centroid_images[0]:
     
-    img = Image.open('%s/im%d.jpg' % (images_path, i + 1))
+    if not os.path.isfile(os.path.join(images_path, 'histograms.npy')):
     
-    if useGreyScale:
-        img = img.convert('L')
+        img = misc.imread('%s/im%d.jpg' % (images_path, images_index[i] + 1))
     
-    hist_RGB_dataset_i = img.histogram()
-    
+        if useGreyScale:
+            img = rgb2gray(img)
+
+        hist_RGB_dataset_i, bins = np.histogram(img, n_columns_histogram)
+            
+    else:
+        hist_RGB_dataset_i = np.load(os.path.join(images_path, 'hist_%d.npy' % (images_index[i] + 1)))
+        
     for j in range (n_columns_histogram):
-        hist_RGB_dataset_i[j] = hist_RGB_dataset_i[j] / standard_deviations_histogram[0, j]
+        hist_RGB_dataset_i[j] = hist_RGB_dataset_i[j] / standard_deviations_histogram[j]
     
     hist_RGB_dataset.append(hist_RGB_dataset_i)
     
@@ -103,6 +117,8 @@ print distances
 
 # Mostrar resultados - substituir trecho abaixo antes de submeter no ADESSOWIKI 
 
+img_original = Image.open(image)
+
 f, axarr = plt.subplots((c_neighbors + 1) / 2,  2)
 axarr[0, 0].imshow(img_original)
 axarr[0, 0].set_title('Imagem original')
@@ -113,7 +129,7 @@ row = 0
 
 for i in range(c_neighbors):
     
-    img_index = same_centroid_images[0][indices[0][i]]
+    img_index = images_index[same_centroid_images[0][indices[0][i]]]
     
     img = Image.open('%s/im%d.jpg' % (images_path, img_index +1))
     

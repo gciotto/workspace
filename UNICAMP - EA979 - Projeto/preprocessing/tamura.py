@@ -1,8 +1,3 @@
-################################################
-# References
-# https://www.cs.auckland.ac.nz/courses/compsci708s1c/lectures/Glect-html/topic4c708FSC.htm#tamura
-# http://people.kmi.open.ac.uk/stefan/www-pub/howarth-rueger-2004-civr-texture.pdf 
-
 import numpy as np
 from scipy import signal
 
@@ -107,6 +102,11 @@ def findPeaks(histD,neigh):
             j += neigh - 1
 
         j += 1
+
+    if(peaks.size == 0): # When no peaks couldn't be found, set the max value as a peak
+        maxValue = np.where(histD == np.max(histD))
+        peaks = np.array([maxValue[0][0]])
+        
     return peaks
 
 #Calculate ranges of peaks
@@ -157,7 +157,7 @@ def degreeDirect(gray, threshold,neigh):
 
     nPeaks = peaks.size
     sumHist = np.sum(histD)
-    r = 10
+    r = 20.0/3
     quant = 179 # quantizing leves
     
     # First Peak
@@ -261,4 +261,4 @@ def coarseness(gray):
                 if kErr[k][i][j] > eMax:
                     eMax = kErr[k][i][j]
                     arrkMax[i][j] = 2**(k+1)
-    return arrkMax
+    return np.mean(arrkMax)
