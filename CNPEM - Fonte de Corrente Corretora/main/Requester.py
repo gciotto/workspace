@@ -166,7 +166,11 @@ class Requester:
             self.window_controller.statusBar().showMessage("Packet transmission failed with error '%s'" % err_m)
             self.window_controller.set_disconnected_state()
                        
-            self.window_controller.clear_source_group()
+            # self.window_controller.clear_source_group()
+            
+            self.window_controller.connect_button.clicked.emit()
+            
+            self.disconnect()
             
             self.m_request.release()
             
@@ -182,7 +186,11 @@ class Requester:
             
             self.window_controller.set_disconnected_state()
                        
-            self.window_controller.clear_source_group()
+            # self.window_controller.clear_source_group()
+            
+            self.window_controller.connect_button.clicked.emit()
+            
+            self.disconnect()
             
             self.m_request.release()
             
