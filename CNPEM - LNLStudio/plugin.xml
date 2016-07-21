@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="LNLStudio">
+         <property
+               name="appName"
+               value="LNLStudio">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="000000">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="7,252,445,20">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="5,275,445,15">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+         <property
+               name="windowImages"
+               value="LNLS_logo16.gif,LNLS_logo32.gif,LNLS_logo48.gif,LNLS_logo64.gif,LNLS_logo128.gif,LNLS_logo256.gif">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.splashHandlers">
+      <splashHandler
+            class="lnlstudio.splashHandlers.BrowserSplashHandler"
+            id="lnlstudio.splashHandlers.browser">
+      </splashHandler>
+   </extension>
+
+</plugin>
