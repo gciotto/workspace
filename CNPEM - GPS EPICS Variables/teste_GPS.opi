@@ -1,0 +1,2246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+  <show_close_button>true</show_close_button>
+  <rules />
+  <wuid>7ee0def6:15572c09c5b:-7fff</wuid>
+  <show_grid>true</show_grid>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <scripts>
+    <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+      <scriptName>EmbeddedScript</scriptName>
+      <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+a = PVUtil.getDoubleArray(pvs[0])
+_str = ""
+
+for i in a:
+	if  i != 0:
+		_str = _str + str(int(i)) + " " 
+
+pvs[1].setValue(_str)
+
+]]></scriptText>
+      <pv trig="true">Cnt:GPS:Satellites</pv>
+      <pv trig="false">loc://satellites</pv>
+    </path>
+    <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+      <scriptName>EmbeddedScript</scriptName>
+      <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+_latitude = PVUtil.getDouble(pvs[0])
+_hemisphere = "N"
+
+if (_latitude < 0):
+	_hemisphere = "S"
+
+_degree = int(_latitude)
+_minutes_f = (_degree - _latitude) * 60
+_minutes = int (_minutes_f)
+_seconds = (_minutes_f - _minutes)*60
+
+pvs[1].setValue("%io %i ' %.3f '' %s" % (abs(_degree), _minutes, _seconds, _hemisphere))]]></scriptText>
+      <pv trig="true">Cnt:GPS:Latitude</pv>
+      <pv trig="false">loc://latitude</pv>
+    </path>
+    <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+      <scriptName>EmbeddedScript</scriptName>
+      <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+_longitude = PVUtil.getDouble(pvs[0])
+_hemisphere = "L"
+
+if (_longitude < 0):
+	_hemisphere = "W"
+
+_degree = int(_longitude)
+_minutes_f = (_degree - _longitude) * 60
+_minutes = int (_minutes_f)
+_seconds = (_minutes_f - _minutes)*60
+
+pvs[1].setValue("%io %2i ' %.3f '' %s" % (abs(_degree), _minutes, _seconds, _hemisphere))
+
+	]]></scriptText>
+      <pv trig="true">Cnt:GPS:Longitude</pv>
+      <pv trig="false">loc://longitude</pv>
+    </path>
+  </scripts>
+  <height>200</height>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+  </macros>
+  <boy_version>4.0.103.201507142027</boy_version>
+  <show_edit_range>false</show_edit_range>
+  <widget_type>Display</widget_type>
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <background_color>
+    <color red="240" green="240" blue="240" />
+  </background_color>
+  <width>500</width>
+  <x>-1</x>
+  <name></name>
+  <grid_space>6</grid_space>
+  <show_ruler>true</show_ruler>
+  <y>-1</y>
+  <snap_to_geometry>true</snap_to_geometry>
+  <foreground_color>
+    <color red="192" green="192" blue="192" />
+  </foreground_color>
+  <actions hook="false" hook_all="false" />
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
+    <border_style>4</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <line_width>0</line_width>
+    <horizontal_fill>true</horizontal_fill>
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-7d04</wuid>
+    <transparent>false</transparent>
+    <pv_value />
+    <alpha>255</alpha>
+    <bg_gradient_color>
+      <color red="255" green="255" blue="255" />
+    </bg_gradient_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>661</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <gradient>false</gradient>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <anti_alias>true</anti_alias>
+    <line_style>0</line_style>
+    <widget_type>Rectangle</widget_type>
+    <fg_gradient_color>
+      <color red="255" green="255" blue="255" />
+    </fg_gradient_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="205" green="243" blue="229" />
+    </background_color>
+    <width>337</width>
+    <x>12</x>
+    <name>Rectangle</name>
+    <y>6</y>
+    <fill_level>0.0</fill_level>
+    <foreground_color>
+      <color red="255" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="11" style="0">Default</opifont.name>
+    </font>
+    <line_color>
+      <color red="128" green="0" blue="255" />
+    </line_color>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>4</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7fa6</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Reference</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>49</width>
+    <x>228</x>
+    <name>Text Update</name>
+    <y>270</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7f8e</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Reference ID:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>139</width>
+    <x>39</x>
+    <name>Label</name>
+    <y>265</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7f84</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Stratum:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>139</width>
+    <x>39</x>
+    <name>Label_1</name>
+    <y>229</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7ed6</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Stratum</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>76</width>
+    <x>228</x>
+    <name>Text Update_1</name>
+    <y>234</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7ebf</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Round-trip time:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>169</width>
+    <x>39</x>
+    <name>Label_2</name>
+    <y>195</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7eb5</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Roundtrip</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>80</width>
+    <x>228</x>
+    <name>Text Update_2</name>
+    <y>198</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7e7a</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Leap Indicator:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>169</width>
+    <x>39</x>
+    <name>Label_3</name>
+    <y>159</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7e70</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Leap</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>76</width>
+    <x>228</x>
+    <name>Text Update_3</name>
+    <y>164</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>2</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7e54</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Hour</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>43</width>
+    <x>102</x>
+    <name>Text Update_4</name>
+    <y>101</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7e4f</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Minute</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>61</width>
+    <x>156</x>
+    <name>Text Update_5</name>
+    <y>101</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7e4a</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Second</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>76</width>
+    <x>228</x>
+    <name>Text Update_6</name>
+    <y>101</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7d43</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>NTP SERVER SUMMARY</text>
+    <scripts />
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="19" green="156" blue="62" />
+    </background_color>
+    <width>290</width>
+    <x>35</x>
+    <name>Label_4</name>
+    <y>61</y>
+    <foreground_color>
+      <color red="255" green="255" blue="255" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7cd3</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Time:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>58</width>
+    <x>39</x>
+    <name>Label_6</name>
+    <y>96</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7cb1</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Date:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>58</width>
+    <x>39</x>
+    <name>Label_7</name>
+    <y>128</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <effect_3d>true</effect_3d>
+    <bit>-1</bit>
+    <pv_value />
+    <height>20</height>
+    <border_width>1</border_width>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:OnOff</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>LED</widget_type>
+    <name>LED</name>
+    <actions hook="false" hook_all="false" />
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7cac</wuid>
+    <on_color>
+      <color red="0" green="255" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <on_label>ON</on_label>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>true</keep_wh_ratio>
+    </scale_options>
+    <off_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <square_led>false</square_led>
+    <width>20</width>
+    <x>300</x>
+    <data_type>0</data_type>
+    <y>22</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <font>
+      <opifont.name fontName="Cantarell" height="11" style="0">Default</opifont.name>
+    </font>
+    <off_label>OFF</off_label>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>2</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7ca4</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Day</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>37</width>
+    <x>102</x>
+    <name>Text Update_8</name>
+    <y>133</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>2</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7c87</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Month</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>46</width>
+    <x>156</x>
+    <name>Text Update_9</name>
+    <y>133</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7c86</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>/</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>25</width>
+    <x>201</x>
+    <name>Label_9</name>
+    <y>128</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>2</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7c7e</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Year</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>76</width>
+    <x>228</x>
+    <name>Text Update_10</name>
+    <y>133</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>7ee0def6:15572c09c5b:-7bf7</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>/</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>25</width>
+    <x>132</x>
+    <name>Label_10</name>
+    <y>128</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-7c4a</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Host address:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>127</width>
+    <x>36</x>
+    <name>Label_5</name>
+    <y>13</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>0</precision>
+    <tooltip>$(pv_name)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-7c49</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:NTP:Address</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>82</width>
+    <x>177</x>
+    <name>Text Update_7</name>
+    <y>18</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-7c1d</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>GPS RECEIVER SUMMARY</text>
+    <scripts />
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="19" green="156" blue="62" />
+    </background_color>
+    <width>290</width>
+    <x>35</x>
+    <name>Label_12</name>
+    <y>318</y>
+    <foreground_color>
+      <color red="255" green="255" blue="255" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-7b71</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Latitude:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>94</width>
+    <x>35</x>
+    <name>Label_13</name>
+    <y>391</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>false</alarm_pulsing>
+    <precision>3</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-7b67</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>loc://latitude</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>176</width>
+    <x>144</x>
+    <name>Text Update_12</name>
+    <y>396</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-6eed</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Fix:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>38</width>
+    <x>35</x>
+    <name>Label_14</name>
+    <y>360</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>false</alarm_pulsing>
+    <precision>3</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-6ed9</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:GPS:Fix</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>61</width>
+    <x>246</x>
+    <name>Text Update_13</name>
+    <y>365</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-6d8c</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Longitude:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>104</width>
+    <x>35</x>
+    <name>Label_15</name>
+    <y>427</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>false</alarm_pulsing>
+    <precision>3</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-6d8b</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>loc://longitude</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>1</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>164</width>
+    <x>144</x>
+    <name>Text Update_14</name>
+    <y>432</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-6d70</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Altitude:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>104</width>
+    <x>35</x>
+    <name>Label_16</name>
+    <y>463</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <line_width>0</line_width>
+    <horizontal_fill>true</horizontal_fill>
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-5d0f57dc:15632c4ac68:-7aad</wuid>
+    <transparent>false</transparent>
+    <pv_value />
+    <alpha>255</alpha>
+    <bg_gradient_color>
+      <color red="255" green="255" blue="255" />
+    </bg_gradient_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>96</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <gradient>false</gradient>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <anti_alias>true</anti_alias>
+    <line_style>1</line_style>
+    <widget_type>Rectangle</widget_type>
+    <fg_gradient_color>
+      <color red="255" green="255" blue="255" />
+    </fg_gradient_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="184" green="218" blue="186" />
+    </background_color>
+    <width>295</width>
+    <x>30</x>
+    <name>Rectangle_1</name>
+    <y>504</y>
+    <fill_level>0.0</fill_level>
+    <foreground_color>
+      <color red="255" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="11" style="0">Default</opifont.name>
+    </font>
+    <line_color>
+      <color red="128" green="0" blue="255" />
+    </line_color>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>false</alarm_pulsing>
+    <precision>3</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-6d6f</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:GPS:Altitude</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>1</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>84</width>
+    <x>224</x>
+    <name>Text Update_15</name>
+    <y>468</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-6d5b</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>UTC Time:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>104</width>
+    <x>35</x>
+    <name>Label_17</name>
+    <y>499</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-5587</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Satellites:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>104</width>
+    <x>35</x>
+    <name>Label_18</name>
+    <y>612</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="15" style="1">Header 2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>false</alarm_pulsing>
+    <precision>3</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>465586f8:1562d671245:-5586</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>false</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>loc://satellites</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>false</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>4</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>187</width>
+    <x>138</x>
+    <name>Text Update_17</name>
+    <y>617</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>2</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7df2</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:GPS:UTC:Hour</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>43</width>
+    <x>123</x>
+    <name>Text Update_18</name>
+    <y>535</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7df1</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:GPS:UTC:Minute</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>61</width>
+    <x>177</x>
+    <name>Text Update_19</name>
+    <y>535</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7df0</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:GPS:UTC:Second</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>76</width>
+    <x>249</x>
+    <name>Text Update_20</name>
+    <y>535</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7def</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Time:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>58</width>
+    <x>60</x>
+    <name>Label_19</name>
+    <y>530</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7dee</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>Date:</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>58</width>
+    <x>60</x>
+    <name>Label_20</name>
+    <y>562</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>2</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7ded</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:GPS:UTC:Day</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>37</width>
+    <x>123</x>
+    <name>Text Update_21</name>
+    <y>567</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>2</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7dec</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:GPS:UTC:Month</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>46</width>
+    <x>177</x>
+    <name>Text Update_22</name>
+    <y>567</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7deb</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>/</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>25</width>
+    <x>222</x>
+    <name>Label_21</name>
+    <y>562</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <precision>2</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7dea</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>Cnt:GPS:UTC:Year</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>76</width>
+    <x>249</x>
+    <name>Text Update_23</name>
+    <y>567</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-592c7088:15632a14fbf:-7de9</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>/</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>25</width>
+    <x>153</x>
+    <name>Label_22</name>
+    <y>562</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Cantarell" height="13" style="1">Header 3</opifont.name>
+    </font>
+  </widget>
+</display>
