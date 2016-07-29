@@ -1,10 +1,11 @@
 [Unit]
 Description=Network Time Service (one-shot ntpdate mode)
+After=gpsd.service
 Before=ntpd.service
- 
+
 [Service]
 Type=oneshot
-ExecStart=/root/gciotto/GPS_server/ntp-install/sbin/ntpd -q -g -x -c /etc/ntpdate.conf
+ExecStart=/usr/local/sbin/ntpd -q -g -x -c /etc/ntpdate.conf
 ExecStart=/sbin/hwclock --systohc
 RemainAfterExit=yes
 
