@@ -22,48 +22,54 @@ import socket
 import gps
 import threading
 
+_prefix = "Cnt:Adafruit:"
+_address = "10.0.6.63"
+
 _months = ['Jan.', 'Feb.', "Mar.", "Apr.", "May", "June", "July", "Aug." , "Sept", "Oct." , "Nov.", "Dec."]
 
 # PVs provided by a NTP server instance and a GPS receiver
 _pvs = {
         
     # NTP - related PVs
-    "Cnt:NTP:OnOff" : { "type" : "enum", "enums" : ["Disconnected", "Connected"], "states" : [Severity.MAJOR_ALARM, Severity.NO_ALARM]},  
+    "NTP:OnOff" : { "type" : "enum", "enums" : ["Disconnected", "Connected"], "states" : [Severity.MAJOR_ALARM, Severity.NO_ALARM]},  
        
-    "Cnt:NTP:Address" : { "type" : "string"},
+    "NTP:Address" : { "type" : "string"},
     
-    "Cnt:NTP:Day" : { "type" : "int"},
-    "Cnt:NTP:Year" : { "type" : "int" },
-    "Cnt:NTP:Month" : { "type" : "string"},
+    "NTP:Timestamp" : {"type" : "float", "prec" : "2"},    
+    "NTP:Day" : { "type" : "int"},
+    "NTP:Year" : { "type" : "int" },
+    "NTP:Month" : { "type" : "string"},
        
-    "Cnt:NTP:Hour" : { "type" : "int", "unit" : "h" },
-    "Cnt:NTP:Minute" : { "type" : "int", "unit" : "min" },
-    "Cnt:NTP:Second" : { "type" : "int", "unit" : "s"},
-    "Cnt:NTP:Millisecond" : { "type" : "int", "unit" : "ms"},
+    "NTP:Hour" : { "type" : "int", "unit" : "h" },
+    "NTP:Minute" : { "type" : "int", "unit" : "min" },
+    "NTP:Second" : { "type" : "int", "unit" : "s"},
+    "NTP:Millisecond" : { "type" : "int", "unit" : "ms"},
     
-    "Cnt:NTP:Stratum" : { "type" : "int"},
-    "Cnt:NTP:Leap" : { "type" : "int"},
-    "Cnt:NTP:Version" : { "type" : "int"},
-    "Cnt:NTP:Roundtrip" : { "type" : "float", "prec" : 3, "unit" : "ms"},
-    "Cnt:NTP:Reference" : { "type" : "string"},
-    #"Cnt:NTP:Offset" : { "type" : "float", "prec" : 3, "unit" : "ms"},
+    
+    "NTP:Stratum" : { "type" : "int"},
+    "NTP:Leap" : { "type" : "enum", "enums" : ["No warning", "+1", "-1", "Unsynchronized"], "states" : [Severity.NO_ALARM, Severity.NO_ALARM, Severity.NO_ALARM, Severity.MAJOR_ALARM]},
+    "NTP:Version" : { "type" : "int"},
+    "NTP:Roundtrip" : { "type" : "float", "prec" : 3, "unit" : "ms"},
+    "NTP:Reference" : { "type" : "string"},
+    #"NTP:Offset" : { "type" : "float", "prec" : 3, "unit" : "ms"},
     
     # GPS - related PVs
     
-    "Cnt:GPS:Fix" : { "type" : "enum", "enums" : ["NO FIX", "2D FIX", "3D FIX"], "states" : [Severity.MAJOR_ALARM, Severity.NO_ALARM, Severity.NO_ALARM]},
-    "Cnt:GPS:Latitude" : { "type" : "float", "prec": 4, "unit" : "º"},
-    "Cnt:GPS:Longitude" : { "type" : "float", "prec": 4, "unit" : "º"},
-    "Cnt:GPS:Altitude" : { "type" : "float", "prec": 2, "unit" : "m"},
+    "GPS:Fix" : { "type" : "enum", "enums" : ["NO FIX", "2D FIX", "3D FIX"], "states" : [Severity.MAJOR_ALARM, Severity.NO_ALARM, Severity.NO_ALARM]},
+    "GPS:Latitude" : { "type" : "float", "prec": 4, "unit" : "º"},
+    "GPS:Longitude" : { "type" : "float", "prec": 4, "unit" : "º"},
+    "GPS:Altitude" : { "type" : "float", "prec": 2, "unit" : "m"},
     
-    "Cnt:GPS:UTC:Day" : { "type" : "int"},
-    "Cnt:GPS:UTC:Month" : { "type" : "string"},
-    "Cnt:GPS:UTC:Year" : { "type" : "int"},
-    "Cnt:GPS:UTC:Hour" : { "type" : "int", "unit" : "h"},
-    "Cnt:GPS:UTC:Minute" : { "type" : "int", "unit" : "min"},
-    "Cnt:GPS:UTC:Second" : { "type" : "int", "unit" : "s"},
+    "GPS:UTC:Timestamp" : {"type" : "float", "prec" : "2"},
+    "GPS:UTC:Day" : { "type" : "int"},
+    "GPS:UTC:Month" : { "type" : "string"},
+    "GPS:UTC:Year" : { "type" : "int"},
+    "GPS:UTC:Hour" : { "type" : "int", "unit" : "h"},
+    "GPS:UTC:Minute" : { "type" : "int", "unit" : "min"},
+    "GPS:UTC:Second" : { "type" : "int", "unit" : "s"},
 
     
-    "Cnt:GPS:Satellites" : { "type" : "int", "count" : 20}
+    "GPS:Satellites" : { "type" : "int", "count" : 20}
     
 }
 
@@ -93,12 +99,12 @@ class NTPDriver(Driver):
         self._gpsdclient = gps.gps(mode = gps.WATCH_ENABLE)  #starting the stream of info)
         
         # Change here to modify ip address of the server to be requested
-        self.setParam("Cnt:NTP:Address", "10.0.6.60")
-        self.setParamStatus("Cnt:NTP:Address", Alarm.NO_ALARM, Severity.NO_ALARM)
+        self.setParam("NTP:Address", _address)
+        self.setParamStatus("NTP:Address", Alarm.NO_ALARM, Severity.NO_ALARM)
         
-        #self.setParam("Cnt:NTP:Address", socket.gethostbyname(socket.gethostname()))
+        #self.setParam("NTP:Address", socket.gethostbyname(socket.gethostname()))
         
-        self.setParam("Cnt:GPS:Fix", 0)
+        self.setParam("GPS:Fix", 0)
         
         # Log file initialization
         self.log_file = open(os.path.dirname(os.path.realpath(sys.argv[0])) + "/GPS-PV-Server.log", "a")
@@ -118,32 +124,37 @@ class NTPDriver(Driver):
             
             try:
                 
-                _server_answer = self._ntpclient.request('10.0.6.60', version = 4);
+                _server_answer = self._ntpclient.request(_address, version = 4);
             
             except: 
                 
-                self.setParam("Cnt:NTP:OnOff", 0)
+                self.setParam("NTP:OnOff", 0)
                                
                 for key in _pvs:
-                    if key != "Cnt:NTP:OnOff" and "NTP" in key:
+                    if key != "NTP:OnOff" and "NTP" in key:
                         self.setParamStatus(key, Alarm.READ_ALARM, Severity.INVALID_ALARM)
                 
             else:                 
                 
-                self.setParam("Cnt:NTP:OnOff", 1)
+                self.setParam("NTP:OnOff", 1)
+                
+                self.setParam("NTP:Timestamp", _server_answer.tx_time)
+                
                 
                 _server_date = datetime.datetime.fromtimestamp(_server_answer.tx_time)
                 
+                
                 # Updates day, month and year
-                self.setParam("Cnt:NTP:Day", _server_date.day)
-                self.setParam("Cnt:NTP:Month", _months[_server_date.month - 1])
-                self.setParam("Cnt:NTP:Year", _server_date.year) 
+                self.setParam("NTP:Day", _server_date.day)
+                self.setParam("NTP:Month", _months[_server_date.month - 1])
+                self.setParam("NTP:Year", _server_date.year) 
                 
                 # Updates time
-                self.setParam("Cnt:NTP:Hour", _server_date.hour)
-                self.setParam("Cnt:NTP:Minute", _server_date.minute)
-                self.setParam("Cnt:NTP:Second", _server_date.second)
-                self.setParam("Cnt:NTP:Millisecond", _server_date.microsecond/1000) 
+                self.setParam("NTP:Hour", _server_date.hour)
+                self.setParam("NTP:Minute", _server_date.minute)
+                self.setParam("NTP:Second", _server_date.second)
+                self.setParam("NTP:Millisecond", _server_date.microsecond/1000) 
+                
                 
                 _reference_id = ""
                 
@@ -156,12 +167,12 @@ class NTPDriver(Driver):
                 if _reference_id == "%c%c%c%c" % (127, 127, 0, 1):
                     _reference_id = "LOCL"
           
-                self.setParam("Cnt:NTP:Stratum", _server_answer.stratum)
-                self.setParam("Cnt:NTP:Leap", _server_answer.leap)
-                self.setParam("Cnt:NTP:Version", _server_answer.version)
-                self.setParam("Cnt:NTP:Reference", _reference_id)
-                self.setParam("Cnt:NTP:Roundtrip", _server_answer.root_delay * 1000)
-                #self.setParam("Cnt:NTP:Offset", _server_answer.offset * 1000)
+                self.setParam("NTP:Stratum", _server_answer.stratum)
+                self.setParam("NTP:Leap", _server_answer.leap)
+                self.setParam("NTP:Version", _server_answer.version)
+                self.setParam("NTP:Reference", _reference_id)
+                self.setParam("NTP:Roundtrip", _server_answer.root_delay * 1000)
+                #self.setParam("NTP:Offset", _server_answer.offset * 1000)
                 
                 
                 for key in _pvs:
@@ -193,23 +204,27 @@ class NTPDriver(Driver):
             
                 # print 'GPS has a fix'
                 
-                self.setParam("Cnt:GPS:Fix", self._gpsdclient.fix.mode - 1) 
+                self.setParam("GPS:Fix", self._gpsdclient.fix.mode - 1) 
             
-                self.setParam("Cnt:GPS:Latitude", self._gpsdclient.fix.latitude)
-                self.setParam("Cnt:GPS:Longitude", self._gpsdclient.fix.longitude)
-                self.setParam("Cnt:GPS:Altitude", self._gpsdclient.fix.altitude)
-                                
+                self.setParam("GPS:Latitude", self._gpsdclient.fix.latitude)
+                self.setParam("GPS:Longitude", self._gpsdclient.fix.longitude)
+                self.setParam("GPS:Altitude", self._gpsdclient.fix.altitude)
+                
                 _utc_as_str =  str(self._gpsdclient.utc)
                 
                 _date_utc = datetime.datetime.strptime(_utc_as_str, '%Y-%m-%dT%H:%M:%S.000Z')
                 
+                _utc_as_timestamp = time.mktime(_date_utc.timetuple())
+                
+                self.setParam("GPS:UTC:Timestamp", _utc_as_timestamp)
+                
                 # print _utc_as_str
-                self.setParam("Cnt:GPS:UTC:Day", _date_utc.day)
-                self.setParam("Cnt:GPS:UTC:Month", _months[_date_utc.month - 1])
-                self.setParam("Cnt:GPS:UTC:Year", _date_utc.year)
-                self.setParam("Cnt:GPS:UTC:Hour", _date_utc.hour)
-                self.setParam("Cnt:GPS:UTC:Minute", _date_utc.minute)
-                self.setParam("Cnt:GPS:UTC:Second", _date_utc.second)
+                self.setParam("GPS:UTC:Day", _date_utc.day)
+                self.setParam("GPS:UTC:Month", _months[_date_utc.month - 1])
+                self.setParam("GPS:UTC:Year", _date_utc.year)
+                self.setParam("GPS:UTC:Hour", _date_utc.hour)
+                self.setParam("GPS:UTC:Minute", _date_utc.minute)
+                self.setParam("GPS:UTC:Second", _date_utc.second)
                 
                 # print str(self._gpsdclient.satellites)
                 
@@ -219,7 +234,7 @@ class NTPDriver(Driver):
                     if s.used:
                         _satellites_codes.append(s.PRN)
                 
-                self.setParam("Cnt:GPS:Satellites", _satellites_codes)
+                self.setParam("GPS:Satellites", _satellites_codes)
                 
                 for key in _pvs:
                     if "GPS" in key:
@@ -229,7 +244,7 @@ class NTPDriver(Driver):
             else:
                 
                 for key in _pvs:
-                    if key != "Cnt:GPS:Fix" and "GPS" in key:
+                    if key != "GPS:Fix" and "GPS" in key:
                         self.setParamStatus(key, Alarm.READ_ALARM, Severity.INVALID_ALARM)
                 
             
@@ -248,7 +263,7 @@ class NTPDriver(Driver):
 if __name__ == "__main__":
 
     CAserver = SimpleServer()
-    CAserver.createPV("", _pvs)
+    CAserver.createPV(_prefix, _pvs)
     driver = NTPDriver()
 
     # Processes request each 100 ms
