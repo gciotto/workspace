@@ -373,13 +373,17 @@ velocidade, data e hora no padrão \textit{UTC} e um pulso, chamado de
 \textit{1PPS}, com frequência de 1Hz e precisão na ordem de \(50ns\). Pode-se
 imaginar que somente o horário fornecido é suficiente para a implementação de um
 bom servidor NTP. Entretanto, os \textit{delays} com que tal informação é
-recebida (\textit{fix reports}) e transmitida pelo \textit{receiver} não são
-constantes e variam conforme temperatura. Dessa forma, a fim de obter um tempo
-preciso, um pulso de 1PPS, com latência baixa e constante (ou quase constante)
-em relação ao tempo do \textit{fix report}, é fornecido. A combinação destes
-dois últimos, aliados a um sistema operacional com \textit{kernel} habilitado ao
-tratamento de tais pulsos, permite a implementação de um servidor com acurácia
-da ordem de \(1\mu s\) em relação ao horário \textit{real}.
+recebida e transmitida pelo \textit{receiver} não são constantes e variam
+conforme temperatura. Dessa forma, a fim de obter um tempo preciso, um pulso de
+1PPS, que marca o ínicio de um novo segundo e cujo \textit{jitter} pertence à
+ordem de centenas de nanosegundos, também é fornecido.
+A combinação destes dois últimos, aliados a um sistema operacional com
+\textit{kernel} habilitado ao tratamento de tais pulsos, permite a implementação
+de um servidor com acurácia da ordem de \(1\mu s\) em relação ao horário
+\textit{real}. É importante destacar que o PPS deve ser combinado com
+alguma outra fonte de tempo, uma vez que ele não capaz de dizer o horário
+efetivo, isto é, horas, minutos e segundos, mas sim somente o início de um novo
+segundo.
 
 \vspace{12pt}
 
@@ -391,17 +395,19 @@ configuração do servidor NTP.
 Dois módulos GPS de fabricantes distintos foram comprados:
 
 \begin{enumerate}[i.]
-  \item \textit{Adafruit Ultimate GPS Breakout - 66 channel w/10 Hz}.
-  \item \textit{U-blox 6H}
+  \item \textit{Adafruit Ultimate GPS Breakout}.
+  \item \textit{MikroE GPS Click - u-blox LEA6S}
 \end{enumerate}
 
 Ambos fornecem um pino de saída 1PPS e comunicação serial assíncrona
 \textit{RX/TX} (\textit{UART}). Foi utilizado também o multivibrador mono
 estável \textit{74HC123}, a fim de obtermos um pulso 1PPS mais largo na entrada
-do pino da \textit{BeagleBone Black}. Tal pulso é fornecido com uma largura de
-apenas \(10\mu s\), que pode não ser capturado pela placa, dependendo da
-utilização da sua CPU. Sendo assim, utilizando-se um resistor de \(22k\Omega\) e um
-capacitor de \(10nF\), obtém-se uma largura de aproximadamente \(100 \mu s\).
+do pino da \textit{BeagleBone Black}. Tal pulso é fornecido por alguns
+receptores com uma largura de apenas \(10\mu s\), que pode não ser capturado pela placa, dependendo da
+utilização da sua CPU. Sendo assim, utilizando-se um resistor de \(1M\Omega\) e
+um capacitor de \(1\mu F\), obtém-se uma largura de aproximadamente \(500 ms\).
+Para os receptores listados acima, porém, o uso do multivibrador não é
+necessário, visto que provêem pulsos de largura superiores a 100\(ms\).
 
 \subsubsection{Configuração do servidor NTP}
 
@@ -417,7 +423,7 @@ A segunda etapa consiste na configuração das portas de entrada e
 saída que serão usadas pela \textit{BeagleBone Black} para se comunicar com o
 GPS. Conforme referência [1], adotaremos que os pinos \texttt{P9-11} e
 \texttt{P9-13} serão utilizados, respectivamente, como \textit{TX} e
-\textit{RX}, e \texttt{P8-7}, como entrada do pulso 1PPS. O arquivo de
+\textit{RX}, e \texttt{P9-12}, como entrada do pulso 1PPS. O arquivo de
 \textit{device tree overlay} especificando tais comportamentos pode ser obtido
 a partir de \url{http://tinyurl.com/oeo2ccu}. Após compilado e carregado, duas
 novas  interfaces estarão disponíveis, sendo elas \path{/dev/ttyO4} e
@@ -466,8 +472,10 @@ respectivamente, a ativação do \textit{driver} de gerenciamento do 1PPS e o
 diretório onde o NTP será instalado.
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-./configure --enable-ATOM --prefix=/INSTALL_DIR --enable-linuxcaps
+./configure --enable-ATOM --prefix=/usr/local/ --enable-linuxcaps
 \end{lstlisting}
+
+\vspace{12pt}
 
 O comando \texttt{make install} instalará os binários no diretório especificado.
 O pacote \texttt{libcap-dev} é necessário e, portanto, deve ser instalado via
@@ -477,10 +485,181 @@ inicializados assim que a \textit{BeagleBone} for ligada. Para tal, implementei
 um \textit{script bash}, encontrado no repositório do grupo, que
 realiza automaticamente esta tarefa.
 
+\subsubsection{Implementação de variáveis EPICS}
+
+A fim de tornarmos disponíveis as variáveis EPICS que possam refletir o estado
+dos receptadores e do servidor NTP, utilizamos algumas bibliotecas em
+\textit{Python}. O servidor de variáveis é implementado através do módulo
+\textit{PCASpy} (consultar seção \ref{sec:pcaspy}) e de suas classes, e a
+comunicação com o servidor e o \textit{receiver} através das bibliotecas
+\texttt{python-gps} (\texttt{apt-get install python-gps}) e \texttt{ntplib}. 
+
+\vspace{12pt}
+
+Para o servidor NTP, as seguintes variáveis estão disponíveis:
+
+\begin{itemize}
+  \renewcommand\labelitemi{--}
+  \item \textit{\texttt{NTP:OnOff}}: indica se o servidor está ativo.
+  
+  \item \textit{\texttt{NTP:Address}}: endereço IP do servidor na rede.
+  
+  \item \textit{\texttt{NTP:Timestamp}}: número de segundos entre a data do
+  servidor e 01 Janeiro de 1970.
+  
+  \item \textit{\texttt{NTP:Day}}, \textit{\texttt{NTP:Month}},
+  \textit{\texttt{NTP:Year}}, \textit{\texttt{NTP:Hour}},
+  \textit{\texttt{NTP:Minute}} e \textit{\texttt{NTP:Second}}:
+  conversão de \textit{\texttt{NTP:Timestamp}} nos respectivos campos.
+  
+  \item \textit{\texttt{NTP:Stratum}}: \textit{stratum} do servidor.
+  
+  \item \textit{\texttt{NTP:Leap}}: ocasionalmente, as autoridades adicionam
+  ou retiram 1 segundo do horário UTC, com o intuito de torná-lo mais
+  próximo do horário solar. Esta variável pode assumir 4 estados, de acordo
+  com a RFC5905. Quando vale 0, significa que nenhuma mudança é necessária e
+  quando vale 1 ou 2, um segundo é, respectivamente, adicionado ou retirado. Ela
+  pode conter também o valor 3, que representa que o relógio do servidor está
+  dessincronizado.
+
+  \item  \textit{\texttt{NTP:Version}}: versão no NTP. Por padrão, sempre
+  utilizamos a 4.
+
+  \item  \textit{\texttt{NTP:Roundtrip}}: tempo que o pacote de requisição leva
+  para chegar e retornar da fonte, em milissegundos.
+
+  \item \textit{\texttt{NTP:Reference}}: \textit{string} de 4 caracteres que
+  identifica a fonte de sincronismo atualmente utilizado pelo servidor.
+\end{itemize}
+
+Para os receptores GPS, por sua vez, são disponibilizadas:
+
+\begin{itemize}
+
+  \renewcommand\labelitemi{--}
+  \item \textit{\texttt{GPS:Fix}}: \textit{enum} que indica o tipo de
+  \textit{fix} obtido pelo GPS. 0 indica que o receptor não pôde obter nenhum
+  \textit{fix}, 1 que um \textit{2D fix} foi obtido e 2, um \textit{3D fix}.
+  
+  \item \textit{\texttt{GPS:Latitude}}, \textit{\texttt{GPS:Longitude}} e
+  \textit{\texttt{GPS:Altitude}}:  informações de posicionamento.
+
+  \item \textit{\texttt{GPS:UTC:Timestamp}}: horário UTC em
+  formato \textit{timestamp} retornado pelo GPS. Da mesma maneira, são
+  disponibilizadas variáveis individuais contendo campos, tais como dia, mês e
+  ano, obtidos a partir deste \textit{timestamp}.
+  
+  \item  \textit{\texttt{GPS:UTC:Satellites}}: vetor com os \textit{PRN} dos
+  satélites utilizados no cálculo do \textit{fix}.
+\end{itemize}
+
+A interface abaixo foi gerada a partir destas bibliotecas e utilizam as
+\textit{PVs} descritas acima:
+
+\FloatBarrier
+
+\begin{figure}[h]
+    
+    \centering
+    \includegraphics[scale=0.4]{image/epics-opi-ntpgps}
+    \caption {\centering Interface construída para visualização das
+    \textit{PVs}.}
+    \label{img:ntp-opi} 
+\end{figure} 
+
+\FloatBarrier
+ 
 \subsection{Construção de um \textit{cape} para a \textit{BeagleBone Black}}
 
-\textit{Seção a ser completada no decorrer das atividades.}
+Dois \textit{capes} foram implementados através do \textit{Kicad}, um para cada
+receptador GPS. Tais arquivos podem ser encontrados no repositório do grupo.
+
 
 \subsection{Resultados}
 
-\textit{Seção a ser completada no decorrer das atividades.}
+A figura \ref{img:adafruit} representa os resultados obtidos para o receptor
+\textit{Adafruit}. Tal tabela foi obtida através do comando \texttt{ntpq}, sendo
+que as colunas representam informações relativas às fontes de sincronismo que
+tal servidor utiliza, tais como \textit{stratum}, \textit{delay},
+\textit{offset} e \textit{jitter}, cujos conceitos já foram explorados
+anteriormente.
+
+\vspace{12pt}
+
+Destaca-se a presença de duas fontes específicas, \texttt{SHM} e \texttt{PPS}.
+A primeira, cuja representação é a abreviação de \textit{SHared Memory}, obtém
+seus valores de hora e data por meio de um segmento compartilhado de memória,
+acessado igualmente pelo utilitário \texttt{gpsd}. Em outras palavras, tal
+segmento é o canal de comunicação utilizado pelo servidor NTP para comunicar-se
+com o \texttt{gpsd}, que, por sua vez, implementa a troca de dados com o
+respectivo receptor. O segundo trata-se da fonte ligada ao PPS, controlada pelo
+\textit{driver} \texttt{ATOM} que tivemos que incorporar na compilação do
+\textit{NTP}. A fonte representada por \texttt{LOCAL}, que obtém a data do
+próprio sistema, é considerada apenas se as duas anteriores não estiverem
+disponíveis.
+
+\FloatBarrier
+
+\begin{figure}[h]
+    
+    \centering
+    \includegraphics[scale=0.6]{image/adafruit_GPS}
+    \caption {\centering Resultado do comando \texttt{ntpq -p} na
+    \textit{BeagleBone} conectada ao \textit{cape} com o receptor \textit{Adafruit Ultimate GPS}.}
+    \label{img:adafruit} 
+\end{figure} 
+
+\FloatBarrier
+
+Conforme esperado, o servidor conseguiu sincronizar-se ao início de um novo
+segundo (PPS) com precisão e \textit{offset} na ordem de unidades de
+microsegundos. Na tabela representada acima, por exemplo, o \textit{offset} é
+-0.006\(ms\), isto é, o horário do servidor está 6\(\mu s\) atrás do pulso de
+PPS, e o jitter, 0.006\(ms\).
+
+\vspace{12pt}
+
+A figura \ref{img:mikroe}, por sua vez, exibe o resultado da execução do mesmo
+comando, porém para o receptor da \textit{MikroE}. Observa-se que, como no caso
+anterior, o servidor conseguiu sincronizar-se ao pulso de PPS.  
+
+\FloatBarrier
+
+\begin{figure}[h]
+    
+    \centering
+    \includegraphics[scale=0.6]{image/mikroe}
+    \caption {\centering Resultado do comando \texttt{ntpq -p} na
+    \textit{BeagleBone} conectada ao \textit{cape} com o receptor
+    \textit{MikroE GPS Click}.}
+    \label{img:mikroe} 
+\end{figure} 
+
+\FloatBarrier
+
+Enfim, a figura \ref{img:cliente_ntp} representa a saída do comando executado em
+uma \textit{Beagle} que utiliza 3 servidores para obter o horário. Os dois
+primeiros (\texttt{10.0.6.63} e \texttt{10.0.6.60}) são os
+endereços das placas ligadas, respectivamente, aos receptadores da
+\textit{Adafruit} e da \textit{MikroE}, e o último, enfim, é um servidor
+externo, referenciado pelo endereço \url{ntp.cnpem.br}. 
+
+\FloatBarrier
+
+\begin{figure}[h]
+    
+    \centering
+    \includegraphics[scale=0.6]{image/cliente-ntp}
+    \caption {\centering Resultado do comando \texttt{ntpq -p} na
+    \textit{BeagleBone} cliente que obtêm sincronização de 3 servidores
+    distintos.}
+    \label{img:cliente_ntp} 
+\end{figure} 
+
+\FloatBarrier
+
+Nota-se que a diferença
+entre as fontes PPS está na ordem de unidades de microssegundos e que a
+diferença entre elas e a externa é da ordem de 100\(\mu s\). Isso indica que o
+fato de que a externa pertence a uma rede externa ao CNPEM, há a introdução de
+um atraso no horário fornecido por ela.
