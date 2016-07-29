@@ -184,7 +184,9 @@ Executamos, então, os comandos abaixo, em que \texttt{pwm\_P9\_22} referencia o
 arquivo gerado após compilação. \texttt{duty\_ns} e \texttt{period\_ns}
 são utilizados, respectivamente, para configurar o intervalo de tempo em que a
 onda permanecerá em nível lógico alto e o seu período total. Para as próximas
-seções, vamos adotá-los como, respectivamente, 2\textit{ms} e 70\textit{ms}.
+seções, vamos adotá-los como, respectivamente, 2\textit{ms} e 70\textit{ms}. Um
+\textit{script bash}, que pode ser encontrado no repositório do grupo, foi
+escrito e automatiza o processo abaixo.
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ echo pwm_P9_22 > $SLOTS
@@ -255,9 +257,7 @@ dados onde serão colocados os processos que esperam pelo evento. Essa fila é d
 tipo \texttt{wake\_queue\_head\_t} e pode ser criada estaticamente, via
 a \textit{macro} \texttt{DECLARE\_WAITQUEUE()}, ou dinamicamente, via a função
 \texttt{init\_waitqueue\_head()}.
-
-\FloatBarrier
-			    
+ 
 	\begin{figure}[h!]
 	
 	\centering
@@ -282,8 +282,8 @@ a \textit{macro} \texttt{DECLARE\_WAITQUEUE()}, ou dinamicamente, via a função
 	\caption{Fluxogramas das \textit{threads} que compõem \texttt{BB1}.}
 	\label{fig:threads_bb1}
 	\end{figure} 
-	
-	\FloatBarrier 
+
+\vspace{12pt}
 
 Os processadores da família \textit{Sitara AM335x} da \textit{Texas Instruments}
 possuem um módulo, chamado de \textit{DMTimer}, composto por 7 \textit{timers}
