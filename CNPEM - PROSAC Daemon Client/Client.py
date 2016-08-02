@@ -1,4 +1,7 @@
 '''
+
+Main module. It launches all three threads (GUI, buffer consumer and producer).
+
 Created on 01/08/2016
 
 @author: gciotto
@@ -12,6 +15,8 @@ import threading
 import time
 from Control_Node import Network_Nodes
 
+# This thread produces READ commands and enqueues them in the command queue (refer to the BufferController
+# module) every 'refresh_delay' seconds.
 def reading_command_thread():
     
     while w_command.still_on:
@@ -24,7 +29,7 @@ def reading_command_thread():
         
         time.sleep(w_command.refresh_delay)
 
-# Main 'function': instantiates a CommandWindow object and starts it. 
+# Main 'function': instantiates a ClientInterface object and starts it. 
 if __name__ == '__main__':
     
     reader = threading.Thread(target = reading_command_thread)

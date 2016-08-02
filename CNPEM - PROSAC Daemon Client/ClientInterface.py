@@ -1,24 +1,31 @@
 '''
+
+ClientInterface inherits from  QT QMainWindow class and represents a graphical
+interface to control all nodes in the network.
+
 Created on 01/08/2016
 
 @author: gciotto
 '''
 from PyQt4.QtGui import QMainWindow,\
-    QGridLayout, QLabel, QPushButton, QTableView, QAbstractItemView, QInputDialog
+    QGridLayout, QLabel, QPushButton, QTableView, QAbstractItemView, QInputDialog,\
+    QTextEdit
 from PyQt4.QtCore import *
 from PyQt4.Qt import QWidget, QLineEdit, QColor, QBrush
-from Control_Node import Control_Node, Control_Node_State, Network_Nodes
+from Control_Node import Control_Node_State, Network_Nodes
 from BufferController import Command
 
 class ClientInterface (QMainWindow):
-    
-    # Constructs a new SourceWindow to control power supply     
+     
+    log_signal = pyqtSignal(str, name="logChanged")
+     
     def __init__(self, parent = None, buf_controller = None):
         
         QMainWindow.__init__(self, parent)
         
         self.should_monitor = False
         self.still_on = True
+        
         
         self.buffer_controller = buf_controller
          
@@ -47,8 +54,19 @@ class ClientInterface (QMainWindow):
         self.table_view.setModel(self.table_model)
         self.table_view.verticalHeader().hide()
         
+        self.log_label = QLabel("Command log:", parent = self)
+        self.log_label.setMaximumHeight(20)
+        self.log_text = QTextEdit(parent = self)
+        self.log_text.setMaximumHeight(150)
+        self.clear_log = QPushButton("Clear log", parent = self)
+        self.clear_log.clicked.connect(self.clear_log_text)
         
-        self.label_delay = QLabel("Refresh delay (s):", self)
+        # Since that log_text should be changed in other thread, we must use signal
+        # to communicate between them
+        self.log_signal.connect(self.append_log)
+        
+        self.label_delay = QLabel("Refresh delay (s): ", self)
+        self.label_delay.setMinimumWidth(200)
         self.refresh_delay = 5
         self.time_edit = QLineEdit("5", self)
         self.time_edit.setMaximumWidth(60)
@@ -60,6 +78,10 @@ class ClientInterface (QMainWindow):
         self.widgetbox.addWidget(self.label_delay, 2, 3, 1, 2)
         self.widgetbox.addWidget(self.time_edit, 2, 4, 1, 1)
         self.widgetbox.addWidget(self.send_cmd, 3, 3, 1, 2)
+        
+        self.widgetbox.addWidget(self.log_label, 5, 0, 1, 2)
+        self.widgetbox.addWidget(self.clear_log, 5, 4, 1, 1)
+        self.widgetbox.addWidget(self.log_text, 6, 0, 1, 5)
             
         self.widget.setLayout(self.widgetbox)
         
@@ -67,6 +89,14 @@ class ClientInterface (QMainWindow):
         self.setCentralWidget(self.widget)
         
         self.setFixedSize(QSize(530, 800))
+    
+    def clear_log_text (self):
+        
+        self.log_text.clear()
+    
+    def append_log (self, str_text):
+        
+        self.log_text.append(str_text)
     
     def send_cmd_nodes(self): 
         
@@ -124,6 +154,8 @@ class ClientInterface (QMainWindow):
                 
         return QMainWindow.paintEvent(self, *args, **kwargs)
 
+# Model to the QTableView widget. It is responsible to fill up the table with the
+# corrected data and paint each row according to its state.
 class TableModel (QAbstractTableModel):
     
     def __init__ (self, parent = None, node_list = []):
@@ -149,8 +181,9 @@ class TableModel (QAbstractTableModel):
            
             if __node.state == Control_Node_State.DISCONNECTED:
                 return QBrush(QColor(229, 85, 94))
+            
             if __node.state == Control_Node_State.CONNECTED:
-                return QBrush(QColor(0, 125, 0))
+                return QBrush(QColor(92, 255, 130))
             
             return QBrush(QColor(255, 255, 0))
         
@@ -162,6 +195,7 @@ class TableModel (QAbstractTableModel):
             
             if __col == 0:
                 return QVariant(__node.network_id)
+            
             if __col == 1:
                 return QVariant(__node.node_id)
             

@@ -39,8 +39,8 @@ class ProsacDaemonConnection(object):
 			#print "SOCKET TIMEOUT"
 			self.s.close()
 			return -1
-		except socket.error:#, (value, message):
-			#print "SOCKET ERROR"#, message
+		except socket.error, msg:#, (value, message):
+			print "SOCKET ERROR", msg#, message
 			self.s.close()
 			return -1
 		else:	
