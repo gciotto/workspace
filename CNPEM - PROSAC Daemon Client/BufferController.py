@@ -120,11 +120,11 @@ class BufferController(threading.Thread):
                     
                         try:
                     
-                            __next.target.changeState(Control_Node_State.CMD_EXECUTING)
-                            
+                            __next.target.changeState(Control_Node_State.CMD_RUNNING)
+
                             self.ssh_client.connect(hostname = __next.target.ip_address,\
                                                     username = "root", password = "root", timeout = 3)
-                        
+                            
                         
                             stdin, stdout, stderr = self.ssh_client.exec_command(str(__next.command))
                         

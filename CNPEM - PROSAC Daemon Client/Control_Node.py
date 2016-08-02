@@ -17,7 +17,7 @@ import threading
 
  
 class Control_Node_State():
-    DISCONNECTED, CONNECTED, REBOOTING, CMD_EXECUTING, CMD_OK = range(5)
+    DISCONNECTED, CONNECTED, REBOOTING, CMD_INQUEUE, CMD_RUNNING , CMD_OK = range(6)
 
     # String representation of a state    
     @staticmethod
@@ -32,7 +32,10 @@ class Control_Node_State():
         elif state == Control_Node_State.REBOOTING:
             return "Rebooting"
         
-        elif state == Control_Node_State.CMD_EXECUTING:
+        elif state == Control_Node_State.CMD_INQUEUE:
+            return "Cmd in queue"
+        
+        elif state == Control_Node_State.CMD_RUNNING:
             return "Running"
         
         return "Command OK"
@@ -68,7 +71,7 @@ class Control_Node():
         
         self.info_mutex.acquire()
         
-        r = (self.state == Control_Node_State.CONNECTED)
+        r = (self.state != Control_Node_State.DISCONNECTED)
         
         self.info_mutex.release()
         

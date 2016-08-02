@@ -104,10 +104,13 @@ class ClientInterface (QMainWindow):
                 "Type in the command which will be executed in selected SBCs:")
         
         if ok:
-            
+                        
             __selection = self.table_view.selectionModel()
             
             for i in __selection.selectedRows():
+                
+                if Network_Nodes.nodes[i.row()].isConnected(): 
+                    Network_Nodes.nodes[i.row()].changeState(Control_Node_State.CMD_INQUEUE)
             
                 __command = Command(type = Command.OTHER, target = Network_Nodes.nodes[i.row()], command = _cmd)
             
