@@ -109,6 +109,9 @@ class BufferController(threading.Thread):
                     
                     if  not __r:
                         
+                        self.window_controller.log_signal.emit("Rebooting node %s (%s)"\
+                                         % (str(__next.target.ip_address), __next.target.dns_name))
+                        
                         __next.target.changeState(Control_Node_State.REBOOTING)
                         
                     else:
@@ -138,21 +141,24 @@ class BufferController(threading.Thread):
                     
                             __next.target.changeState(Control_Node_State.CMD_OK)
                             
-                            self.window_controller.log_signal.emit("Results of running '%s' @ %s"\
-                                                         % (str(__next.command), str(__next.target.ip_address)))
+                            self.window_controller.log_signal.emit("Results of running '%s' @ %s (%s)"\
+                                                         % (str(__next.command), str(__next.target.ip_address),\
+                                                            __next.target.dns_name))
                             
+                            # print normal output, if command was successful
                             for i in stdout.readlines():
                                 
                                 self.window_controller.log_signal.emit(str(i)[:-1])
                                 
+                            # print error output, if command failed
                             for i in stderr.readlines():
                                 
                                 self.window_controller.log_signal.emit(str(i)[:-1])
                             
-                            self.window_controller.log_signal.emit("===================================")
+                            self.window_controller.log_signal.emit("-" * 82)
                             
                         self.ssh_client.close()
                         
-                        
+                # Emits signal to update table view
                 self.window_controller.table_model.dataChanged.emit(QModelIndex(), QModelIndex())
        
