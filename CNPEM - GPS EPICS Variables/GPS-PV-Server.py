@@ -21,6 +21,7 @@ import datetime
 import socket
 import gps
 import threading
+from subprocess import check_output
 
 _prefix = "Cnt:Adafruit:"
 _address = "10.0.6.63"
@@ -51,7 +52,7 @@ _pvs = {
     "NTP:Version" : { "type" : "int"},
     "NTP:Roundtrip" : { "type" : "float", "prec" : 3, "unit" : "ms"},
     "NTP:Reference" : { "type" : "string"},
-    #"NTP:Offset" : { "type" : "float", "prec" : 3, "unit" : "ms"},
+    "NTP:Offset" : { "type" : "float", "prec" : 3, "unit" : "ms"},
     
     # GPS - related PVs
     
@@ -140,9 +141,7 @@ class NTPDriver(Driver):
                 
                 self.setParam("NTP:Timestamp", _server_answer.tx_time)
                 
-                
                 _server_date = datetime.datetime.fromtimestamp(_server_answer.tx_time)
-                
                 
                 # Updates day, month and year
                 self.setParam("NTP:Day", _server_date.day)
@@ -153,8 +152,7 @@ class NTPDriver(Driver):
                 self.setParam("NTP:Hour", _server_date.hour)
                 self.setParam("NTP:Minute", _server_date.minute)
                 self.setParam("NTP:Second", _server_date.second)
-                self.setParam("NTP:Millisecond", _server_date.microsecond/1000) 
-                
+                self.setParam("NTP:Millisecond", _server_date.microsecond/1000)  
                 
                 _reference_id = ""
                 
@@ -166,14 +164,36 @@ class NTPDriver(Driver):
                     
                 if _reference_id == "%c%c%c%c" % (127, 127, 0, 1):
                     _reference_id = "LOCL"
+                
           
                 self.setParam("NTP:Stratum", _server_answer.stratum)
                 self.setParam("NTP:Leap", _server_answer.leap)
                 self.setParam("NTP:Version", _server_answer.version)
                 self.setParam("NTP:Reference", _reference_id)
                 self.setParam("NTP:Roundtrip", _server_answer.root_delay * 1000)
-                #self.setParam("NTP:Offset", _server_answer.offset * 1000)
                 
+                
+                # If stratum is bigger than 1, get offset from NTP packet. Otherwise,
+                # we need to request PPS ATOM driver directly.
+                if _server_answer.stratum > 1:
+                    self.setParam("NTP:Offset", _server_answer.offset * 1000)
+                
+                else: 
+                    
+                    _output = check_output(["ntpq", "-p"])
+                    _l = _output.split('\n')
+                    _lines = [filter (lambda a: a != '', _l[n].split(" ")) for n in range (len(_l))]
+                    
+                    # Discard two first header rows and last empty row
+                    for l in _lines[2:-1]:
+                                                
+                        if _reference_id[:-1] in l[1]:
+                            _used_line = l 
+                            break
+                        
+                    _offset = float (_used_line[-2])
+                    self.setParam("NTP:Offset", _offset)
+                    
                 
                 for key in _pvs:
                     if "NTP" in key:
