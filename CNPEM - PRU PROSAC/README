@@ -1,0 +1,26 @@
+PROSAC PRU Interrupter 
+
+Author: Gustavo CIOTTO PINTON
+
+
+Each time a new synchronism pulse, the firmware running in the PRU launches an interruption to the user-space program. 
+It was designed to wake up PROSAC interrupter thread only in the case it was necessary, discarding the explicit call of yield()
+a lot of times.
+
+It is provided as well a test program, pru_prosac_loader_with_threads.c, containing 1 thread which is waken up by the PRU module and
+shares the CPU with other 100 threads.
+
+Building and launching scripts are also provided.
+
+* Requirements *
+
+1) PRU driver and library
+
+* Running *
+
+1) Run build_overlay.sh to configure PRU pins
+2) Run build_source_files.sh to compile .p and .c files
+3) Run binary file generated in previous test, if you wish to execute test program
+
+The beagle_pru_waking_main.png represents the results of such execution
+  
