@@ -1,0 +1,21 @@
+PROSAC Daemon Client
+
+Author: Gustavo CIOTTO PINTON
+Version/Date: 1.0 - 04/08/2016
+
+The clients provides a graphical interface to monitor and send commands to the single-board computers present in the UVX's control network.
+
+It was written in Python and is basically composed of 3 threads, which are listed below:
+
+1) Interface thread, which handles events and signals of the GUI;
+2) Monitor thread, which periodically enqueues READ commands to the SBCs;
+3) Consumer thread, which dequeues commands and send them via a TCP interface. Besides, this thread also sends other Linux commands, such as 'ls -l', through a SSH connection.
+
+* Requirements *
+
+1) PyQt4 module, install with 'sudo apt-get install python-qt4'
+2) paramiko module
+
+* Running *
+
+1) Type 'python Client.py' to run the client 

@@ -1,0 +1,16 @@
+Sirius New Power Supply Qt4 GUI
+
+Authors: 	Gustavo Ciotto Pinton
+			Eduardo Pereira Coelho
+Version/Date: 1.0 - 27/07/2016
+
+Python Qt4 interface for controlling a Sirius power supply. It implements the same protocol used by PROSAC.
+
+* Requirements *
+
+1) python-qt4, install with 'sudo apt-get install python-qt4'
+2) A SBC running PROSAC
+
+* Running *
+
+1) Run init_app.sh script
