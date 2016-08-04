@@ -232,7 +232,7 @@ class NTPDriver(Driver):
                 
                 _utc_as_str =  str(self._gpsdclient.utc)
                 
-                _date_utc = datetime.datetime.strptime(_utc_as_str, '%Y-%m-%dT%H:%M:%S.000Z')
+                _date_utc = datetime.datetime.strptime(_utc_as_str, '%Y-%m-%dT%H:%M:%S.%fZ')
                 
                 _utc_as_timestamp = time.mktime(_date_utc.timetuple())
                 
