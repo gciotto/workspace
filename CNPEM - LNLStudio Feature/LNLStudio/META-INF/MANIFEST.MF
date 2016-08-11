@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: LNLStudio
+Bundle-SymbolicName: br.cnpem.lnlstudio;singleton:=true
+Bundle-Version: 1.0.0.0
+Bundle-Activator: lnlstudio.Activator
+Bundle-Vendor: CNPEM
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.intro,
+ org.eclipse.ui.intro.universal,
+ org.eclipse.ui.intro.universal
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: lnlstudio

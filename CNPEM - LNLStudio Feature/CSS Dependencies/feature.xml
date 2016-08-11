@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="CSS_Dependencies"
+      label="CSS_Dependencies"
+      version="1.0.0.qualifier">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.csstudio.alarm.beast.tools.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.alarm.beast.ui.alarmtable.opiwidget.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.alarm.beast.ui.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.alarm.diirt.datasource.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.applications.channel.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.applications.channelfinder.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.applications.opibuilder.edm.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.applications.opibuilder.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.applications.opibuilder.medm.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.applications.pvmanager.diag.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.applications.utility.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.archive.diirt.datasource.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.archive.reader.appliance.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.archive.reader.channelarchiver.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.archive.reader.rdb.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.archive.tools.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.core.base.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.core.platform.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.core.ui.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.core.utility.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.display.rdbtable.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.graphene.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.graphene.opiwidgets.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.pvmanager.autocomplete.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.thirdparty.all.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.trends.databrowser2.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.trends.databrowser2.opiwidget.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.utilities.debugging.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.utilities.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.email.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.applications.logbook.feature"
+         version="0.0.0"/>
+
+   <requires>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.apache.batik.css" version="1.7.0" match="equivalent"/>
+      <import plugin="org.apache.batik.util" version="1.7.0" match="equivalent"/>
+      <import plugin="org.apache.batik.util.gui" version="1.7.0" match="equivalent"/>
+   </requires>
+
+   <plugin
+         id="org.diirt.datasource"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource-extra"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource-formula"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource-graphene"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource-loc"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource-sim"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource-sys"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource-vtype"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.graphene"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.service"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.support.diirt-ca"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.util"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.vtype"
+         download-size="0"
+         install-size="0"
+         version="3.1.2"
+         unpack="false"/>
+
+   <plugin
+         id="com.google.guava"
+         download-size="0"
+         install-size="0"
+         version="15.0.0.v201403281430"
+         unpack="false"/>
+
+   <plugin
+         id="com.sun.jersey.bundle"
+         download-size="0"
+         install-size="0"
+         version="1.19.0"
+         unpack="false"/>
+
+   <plugin
+         id="junit"
+         download-size="0"
+         install-size="0"
+         version="4.11.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.fasterxml.jackson.core.jackson-annotations"
+         download-size="0"
+         install-size="0"
+         version="2.6.3"
+         unpack="false"/>
+
+   <plugin
+         id="com.fasterxml.jackson.core.jackson-core"
+         download-size="0"
+         install-size="0"
+         version="2.6.3"
+         unpack="false"/>
+
+   <plugin
+         id="com.fasterxml.jackson.core.jackson-databind"
+         download-size="0"
+         install-size="0"
+         version="2.6.3"
+         unpack="false"/>
+
+   <plugin
+         id="com.fasterxml.jackson.dataformat.jackson-dataformat-smile"
+         download-size="0"
+         install-size="0"
+         version="2.6.3"
+         unpack="false"/>
+
+   <plugin
+         id="javax.mail"
+         download-size="0"
+         install-size="0"
+         version="1.4.0.v201005080615"
+         unpack="false"/>
+
+   <plugin
+         id="javax.activation"
+         download-size="0"
+         install-size="0"
+         version="1.1.0.v201211130549"
+         unpack="false"/>
+
+   <plugin
+         id="org.python.jython"
+         download-size="0"
+         install-size="0"
+         version="2.7.0.release"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.lang"
+         download-size="0"
+         install-size="0"
+         version="2.6.0.v201404270220"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.io"
+         download-size="0"
+         install-size="0"
+         version="2.2.0.v201405211200"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.dom"
+         download-size="0"
+         install-size="0"
+         version="1.7.0.v201011041433"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.dom.svg"
+         download-size="0"
+         install-size="0"
+         version="1.7.0.v201011041433"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.xml"
+         download-size="0"
+         install-size="0"
+         version="1.7.0.v201011041433"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.parser"
+         download-size="0"
+         install-size="0"
+         version="1.7.0.v201011041433"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.ext.awt"
+         download-size="0"
+         install-size="0"
+         version="1.7.0.v201011041433"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.bridge"
+         download-size="0"
+         install-size="0"
+         version="1.7.0.v201011041433"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.transcoder"
+         download-size="0"
+         install-size="0"
+         version="1.7.0.v201011041433"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.svggen"
+         download-size="0"
+         install-size="0"
+         version="1.7.0.v201011041433"
+         unpack="false"/>
+
+   <plugin
+         id="org.epics.pvaccess"
+         download-size="0"
+         install-size="0"
+         version="4.0.4"
+         unpack="false"/>
+
+   <plugin
+         id="org.epics.pvdata"
+         download-size="0"
+         install-size="0"
+         version="4.0.3"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.platform.libs.epics"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20160810081359"
+         unpack="false"/>
+
+   <plugin
+         id="org.antlr.runtime"
+         download-size="0"
+         install-size="0"
+         version="3.5.2"
+         unpack="false"/>
+
+   <plugin
+         id="javax.servlet"
+         download-size="0"
+         install-size="0"
+         version="3.0.0.v201112011016"
+         unpack="false"/>
+
+   <plugin
+         id="org.slf4j.api"
+         download-size="0"
+         install-size="0"
+         version="1.7.2.v20121108-1250"
+         unpack="false"/>
+
+</feature>

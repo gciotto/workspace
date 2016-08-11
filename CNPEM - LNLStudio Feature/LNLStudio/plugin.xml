@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="LNLStudio">
+         <property
+               name="appName"
+               value="LNLStudio">
+         </property>
+         <property
+               name="aboutImage"
+               value="icon/about.gif">
+         </property>
+         <property
+               name="windowImages"
+               value="icon/LNLS_logo16.gif,icon/LNLS_logo32.gif,icon/LNLS_logo48.gif,icon/LNLS_logo64.gif,icon/LNLS_logo128.gif,icon/LNLS_logo256.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="LNLStudio based on Control System Studio 4.3 and Eclipse Luna. Developed by LNLS Control Group.&#x0A;&#x0A;This product is composed of a set of features provided by the Control System Studio repository and Eclipse community.&#x0A;&#x0A;For further information or propose new functionalities, send an email to gustavo.pinton@lnls.br.">
+         </property>
+      </product>
+   </extension>
+
+</plugin>

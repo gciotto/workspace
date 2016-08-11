@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/CSS_Dependencies_1.0.0.201608111006.jar" id="CSS_Dependencies" version="1.0.0.201608111006"/>
+   <feature url="features/Eclipse_Dependencies_1.0.0.201608111006.jar" id="Eclipse_Dependencies" version="1.0.0.201608111006"/>
+</site>
