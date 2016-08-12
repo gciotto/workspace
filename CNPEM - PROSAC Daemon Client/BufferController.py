@@ -155,7 +155,7 @@ class BufferController(threading.Thread):
                                 
                                 self.window_controller.log_signal.emit(str(i)[:-1])
                             
-                            self.window_controller.log_signal.emit("-" * 82)
+                            self.window_controller.log_signal.emit("-" * 60)
                             
                         self.ssh_client.close()
                         

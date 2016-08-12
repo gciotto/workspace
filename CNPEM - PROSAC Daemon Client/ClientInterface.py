@@ -53,6 +53,8 @@ class ClientInterface (QMainWindow):
         self.table_view.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table_view.setModel(self.table_model)
         self.table_view.verticalHeader().hide()
+	self.table_view.setMinimumHeight(400)
+	self.table_view.setMinimumWidth(320)
         
         self.log_label = QLabel("Command log:", parent = self)
         self.log_label.setMaximumHeight(20)
@@ -66,16 +68,16 @@ class ClientInterface (QMainWindow):
         self.log_signal.connect(self.append_log)
         
         self.label_delay = QLabel("Refresh delay (s): ", self)
-        self.label_delay.setMinimumWidth(200)
+        #self.label_delay.setMinimumWidth(100)
         self.refresh_delay = 5
         self.time_edit = QLineEdit("5", self)
-        self.time_edit.setMaximumWidth(60)
+        self.time_edit.setMaximumWidth(40)
         self.time_edit.editingFinished.connect(self.update_refresh_delay)
         
         self.widgetbox.addWidget(self.table_view, 0,0, 5, 3)
         self.widgetbox.addWidget(self.start_monitoring, 0, 3, 1, 2)
         self.widgetbox.addWidget(self.reboot_nodes, 1, 3, 1, 2)
-        self.widgetbox.addWidget(self.label_delay, 2, 3, 1, 2)
+        self.widgetbox.addWidget(self.label_delay, 2, 3, 1, 1)
         self.widgetbox.addWidget(self.time_edit, 2, 4, 1, 1)
         self.widgetbox.addWidget(self.send_cmd, 3, 3, 1, 2)
         
@@ -88,7 +90,7 @@ class ClientInterface (QMainWindow):
         self.setWindowTitle("PROSAC Daemon Client")  
         self.setCentralWidget(self.widget)
         
-        self.setFixedSize(QSize(530, 800))
+        self.setFixedSize(QSize(560, 800))
     
     def clear_log_text (self):
         

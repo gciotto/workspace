@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 '''
 
 Main module. It launches all three threads (GUI, buffer consumer and producer).
