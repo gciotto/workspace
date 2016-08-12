@@ -35,6 +35,12 @@ if [ "$hasGPSD" = false ]; then
 	apt-get install gpsd > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
 
 	printf "${GREEN}Ok!${NC}\n"
+	
+	echo -n "Installing GPSD Clients (apt-get install gpsd-clients)... "
+
+	apt-get install gpsd-clients  > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
+
+	printf "${GREEN}Ok!${NC}\n"
 
 else
 	printf "GPSD already installed... ${GREEN}Ok!${NC}\n"
