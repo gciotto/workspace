@@ -107,7 +107,7 @@ _server_date = datetime.datetime.fromtimestamp(_tx_time)
 
 pvs[1].setValue("%d / %s / %d %02d : %02d : %02d" % (_server_date.day, _months[_server_date.month - 1], _server_date.year, _server_date.hour, _server_date.minute,_server_date.second ))]]></scriptText>
       <pv trig="true">ca://Cnt:$(receiver_id):GPS:UTC:Timestamp</pv>
-      <pv trig="true">loc://gps_timestr</pv>
+      <pv trig="false">loc://gps_timestr</pv>
     </path>
   </scripts>
   <show_close_button>true</show_close_button>
