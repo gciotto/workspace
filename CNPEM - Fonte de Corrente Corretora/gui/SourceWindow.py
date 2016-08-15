@@ -27,6 +27,8 @@ import threading
 
 class SourceWindow (QMainWindow):
     
+    _seconds = 25 
+    
     # Constructs a new SourceWindow to control power supply     
     def __init__(self, parent = None, board = none):
         
@@ -113,7 +115,7 @@ class SourceWindow (QMainWindow):
         
         now = datetime.datetime.now()
 
-        x_before = now - datetime.timedelta(seconds = 50)
+        x_before = now - datetime.timedelta(seconds = self._seconds)
 
         dates = matplotlib.dates.date2num([x_before, now])
 
@@ -277,10 +279,10 @@ class SourceWindow (QMainWindow):
             self.data_plot_x.append(now)
         
             # Verifies if those data structures need to be truncated. As defined earlier, 
-            # the lowest point corresponds to 50 seconds in the past. Considering that the 
-            # reading thread demands new values with a period of 0.1 seconds, we should have  
-            # 500 visible points in canvas.   
-            if len (self.data_plot_y) >= 500:
+            # the lowest point corresponds to _seconds seconds in the past. Considering that the 
+            # reading thread demands new values with a 0.1-second period, we should have  
+            # _seconds * 10 visible points in canvas.   
+            if len (self.data_plot_y) >= (self._seconds * 10):
                 self.data_plot_y = self.data_plot_y[1:]
                 self.data_plot_x = self.data_plot_x[1:]
             
