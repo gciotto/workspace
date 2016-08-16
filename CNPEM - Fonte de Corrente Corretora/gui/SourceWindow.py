@@ -352,7 +352,7 @@ class SourceWindow (QMainWindow):
             self.on_off_button.setText('Turn On') 
             self.on_off_led.turnOff()
         
-        # Schedules a paint event for processing when Qt returns to the main event loop.
+        # Schedules a paint event to be processed as soon as Qt returns to the main event loop.
         self.update()
     
     # Returns current state
