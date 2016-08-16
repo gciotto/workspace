@@ -1,0 +1,13 @@
+[Unit]
+Description=EPICS NTP/GPS Variable Server
+After=ntpd.service ntpdate.service gpsd.service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/root/gciotto/GPS_server/GPS-PV-Server.py
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
