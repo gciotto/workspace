@@ -1,5 +1,11 @@
 package main;
 
+/**
+ * List of supported boards for this application. Each module constains its code, the number of read and
+ * write bytes and its name. <br>
+ * Refer to the intracont reference manual for further details.
+ * @author Gustavo CIOTTO PINTON
+ */
 public enum Module 
 {
     NONE                (0x3F, 0,  0, "NONE"),
@@ -27,6 +33,11 @@ public enum Module
         this.name               = name;
     }
 
+    /**
+     * Searches for a Module object by its code. Returns null if it is not found.
+     * @param type Module's id.
+     * @return Module object if it is found or null, otherwise.
+     */
     public static Module findByType(int type)
     {
         for (Module m : Module.values())

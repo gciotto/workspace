@@ -1,5 +1,9 @@
 package main;
 
+/**
+ * This enumeration constains all available commands which can be transmitted or read from PROSAC. 
+ * @author Bruno MARTINS
+ */
 public enum Command 
 {
     NORMAL              (0x00, "Normal"),
@@ -30,6 +34,11 @@ public enum Command
         this.name = name;
     }
 
+    /**
+     * Finds a enum object by its code. Returns null if it does not exist.
+     * @param code Command code
+     * @return Command object if it is found. Otherwise, null.
+     */
     public static Command findByCode(int code)
     {
         for (Command c : Command.values())

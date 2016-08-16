@@ -13,24 +13,31 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Class containing main function. Instantiates two threads:<br>
+ * - GUI thread, a thread for the graphical window. <br> 
+ * - a thread for requesting read commands periodically.
+ * 
+ * @author Gustavo CIOTTO PINTON
+ * @author Bruno MARTINS
+ */
 public class Client 
 {
 	// Defines
-	private static final int CONNECT_TIMEOUT = 2000; //miliseconds
-	public  static final int UPDATE_TIMEOUT  = 1;   // miliseconds
+	private static final int CONNECT_TIMEOUT = 2000; /* in milliseconds */
+	public  static final int UPDATE_TIMEOUT  = 1;    /* in milliseconds */
 
-	private static final int CYCLE_TIMER = 20000;   // Iterations
+	private static final int CYCLE_TIMER = 20000;   /*  Iterations */
 	private static final int RAMP_TIMER =  15000;
 
-	// Curves
+	/* Curves */
 	private static short[][] rampCurves;
 
 	private static List<int[]> rampPackets = new ArrayList<int[]>();
 
-	// GUI
+	/* GUI */
 	static Frame frame;
 
-	// Socket related
 	static Socket socket;
 
 	private static BufferedInputStream socketIn;
@@ -46,7 +53,6 @@ public class Client
 	// Mutex
 	private static final  Object lock = new Object();
 
-
 	private static boolean connected = false, supportedBoards = false;
 
 	/* Initialization */
@@ -54,6 +60,7 @@ public class Client
 	{      
 		frame = new Frame();
 		socket = new Socket();
+
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() 
 		{
@@ -63,13 +70,11 @@ public class Client
 			}
 		});
 
+		/* Generates some example curves */
 		generateRamps();       
 
-		int cycle_count = 0;
-		int ramp_count = 0;
-
 		while(true)		{
-			
+
 			if(connected)
 				executeCommand(Command.NORMAL);
 
@@ -77,7 +82,9 @@ public class Client
 		}
 	}
 
-	/* Populate ramp curves */
+	/**
+	 *  Populates ramp curves. 3 ramp curves are currently available. 
+	 */
 	public static void generateRamps()
 	{
 		rampCurves = new short[3][1021];
@@ -91,14 +98,20 @@ public class Client
 	}
 
 
-	/* Buttons */
+	/**
+	 * All button click event handlers call this function.
+	 * @param cmd Command id to be executed.
+	 */
 	public static void btCommand(int cmd)
 	{
 		executeCommand(Command.findByCode(cmd));
 	}
 
+	/**
+	 * Close connection.
+	 */
 	public static void closeSockets() {
-		
+
 		try {
 			socket.shutdownInput();
 		} catch (IOException ex) {
@@ -110,19 +123,24 @@ public class Client
 			Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	
+
+	/**
+	 * Connect button click event handler.
+	 * @param ip IP address.
+	 * @param port Port number.
+	 * @see Connection
+	 */
 	public static void btConnect(String ip, String port)
 	{
 		if(connected)
 		{
 			connected = false;
-			
+
 			closeSockets();
 
 			frame.setDisconnected();
 			return;
 		}
-
 
 		System.out.printf("Connect %s:%s\n", ip, port);
 
@@ -134,20 +152,27 @@ public class Client
 
 		executeCommand(Command.IDENT);
 		executeCommand(Command.END_IDENT);
-		
+
 		/* Checks if client supports all connected boards. */
 		if (!supportedBoards) {
-			
+
 			/* Client can't proceed with unsupported boards. Disconnects
 			 * from PROSAC */
 			disconnected();			
 			closeSockets();
-			
+
 			frame.setStatus("O cliente não suporta uma de suas placas.");
-			
+
 			JOptionPane.showMessageDialog(frame, 
 					"Cliente não suporta uma de seus placas!", "Erro de compatibilidade", 
 					JOptionPane.ERROR_MESSAGE);
+		}
+		else if (boardsList.isEmpty()) {
+			
+			frame.disableAll();
+			JOptionPane.showMessageDialog(frame, 
+					"Não há placas conectadas ao PROSAC!", "Aviso", 
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -160,7 +185,7 @@ public class Client
 			status += "Erro: ";
 
 		status += message;
-		
+
 		frame.setStatus(status);
 	}
 
@@ -221,14 +246,19 @@ public class Client
 			processCommand();
 
 			if (supportedBoards){
-				
+
 				frame.setCmdRecv(recvBuffer);
 				frame.refresh();
 			}
 		}
 	}
 
-
+	/**
+	 * Prepare command to be sent to PROSAC. For further detail about the protocol, refer to
+	 * the intracont reference manual.
+	 * @param cmd Command object 
+	 * @see Command
+	 */
 	public static void prepareCommand(Command cmd)
 	{
 		if(cmd == null)
@@ -298,18 +328,18 @@ public class Client
 
 					int[] packet = new int[packetSize]; 
 
-					packet[0] = Command.RAMP_BLOCK.bytecode;  // Command
-					packet[1] = ((packetSize - 3) >> 8) & 0xFF; // Packet
+					packet[0] = Command.RAMP_BLOCK.bytecode;  /* Command */
+					packet[1] = ((packetSize - 3) >> 8) & 0xFF; /* Packet */
 					packet[2] = (packetSize - 3) & 0xFF;
 
 					packet[3] = boardPosition++;   /* To perform a ramp, PROSAC needs
 					 								  the order in which the board appears, not its ID. */
 
-					packet[4] = b.getRampPulses();            // Pulses to wait
+					packet[4] = b.getRampPulses();            /* Pulses to wait */
 					packet[5] = (rampLength >> 8) & 0xFF;
 					packet[6] = rampLength & 0xFF;
 
-					// Data
+					/* Data */
 					for(int k = 7; k < packetSize; k+=2)
 					{
 						if(j < rampLength)
@@ -381,14 +411,17 @@ public class Client
 		}
 	}
 
+	/**
+	 * After a command is sent, we process the answer. 
+	 */
 	public static void processCommand()
 	{
 		Command c = Command.findByCode(recvBuffer[0]);
 
 		switch(c){ 
-		
+
 		case IDENT:
-			
+
 			boardsList.clear();
 			frame.clearBoards();
 
@@ -424,6 +457,7 @@ public class Client
 			}
 
 			frame.setBoardsList(boardsList);
+
 			break;
 
 		case RAMP_ABORTED:
@@ -431,7 +465,6 @@ public class Client
 			printCommand(recvBuffer);
 			frame.setRampingDone();
 			break;    
-
 
 		case CYCLE_COMPLETED:
 		case CYCLE_ABORTED:
@@ -454,6 +487,9 @@ public class Client
 	}  
 
 
+	/**
+	 * Sends an array of bytes to PROSAC.
+	 */
 	public static void sendCommand()
 	{
 		byte[] sendBuf = new byte[sendBuffer.length];
@@ -477,6 +513,10 @@ public class Client
 
 	}
 
+	/**
+	 * Receives an array of bytes from PROSAC. this function is called a command is sent to
+	 * PROSAC.
+	 */
 	public static void recvCommand()
 	{
 		byte[] recvBuf = new byte[256];
@@ -502,7 +542,10 @@ public class Client
 
 	}
 
-
+	/**
+	 * Displays an array of bytes representing a message which was sent or received from PROSAC.
+	 * @param buf Array of bytes 
+	 */
 	public static void printCommand(int[] buf)
 	{
 		if(buf == null)

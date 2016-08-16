@@ -1,9 +1,19 @@
 package main;
 
+/**
+ * Encapsulates the information related to a board, such as type and address.
+ * 
+ * @author Gustavo CIOTTO PINTON
+ * @author Bruno MARTINS
+ * @see Module
+ */
+
 public class Board 
 {
     private int position;
     
+    /* readBytes and writeBytes represent the bytes which will be sent and received 
+     * to PROSAC by this board. They are constantly updated. */
     private int readBytes[];
     private int writeBytes[];
     
@@ -16,25 +26,44 @@ public class Board
     
     private Module module;
     
+    /**
+     * Constructs a new board with a given address and module type. 
+     * @param pos Address
+     * @param m Module object.
+     * @see Module
+     */
     public Board(int pos, Module m)
     {
         this.position = pos;
         this.module = m;
         
-        this.readBytes  = new int[m.readBytesCount + 2]; // PRIORITY and FLAGS
+        /* +2 comes from PRIORITY and FLAGS */
+        this.readBytes  = new int[m.readBytesCount + 2]; 
         this.writeBytes = new int[m.writeBytesCount + 2]; 
         
-        //this.writeBytes[1] = 0x80;
     }
 
+    /**
+     * Gets board address.
+     * @return Address
+     */
     public int getPosition() {
         return position;
     }
 
+    /**
+     * Gets board type.
+     * @return Board type
+     * @see Module
+     */
     public Module getModule() {
         return module;
     }
 
+    /**
+     * Gets cycle curve id.
+     * @return Curve id. 
+     */
     public int getCycleCurve() {
         return cycleCurve;
     }
