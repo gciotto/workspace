@@ -1,6 +1,11 @@
 
 package gui;
 
+/**
+ * This class shows important messages received from PROSAC. 
+ * 
+ * @author Gustavo CIOTTO PINTON
+ */
 public class Status extends javax.swing.JPanel {
 
 
@@ -8,10 +13,11 @@ public class Status extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void setStatus(String message)
-    {
+    public void setStatus(String message) {
+    	
         txtStatus.setText(message);
     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

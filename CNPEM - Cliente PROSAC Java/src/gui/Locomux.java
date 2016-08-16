@@ -6,7 +6,22 @@ import main.Client;
 import util.Complex;
 import util.FFT;
 
-public class Locomux extends javax.swing.JPanel {
+/**
+ * Graphical representation of a LOCOMUX board. This class inherits from JPanel, therefore
+ * it can be placed inside a window, such as a JFrame. In our application, it will be instantiated
+ * by the BoardsFrame class.
+ * <br>
+ * According to the intracont reference manual, this board presents the following features: <br>
+ *  - Read Block (22 bytes): priority + flags + integration result (20 bytes) <br>
+ *  - Write Block (6 bytes): priority + flags + operation mode + integration count + interval + duration <br>
+ * <br>
+ * Refer to the <a href="http://git.cnpem.br/bruno.martins/prosac/blob/master/modules/MUX16BBP.c"> git repository </a> 
+ * for further details about how PROSAC handles them.
+ * 
+ * @author Bruno MARTINS
+ */
+
+public class Locomux extends javax.swing.JPanel implements IBoard {
 
     private Board board;
     

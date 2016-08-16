@@ -11,19 +11,35 @@ import javax.swing.JPanel;
 import main.Board;
 import main.Module;
 
+/**
+ * The BoardsFrame class inherits from JFrame and is responsible for holding all board panels.
+ * It is capable of adding or removing panels dynamically.
+ * 
+ * For the list of supported boards, refer to Client class.
+ * 
+ * @see IBoard
+ * @see Digint
+ * @see Locomux
+ * @see Locon
+ * @see PCOR4
+ * @see Rux
+ * @see Statfnt
+ * @author Gustavo Ciotto Pinton
+ */
 public class BoardsFrame extends JFrame {
 
-	private List<Locon>     loconList;
-	private List<Locomux>   locomuxList;
-	private List<Rux>   	ruxList;
-	private List<Statfnt>   statList;
-	private List<Digint>	digintList;
-	private List<PCOR4>		pcorList;
-
+	private List<IBoard> boardsList;
 	private JPanel pBoards;
 	
 	private int usedRows, usedColumns;
 	
+	
+	/**
+	 * Constructs a new frame. By default, it uses a 1-row 3-column grid layout, but its size
+	 * can change dynamically.
+	 * 
+	 * @see GridLayout
+	 */
 	public BoardsFrame() {
 
 		pBoards = new JPanel();
@@ -35,13 +51,8 @@ public class BoardsFrame extends JFrame {
 		this.getContentPane().add(pBoards, BorderLayout.CENTER);
 
 		this.setSize(100, 200);
-
-		loconList = new ArrayList<Locon>();
-		locomuxList = new ArrayList<Locomux>();
-		ruxList = new ArrayList<Rux>();
-		statList = new ArrayList<Statfnt>();
-		digintList = new ArrayList<Digint>();
-		pcorList = new ArrayList<PCOR4>();
+		
+		boardsList = new ArrayList<IBoard>();
 		
 		setVisible(false);
 		
@@ -53,6 +64,9 @@ public class BoardsFrame extends JFrame {
 		setLocation(500, 200);
 	}
 
+	/**
+	 * Sets frame's height according to how many boards were detected.
+	 */
 	public void updateSize() {
 		
 		/* Updates window height according to the number of boards  */
@@ -60,11 +74,19 @@ public class BoardsFrame extends JFrame {
 		this.repaint();
 	}
 	
+	/**
+	 * Adds a new board to the interface. It chooses the right panel to be added
+	 * according to the boards characteristics.
+	 * 
+	 * @param b New board object.
+	 * @see Board
+	 */
 	public void addBoard(Board b) {
 
 		if (usedRows == 0)
 			usedRows++;
 		
+		/* each row holds only 3 boards. If more than 3 are used, then add new row */
 		if (usedColumns >= 3) {
 			usedColumns = 0;
 			usedRows++;
@@ -72,11 +94,12 @@ public class BoardsFrame extends JFrame {
 		
 		usedColumns++;
 		
+		/* Updates size if needed */
 		this.updateSize();
 		
 		Module m = b.getModule();
 		
-		/* Checks module type, in order to add a new board panel in 
+		/* Checks module type to add a new board panel in 
 		 * frame */
 		
 		if(m == Module.LCN16BMP || m == Module.LCN16BBP 
@@ -85,10 +108,12 @@ public class BoardsFrame extends JFrame {
 
 			Locon nloconBoard = new Locon();
 			nloconBoard.setBoard(b);
-
+			
+			/* Sets canvas max. and min. values for digital inputs */
 			nloconBoard.setDigitalCanvasMax(255);
 			nloconBoard.setDigitalCanvasMin(0);
 			
+			/* We need to check if we are dealing with a 12 or 16-bit locon board */
 			if (m == Module.LCN16BMP || m == Module.LCN16BBP 
 					|| m == Module.LCN16V32M) {
 
@@ -107,7 +132,7 @@ public class BoardsFrame extends JFrame {
 				else nloconBoard.setAnalogCanvasMin(0);
 			}
 
-			loconList.add(nloconBoard);
+			boardsList.add(nloconBoard);
 
 			pBoards.add(nloconBoard);
 		}
@@ -117,8 +142,8 @@ public class BoardsFrame extends JFrame {
 			Locomux nLocomuxBoard = new Locomux();
 			nLocomuxBoard.setBoard(b);
 
-			locomuxList.add(nLocomuxBoard);
-
+			boardsList.add(nLocomuxBoard);
+			
 			pBoards.add(nLocomuxBoard);
 		}   
 		else if (m == Module.RUX12BBP) {
@@ -134,7 +159,7 @@ public class BoardsFrame extends JFrame {
 			nRuxBoard.setAnalogCanvasMax(0xFFF);
 			nRuxBoard.setAnalogCanvasMin(0xFFF / 2);
 
-			ruxList.add(nRuxBoard);
+			boardsList.add(nRuxBoard);
 
 			pBoards.add(nRuxBoard);
 
@@ -144,7 +169,7 @@ public class BoardsFrame extends JFrame {
 			Statfnt nStatFntBoard = new Statfnt();
 			nStatFntBoard.setBoard(b);
 			
-			statList.add(nStatFntBoard);
+			boardsList.add(nStatFntBoard);
 			
 			pBoards.add(nStatFntBoard);
 			
@@ -154,7 +179,7 @@ public class BoardsFrame extends JFrame {
 			Digint nDigIntBoard = new Digint();
 			nDigIntBoard.setBoard(b);
 			
-			digintList.add(nDigIntBoard);
+			boardsList.add(nDigIntBoard);
 			
 			pBoards.add(nDigIntBoard);
 			
@@ -167,7 +192,7 @@ public class BoardsFrame extends JFrame {
 			pcorBoard.setCanvasMax(0xFFF);
 			pcorBoard.setCanvasMin(0);
 			
-			pcorList.add(pcorBoard);
+			boardsList.add(pcorBoard);
 			
 			pBoards.add(pcorBoard);
 			
@@ -175,42 +200,30 @@ public class BoardsFrame extends JFrame {
 		
 	}
 
+	/**
+	 *  Refreshes board list
+	 *  @see IBoard
+	 *  @see Board 
+	 */
 	public void refresh() {
 
-		/* Refreshes each non-empty list */
-		
-		for(Locon l : loconList)
-			l.refresh();
-
-		for(Locomux l : locomuxList)
-			l.refresh();
-
-		for(Rux l : ruxList)
-			l.refresh();
-		
-		for(Statfnt l : statList)
-			l.refresh();
-		
-		for(Digint l : digintList)
-			l.refresh();
-		
-		for(PCOR4 l : pcorList)
+		for (IBoard l: boardsList)
 			l.refresh();
 	}
 
+	/**
+	 * Resets this object and closes the frame.
+	 */
 	public void clearBoards() {
 
+		this.setVisible(false);
+		
 		pBoards.removeAll();
 		
 		this.usedColumns = 0;
 		this.usedRows = 0;
 
-		this.locomuxList.clear();
-		this.loconList.clear();
-		this.ruxList.clear();
-		this.statList.clear();
-		this.digintList.clear();
-		this.pcorList.clear();
+		this.boardsList.clear();
 	}
 
 }
