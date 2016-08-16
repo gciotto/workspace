@@ -1,6 +1,8 @@
 [Unit]
 Description=GPS (Global Positioning System) Daemon
+After=capemgr.service
 Requires=gpsd.socket
+Before=ntpdate.service
 
 [Service]
 ExecStartPre=echo overlay_GPS > $SLOTS && sleep 2

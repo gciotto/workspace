@@ -131,6 +131,7 @@ cat > ${SYSTEM_MD_PATH}/ntpd.service <<- _EOF_
 Description=Network Time Service
 Requires=gpsd.service
 After=network.target
+Before=ntpdate.service
 
 [Service]
 Type=forking
@@ -343,6 +344,28 @@ printf "${GREEN}Ok!${NC}\n"
 # Enable all services
 echo "(vi) Enabling services"
 
+echo -n "  - Creating pvgpsd.service in directory '${SYSTEM_MD_PATH}'... "
+
+############################################################################################ PVGPSD.SERVICE
+cat > ${SYSTEM_MD_PATH}/pvgpsd.service <<- _EOF_
+[Unit]
+Description=EPICS NTP/GPS Variable Server
+After=ntpd.service ntpdate.service gpsd.service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/root/gciotto/GPS_server/GPS-PV-Server.py
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
+_EOF_
+############################################################################################ PVGPSD.SERVICE 
+
+printf "${GREEN}Ok!${NC}\n"
+
 gpsd_success=true
 
 echo -n "  - Starting gpsd.service..."
@@ -378,5 +401,17 @@ if ["$ntpd_success" = true] ; then
 	
 	echo -n "  - Enabling ntpd.service..."
 	systemctl enable ntpd.service > /dev/null 2>&1 || { printf "${RED}Failed!${NC}\n"; }
+	printf "${GREEN}Ok!${NC}\n"
+fi
+
+pvgpsd_success=true
+
+echo -n "  - Starting pvgpsd.service..."
+systemctl restart pvgpsd.service > /dev/null 2>&1 || { printf "${RED}Failed!${NC}\n" && pvgpsd_success=false; }
+if ["$pvgpsd_success" = true] ; then
+	printf "${GREEN}Ok!${NC}\n"
+	
+	echo -n "  - Enabling pvgpsd.service..."
+	systemctl enable pvgpsd.service > /dev/null 2>&1 || { printf "${RED}Failed!${NC}\n"; }
 	printf "${GREEN}Ok!${NC}\n"
 fi
