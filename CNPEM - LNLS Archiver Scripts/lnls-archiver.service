@@ -1,0 +1,13 @@
+[Unit]
+Description=Start LNLS Epics Archiver Appliances
+After=mysql.service apache2.service
+
+[Service]
+Type=forking
+WorkingDirectory=/opt/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27/scripts/
+ExecStart=/bin/bash lnls-archiver-systemd.sh start
+ExecStop=/bin/bash lnls-archiver-systemd.sh stop
+ExecReload=/bin/bash lnls-archiver-systemd.sh restart
+
+[Install]
+WantedBy=multi-user.target
