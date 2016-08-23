@@ -18,6 +18,7 @@ from Control_Node import Control_Node, Control_Node_State
 from tcp_connection import ProsacDaemonConnection
 from PyQt4.Qt import QModelIndex
 import paramiko
+import time
 
 # Command class is equivalent to an enum type in C 
 class Command():
@@ -161,4 +162,5 @@ class BufferController(threading.Thread):
                         
                 # Emits signal to update table view
                 self.window_controller.table_model.dataChanged.emit(QModelIndex(), QModelIndex())
-       
+            
+            else: time.sleep(0) # yields processor
