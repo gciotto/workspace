@@ -153,8 +153,8 @@ $ cd cs-studio-master/
    
 \begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,
 keywordstyle=\ttfamily, style=nonumbers] $ mysql -u root -p
->> CREATE DATABASE ALARM;
->> GRANT ALL ON ALARM.* TO 'lnls_alarm_user'@localhost IDENTIFIED BY 'alarm_password';
+>> CREATE DATABASE lnls_alarms;
+>> GRANT ALL ON lnls_alarms.* TO 'lnls_alarm_user'@'%' IDENTIFIED BY 'controle';
 >> exit
 $ mysql -u lnls_alarm_user -p
 >> source applications/alarm/alarm-plugins/org.csstudio.alarm.beast/dbd/ALARM_MYSQL.sql;
@@ -197,6 +197,11 @@ arquivos onde estarão armazenados os usuários, suas senhas (\texttt{users.prop
 $ cd $INSTALL_DIR/apache-activemq-5.13.0/bin/linux-x86-64/
 $ ./activemq start
 \end{lstlisting}
+
+No \textit{Ubuntu} 16.04, a instalação do \texttt{activemq} pode ser feita
+através dos repositórios oficiais, por meio do comando \texttt{apt-get install
+activemq}. Os arquivos de configuração encontram-se, por sua vez, em
+\path{/etc/activemq}.
 
 \item Tendo instalado os componentes responsáveis pela comunicação entre módulos
 e base de dados de configurações, podemos iniciar o servidor. Para isso, vamos
@@ -272,13 +277,11 @@ PVManager System Support  & PVManager VType Support  & \\\hline
 \FloatBarrier
 
 O produto necessita também do \textit{plug-in} \texttt{com.ibm.icu.base} contido
-no repositório \textit{Orbit}, acessado através do \textit{link} abaixo.
-Selecione somente o pacote \textit{Internacional Components for Unicode for
-Java (ICU4J)} e instale-o.
+no repositório \textit{Orbit}, acessado através do \textit{link}
+\url{http://tinyurl.com/zu8ybkj}. Selecione somente o pacote
+\textit{Internacional Components for Unicode for Java (ICU4J)} e instale-o.
 
-\begin{center}
-\textit{http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/}
-\end{center}
+\vspace{12pt}
 
 O servidor já pode ser executado, porém ele utilizará uma configuração padrão
 para conectar-se ao \textit{MySQL} e ao \textit{JMS}. A fim de modificar tal
@@ -298,9 +301,9 @@ figura abaixo.
 \begin{figure}[h]
 
 \centering
-\includegraphics[scale=0.45]{image/launch-view}
+\includegraphics[scale=0.35]{image/launch-view}
 \caption {\textit{Launching view} do produto \texttt{AlarmServer.product}.
-Substituir \texttt{\$PATH\_TO\_FILE}} pelo caminho completo do arquivo
+Substituir \texttt{\$PATH}} pelo caminho completo do arquivo
 \textit{plugin\_customization.xml}.
 \label{img:launch-view} 
 \end{figure}
@@ -314,6 +317,13 @@ O servidor se encarregará da criação dos \textit{topics} na aplicação
 criada no item \ref{mysql-alarm} (verificar conteúdo do arquivo
 \texttt{ALARM\_MYSQL.sql}) e define, assim, quais tópicos serão utilizados na
 comunicação.
+
+\vspace{12pt}
+
+Para uma execução independente do cliente do \textit{Eclipse}, é possível
+exportar o produto através da ferramenta \textit{Eclipse Product export wizard},
+que pode ser acessado através do ícone próximo ao botão verde de
+\textit{Launching}.
 
 \FloatBarrier
 
@@ -379,8 +389,9 @@ novo \textit{Plug-in Project} e adicionamos um novo arquivo do tipo
 versão e, no campo \textit{Product Definition}, definimos \textit{Product} como
 \texttt{lnlstudio.product} e \textit{Application},
 \path{org.eclipse.ui.ide.workbench}. Na aba \textit{Dependencies}, é preciso
-especificar quais \textit{plug-ins} são necessários ao produto. Por questão de
-simplicidade, adicionamos todos aqueles que estão instalados
+especificar quais \textit{plug-ins} (ou \textit{features}) são necessários ao
+produto.
+Por questão de simplicidade, adicionamos todos aqueles que estão instalados
 (\textit{Add\ldots} e \textit{Ctrl+A} para selecionar todos). Para configurar a
 \textit{splash screen}, clique na aba \textit{Splash} e adicione uma
 \textit{progress bar}, uma \textit{progress message} e um arquivo chamado

@@ -56,7 +56,9 @@ dedicadas à instalação e exploração dos recursos disponíveis nesta aplica�
 \subsection {Instalação}
 
 Esta subseção é dedicada às etapas necessárias para a instalação do EPICS
-Archiver Appliance.
+Archiver Appliance. Neste tutorial serão apresentadas dois métodos: um que
+utiliza os repositórios oficiais do Ubuntu 16.04 para obter os pacotes e o
+outro, os servidores dos próprios provedores dos serviços.
 
 \subsubsection {Instalação das dependências}
 \label{ref:epics-install}
@@ -117,36 +119,50 @@ O EPICS Archiver Appliance necessita de duas variáveis de ambiente referentes a
 ambiente EPICS.
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
-export JRE_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre"
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JRE_HOME=${JAVA_HOME}/jre
 \end{lstlisting}
 
 \item \textit{Instalação do MySQL Server}: para instalar um servidor
 \textit{MySQL}, basta executar o comando abaixo. Durante o processo de
-instalação, será requisitada a senha para o usuário \textit{root} do servidor. 
+instalação, será requisitada a senha para o usuário \textit{root} do servidor.
+No nosso caso, senha escolhida foi \texttt{toor}.
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ sudo apt-get install mysql-server
 \end{lstlisting}
 
+
 \item \textit{Instalação do Apache Tomcat}: defina um diretório onde os arquivos
 serão instalados e execute os comandos abaixo. Esse diretório será referenciado
-pela variável de ambiente \path{\$TOMCAT_DIR}.
+pela variável de ambiente \path{${TOMCAT_DIR}}.
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-$ cd $TOMCAT_DIR
-$ wget http://tinyurl.com/hbsat8m
-$ tar -xvzf apache-tomcat-8.0.32.tar.gz
-$ rm apache-tomcat-8.0.32.tar.gz
-$ cd apache-tomcat-8.0.32/
+$ cd ${TOMCAT_DIR}
+$ wget http://tinyurl.com/zewzg72
+$ tar -xvzf apache-tomcat-8.5.4.tar.gz
+$ rm apache-tomcat-8.5.4.tar.gz
+$ cd apache-tomcat-8.5.4/
 \end{lstlisting}
 
-Defina a variável de ambiente \texttt{\$CATALINA\_HOME}, responsável por
-referenciar o diretório \textit{apache-tomcat-8.0.32/} recém criado. Adicione a
-seguinte linha no arquivo \texttt{.bashrc} logo abaixo das variáveis de ambiente
+Defina a variável de ambiente \texttt{\$\{CATALINA\_HOME\}}, responsável
+por referenciar o diretório \textit{apache-tomcat-8.5.4/} recém criado. Adicione
+a seguinte linha no arquivo \texttt{.bashrc} logo abaixo das variáveis de ambiente
 adicionadas na instalação do \textit{Java}.
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-export CATALINA_HOME = $TOMCAT_DIR/apache-tomcat-8.0.32
+export CATALINA_HOME = ${TOMCAT_DIR}/apache-tomcat-8.5.4
+\end{lstlisting}
+
+No \textit{Ubuntu} 16.04, a instalação pode ser realizada com o comando 
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+sudo apt-get install tomcat8
+\end{lstlisting}
+
+E defina a variável \texttt{\$\{CATALINA\_HOME\}} como 
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+export CATALINA_HOME = /usr/share/tomcat8
 \end{lstlisting}
 
 \item \textit{Instalação do Apache HTTP Server}: Para instalar o servidor
@@ -154,10 +170,10 @@ export CATALINA_HOME = $TOMCAT_DIR/apache-tomcat-8.0.32
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ cd $INSTALL_DIR
-$ wget http://tinyurl.com/gmvgo3d
-$ tar -xvzf httpd-2.4.18.tar.gz
-$ rm httpd-2.4.18.tar.gz
-$ cd httpd-2.4.18
+$ wget http://tinyurl.com/z8gnxmk
+$ tar -xvzf httpd-2.4.23.tar.gz
+$ rm httpd-2.4.23.tar.gz
+$ cd httpd-2.4.23
 \end{lstlisting}
 
 Algumas dependências devem ser instaladas:
@@ -182,7 +198,7 @@ $ make install
 Finalmente, execute os \textit{scripts} para instalar o \textit{Apache http}:
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-$ cd $INSTALL_DIR/httpd-2.4.18
+$ cd $INSTALL_DIR/httpd-2.4.23
 $ ./configure --prefix=$INSTALL_DIR/httpd --with-pcre=$INSTALL_DIR/pcre
 $ make
 $ make install
@@ -220,6 +236,28 @@ $ sudo $INSTALL_DIR/httpd/bin/apachectl start
 O servidor \textit{Apache} funciona agora como um divisor de carga entre as
 diversas \textit{appliances} da rede.
 
+\vspace{12pt}
+
+No \textit{Ubuntu} 16.04, a instalação é realizada através do comando abaixo. A
+configuração deste módulo é um pouco distinta daquela documentada anteriormente,
+sendo que é necessário copiar os arquivos \path{proxy-balancer.*},
+\path{proxy.*}, \path{proxy-http.*}, \path{status.*} e
+\path{lbmethod_byrequest.*} da pasta \path{mods-avaiable/} para
+\path{mods-enabled/}. Os dois últimos diretórios encontram-se em
+\path{/etc/apache2/}. Enfim, a configuração dos \textit{proxies} deve ser
+realizada no arquivo \path{proxy.conf} da mesma maneira que foi explicada
+anteriormente.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo apt-get install apache2
+\end{lstlisting}
+
+O servidor é iniciado, por sua vez, através de 
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo systemctl start apache2.service
+\end{lstlisting}
+
 \end{enumerate} 
 
 \subsubsection {Instalação do EPICS Archiver Appliance}
@@ -234,29 +272,35 @@ uma pasta onde serão instalados os pacotes. Esse diretório será referenciado 
   \item Crie uma pasta e faça o \textit{download} dos pacotes do arquivador,
   segundo os comandos abaixo. 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-$ mkdir $INSTALL_DIR/epics-archiver-appliance/
-$ cd $INSTALL_DIR/epics-archiver-appliance/
-$ wget http://tinyurl.com/jbac89o
-$ tar -xvzf archappl_v0.0.1_SNAPSHOT_26-January-2016T18-03-47.tar.gz
-$ rm archappl_v0.0.1_SNAPSHOT_26-January-2016T18-03-47.tar.gz
+$ mkdir $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27
+$ cd $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27
+$ wget http://tinyurl.com/zom7pbw
+$ tar -xvzf archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27.tar.gz
+$ rm archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27.tar.gz
 \end{lstlisting}
-	Nesta pasta estão os arquivos \textit{.war}  usados para lançar os módulos e
-	alguns \textit{scripts} sugeridos pelo desenvolvedor para auxiliar na
-	instalação.
+
+Nesta pasta estão os arquivos \textit{.war}  usados para lançar os módulos e
+alguns \textit{scripts} sugeridos pelo desenvolvedor para auxiliar na
+instalação.
+	
   \item \label{item:appl} Crie uma pasta onde as instâncias \textit{Tomcat} de cada módulo serão
-  armazenadas e crie o arquivo \textit{lnls\_appliances.xml}. Vamos chamar essa
-  pasta de \texttt{epics-appliances/}. 
+  armazenadas e, dentro dela, o arquivo \textit{lnls\_appliances.xml}. Tal pasta
+  será chamada de \path{lnls-control-archiver_v0.0.1_22-June-2016T10-25-27}.
+
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-$ mkdir $INSTALL_DIR/epics-appliances/
-$ nano $INSTALL_DIR/epics-appliances/lnls_appliances.xml
+$ mkdir $INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+$ cd INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+$ nano lnls_appliances.xml
 \end{lstlisting}
+
 Copie as seguintes linhas para esse arquivo. Se a configuração do
 \textit{Apache httpd} não foi realizada, então o endereço de
 \texttt{<data\_retrieval\_url>} deve ser igual ao endereço de
 \texttt{<retrieval\_url>}. Senão:
+
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 <appliances> <appliance>
-     <identity>lnls_epics_appliance</identity>
+     <identity>lnls_control_appliance</identity>
      <cluster_inetport>localhost:12000</cluster_inetport>
      <mgmt_url>http://localhost:11995/mgmt/bpl</mgmt_url>
      <engine_url>http://localhost:11996/engine/bpl</engine_url>
@@ -266,23 +310,25 @@ Copie as seguintes linhas para esse arquivo. Se a configuração do
    </appliance>
  </appliances>
 \end{lstlisting} 
+
 Esse arquivo especifica os endereços e portas de cada um dos quatro módulos, bem
-como o nome da \textit{appliance} (\texttt{lnls\_epics\_appliance}). Os números
-das portas foram escolhidos aleatoriamente, mas, por sugestão do desenvolver,
+como o nome da \textit{appliance} (\texttt{lnls\_control\_appliance}). Os
+números das portas foram escolhidos aleatoriamente, mas, por sugestão do desenvolver,
 deve-se adotar uma sequência crescente a partir da porta do módulo
-\texttt{mgmt}, que, no nosso caso, vale 11995.
-\texttt{\(<\)data\_retrieval\_url\(>\)} é o endereço que deverá ser utilizado
-a fim de enviar e obter requisões HTTP e JSON, conforme figura
+\texttt{mgmt}, que, no nosso caso, vale 11995. É importante observar que
+\texttt{localhost} deve ser substituído pelo endereço que será utilizado para
+referenciar os \textit{servlets} remotamente.
+\texttt{\(<\)data\_retrieval\_url\(>\)} é o endereço que deverá ser utilizado a
+fim de enviar e obter requisões HTTP e JSON, conforme figura
 \ref{fig:epics_archiver} e \texttt{\(<\)cluster\_inetport\(>\)} é a combinação
 \texttt{TCPIP address:port} usado para a comunicação entre as
 \textit{appliances}. Por fim, adicione as váriaveis de ambiente ao arquivo
 \texttt{.bashrc}.
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-export ARCHAPPL_APPLIANCES=$INSTALL_DIR/epics-appliances/lnls_appliances.xml
-export ARCHAPPL_MYIDENTITY="lnls_epics_appliance"
+export ARCHAPPL_APPLIANCES=$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27/lnls_appliances.xml
+export ARCHAPPL_MYIDENTITY=lnls_control_appliance
 \end{lstlisting}
-
 
 O desenvolvedor sugere também trocar a porta padrão usada pelo \textit{Apache
 Tomcat} pela porta usada pelo módulo \texttt{mgmt}, isto é, 11995, e comentar
@@ -306,11 +352,12 @@ instâncias do \textit{Apache Tomcat}.
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 $ source /home/user/.bashrc
-$ cd $INSTALL_DIR/epics-archiver-appliance/install_scripts
-$ ./deployMultipleTomcats.py $INSTALL_DIR/epics-appliances
+$ cd $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27/install_scripts
+$ ./deployMultipleTomcats.py $INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
 \end{lstlisting}
 
-Serão criadas 4 pastas dentro de \texttt{\$INSTALL\_DIR/epics-appliances}, uma
+Serão criadas 4 pastas dentro de
+\path{${INSTALL_DIR}/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27}, uma
 para cada módulo.
 
 \item É possível também alteração as configurações de \textit{log}. O
@@ -343,32 +390,34 @@ possível ajustar neste arquivo parâmetros que alteram a taxa de armazenamento 
 uma PV dependendo de sua taxa de aquisição, por exemplo. Para um primeiro
 instante vamos usar esse arquivo fornecido, que está disponível na pasta
 \texttt{WEB-INF/classes} dentro do arquivo \texttt{mgmt.war} em
-\texttt{\$INSTALL\_DIR/epics-archiver-appliance/}. Copie-o para
-\texttt{\$INSTALL\_DIR/epics-appliances/} e renomeie-o para
-\texttt{lnls\_policies.xml}. Enfim, defina variáveis de ambiente usada por este
-arquivo.
+\texttt{\$INSTALL\_DIR/archappl\_v0.0.1\_SNAPSHOT\_22-June-2016T10-25-27}.
+Copie-o para
+\texttt{\$INSTALL\_DIR/lnls-control-archiver\_v0.0.1\_22-June-2016T10-25 -27} e
+renomeie-o para \texttt{lnls\_policies.py}. Enfim, defina variáveis de ambiente
+usadas por este arquivo.
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-export ARCHAPPL_POLICIES=$INSTALL_DIR/epics-appliances/lnls_policies.py
-export ARCHAPPL_SHORT_TERM_FOLDER=$INSTALL_DIR/epics-storage
-export ARCHAPPL_MEDIUM_TERM_FOLDER=$INSTALL_DIR/epics-storage
-export ARCHAPPL_LONG_TERM_FOLDER=$INSTALL_DIR/epics-storage
+export ARCHAPPL_POLICIES=$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27/lnls_policies.py
+export ARCHAPPL_SHORT_TERM_FOLDER=$INSTALL_DIR/lnls-archiver-storage/STS
+export ARCHAPPL_MEDIUM_TERM_FOLDER=$INSTALL_DIR/lnls-archiver-storage/MTS
+export ARCHAPPL_LONG_TERM_FOLDER=$INSTALL_DIR/lnls-archiver-storage/LTS
 \end{lstlisting}
 
 As três últimas variáveis devem ser corretamente configuradas de acordo com a
 disponibilidade de equipamentos, por exemplo. No nosso caso, um único diretório
-é usado para os três tipos de armazenamento, sendo ele \texttt{epics-storage/}.
+é usado para os três tipos de armazenamento, sendo ele \texttt{lnls-archiver-storage/}.
 
 \item \label{mysql-install}A próxima etapa é a criação de tabelas usadas pelo
 EPICS Archiver Appliance. Vamos criar uma base chamada \texttt{lnls\_appliance\_database} e o
 usuário \texttt{lnls\_user}, com todos os direitos de acesso a ela. No nosso
-caso, a senha do usuário é \texttt{app1}. 
+caso, a senha do usuário é \texttt{controle}. 
 
 \begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,keywordstyle=\ttfamily,
 style=nonumbers] 
 $ mysql -u root -p
 >> CREATE DATABASE lnls_appliance_database;
->> GRANT ALL ON lnls_appliance_database.* TO 'lnls_user'@localhost IDENTIFIED BY 'app1';
+>> GRANT ALL ON lnls_appliance_database.* TO 'lnls_user'@'%' IDENTIFIED BY
+'controle';
 \end{lstlisting}
 
 Acesse o servidor \textit{mysql} com esse usuário e execute o \textit{script}
@@ -378,7 +427,7 @@ de criação das tabelas disponibilizado pelo desenvolvedor:
 style=nonumbers] 
 $ mysql -u lnls_user -p
 >> USE lnls_appliance_database
->> source $INSTALL_DIR/epics-archiver-appliance/install_scripts/archappl_mysql.sql
+>> source $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27/install_scripts/archappl_mysql.sql
 \end{lstlisting}
 
 \item É necessário fazer o \textit{download} do conector \textit{MySQL} usado
@@ -401,7 +450,7 @@ $ nano $CATALINA_HOME/conf/context.xml
 	      type="javax.sql.DataSource"
 	      factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 	      username="lnls_user"
-	      password="app1" 
+	      password="controle" 
 	      testWhileIdle="true"
 	      testOnBorrow="true"
 	      testOnReturn="false"
@@ -427,44 +476,50 @@ Note que modificamos os campos \texttt{username}, \texttt{password} e
 \texttt{url} de acordo com a instalação no item \ref{mysql-install}.
 
 \item É necessário copiar e extrair todos os arquivos \textit{.war} presentes em
-\texttt{epics-archiver-appliance/} para os respectivos diretórios
-\texttt{webapps/}. Para tal, definimos:
+\path{archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27} para os respectivos
+diretórios \texttt{webapps/}. Para tal, definimos:
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-export DEPLOY_DIR=$INSTALL_DIR/epics-appliances
-export WARSRC_DIR=$INSTALL_DIR/epics-archiver-appliance
+export DEPLOY_DIR=$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+export WARSRC_DIR=$INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27
 \end{lstlisting}
 
-E executamos o seguinte trecho para extrair os arquivos \textit{.war}:
+E executamos o \textit{script} \texttt{lnls-archiver-extract-wars.sh}, presente
+no repositório do grupo, para extrair os arquivos \textit{.war}.
 
-\begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,keywordstyle=\ttfamily,
-style=nonumbers] 
-$ source /home/user/.bashrc
-$ pushd ${DEPLOY_DIR}/mgmt/webapps && rm -rf mgmt*; cp ${WARSRC_DIR}/mgmt.war .; mkdir mgmt; cd mgmt; jar xf ../mgmt.war; popd; 
-$ pushd ${DEPLOY_DIR}/engine/webapps && rm -rf engine*; cp ${WARSRC_DIR}/engine.war .; mkdir engine; cd engine; jar xf ../engine.war; popd; 
-$ pushd ${DEPLOY_DIR}/etl/webapps && rm -rf etl*; cp ${WARSRC_DIR}/etl.war .; mkdir etl; cd etl; jar xf ../etl.war; popd; 
-$ pushd ${DEPLOY_DIR}/retrieval/webapps && rm -rf retrieval*; cp ${WARSRC_DIR}/retrieval.war .; mkdir retrieval; cd retrieval; jar xf ../retrieval.war; popd;
+
+\item Enfim, os 4 \textit{Tomcats} são lançados através do serviço
+\textit{systemd}, que pode ser obtido através do repositório \textit{git} do
+grupo, conforme comando abaixo. Tal serviço deve ser \textit{instalado} do
+diretório \path{/lib/systemd/system}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo systemctl start lnls-archiver.service
 \end{lstlisting}
 
-\item Enfim, lance os 4 \textit{Tomcats}:
-
-\begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,keywordstyle=\ttfamily,
-style=nonumbers]
-$ source /home/user/.bashrc
-$ export CATALINA_BASE=${DEPLOY_DIR}/mgmt;${CATALINA_HOME}/bin/catalina.sh start 
-$ export CATALINA_BASE=${DEPLOY_DIR}/engine;${CATALINA_HOME}/bin/catalina.sh start 
-$ export CATALINA_BASE=${DEPLOY_DIR}/etl;${CATALINA_HOME}/bin/catalina.sh start 
-$ export CATALINA_BASE=${DEPLOY_DIR}/retrieval; ${CATALINA_HOME}/bin/catalina.sh start
-
-\end{lstlisting}
-
-\item O arquivador é acessado através da URL 
+\item O arquivador é acessado através da URL (\path{localhost} pode ser
+substituído pelo endereço IP que referencia o \textit{host})
 
 \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
 http://localhost:11995/mgmt/ui/index.html
 \end{lstlisting}
 
 \end{enumerate} 
+
+\subsubsection{\textit{Debugging}}
+
+A lista abaixo apresenta algumas situações que foram encontradas durante a
+instalação.
+
+\begin {enumerate}[i.] 
+  \item Se após o reinício do arquivador todos os dados referentes às variáveis
+  forem perdidos é necessário checar todos os arquivos \path{conf/context.xml}
+  de cada um dos \textit{tomcats} e verificar que a configuração do servidor
+  \textit{MySQL} foi realizada corretamente.
+
+  \item Uma regra geral é verificar se todas as variáveis de ambiente foram
+  corretamente configuradas.
+\end{enumerate}
 
 \subsection{Uso do CS Studio no monitoramento} \label{appliance-csstudio}
 
