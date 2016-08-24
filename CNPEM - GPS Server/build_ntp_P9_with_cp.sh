@@ -58,7 +58,7 @@ if [ ! -f ${SYSTEM_MD_PATH}/gpsd.service ]; then
 
 	echo -n "  - /etc/systemd/system/gpsd.service not found! Adding symbolic link to '${SYSTEM_MD_PATH}'... "
 
-	ln -s -f ${PWD}/gpsd.service ${SYSTEM_MD_PATH}/gpsd.service
+	cp ${PWD}/gpsd.service ${SYSTEM_MD_PATH}/gpsd.service
 
 	printf "${GREEN}Ok!${NC}\n"
 		
@@ -71,7 +71,7 @@ else
 
 		echo -n "  - Replacing /etc/systemd/system/gpsd.service... "
 
-		ln -s -f ${PWD}/gpsd.service ${SYSTEM_MD_PATH}/gpsd.service
+		cp ${PWD}/gpsd.service ${SYSTEM_MD_PATH}/gpsd.service
 
 		printf "${GREEN}Ok!${NC}\n"
 
@@ -110,7 +110,7 @@ printf "${GREEN}Ok!${NC}\n"
 echo -n "  - Creating symbolic link to ntpd.service in directory '${SYSTEM_MD_PATH}'... "
 
 ############################################################################################ NTPD.SERVICE 
-ln -s -f ${PWD}/ntpd.service ${SYSTEM_MD_PATH}/ntpd.service
+cp ${PWD}/ntpd.service ${SYSTEM_MD_PATH}/ntpd.service
 ############################################################################################ NTPD.SERVICE
 
 printf "${GREEN}Ok!${NC}\n"
@@ -118,7 +118,7 @@ printf "${GREEN}Ok!${NC}\n"
 echo -n "  - Creating symbolic link to ntpdate.service in directory '${SYSTEM_MD_PATH}'... "
 
 ############################################################################################ NTPDATE.SERVICE
-ln -s -f ${PWD}/ntpdate.service ${SYSTEM_MD_PATH}/ntpdate.service
+cp ${PWD}/ntpdate.service ${SYSTEM_MD_PATH}/ntpdate.service
 ############################################################################################ NTPDATE.SERVICE 
 
 printf "${GREEN}Ok!${NC}\n"
@@ -126,11 +126,11 @@ printf "${GREEN}Ok!${NC}\n"
 echo -n "  - Creating symbolic link to ntp.conf in directory '/etc/'... "
 
 ############################################################################################ NTP.CONF
-ln -s -f ${PWD}/ntp.conf /etc/ntp.conf
+cp ${PWD}/ntp.conf /etc/ntp.conf
 ############################################################################################ NTP.CONF
 
 ############################################################################################ NTPDATE.CONF
-ln -s -f ${PWD}/ntpdate.conf /etc/ntpdate.conf
+cp ${PWD}/ntpdate.conf /etc/ntpdate.conf
 ############################################################################################ NTPDATE.CONF
 
 printf "${GREEN}Ok!${NC}\n"
@@ -194,7 +194,7 @@ echo "(vi) Enabling services"
 echo -n "  - Creating symbolic link to  pvgpsd.service in directory '${SYSTEM_MD_PATH}'... "
 
 ############################################################################################ PVGPSD.SERVICE
-ln -s -f ${PWD}/pvgpsd.service ${SYSTEM_MD_PATH}/pvgpsd.service
+cp ${PWD}/pvgpsd.service ${SYSTEM_MD_PATH}/pvgpsd.service
 ############################################################################################ PVGPSD.SERVICE 
 
 printf "${GREEN}Ok!${NC}\n"
