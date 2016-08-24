@@ -1,9 +1,7 @@
 #!/bin/bash
 
-source start-appliances.sh
-source stop-appliances.sh
-
-echo "coco"
+source ${DEPLOY_DIR}/scripts/start-appliances.sh
+source ${DEPLOY_DIR}/scripts/stop-appliances.sh
 
 case "$1" in
    start)
