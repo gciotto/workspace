@@ -31,13 +31,13 @@ if [ "$hasGPSD" = false ]; then
 
 	echo -n "  - Installing GPSD (apt-get install gpsd)... "
 
-	apt-get install gpsd  > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
+	apt-get install gpsd -y  > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
 
 	printf "${GREEN}Ok!${NC}\n"
 	
 	echo -n "  - Installing GPSD Clients (apt-get install gpsd-clients)... "
 
-	apt-get install gpsd-clients  > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
+	apt-get install gpsd-clients -y > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
 
 	printf "${GREEN}Ok!${NC}\n"
 
@@ -113,7 +113,7 @@ rm ntp-4.2.8p7.tar.gz
 printf "${GREEN}Ok!${NC}\n"
 
 echo -n "  - Building dependences... "
-apt-get install libcap-dev > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
+apt-get install libcap-dev -y > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
 printf "${GREEN}Ok!${NC}\n"
 
 echo -n "  - Configuring NTP './configure --enable-ATOM --prefix=/usr/local --enable-linuxcaps'..."
@@ -298,7 +298,7 @@ rm ntplib-0.3.3.tar.gz
 
 rm -R ntplib-0.3.3/
 
-apt-get install python-gps  > /dev/null || { printf "${RED}Failed!${NC}\n"; }
+apt-get install python-gps -y > /dev/null || { printf "${RED}Failed!${NC}\n"; }
 
 printf "${GREEN}Ok!${NC}\n"
 
@@ -306,7 +306,7 @@ echo "(iii) Building PPS tools"
 
 echo -n "  - Installing PPS Tools (apt-get install pps-tools)... "
 
-apt-get install pps-tools > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
+apt-get install pps-tools -y > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
 
 printf "${GREEN}Ok!${NC}\n"
 

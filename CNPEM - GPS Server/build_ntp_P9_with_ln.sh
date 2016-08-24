@@ -20,7 +20,7 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-SYSTEM_MD_PATH=/lib/systemd/system/
+SYSTEM_MD_PATH=/lib/systemd/system
 
 if [[ $# -ne 1 ]]; then
  echo "Format: build_ntp.sh arg1 (DTS file)"
@@ -38,13 +38,13 @@ if [ "$hasGPSD" = false ]; then
 
 	echo -n "  - Installing GPSD (apt-get install gpsd)... "
 
-	apt-get install gpsd  > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
+	apt-get install gpsd -y > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
 
 	printf "${GREEN}Ok!${NC}\n"
 	
 	echo -n "  - Installing GPSD Clients (apt-get install gpsd-clients)... "
 
-	apt-get install gpsd-clients  > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
+	apt-get install gpsd-clients -y > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
 
 	printf "${GREEN}Ok!${NC}\n"
 
@@ -58,7 +58,7 @@ if [ ! -f ${SYSTEM_MD_PATH}/gpsd.service ]; then
 
 	echo -n "  - /etc/systemd/system/gpsd.service not found! Adding symbolic link to '${SYSTEM_MD_PATH}'... "
 
-	ln -s -f gpsd.service ${SYSTEM_MD_PATH}/gpsd.service
+	ln -s -f ${PWD}/gpsd.service ${SYSTEM_MD_PATH}/gpsd.service
 
 	printf "${GREEN}Ok!${NC}\n"
 		
@@ -71,7 +71,7 @@ else
 
 		echo -n "  - Replacing /etc/systemd/system/gpsd.service... "
 
-		ln -s -f gpsd.service ${SYSTEM_MD_PATH}/gpsd.service
+		ln -s -f ${PWD}/gpsd.service ${SYSTEM_MD_PATH}/gpsd.service
 
 		printf "${GREEN}Ok!${NC}\n"
 
@@ -97,7 +97,7 @@ rm ntp-4.2.8p7.tar.gz
 printf "${GREEN}Ok!${NC}\n"
 
 echo -n "  - Building dependences... "
-apt-get install libcap-dev > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
+apt-get install libcap-dev -y > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
 printf "${GREEN}Ok!${NC}\n"
 
 echo -n "  - Configuring NTP './configure --enable-ATOM --prefix=/usr/local --enable-linuxcaps'..."
@@ -110,7 +110,7 @@ printf "${GREEN}Ok!${NC}\n"
 echo -n "  - Creating symbolic link to ntpd.service in directory '${SYSTEM_MD_PATH}'... "
 
 ############################################################################################ NTPD.SERVICE 
-ln -s -f ntpd.service ${SYSTEM_MD_PATH}/ntpd.service
+ln -s -f ${PWD}/ntpd.service ${SYSTEM_MD_PATH}/ntpd.service
 ############################################################################################ NTPD.SERVICE
 
 printf "${GREEN}Ok!${NC}\n"
@@ -118,7 +118,7 @@ printf "${GREEN}Ok!${NC}\n"
 echo -n "  - Creating symbolic link to ntpdate.service in directory '${SYSTEM_MD_PATH}'... "
 
 ############################################################################################ NTPDATE.SERVICE
-ln -s -f ntpdate.service ${SYSTEM_MD_PATH}/ntpdate.service
+ln -s -f ${PWD}/ntpdate.service ${SYSTEM_MD_PATH}/ntpdate.service
 ############################################################################################ NTPDATE.SERVICE 
 
 printf "${GREEN}Ok!${NC}\n"
@@ -126,11 +126,11 @@ printf "${GREEN}Ok!${NC}\n"
 echo -n "  - Creating symbolic link to ntp.conf in directory '/etc/'... "
 
 ############################################################################################ NTP.CONF
-ln -s -f ntp.conf /etc/ntp.conf
+ln -s -f ${PWD}/ntp.conf /etc/ntp.conf
 ############################################################################################ NTP.CONF
 
 ############################################################################################ NTPDATE.CONF
-ln -s -f ntpdate.conf /etc/ntpdate.conf
+ln -s -f ${PWD}/ntpdate.conf /etc/ntpdate.conf
 ############################################################################################ NTPDATE.CONF
 
 printf "${GREEN}Ok!${NC}\n"
@@ -145,7 +145,7 @@ rm ntplib-0.3.3.tar.gz
 
 rm -R ntplib-0.3.3/
 
-apt-get install python-gps  > /dev/null || { printf "${RED}Failed!${NC}\n"; }
+apt-get install python-gps -y > /dev/null || { printf "${RED}Failed!${NC}\n"; }
 
 printf "${GREEN}Ok!${NC}\n"
 
@@ -153,7 +153,7 @@ echo "(iii) Building PPS tools"
 
 echo -n "  - Installing PPS Tools (apt-get install pps-tools)... "
 
-apt-get install pps-tools > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
+apt-get install pps-tools -y > /dev/null || { printf "${RED}Failed!${NC}\n" && exit 1; }
 
 printf "${GREEN}Ok!${NC}\n"
 
@@ -194,7 +194,7 @@ echo "(vi) Enabling services"
 echo -n "  - Creating symbolic link to  pvgpsd.service in directory '${SYSTEM_MD_PATH}'... "
 
 ############################################################################################ PVGPSD.SERVICE
-ln -s -f pvgpsd.service ${SYSTEM_MD_PATH}/pvgpsd.service
+ln -s -f ${PWD}/pvgpsd.service ${SYSTEM_MD_PATH}/pvgpsd.service
 ############################################################################################ PVGPSD.SERVICE 
 
 printf "${GREEN}Ok!${NC}\n"
