@@ -1,0 +1,198 @@
+                           SPEC(R) CINT2006 Summary
+                       System Vendor System Model Name
+         Test Sponsor: Test Sponsor (Optional, defaults to hw_vendor)
+                           Sat Aug 27 22:46:10 2016
+
+CPU2006 License: 0                                       Test date: Aug-2016
+Test sponsor: Test Sponsor (Optional, defaults to hw_vendor)  Hardware availability: Dec-9999
+Tested by:    (Optional, defaults to hw_vendor)  Software availability: May-2010
+
+                Base     Base       Base        Peak     Peak       Peak
+Benchmarks      Ref.   Run Time     Ratio       Ref.   Run Time     Ratio
+-------------- ------  ---------  ---------    ------  ---------  ---------
+400.perlbench    9770        776      12.6  *                                  
+400.perlbench    9770        771      12.7  S                                  
+400.perlbench    9770        778      12.6  S                                  
+401.bzip2        9650       1565       6.17 S                                  
+401.bzip2        9650       1563       6.18 *                                  
+401.bzip2        9650       1562       6.18 S                                  
+403.gcc          8050        730      11.0  S                                  
+403.gcc          8050        730      11.0  *                                  
+403.gcc          8050        731      11.0  S                                  
+429.mcf          9120        600      15.2  S                                  
+429.mcf          9120        598      15.2  *                                  
+429.mcf          9120        575      15.9  S                                  
+445.gobmk       10490       1201       8.73 S                                  
+445.gobmk       10490       1199       8.75 S                                  
+445.gobmk       10490       1200       8.74 *                                  
+456.hmmer        9330       2374       3.93 S                                  
+456.hmmer        9330       2376       3.93 S                                  
+456.hmmer        9330       2375       3.93 *                                  
+458.sjeng       12100       1285       9.42 S                                  
+458.sjeng       12100       1283       9.43 S                                  
+458.sjeng       12100       1284       9.42 *                                  
+462.libquantum  20720       1117      18.5  S                                  
+462.libquantum  20720       1120      18.5  *                                  
+462.libquantum  20720       1120      18.5  S                                  
+464.h264ref     22130       2056      10.8  S                                  
+464.h264ref     22130       2047      10.8  *                                  
+464.h264ref     22130       2046      10.8  S                                  
+471.omnetpp      6250        852       7.34 *                                  
+471.omnetpp      6250        852       7.33 S                                  
+471.omnetpp      6250        851       7.34 S                                  
+473.astar        7020       1183       5.94 S                                  
+473.astar        7020       1175       5.97 S                                  
+473.astar        7020       1178       5.96 *                                  
+483.xalancbmk    6900       2079       3.32 S                                  
+483.xalancbmk    6900       2087       3.31 S                                  
+483.xalancbmk    6900       2086       3.31 *                                  
+==============================================================================
+400.perlbench    9770        776      12.6  *                                  
+401.bzip2        9650       1563       6.18 *                                  
+403.gcc          8050        730      11.0  *                                  
+429.mcf          9120        598      15.2  *                                  
+445.gobmk       10490       1200       8.74 *                                  
+456.hmmer        9330       2375       3.93 *                                  
+458.sjeng       12100       1284       9.42 *                                  
+462.libquantum  20720       1120      18.5  *                                  
+464.h264ref     22130       2047      10.8  *                                  
+471.omnetpp      6250        852       7.34 *                                  
+473.astar        7020       1178       5.96 *                                  
+483.xalancbmk    6900       2086       3.31 *                                  
+ SPECint(R)_base2006                   8.39
+ SPECint2006                                                        Not Run
+
+
+                                   HARDWARE
+                                   --------
+            CPU Name: Intel Core i3-2330M
+ CPU Characteristics:  
+             CPU MHz: 9999
+                 FPU: Integrated
+      CPU(s) enabled: number of cores enabled cores, 1 chip, number of cores manufactured into each chip cores/chip, number of threads enabled per core threads/core
+    CPU(s) orderable: 1,2 chips
+       Primary Cache: 9999 KB I + 9999 KB D on chip per core
+     Secondary Cache: 9999 KB I+D on chip per core
+            L3 Cache: 9999 MB I+D on chip per chip
+         Other Cache: None
+              Memory: 3.774 GB fixme: If using DDR3, format is:
+                      'N GB (M x N GB nRxn PCn-nnnnnR-n, ECC)'
+      Disk Subsystem: 158 GB  add more disk info here
+      Other Hardware: None
+
+
+                                   SOFTWARE
+                                   --------
+    Operating System: NAME="Arch Linux"
+                      4.7.1-1-ARCH
+            Compiler: gcc, g++ & gfortran 4.3.4
+       Auto Parallel: No
+         File System: ext4
+        System State: Run level N (add definition here)
+       Base Pointers: 64-bit
+       Peak Pointers: 64-bit
+      Other Software: None
+
+
+                                 Submit Notes
+                                 ------------
+    'numactl' was used to bind copies to the cores.
+    See the configuration file for details.
+
+                            Operating System Notes
+                            ----------------------
+    'ulimit -s unlimited' was used to set environment stack size
+
+                                Platform Notes
+                                --------------
+     Sysinfo program /home/gciotto/SPEC2006/Docs/sysinfo
+     $Rev: 6775 $ $Date:: 2011-08-16 #$ 8787f7622badcf24e01c368b1db4377c
+     running on gciotto Sat Aug 27 22:46:14 2016
+    
+     This section contains SUT (System Under Test) info as seen by
+     some common utilities.  To remove or add to this section, see:
+       http://www.spec.org/cpu2006/Docs/config.html#sysinfo
+    
+     From /proc/cpuinfo
+        model name : Intel(R) Core(TM) i3-2330M CPU @ 2.20GHz
+           1 "physical id"s (chips)
+           4 "processors"
+        cores, siblings (Caution: counting these is hw and system dependent.  The
+        following excerpts from /proc/cpuinfo might not be reliable.  Use with
+        caution.)
+           cpu cores : 2
+           siblings  : 4
+           physical 0: cores 0 1
+        cache size : 3072 KB
+    
+     From /proc/meminfo
+        MemTotal:        3957208 kB
+        HugePages_Total:       0
+        Hugepagesize:       2048 kB
+    
+     From /etc/*release* /etc/*version*
+        os-release:
+           NAME="Arch Linux"
+           ID=arch
+           PRETTY_NAME="Arch Linux"
+           ANSI_COLOR="0;36"
+           HOME_URL="https://www.archlinux.org/"
+           SUPPORT_URL="https://bbs.archlinux.org/"
+           BUG_REPORT_URL="https://bugs.archlinux.org/"
+    
+    
+     uname -a:
+        Linux gciotto 4.7.1-1-ARCH #1 SMP PREEMPT Wed Aug 17 08:13:35 CEST 2016
+        x86_64 GNU/Linux
+    
+    
+     SPEC is set to: /home/gciotto/SPEC2006
+        Filesystem     Type  Size  Used Avail Use% Mounted on
+        /dev/sda6      ext4  158G  132G   18G  89% /home
+    
+     (End of data from sysinfo program)
+
+                           Base Compiler Invocation
+                           ------------------------
+C benchmarks: 
+     /usr/bin/gcc
+
+C++ benchmarks: 
+     /usr/bin/g++
+
+
+                            Base Portability Flags
+                            ----------------------
+  400.perlbench: -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64
+      401.bzip2: -DSPEC_CPU_LP64
+        403.gcc: -DSPEC_CPU_LP64
+        429.mcf: -DSPEC_CPU_LP64
+      445.gobmk: -DSPEC_CPU_LP64
+      456.hmmer: -DSPEC_CPU_LP64
+      458.sjeng: -DSPEC_CPU_LP64
+ 462.libquantum: -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX
+    464.h264ref: -DSPEC_CPU_LP64
+    471.omnetpp: -DSPEC_CPU_LP64
+      473.astar: -DSPEC_CPU_LP64
+  483.xalancbmk: -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX
+
+
+                           Base Optimization Flags
+                           -----------------------
+C benchmarks: 
+     -fno-strict-aliasing
+
+C++ benchmarks: 
+     -fno-strict-aliasing
+
+
+    SPEC and SPECint are registered trademarks of the Standard Performance
+    Evaluation Corporation.  All other brand and product names appearing
+    in this result are trademarks or registered trademarks of their
+    respective holders.
+-----------------------------------------------------------------------------
+For questions about this result, please contact the tester.
+For other inquiries, please contact webmaster@spec.org.
+Copyright 2006-2016 Standard Performance Evaluation Corporation
+Tested with SPEC CPU2006 v1.2.
+Report generated on Sun Aug 28 12:55:50 2016 by CPU2006 ASCII formatter v6400.
