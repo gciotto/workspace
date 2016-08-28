@@ -80,32 +80,27 @@ VOID initThreadData (THREADID threadid, CONTEXT *ctxt, INT32 flags, VOID *v) {
 }
 
 /* This function is called before every instruction is executed */
-VOID incrementCounter(UINT64 * counter) {
-    (*counter)++;
+VOID incrementCounter(THREADID _thread_id, string _name) {
+
+	Thread_info* _t_info = static_cast<Thread_info*> (PIN_GetThreadData(tls_key, _thread_id));
+
+	for (Routine_info* t =  _t_info->_routine_head; t; t = t->_next)
+		if (!t->_name.compare(_name)) {
+			t->_ins_count++;
+			break;
+		}
+
 }
 
+VOID saveRoutineObject(THREADID _thread_id, string _name) {
 
-/* Function of the 'type' RTN_INSTRUMENT_CALLBACK(RTN rtn, VOID *v). */
-VOID initRoutineCallback(RTN rtn, VOID *v) {
 
-	THREADID _thread_id = PIN_ThreadId();
+    Thread_info* _t_info = static_cast<Thread_info*> (PIN_GetThreadData(tls_key, _thread_id));
 
 	Routine_info* _new_routine = new Routine_info;
 
-	_new_routine->_name = RTN_Name(rtn);
 
-    RTN_Open(rtn);
-
-    // For each instruction of the routine
-    for (INS ins = RTN_InsHead(rtn); INS_Valid(ins); ins = INS_Next(ins))
-    	INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)incrementCounter, IARG_PTR, &(_new_routine->_ins_count), IARG_END);
-
-    RTN_Close(rtn);
-
-    //OutFile << "initRoutineCallback: Getting data structure of thread...";
-
-    Thread_info* _t_info =
-    	         static_cast<Thread_info*> (PIN_GetThreadData(tls_key, _thread_id));
+	_new_routine->_name = _name;
 
 	if (_t_info) {
 
@@ -122,12 +117,29 @@ VOID initRoutineCallback(RTN rtn, VOID *v) {
 			/* Adds new routine to the beginning of the linked list */
 			_new_routine->_next = _t_info->_routine_head;
 			_t_info->_routine_head = _new_routine;
-
-		} else {
-			t->_ins_count += _new_routine->_ins_count;
-			//delete _new_routine;
 		}
 	}
+
+}
+
+/* Function of the 'type' RTN_INSTRUMENT_CALLBACK(RTN rtn, VOID *v). */
+VOID initRoutineCallback(RTN rtn, VOID *v) {
+
+    RTN_Open(rtn);
+
+    string* _rtn_name = new string (RTN_Name(rtn));
+
+
+    // RTN_NumIns 	(  	RTN  	rtn 	 )
+    RTN_InsertCall(rtn, IPOINT_BEFORE, (AFUNPTR)saveRoutineObject, IARG_THREAD_ID, IARG_PTR , _rtn_name, IARG_END);
+
+    //For each instruction of the routine
+    for (INS ins = RTN_InsHead(rtn); INS_Valid(ins); ins = INS_Next(ins))
+    	INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)incrementCounter, IARG_THREAD_ID, IARG_PTR, _rtn_name, IARG_END);
+
+    RTN_Close(rtn);
+
+
 
 }
 
@@ -144,7 +156,7 @@ VOID endTool(INT32 code, VOID *v)
     	OutFile << "Thread #" << decstr(i) << endl;
 
     	for (Routine_info* t = _t_info->_routine_head; t; t = t->_next)
-    		if (t->_ins_count)
+    		//if (t->_ins_count)
     			OutFile << "|----- " << t->_name << " with " << t->_ins_count << " executed instructions. " << endl;
     	OutFile.flush();
 
