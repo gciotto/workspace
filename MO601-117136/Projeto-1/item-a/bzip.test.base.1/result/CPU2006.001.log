@@ -1,0 +1,469 @@
+runspec v6674 started at Sat Aug 27 18:54:28 2016 on "gciotto"
+runspec is: /home/gciotto/SPEC/bin/runspec
+runspec: runspec --config=project1a --size=test --noreportable --tune=base --iterations=1 bzip
+toolset: linux-suse10-amd64
+
+Locating benchmarks...found 31 benchmarks in 6 benchsets.
+Reading config file '/home/gciotto/SPEC/config/project1a.cfg'
+Running "specperl /home/gciotto/SPEC/Docs/sysinfo" to gather system information.
+Read 57 total lines from the sysinfo program.
+Read 56 usable lines from the sysinfo program.
+
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-gcc4x-flags-revA.xml)...
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-linux-platform-revA.xml)...
+Verbosity = 5
+Action    = validate
+Tune      = base
+Ext       = gcc43-64bit
+Size      = test
+Machine   = default
+benchmarks= 401.bzip2
+outputs   = asc,csv,html
+username  = gciotto
+Benchmarks selected: 401.bzip2
+Compiling Binaries
+
+------------------------------------------------------------------------
+/home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/exe/bzip2_base.gcc43-64bit does not exist
+  Building 401.bzip2 base gcc43-64bit default: (build_base_gcc43-64bit.0000)
+Wrote to makefile '/home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/build/build_base_gcc43-64bit.0000/Makefile.deps':
+
+# These are the build dependencies
+
+# End dependencies
+Wrote to makefile '/home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/build/build_base_gcc43-64bit.0000/Makefile.spec':
+TUNE=base
+EXT=gcc43-64bit
+NUMBER=401
+NAME=bzip2
+SOURCES= spec.c blocksort.c bzip2.c bzlib.c compress.c crctable.c \
+	 decompress.c huffman.c randtable.c
+EXEBASE=bzip2
+NEED_MATH=
+BENCHLANG=C
+ONESTEP=
+CONESTEP=
+
+CC               = /usr/bin/gcc
+COPTIMIZE        = -fno-strict-aliasing
+CXX              = /usr/bin/g++
+CXXOPTIMIZE      = -fno-strict-aliasing
+FC               = /usr/bin/gfortran
+FOPTIMIZE        = -fno-strict-aliasing
+FPBASE           = yes
+OS               = unix
+PORTABILITY      = -DSPEC_CPU_LP64
+absolutely_no_locking = 0
+abstol           = 
+action           = validate
+allow_extension_override = 0
+backup_config    = 1
+baseexe          = bzip2
+basepeak         = 1
+benchdir         = benchspec
+benchmark        = 401.bzip2
+binary           = 
+bindir           = exe
+build_in_build_dir = 1
+builddir         = build
+bundleaction     = 
+bundlename       = 
+calctol          = 0
+changedmd5       = 0
+check_integrity  = 1
+check_md5        = 1
+check_version    = 1
+clean_between_builds = no
+command_add_redirect = 0
+commanderrfile   = speccmds.err
+commandexe       = bzip2_base.gcc43-64bit
+commandfile      = speccmds.cmd
+commandoutfile   = speccmds.out
+commandstdoutfile = speccmds.stdout
+compareerrfile   = compare.err
+comparefile      = compare.cmd
+compareoutfile   = compare.out
+comparestdoutfile = compare.stdout
+compile_error    = 0
+compwhite        = 
+configdir        = config
+configpath       = /home/gciotto/SPEC/config/project1a.cfg
+copies           = 1
+datadir          = data
+default_size     = ref
+delay            = 0
+deletebinaries   = 0
+deletework       = 0
+dependent_workloads = 0
+difflines        = 10
+dirprot          = 511
+endian           = 12345678
+env_vars         = 0
+exitvals         = spec_exit
+expand_notes     = 0
+expid            = 
+ext              = gcc43-64bit
+fake             = 0
+feedback         = 1
+flag_url_base    = http://www.spec.org/auto/cpu2006/flags/
+floatcompare     = 
+help             = 0
+http_proxy       = 
+http_timeout     = 30
+hw_avail         = Dec-9999
+hw_cpu_char      = 
+hw_cpu_mhz       = 9999
+hw_cpu_name      = Intel Core i5-2500K
+hw_disk          = 159 GB  add more disk info here
+hw_fpu           = Integrated
+hw_memory001     = 7.785 GB fixme: If using DDR3, format is:
+hw_memory002     = 'N GB (M x N GB nRxn PCn-nnnnnR-n, ECC)'
+hw_model         = System Model Name
+hw_nchips        = 1
+hw_ncores        = number of cores enabled
+hw_ncoresperchip = number of cores manufactured into each chip
+hw_ncpuorder     = 1,2 chips
+hw_nthreadspercore = number of threads enabled per core
+hw_ocache        = None
+hw_other         = None
+hw_pcache        = 9999 KB I + 9999 KB D on chip per core
+hw_scache        = 9999 KB I+D on chip per core
+hw_tcache        = 9999 MB I+D on chip per chip
+hw_vendor        = System Vendor
+ignore_errors    = yes
+ignore_sigint    = 0
+ignorecase       = 
+info_wrap_columns = 50
+inputdir         = input
+iteration        = -1
+iterations       = 1
+keeptmp          = 0
+license_num      = 0
+line_width       = 0
+locking          = 1
+log              = CPU2006
+log_line_width   = 0
+log_timestamp    = 0
+logname          = /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/result/CPU2006.001.log
+lognum           = 001
+mach             = default
+mail_reports     = all
+mailcompress     = 0
+mailmethod       = smtp
+mailport         = 25
+mailserver       = 127.0.0.1
+mailto           = 
+make             = specmake
+make_no_clobber  = 0
+makeflags        = 
+max_active_compares = 0
+mean_anyway      = 0
+min_report_runs  = 3
+minimize_builddirs = 0
+minimize_rundirs = 0
+name             = bzip2
+need_math        = 
+no_input_handler = close
+no_monitor       = 
+note_preenv      = 0
+notes_os_000     = 'ulimit -s unlimited' was used to set environment stack size
+notes_plat_sysinfo_000 =  Sysinfo program /home/gciotto/SPEC/Docs/sysinfo
+notes_plat_sysinfo_005 =  $Rev: 6775 $ $Date:: 2011-08-16 \#$ 8787f7622badcf24e01c368b1db4377c
+notes_plat_sysinfo_010 =  running on gciotto Sat Aug 27 18:54:29 2016
+notes_plat_sysinfo_015 = 
+notes_plat_sysinfo_020 =  This section contains SUT (System Under Test) info as seen by
+notes_plat_sysinfo_025 =  some common utilities.  To remove or add to this section, see:
+notes_plat_sysinfo_030 =    http://www.spec.org/cpu2006/Docs/config.html\#sysinfo
+notes_plat_sysinfo_035 = 
+notes_plat_sysinfo_040 =  From /proc/cpuinfo
+notes_plat_sysinfo_045 =     model name : Intel(R) Core(TM) i5-2500K CPU @ 3.30GHz
+notes_plat_sysinfo_050 =        1 "physical id"s (chips)
+notes_plat_sysinfo_055 =        4 "processors"
+notes_plat_sysinfo_060 =     cores, siblings (Caution: counting these is hw and system dependent.  The
+notes_plat_sysinfo_065 =     following excerpts from /proc/cpuinfo might not be reliable.  Use with
+notes_plat_sysinfo_070 =     caution.)
+notes_plat_sysinfo_075 =        cpu cores : 4
+notes_plat_sysinfo_080 =        siblings  : 4
+notes_plat_sysinfo_085 =        physical 0: cores 0 1 2 3
+notes_plat_sysinfo_090 =     cache size : 6144 KB
+notes_plat_sysinfo_095 = 
+notes_plat_sysinfo_100 =  From /proc/meminfo
+notes_plat_sysinfo_105 =     MemTotal:        8162908 kB
+notes_plat_sysinfo_110 =     HugePages_Total:       0
+notes_plat_sysinfo_115 =     Hugepagesize:       2048 kB
+notes_plat_sysinfo_120 = 
+notes_plat_sysinfo_125 =  From /etc/*release* /etc/*version*
+notes_plat_sysinfo_130 =     os-release:
+notes_plat_sysinfo_135 =        NAME="Arch Linux"
+notes_plat_sysinfo_140 =        ID=arch
+notes_plat_sysinfo_145 =        PRETTY_NAME="Arch Linux"
+notes_plat_sysinfo_150 =        ANSI_COLOR="0;36"
+notes_plat_sysinfo_155 =        HOME_URL="https://www.archlinux.org/"
+notes_plat_sysinfo_160 =        SUPPORT_URL="https://bbs.archlinux.org/"
+notes_plat_sysinfo_165 =        BUG_REPORT_URL="https://bugs.archlinux.org/"
+notes_plat_sysinfo_170 = 
+notes_plat_sysinfo_175 = 
+notes_plat_sysinfo_180 =  uname -a:
+notes_plat_sysinfo_185 =     Linux gciotto 4.6.4-1-ARCH \#1 SMP PREEMPT Mon Jul 11 19:12:32 CEST 2016
+notes_plat_sysinfo_190 =     x86_64 GNU/Linux
+notes_plat_sysinfo_195 = 
+notes_plat_sysinfo_200 = 
+notes_plat_sysinfo_205 =  SPEC is set to: /home/gciotto/SPEC
+notes_plat_sysinfo_210 =     Filesystem     Type  Size  Used Avail Use% Mounted on
+notes_plat_sysinfo_215 =     /dev/sda6      ext4  159G  137G   15G  91% /home
+notes_plat_sysinfo_220 = 
+notes_plat_sysinfo_225 =  (End of data from sysinfo program)
+notes_submit_000 = 'numactl' was used to bind copies to the cores.
+notes_submit_005 = See the configuration file for details.
+notes_wrap_columns = 0
+notes_wrap_indent =   
+num              = 401
+obiwan           = 
+os_exe_ext       = 
+output           = asc
+output_format    = asc,csv,html
+output_root      = /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1
+outputdir        = output
+parallel_setup   = 1
+parallel_setup_prefork = 
+parallel_setup_type = fork
+parallel_test    = 0
+parallel_test_submit = 0
+parallel_test_workloads = 
+path             = /home/gciotto/SPEC/benchspec/CPU2006/401.bzip2
+plain_train      = 1
+power            = 0
+preenv           = 1
+prefix           = 
+prepared_by      = gciotto  (is never output, only tags rawfile)
+ranks            = 1
+rate             = 0
+realuser         = your name here
+rebuild          = 0
+reftime          = reftime
+reltol           = 
+reportable       = 0
+resultdir        = result
+review           = 0
+run              = all
+rundir           = run
+runspec          = /home/gciotto/SPEC/bin/runspec --config=project1a --size=test --noreportable --tune=base --iterations=1 bzip
+safe_eval        = 1
+section_specifier_fatal = 1
+sendmail         = /usr/sbin/sendmail
+setpgrp_enabled  = 1
+setprocgroup     = 1
+setup_error      = 0
+shrate           = 0
+sigint           = 2
+size             = test
+size_class       = test
+skipabstol       = 
+skipobiwan       = 
+skipreltol       = 
+skiptol          = 
+smarttune        = base
+specdiff         = specdiff
+specmake         = Makefile.YYYtArGeTYYYspec
+specrun          = specinvoke
+speed            = 0
+srcalt           = 
+srcdir           = src
+srcsource        = /home/gciotto/SPEC/benchspec/CPU2006/401.bzip2/src
+stagger          = 10
+strict_rundir_verify = 1
+submit_default   = $BIND $command
+sw_avail         = May-2010
+sw_base_ptrsize  = 64-bit
+sw_compiler      = gcc, g++ & gfortran 4.3.4
+sw_file          = ext4
+sw_os001         = NAME="Arch Linux"
+sw_os002         = 4.6.4-1-ARCH
+sw_other         = None
+sw_peak_ptrsize  = 64-bit
+sw_state         = Run level N (add definition here)
+sysinfo_program  = specperl /home/gciotto/SPEC/Docs/sysinfo
+table            = 1
+teeout           = yes
+teerunout        = yes
+test_date        = Aug-2016
+test_sponsor     = Test Sponsor (Optional, defaults to hw_vendor)
+tester           = (Optional, defaults to hw_vendor)
+top              = /home/gciotto/SPEC
+train_with       = train
+tune             = base
+uid              = 1000
+unbuffer         = 1
+update-flags     = 0
+use_submit_for_speed = 0
+username         = gciotto
+vendor           = anon
+vendor_makefiles = 0
+verbose          = 5
+version          = 0
+version_url      = http://www.spec.org/auto/cpu2006/current_version
+worklist         = list
+OUTPUT_RMFILES   = byoudoin.jpg.out input.combined.out input.program.out
+  Compile for '401.bzip2' started at: Sat Aug 27 18:54:29 2016 (1472334869)
+Issuing make.clean command 'specmake clean'
+specmake clean 2> make.clean.err | tee make.clean.out
+Start make.clean command: Sat Aug 27 18:54:29 2016 (1472334869)
+rm -rf *.o  byoudoin.jpg.out input.combined.out input.program.out
+find . \( -name \*.o -o -name '*.fppized.f*' -o -name '*.i' -o -name '*.mod' \) -print | xargs rm -rf
+rm -rf bzip2
+rm -rf bzip2.exe
+rm -rf core
+rm -rf 
+Stop make.clean command: Sat Aug 27 18:54:30 2016 (1472334870)
+Elapsed time for make.clean command: 00:00:01 (1)
+Issuing make command 'specmake build'
+specmake build 2> make.err | tee make.out
+Start make command: Sat Aug 27 18:54:30 2016 (1472334870)
+/usr/bin/gcc -c -o spec.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         spec.c
+/usr/bin/gcc -c -o blocksort.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         blocksort.c
+/usr/bin/gcc -c -o bzip2.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         bzip2.c
+In file included from bzip2.c:155:0:
+bzip2.c: In function 'compressStream':
+bzlib.h:80:28: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    #  define SPEC_NULLCAST (int)
+                            ^
+bzip2.c:484:32: note: in expansion of macro 'SPEC_NULLCAST'
+       outputHandleJustInCase = SPEC_NULLCAST NULL;
+                                ^~~~~~~~~~~~~
+bzip2.c:487:27: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+    outputHandleJustInCase = NULL;
+                           ^
+In file included from bzip2.c:155:0:
+bzip2.c: In function 'uncompressStream':
+bzlib.h:80:28: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    #  define SPEC_NULLCAST (int)
+                            ^
+bzip2.c:611:32: note: in expansion of macro 'SPEC_NULLCAST'
+       outputHandleJustInCase = SPEC_NULLCAST NULL;
+                                ^~~~~~~~~~~~~
+bzip2.c:614:27: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+    outputHandleJustInCase = NULL;
+                           ^
+/usr/bin/gcc -c -o bzlib.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         bzlib.c
+In file included from bzlib_private.h:73:0,
+                 from bzlib.c:77:
+bzlib.c: In function 'BZ2_bzWriteOpen':
+bzlib.h:80:28: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    #  define SPEC_NULLCAST (int)
+                            ^
+bzlib.c:996:13: note: in expansion of macro 'SPEC_NULLCAST'
+    if (f == SPEC_NULLCAST NULL ||
+             ^~~~~~~~~~~~~
+bzlib.c: In function 'BZ2_bzReadOpen':
+bzlib.h:80:28: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    #  define SPEC_NULLCAST (int)
+                            ^
+bzlib.c:1172:13: note: in expansion of macro 'SPEC_NULLCAST'
+    if (f == SPEC_NULLCAST NULL ||
+             ^~~~~~~~~~~~~
+bzlib.c: In function 'bzopen_or_bzdopen':
+bzlib.h:80:28: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    #  define SPEC_NULLCAST (int)
+                            ^
+bzlib.c:1512:12: note: in expansion of macro 'SPEC_NULLCAST'
+       fp = SPEC_NULLCAST NULL;
+            ^~~~~~~~~~~~~
+bzlib.h:80:28: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    #  define SPEC_NULLCAST (int)
+                            ^
+bzlib.c:1521:14: note: in expansion of macro 'SPEC_NULLCAST'
+    if (fp == SPEC_NULLCAST NULL) return NULL;
+              ^~~~~~~~~~~~~
+/usr/bin/gcc -c -o compress.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         compress.c
+/usr/bin/gcc -c -o crctable.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         crctable.c
+/usr/bin/gcc -c -o decompress.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         decompress.c
+/usr/bin/gcc -c -o huffman.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         huffman.c
+/usr/bin/gcc -c -o randtable.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         randtable.c
+/usr/bin/gcc   -fno-strict-aliasing  -DSPEC_CPU_LP64        spec.o blocksort.o bzip2.o bzlib.o compress.o crctable.o decompress.o huffman.o randtable.o                     -o bzip2
+Stop make command: Sat Aug 27 18:54:30 2016 (1472334870)
+Elapsed time for make command: 00:00:00 (0)
+Issuing options command 'specmake options'
+specmake options 2> options.err | tee options.out
+Start options command: Sat Aug 27 18:54:30 2016 (1472334870)
+COMP: /usr/bin/gcc -c -o options.o -DSPEC_CPU -DNDEBUG    -fno-strict-aliasing       -DSPEC_CPU_LP64         <source>
+C: CC="/usr/bin/gcc"
+C: COBJOPT="-c -o options"
+P: CPUFLAGS="-DSPEC_CPU -DNDEBUG"
+P: BENCH_FLAGS=""
+P: BENCH_CFLAGS=""
+O: OPTIMIZE=""
+O: COPTIMIZE="-fno-strict-aliasing"
+P: PORTABILITY="-DSPEC_CPU_LP64"
+P: CPORTABILITY=""
+O: EXTRA_CFLAGS=""
+O: EXTRA_OPTIMIZE=""
+O: EXTRA_COPTIMIZE=""
+P: EXTRA_PORTABILITY=""
+P: EXTRA_CPORTABILITY=""
+LINK: /usr/bin/gcc   -fno-strict-aliasing  -DSPEC_CPU_LP64        <objects>           -o options
+C: LD="/usr/bin/gcc"
+O: COPTIMIZE="-fno-strict-aliasing"
+P: PORTABILITY="-DSPEC_CPU_LP64"
+C: LDOUT="-o options"
+Stop options command: Sat Aug 27 18:54:31 2016 (1472334871)
+Elapsed time for options command: 00:00:01 (1)
+  Compile for '401.bzip2' ended at: Sat Aug 27 18:54:31 2016 (1472334871)
+  Elapsed compile for '401.bzip2': 00:00:02 (2)
+
+Build successes: 401.bzip2(base)
+
+Setting Up Run Directories
+  Setting up 401.bzip2 test base gcc43-64bit default: created (run_base_test_gcc43-64bit.0000)
+
+-----------------------------------
+Running Benchmarks
+
+-----------------------------------
+  Running 401.bzip2 test base gcc43-64bit default
+Commands to run:
+    -b numactl -m 0 --physcpubind=0
+    -C /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/run/run_base_test_gcc43-64bit.0000
+    -o input.program.out -e input.program.err ../run_base_test_gcc43-64bit.0000/bzip2_base.gcc43-64bit input.program 5 (timed)
+    -o dryer.jpg.out -e dryer.jpg.err ../run_base_test_gcc43-64bit.0000/bzip2_base.gcc43-64bit dryer.jpg 2 (timed)
+Specinvoke: /home/gciotto/SPEC/bin/specinvoke -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/run/run_base_test_gcc43-64bit.0000 -e speccmds.err -o speccmds.stdout -f speccmds.cmd -C -q
+Issuing command '/home/gciotto/SPEC/bin/specinvoke -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/run/run_base_test_gcc43-64bit.0000 -e speccmds.err -o speccmds.stdout -f speccmds.cmd -C -q'
+/home/gciotto/SPEC/bin/specinvoke -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/run/run_base_test_gcc43-64bit.0000 -e speccmds.err -o speccmds.stdout -f speccmds.cmd -C -q
+Start command: Sat Aug 27 18:54:31 2016 (1472334871)
+Stop command: Sat Aug 27 18:54:50 2016 (1472334890)
+Elapsed time for command: 00:00:19 (19)
+Workload elapsed time (0:1) = 3.569358 seconds
+Workload elapsed time (0:2) = 6.983703 seconds
+Copy 0 of 401.bzip2 (base test) run 1 finished at Sat Aug 27 18:54:42 2016.  Total elapsed time: 10.553061
+comparing files in '/home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/run/run_base_test_gcc43-64bit.0000'
+comparing 'dryer.jpg.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'input.program.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+Specinvoke: /home/gciotto/SPEC/bin/specinvoke -E -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/run/run_base_test_gcc43-64bit.0000 -c 1 -e compare.err -o compare.stdout -f compare.cmd
+Issuing command '/home/gciotto/SPEC/bin/specinvoke -E -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/run/run_base_test_gcc43-64bit.0000 -c 1 -e compare.err -o compare.stdout -f compare.cmd'
+/home/gciotto/SPEC/bin/specinvoke -E -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/benchspec/CPU2006/401.bzip2/run/run_base_test_gcc43-64bit.0000 -c 1 -e compare.err -o compare.stdout -f compare.cmd
+Start command: Sat Aug 27 18:54:50 2016 (1472334890)
+Stop command: Sat Aug 27 18:54:51 2016 (1472334891)
+Elapsed time for command: 00:00:01 (1)
+Benchmark Times:
+  Start:    Sat Aug 27 18:54:31 2016 (1472334871)
+  Stop:     Sat Aug 27 18:54:50 2016 (1472334890)
+  Elapsed:  00:00:19 (19)
+  Reported: 10 553156000 10.553156
+ Success 401.bzip2 base test ratio=-0.00, runtime=10.553156, power=0.00w, temp=0.00 deg, humidity=0.00%
+Success: 1x401.bzip2
+Producing Raw Reports
+mach: default
+  ext: gcc43-64bit
+    size: test
+      set: int
+        format: raw -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/result/CINT2006.001.test.rsf
+Parsing flags for 401.bzip2 base: done
+Doing flag reduction: done
+        format: flags -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/result/CINT2006.001.test.flags.html
+        format: ASCII -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/result/CINT2006.001.test.txt
+        format: CSV -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/result/CINT2006.001.test.csv
+        format: HTML -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/result/CINT2006.001.test.html, /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/result/invalid.gif, /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/result/CINT2006.001.test.gif
+      set: fp
+
+The log for this run is in /home/gciotto/workspace/MO601-117136/Projeto-1/item-a/test1/result/CPU2006.001.log
+
+runspec finished at Sat Aug 27 18:54:52 2016; 24 total seconds elapsed
