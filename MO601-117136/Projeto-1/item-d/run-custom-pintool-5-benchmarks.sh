@@ -12,7 +12,7 @@
 
 SPEC_DIR=/home/gciotto/SPEC
 PIN_DIR=/home/gciotto/pin-3.0-76991-gcc-linux
-PIN_ROOT=${PIN_DIR}
+export PIN_ROOT=${PIN_DIR}
 PROJECT_DIR=${PWD}
 
 echo $PROJECT_DIR
@@ -33,7 +33,7 @@ source shrc
 # than 'inscount0' because it considers inserting the analysis callback function after each trace instead of
 # every intruction.
 echo "Compiling 'most-used-ins.cpp'"
-make dir obj-intel64/most-used-ins.so
+(cd ${PROJECT_DIR} && make dir obj-intel64/most-used-ins.so)
 
 
 benchmarks=( perlbench bzip2 gcc mcf gobmk)
