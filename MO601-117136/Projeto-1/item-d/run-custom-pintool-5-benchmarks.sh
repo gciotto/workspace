@@ -20,8 +20,8 @@ echo $PROJECT_DIR
 function runPintoolForBenchmark {
 		
 	mkdir ${PROJECT_DIR}/${1}	
-	
-	(cd ${PIN_DIR} && ./pin -t ${PROJECT_DIR}/obj-intel64/most-used-ins.so -o  ${PROJECT_DIR}/${1}/${1}.out -- runspec --config=project1d --iterations=1 --size=test --noreportable ${1})
+	runspec --config=project1d --action=build --tune=base ${1}
+	(cd ${PIN_DIR} && ./pin -t ${PROJECT_DIR}/obj-intel64/most-used-ins.so -o  ${PROJECT_DIR}/${1}/${1}.out -- runspec --config=project1d --iterations=1 --size=test --tune=base --noreportable ${1})
 
 }
 

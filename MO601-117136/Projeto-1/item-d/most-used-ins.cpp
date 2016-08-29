@@ -13,6 +13,8 @@
 
 #define MAX_ROUTINES_PER_THREAD 50
 
+#define STATIC_INS 1
+
 /* Output file handler */
 ofstream OutFile;
 
@@ -92,27 +94,59 @@ VOID incrementCounter(THREADID _thread_id, string _name) {
 
 }
 
-VOID saveRoutineObject(THREADID _thread_id, string _name) {
+VOID saveRoutineObjectStatic(THREADID _thread_id, string _name, UINT32 c) {
 
 
     Thread_info* _t_info = static_cast<Thread_info*> (PIN_GetThreadData(tls_key, _thread_id));
 
-	Routine_info* _new_routine = new Routine_info;
-
-
-	_new_routine->_name = _name;
 
 	if (_t_info) {
 
 		UINT8 hasFound = 0;
 		Routine_info* t;
 		for (t =  _t_info->_routine_head; t; t = t->_next)
-			if (!_new_routine->_name.compare(t->_name)) {
+			if (!t->_name.compare(_name)) {
 				hasFound = 1;
 				break;
 			}
 
 		if (!hasFound) {
+
+			Routine_info* _new_routine = new Routine_info;
+
+			_new_routine->_name = _name;
+
+			/* Adds new routine to the beginning of the linked list */
+			_new_routine->_next = _t_info->_routine_head;
+			_t_info->_routine_head = _new_routine;
+			_new_routine->_ins_count = c;
+		}
+		else t->_ins_count += c;
+	}
+
+}
+
+VOID saveRoutineObject(THREADID _thread_id, string _name) {
+
+
+    Thread_info* _t_info = static_cast<Thread_info*> (PIN_GetThreadData(tls_key, _thread_id));
+
+	if (_t_info) {
+
+		UINT8 hasFound = 0;
+		Routine_info* t;
+		for (t =  _t_info->_routine_head; t; t = t->_next)
+			if (!t->_name.compare(_name)) {
+				hasFound = 1;
+				break;
+			}
+
+		if (!hasFound) {
+
+			Routine_info* _new_routine = new Routine_info;
+
+			_new_routine->_name = _name;
+
 
 			/* Adds new routine to the beginning of the linked list */
 			_new_routine->_next = _t_info->_routine_head;
@@ -131,11 +165,18 @@ VOID initRoutineCallback(RTN rtn, VOID *v) {
 
 
     // RTN_NumIns 	(  	RTN  	rtn 	 )
-    RTN_InsertCall(rtn, IPOINT_BEFORE, (AFUNPTR)saveRoutineObject, IARG_THREAD_ID, IARG_PTR , _rtn_name, IARG_END);
 
-    //For each instruction of the routine
-    for (INS ins = RTN_InsHead(rtn); INS_Valid(ins); ins = INS_Next(ins))
-    	INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)incrementCounter, IARG_THREAD_ID, IARG_PTR, _rtn_name, IARG_END);
+    if (STATIC_INS)
+    	RTN_InsertCall(rtn, IPOINT_BEFORE, (AFUNPTR)saveRoutineObjectStatic, IARG_THREAD_ID, IARG_PTR , _rtn_name, IARG_UINT32, RTN_NumIns(rtn),  IARG_END);
+
+    else {
+
+		RTN_InsertCall(rtn, IPOINT_BEFORE, (AFUNPTR)saveRoutineObject, IARG_THREAD_ID, IARG_PTR , _rtn_name, IARG_END);
+
+		//For each instruction of the routine
+		for (INS ins = RTN_InsHead(rtn); INS_Valid(ins); ins = INS_Next(ins))
+			INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)incrementCounter, IARG_THREAD_ID, IARG_PTR, _rtn_name, IARG_END);
+    }
 
     RTN_Close(rtn);
 
@@ -156,7 +197,9 @@ VOID endTool(INT32 code, VOID *v)
     	OutFile << "Thread #" << decstr(i) << endl;
 
     	for (Routine_info* t = _t_info->_routine_head; t; t = t->_next)
-    		//if (t->_ins_count)
+    		if (STATIC_INS)
+    			OutFile << "|----- " << t->_name << " with " << t->_ins_count << " static instructions. " << endl;
+    		else
     			OutFile << "|----- " << t->_name << " with " << t->_ins_count << " executed instructions. " << endl;
     	OutFile.flush();
 

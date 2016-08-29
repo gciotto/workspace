@@ -1,0 +1,99 @@
+runspec v6674 started at Sun Aug 28 23:10:13 2016 on "gciotto"
+runspec is: /home/gciotto/SPEC/bin/runspec
+runspec: runspec --config=project1d --iterations=1 --size=test --tune=base --noreportable gobmk
+toolset: linux-suse10-amd64
+
+Locating benchmarks...found 31 benchmarks in 6 benchsets.
+Reading config file '/home/gciotto/SPEC/config/project1d.cfg'
+Running "specperl /home/gciotto/SPEC/Docs/sysinfo" to gather system information.
+Read 57 total lines from the sysinfo program.
+Read 56 usable lines from the sysinfo program.
+
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-gcc4x-flags-revA.xml)...
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-linux-platform-revA.xml)...
+Verbosity = 5
+Action    = validate
+Tune      = base
+Ext       = gcc43-64bit
+Size      = test
+Machine   = default
+benchmarks= 445.gobmk
+outputs   = asc,csv,html
+username  = gciotto
+Benchmarks selected: 445.gobmk
+Compiling Binaries
+
+------------------------------------------------------------------------
+  Up to date 445.gobmk base gcc43-64bit default
+
+
+Setting Up Run Directories
+  Setting up 445.gobmk test base gcc43-64bit default: created (run_base_test_gcc43-64bit.0000)
+
+-----------------------------------
+Running Benchmarks
+
+-----------------------------------
+  Running 445.gobmk test base gcc43-64bit default
+Commands to run:
+    -b numactl -m 0 --physcpubind=0
+    -C /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/run/run_base_test_gcc43-64bit.0000
+    -i capture.tst -o capture.out -e capture.err ../run_base_test_gcc43-64bit.0000/gobmk_base.gcc43-64bit --quiet --mode gtp (timed)
+    -i connect.tst -o connect.out -e connect.err ../run_base_test_gcc43-64bit.0000/gobmk_base.gcc43-64bit --quiet --mode gtp (timed)
+    -i connect_rot.tst -o connect_rot.out -e connect_rot.err ../run_base_test_gcc43-64bit.0000/gobmk_base.gcc43-64bit --quiet --mode gtp (timed)
+    -i connection.tst -o connection.out -e connection.err ../run_base_test_gcc43-64bit.0000/gobmk_base.gcc43-64bit --quiet --mode gtp (timed)
+    -i connection_rot.tst -o connection_rot.out -e connection_rot.err ../run_base_test_gcc43-64bit.0000/gobmk_base.gcc43-64bit --quiet --mode gtp (timed)
+    -i cutstone.tst -o cutstone.out -e cutstone.err ../run_base_test_gcc43-64bit.0000/gobmk_base.gcc43-64bit --quiet --mode gtp (timed)
+    -i dniwog.tst -o dniwog.out -e dniwog.err ../run_base_test_gcc43-64bit.0000/gobmk_base.gcc43-64bit --quiet --mode gtp (timed)
+Specinvoke: /home/gciotto/SPEC/bin/specinvoke -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/run/run_base_test_gcc43-64bit.0000 -e speccmds.err -o speccmds.stdout -f speccmds.cmd -C -q
+Issuing command '/home/gciotto/SPEC/bin/specinvoke -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/run/run_base_test_gcc43-64bit.0000 -e speccmds.err -o speccmds.stdout -f speccmds.cmd -C -q'
+/home/gciotto/SPEC/bin/specinvoke -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/run/run_base_test_gcc43-64bit.0000 -e speccmds.err -o speccmds.stdout -f speccmds.cmd -C -q
+Start command: Sun Aug 28 23:19:19 2016 (1472437159)
+Stop command: Sun Aug 28 23:19:52 2016 (1472437192)
+Elapsed time for command: 00:00:33 (33)
+Workload elapsed time (0:1) = 0.180959 seconds
+Workload elapsed time (0:2) = 1.374091 seconds
+Workload elapsed time (0:3) = 0.091222 seconds
+Workload elapsed time (0:4) = 5.731291 seconds
+Workload elapsed time (0:5) = 0.108589 seconds
+Workload elapsed time (0:6) = 0.364212 seconds
+Workload elapsed time (0:7) = 16.817587 seconds
+Copy 0 of 445.gobmk (base test) run 1 finished at Sun Aug 28 23:19:44 2016.  Total elapsed time: 24.667951
+comparing files in '/home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/run/run_base_test_gcc43-64bit.0000'
+comparing 'capture.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'connect.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'connect_rot.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'connection.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'connection_rot.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'cutstone.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'dniwog.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+Specinvoke: /home/gciotto/SPEC/bin/specinvoke -E -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/run/run_base_test_gcc43-64bit.0000 -c 1 -e compare.err -o compare.stdout -f compare.cmd
+Issuing command '/home/gciotto/SPEC/bin/specinvoke -E -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/run/run_base_test_gcc43-64bit.0000 -c 1 -e compare.err -o compare.stdout -f compare.cmd'
+/home/gciotto/SPEC/bin/specinvoke -E -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/run/run_base_test_gcc43-64bit.0000 -c 1 -e compare.err -o compare.stdout -f compare.cmd
+Start command: Sun Aug 28 23:20:04 2016 (1472437204)
+Stop command: Sun Aug 28 23:20:06 2016 (1472437206)
+Elapsed time for command: 00:00:02 (2)
+Benchmark Times:
+  Start:    Sun Aug 28 23:19:19 2016 (1472437159)
+  Stop:     Sun Aug 28 23:19:52 2016 (1472437192)
+  Elapsed:  00:00:33 (33)
+  Reported: 24 668158000 24.668158
+ Success 445.gobmk base test ratio=-0.00, runtime=24.668158, power=0.00w, temp=0.00 deg, humidity=0.00%
+Success: 1x445.gobmk
+Producing Raw Reports
+mach: default
+  ext: gcc43-64bit
+    size: test
+      set: int
+        format: raw -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.012.test.rsf
+Parsing flags for 445.gobmk base: done
+Doing flag reduction: done
+        format: flags -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.012.test.flags.html
+        format: ASCII -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.012.test.txt
+        format: CSV -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.012.test.csv
+        format: HTML -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.012.test.html, /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.012.test.gif
+      set: fp
+
+The log for this run is in /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CPU2006.012.log
+
+runspec finished at Sun Aug 28 23:21:31 2016; 678 total seconds elapsed

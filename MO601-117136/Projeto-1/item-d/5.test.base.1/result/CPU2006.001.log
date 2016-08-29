@@ -1,0 +1,479 @@
+runspec v6674 started at Sun Aug 28 22:20:28 2016 on "gciotto"
+runspec is: /home/gciotto/SPEC/bin/runspec
+runspec: runspec --config=project1d --action=build --tune=base perlbench
+toolset: linux-suse10-amd64
+
+Locating benchmarks...found 31 benchmarks in 6 benchsets.
+Reading config file '/home/gciotto/SPEC/config/project1d.cfg'
+Running "specperl /home/gciotto/SPEC/Docs/sysinfo" to gather system information.
+Read 57 total lines from the sysinfo program.
+Read 56 usable lines from the sysinfo program.
+
+Loading "http://www.spec.org/auto/cpu2006/current_version" for version check: OK
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-gcc4x-flags-revA.xml)...
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-linux-platform-revA.xml)...
+Verbosity = 5
+Action    = build
+Tune      = base
+Ext       = gcc43-64bit
+Size      = ref
+Machine   = default
+benchmarks= 400.perlbench
+outputs   = asc,csv,html
+username  = gciotto
+Benchmarks selected: 400.perlbench
+Compiling Binaries
+
+------------------------------------------------------------------------
+/home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/exe/perlbench_base.gcc43-64bit does not exist
+  Building 400.perlbench base gcc43-64bit default: (build_base_gcc43-64bit.0000)
+Wrote to makefile '/home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/build/build_base_gcc43-64bit.0000/Makefile.deps':
+
+# These are the build dependencies
+
+$(addsuffix $(OBJ), $(basename perl.c)): perl.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename universal.c)): universal.c perliol.h XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename perlhost.h)): perlhost.h iperlsys.h vmem.h vdir.h perlio.h
+$(addsuffix $(OBJ), $(basename doio.c)): doio.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename win32thread.c)): win32thread.c win32.h win32iop.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename locale.c)): locale.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename op.c)): op.c keywords.h XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename gv.c)): gv.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename av.c)): av.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename perly.c)): perly.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename mg.c)): mg.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename xsutils.c)): xsutils.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename proto.h)): proto.h pp_proto.h
+$(addsuffix $(OBJ), $(basename Base64.c)): Base64.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename perllib.c)): perllib.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename IO.c)): IO.c poll.h XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename iperlsys.h)): iperlsys.h perlio.h
+$(addsuffix $(OBJ), $(basename doop.c)): doop.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename toke.c)): toke.c keywords.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename Storable.c)): Storable.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename Dumper.c)): Dumper.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename perlapi.c)): perlapi.c perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename perlmain.c)): perlmain.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename hparser.c)): hparser.c hctype.h tokenpos.h
+$(addsuffix $(OBJ), $(basename HiRes.c)): HiRes.c const-c.inc XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename sv.c)): sv.c regcomp.h regnodes.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename perlio.c)): perlio.c perlsdio.h perliol.h XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename taint.c)): taint.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename pad.c)): pad.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename DynaLoader.c)): DynaLoader.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename util.c)): util.c specrand.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename regcomp.c)): regcomp.c INTERN.h regcomp.h regnodes.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename utf8.c)): utf8.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename miniperlmain.c)): miniperlmain.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename scope.c)): scope.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename XSUB.h)): XSUB.h perlapi.h
+$(addsuffix $(OBJ), $(basename attrs.c)): attrs.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename config.h)): config.h spec_config.h
+$(addsuffix $(OBJ), $(basename win32io.c)): win32io.c perliol.h XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename numeric.c)): numeric.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename MD5.c)): MD5.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename Cwd.c)): Cwd.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename pp_pack.c)): pp_pack.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename poll.c)): poll.c poll.h XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename pp_hot.c)): pp_hot.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename pp_sys.c)): pp_sys.c reentr.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename globals.c)): globals.c INTERN.h perlapi.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename run.c)): run.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename regexec.c)): regexec.c regcomp.h regnodes.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename Hostname.c)): Hostname.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename Peek.c)): Peek.c XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename win32sck.c)): win32sck.c win32iop.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename pp_ctl.c)): pp_ctl.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename hv.c)): hv.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename Parser.c)): Parser.c hparser.h parser-util.c hparser.c hctype.h tokenpos.h XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename pp_sort.c)): pp_sort.c specrand.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename deb.c)): deb.c EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename pp.c)): pp.c reentr.h keywords.h specrand.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename win32.c)): win32.c win32iop.h XSUB.h perlapi.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+$(addsuffix $(OBJ), $(basename dump.c)): dump.c regcomp.h regnodes.h EXTERN.h perl.h config.h spec_config.h embed.h handy.h iperlsys.h perlio.h regexp.h sv.h util.h form.h gv.h pad.h cv.h opnames.h op.h cop.h av.h hv.h mg.h scope.h warnings.h utf8.h perly.h thread.h pp.h proto.h pp_proto.h opcode.h embedvar.h intrpvar.h thrdvar.h perlvars.h patchlevel.h
+# End dependencies
+Wrote to makefile '/home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/build/build_base_gcc43-64bit.0000/Makefile.spec':
+TUNE=base
+EXT=gcc43-64bit
+NUMBER=400
+NAME=perlbench
+SOURCES= av.c deb.c doio.c doop.c dump.c globals.c gv.c hv.c locale.c mg.c \
+	 numeric.c op.c pad.c perl.c perlapi.c perlio.c perlmain.c perly.c pp.c \
+	 pp_ctl.c pp_hot.c pp_pack.c pp_sort.c pp_sys.c regcomp.c regexec.c run.c \
+	 scope.c sv.c taint.c toke.c universal.c utf8.c util.c xsutils.c Base64.c \
+	 Cwd.c Dumper.c HiRes.c IO.c Peek.c attrs.c poll.c stdio.c DynaLoader.c \
+	 MD5.c Storable.c Parser.c specrand.c Hostname.c Opcode.c
+EXEBASE=perlbench
+NEED_MATH=yes
+BENCHLANG=C
+ONESTEP=
+CONESTEP=
+
+BENCH_FLAGS      = -DPERL_CORE
+CC               = /usr/bin/gcc
+COPTIMIZE        = -fno-strict-aliasing
+CPORTABILITY     = -DSPEC_CPU_LINUX_X64
+CXX              = /usr/bin/g++
+CXXOPTIMIZE      = -fno-strict-aliasing
+FC               = /usr/bin/gfortran
+FOPTIMIZE        = -fno-strict-aliasing
+FPBASE           = yes
+OS               = unix
+PORTABILITY      = -DSPEC_CPU_LP64
+absolutely_no_locking = 0
+abstol           = 
+action           = build
+allow_extension_override = 0
+backup_config    = 1
+baseexe          = perlbench
+basepeak         = 1
+benchdir         = benchspec
+benchmark        = 400.perlbench
+binary           = 
+bindir           = exe
+build_in_build_dir = 1
+builddir         = build
+bundleaction     = 
+bundlename       = 
+calctol          = 0
+changedmd5       = 0
+check_integrity  = 1
+check_md5        = 1
+check_version    = 1
+clean_between_builds = no
+command_add_redirect = 0
+commanderrfile   = speccmds.err
+commandexe       = perlbench_base.gcc43-64bit
+commandfile      = speccmds.cmd
+commandoutfile   = speccmds.out
+commandstdoutfile = speccmds.stdout
+compareerrfile   = compare.err
+comparefile      = compare.cmd
+compareoutfile   = compare.out
+comparestdoutfile = compare.stdout
+compile_error    = 0
+compwhite        = 
+configdir        = config
+configpath       = /home/gciotto/SPEC/config/project1d.cfg
+copies           = 1
+datadir          = data
+default_size     = ref
+delay            = 0
+deletebinaries   = 0
+deletework       = 0
+dependent_workloads = 0
+difflines        = 10
+dirprot          = 511
+endian           = 12345678
+env_vars         = 0
+exitvals         = spec_exit
+expand_notes     = 0
+expid            = 
+ext              = gcc43-64bit
+fake             = 0
+feedback         = 1
+flag_url_base    = http://www.spec.org/auto/cpu2006/flags/
+floatcompare     = 
+help             = 0
+http_proxy       = 
+http_timeout     = 30
+hw_avail         = Dec-9999
+hw_cpu_char      = 
+hw_cpu_mhz       = 9999
+hw_cpu_name      = Intel Core i5-2500K
+hw_disk          = 159 GB  add more disk info here
+hw_fpu           = Integrated
+hw_memory001     = 7.785 GB fixme: If using DDR3, format is:
+hw_memory002     = 'N GB (M x N GB nRxn PCn-nnnnnR-n, ECC)'
+hw_model         = System Model Name
+hw_nchips        = 1
+hw_ncores        = number of cores enabled
+hw_ncoresperchip = number of cores manufactured into each chip
+hw_ncpuorder     = 1,2 chips
+hw_nthreadspercore = number of threads enabled per core
+hw_ocache        = None
+hw_other         = None
+hw_pcache        = 9999 KB I + 9999 KB D on chip per core
+hw_scache        = 9999 KB I+D on chip per core
+hw_tcache        = 9999 MB I+D on chip per chip
+hw_vendor        = System Vendor
+ignore_errors    = yes
+ignore_sigint    = 0
+ignorecase       = 
+info_wrap_columns = 50
+inputdir         = input
+iteration        = -1
+iterations       = 3
+keeptmp          = 0
+license_num      = 0
+line_width       = 0
+locking          = 1
+log              = CPU2006
+log_line_width   = 0
+log_timestamp    = 0
+logname          = /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CPU2006.001.log
+lognum           = 001
+mach             = default
+mail_reports     = all
+mailcompress     = 0
+mailmethod       = smtp
+mailport         = 25
+mailserver       = 127.0.0.1
+mailto           = 
+make             = specmake
+make_no_clobber  = 0
+makeflags        = 
+max_active_compares = 0
+mean_anyway      = 0
+min_report_runs  = 3
+minimize_builddirs = 0
+minimize_rundirs = 0
+name             = perlbench
+need_math        = yes
+no_input_handler = close
+no_monitor       = 
+note_preenv      = 0
+notes_os_000     = 'ulimit -s unlimited' was used to set environment stack size
+notes_plat_sysinfo_000 =  Sysinfo program /home/gciotto/SPEC/Docs/sysinfo
+notes_plat_sysinfo_005 =  $Rev: 6775 $ $Date:: 2011-08-16 \#$ 8787f7622badcf24e01c368b1db4377c
+notes_plat_sysinfo_010 =  running on gciotto Sun Aug 28 22:20:31 2016
+notes_plat_sysinfo_015 = 
+notes_plat_sysinfo_020 =  This section contains SUT (System Under Test) info as seen by
+notes_plat_sysinfo_025 =  some common utilities.  To remove or add to this section, see:
+notes_plat_sysinfo_030 =    http://www.spec.org/cpu2006/Docs/config.html\#sysinfo
+notes_plat_sysinfo_035 = 
+notes_plat_sysinfo_040 =  From /proc/cpuinfo
+notes_plat_sysinfo_045 =     model name : Intel(R) Core(TM) i5-2500K CPU @ 3.30GHz
+notes_plat_sysinfo_050 =        1 "physical id"s (chips)
+notes_plat_sysinfo_055 =        4 "processors"
+notes_plat_sysinfo_060 =     cores, siblings (Caution: counting these is hw and system dependent.  The
+notes_plat_sysinfo_065 =     following excerpts from /proc/cpuinfo might not be reliable.  Use with
+notes_plat_sysinfo_070 =     caution.)
+notes_plat_sysinfo_075 =        cpu cores : 4
+notes_plat_sysinfo_080 =        siblings  : 4
+notes_plat_sysinfo_085 =        physical 0: cores 0 1 2 3
+notes_plat_sysinfo_090 =     cache size : 6144 KB
+notes_plat_sysinfo_095 = 
+notes_plat_sysinfo_100 =  From /proc/meminfo
+notes_plat_sysinfo_105 =     MemTotal:        8162908 kB
+notes_plat_sysinfo_110 =     HugePages_Total:       0
+notes_plat_sysinfo_115 =     Hugepagesize:       2048 kB
+notes_plat_sysinfo_120 = 
+notes_plat_sysinfo_125 =  From /etc/*release* /etc/*version*
+notes_plat_sysinfo_130 =     os-release:
+notes_plat_sysinfo_135 =        NAME="Arch Linux"
+notes_plat_sysinfo_140 =        ID=arch
+notes_plat_sysinfo_145 =        PRETTY_NAME="Arch Linux"
+notes_plat_sysinfo_150 =        ANSI_COLOR="0;36"
+notes_plat_sysinfo_155 =        HOME_URL="https://www.archlinux.org/"
+notes_plat_sysinfo_160 =        SUPPORT_URL="https://bbs.archlinux.org/"
+notes_plat_sysinfo_165 =        BUG_REPORT_URL="https://bugs.archlinux.org/"
+notes_plat_sysinfo_170 = 
+notes_plat_sysinfo_175 = 
+notes_plat_sysinfo_180 =  uname -a:
+notes_plat_sysinfo_185 =     Linux gciotto 4.6.4-1-ARCH \#1 SMP PREEMPT Mon Jul 11 19:12:32 CEST 2016
+notes_plat_sysinfo_190 =     x86_64 GNU/Linux
+notes_plat_sysinfo_195 = 
+notes_plat_sysinfo_200 = 
+notes_plat_sysinfo_205 =  SPEC is set to: /home/gciotto/SPEC
+notes_plat_sysinfo_210 =     Filesystem     Type  Size  Used Avail Use% Mounted on
+notes_plat_sysinfo_215 =     /dev/sda6      ext4  159G  137G   15G  91% /home
+notes_plat_sysinfo_220 = 
+notes_plat_sysinfo_225 =  (End of data from sysinfo program)
+notes_submit_000 = 'numactl' was used to bind copies to the cores.
+notes_submit_005 = See the configuration file for details.
+notes_wrap_columns = 0
+notes_wrap_indent =   
+num              = 400
+obiwan           = 
+os_exe_ext       = 
+output           = asc
+output_format    = asc,csv,html
+output_root      = /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1
+outputdir        = output
+parallel_setup   = 1
+parallel_setup_prefork = 
+parallel_setup_type = fork
+parallel_test    = 0
+parallel_test_submit = 0
+parallel_test_workloads = 
+path             = /home/gciotto/SPEC/benchspec/CPU2006/400.perlbench
+plain_train      = 1
+power            = 0
+preenv           = 1
+prefix           = 
+prepared_by      = gciotto  (is never output, only tags rawfile)
+ranks            = 1
+rate             = 0
+realuser         = your name here
+rebuild          = 0
+reftime          = reftime
+reltol           = 
+reportable       = yes
+resultdir        = result
+review           = 0
+run              = all
+rundir           = run
+runspec          = /home/gciotto/SPEC/bin/runspec --config=project1d --action=build --tune=base perlbench
+safe_eval        = 1
+section_specifier_fatal = 1
+sendmail         = /usr/sbin/sendmail
+setpgrp_enabled  = 1
+setprocgroup     = 1
+setup_error      = 0
+shrate           = 0
+sigint           = 2
+size             = ref
+size_class       = ref
+skipabstol       = 
+skipobiwan       = 
+skipreltol       = 
+skiptol          = 
+smarttune        = base
+specdiff         = specdiff
+specmake         = Makefile.YYYtArGeTYYYspec
+specrun          = specinvoke
+speed            = 0
+srcalt           = 
+srcdir           = src
+srcsource        = /home/gciotto/SPEC/benchspec/CPU2006/400.perlbench/src
+stagger          = 10
+strict_rundir_verify = 1
+submit_default   = $BIND $command
+sw_avail         = May-2010
+sw_base_ptrsize  = 64-bit
+sw_compiler      = gcc, g++ & gfortran 4.3.4
+sw_file          = ext4
+sw_os001         = NAME="Arch Linux"
+sw_os002         = 4.6.4-1-ARCH
+sw_other         = None
+sw_peak_ptrsize  = 64-bit
+sw_state         = Run level N (add definition here)
+sysinfo_program  = specperl /home/gciotto/SPEC/Docs/sysinfo
+table            = 1
+teeout           = yes
+teerunout        = yes
+test_date        = Aug-2016
+test_sponsor     = Test Sponsor (Optional, defaults to hw_vendor)
+tester           = (Optional, defaults to hw_vendor)
+top              = /home/gciotto/SPEC
+train_with       = train
+tune             = base
+uid              = 1000
+unbuffer         = 1
+update-flags     = 0
+use_submit_for_speed = 0
+username         = gciotto
+vendor           = anon
+vendor_makefiles = 0
+verbose          = 5
+version          = 0
+version_url      = http://www.spec.org/auto/cpu2006/current_version
+worklist         = list
+OUTPUT_RMFILES   = diffmail.2.550.15.24.23.100.out perfect.b.3.out scrabbl.out splitmail.535.13.25.24.1091.out suns.out validate
+  Compile for '400.perlbench' started at: Sun Aug 28 22:20:33 2016 (1472433633)
+Issuing make.clean command 'specmake clean'
+specmake clean 2> make.clean.err | tee make.clean.out
+Start make.clean command: Sun Aug 28 22:20:33 2016 (1472433633)
+rm -rf *.o  diffmail.2.550.15.24.23.100.out perfect.b.3.out scrabbl.out splitmail.535.13.25.24.1091.out suns.out validate
+find . \( -name \*.o -o -name '*.fppized.f*' -o -name '*.i' -o -name '*.mod' \) -print | xargs rm -rf
+rm -rf perlbench
+rm -rf perlbench.exe
+rm -rf core
+rm -rf 
+Stop make.clean command: Sun Aug 28 22:20:33 2016 (1472433633)
+Elapsed time for make.clean command: 00:00:00 (0)
+Issuing make command 'specmake build'
+specmake build 2> make.err | tee make.out
+Start make command: Sun Aug 28 22:20:33 2016 (1472433633)
+/usr/bin/gcc -c -o av.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        av.c
+/usr/bin/gcc -c -o deb.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        deb.c
+/usr/bin/gcc -c -o doio.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        doio.c
+/usr/bin/gcc -c -o doop.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        doop.c
+/usr/bin/gcc -c -o dump.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        dump.c
+/usr/bin/gcc -c -o globals.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        globals.c
+/usr/bin/gcc -c -o gv.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        gv.c
+/usr/bin/gcc -c -o hv.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        hv.c
+/usr/bin/gcc -c -o locale.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        locale.c
+/usr/bin/gcc -c -o mg.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        mg.c
+/usr/bin/gcc -c -o numeric.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        numeric.c
+/usr/bin/gcc -c -o op.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        op.c
+/usr/bin/gcc -c -o pad.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        pad.c
+/usr/bin/gcc -c -o perl.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        perl.c
+/usr/bin/gcc -c -o perlapi.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        perlapi.c
+/usr/bin/gcc -c -o perlio.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        perlio.c
+/usr/bin/gcc -c -o perlmain.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        perlmain.c
+/usr/bin/gcc -c -o perly.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        perly.c
+/usr/bin/gcc -c -o pp.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        pp.c
+/usr/bin/gcc -c -o pp_ctl.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        pp_ctl.c
+/usr/bin/gcc -c -o pp_hot.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        pp_hot.c
+/usr/bin/gcc -c -o pp_pack.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        pp_pack.c
+/usr/bin/gcc -c -o pp_sort.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        pp_sort.c
+/usr/bin/gcc -c -o pp_sys.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        pp_sys.c
+/usr/bin/gcc -c -o regcomp.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        regcomp.c
+/usr/bin/gcc -c -o regexec.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        regexec.c
+/usr/bin/gcc -c -o run.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        run.c
+/usr/bin/gcc -c -o scope.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        scope.c
+/usr/bin/gcc -c -o sv.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        sv.c
+/usr/bin/gcc -c -o taint.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        taint.c
+/usr/bin/gcc -c -o toke.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        toke.c
+/usr/bin/gcc -c -o universal.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        universal.c
+/usr/bin/gcc -c -o utf8.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        utf8.c
+/usr/bin/gcc -c -o util.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        util.c
+/usr/bin/gcc -c -o xsutils.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        xsutils.c
+/usr/bin/gcc -c -o Base64.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        Base64.c
+/usr/bin/gcc -c -o Cwd.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        Cwd.c
+/usr/bin/gcc -c -o Dumper.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        Dumper.c
+/usr/bin/gcc -c -o HiRes.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        HiRes.c
+/usr/bin/gcc -c -o IO.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        IO.c
+/usr/bin/gcc -c -o Peek.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        Peek.c
+/usr/bin/gcc -c -o attrs.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        attrs.c
+/usr/bin/gcc -c -o poll.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        poll.c
+/usr/bin/gcc -c -o stdio.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        stdio.c
+/usr/bin/gcc -c -o DynaLoader.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        DynaLoader.c
+/usr/bin/gcc -c -o MD5.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        MD5.c
+/usr/bin/gcc -c -o Storable.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        Storable.c
+/usr/bin/gcc -c -o Parser.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        Parser.c
+/usr/bin/gcc -c -o specrand.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        specrand.c
+/usr/bin/gcc -c -o Hostname.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        Hostname.c
+/usr/bin/gcc -c -o Opcode.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        Opcode.c
+/usr/bin/gcc   -fno-strict-aliasing  -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64       av.o deb.o doio.o doop.o dump.o globals.o gv.o hv.o locale.o mg.o numeric.o op.o pad.o perl.o perlapi.o perlio.o perlmain.o perly.o pp.o pp_ctl.o pp_hot.o pp_pack.o pp_sort.o pp_sys.o regcomp.o regexec.o run.o scope.o sv.o taint.o toke.o universal.o utf8.o util.o xsutils.o Base64.o Cwd.o Dumper.o HiRes.o IO.o Peek.o attrs.o poll.o stdio.o DynaLoader.o MD5.o Storable.o Parser.o specrand.o Hostname.o Opcode.o             -lm        -o perlbench
+Stop make command: Sun Aug 28 22:20:43 2016 (1472433643)
+Elapsed time for make command: 00:00:10 (10)
+Issuing options command 'specmake options'
+specmake options 2> options.err | tee options.out
+Start options command: Sun Aug 28 22:20:43 2016 (1472433643)
+COMP: /usr/bin/gcc -c -o options.o -DSPEC_CPU -DNDEBUG -DPERL_CORE   -fno-strict-aliasing       -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64        <source>
+C: CC="/usr/bin/gcc"
+C: COBJOPT="-c -o options"
+P: CPUFLAGS="-DSPEC_CPU -DNDEBUG"
+P: BENCH_FLAGS="-DPERL_CORE"
+P: BENCH_CFLAGS=""
+O: OPTIMIZE=""
+O: COPTIMIZE="-fno-strict-aliasing"
+P: PORTABILITY="-DSPEC_CPU_LP64"
+P: CPORTABILITY="-DSPEC_CPU_LINUX_X64"
+O: EXTRA_CFLAGS=""
+O: EXTRA_OPTIMIZE=""
+O: EXTRA_COPTIMIZE=""
+P: EXTRA_PORTABILITY=""
+P: EXTRA_CPORTABILITY=""
+LINK: /usr/bin/gcc   -fno-strict-aliasing  -DSPEC_CPU_LP64 -DSPEC_CPU_LINUX_X64       <objects>   -lm        -o options
+C: LD="/usr/bin/gcc"
+O: COPTIMIZE="-fno-strict-aliasing"
+P: PORTABILITY="-DSPEC_CPU_LP64"
+P: CPORTABILITY="-DSPEC_CPU_LINUX_X64"
+C: MATH_LIBS="-lm"
+C: LDOUT="-o options"
+Stop options command: Sun Aug 28 22:20:43 2016 (1472433643)
+Elapsed time for options command: 00:00:00 (0)
+  Compile for '400.perlbench' ended at: Sun Aug 28 22:20:43 2016 (1472433643)
+  Elapsed compile for '400.perlbench': 00:00:10 (10)
+
+Build successes: 400.perlbench(base)
+
+Build Complete
+
+The log for this run is in /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CPU2006.001.log
+
+runspec finished at Sun Aug 28 22:20:43 2016; 15 total seconds elapsed

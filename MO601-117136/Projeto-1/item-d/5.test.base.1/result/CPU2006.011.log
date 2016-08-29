@@ -1,0 +1,447 @@
+runspec v6674 started at Sun Aug 28 23:08:17 2016 on "gciotto"
+runspec is: /home/gciotto/SPEC/bin/runspec
+runspec: runspec --config=project1d --action=build --tune=base gobmk
+toolset: linux-suse10-amd64
+
+Locating benchmarks...found 31 benchmarks in 6 benchsets.
+Reading config file '/home/gciotto/SPEC/config/project1d.cfg'
+Running "specperl /home/gciotto/SPEC/Docs/sysinfo" to gather system information.
+Read 57 total lines from the sysinfo program.
+Read 56 usable lines from the sysinfo program.
+
+Loading "http://www.spec.org/auto/cpu2006/current_version" for version check: OK
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-gcc4x-flags-revA.xml)...
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-linux-platform-revA.xml)...
+Verbosity = 5
+Action    = build
+Tune      = base
+Ext       = gcc43-64bit
+Size      = ref
+Machine   = default
+benchmarks= 445.gobmk
+outputs   = asc,csv,html
+username  = gciotto
+Benchmarks selected: 445.gobmk
+Compiling Binaries
+
+------------------------------------------------------------------------
+/home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/exe/gobmk_base.gcc43-64bit does not exist
+  Building 445.gobmk base gcc43-64bit default: (build_base_gcc43-64bit.0000)
+Wrote to makefile '/home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/build/build_base_gcc43-64bit.0000/Makefile.deps':
+
+# These are the build dependencies
+
+# End dependencies
+Wrote to makefile '/home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/445.gobmk/build/build_base_gcc43-64bit.0000/Makefile.spec':
+TUNE=base
+EXT=gcc43-64bit
+NUMBER=445
+NAME=gobmk
+SOURCES= sgf/sgf_utils.c sgf/sgftree.c sgf/sgfnode.c engine/aftermath.c \
+	 engine/board.c engine/cache.c engine/combination.c engine/dragon.c \
+	 engine/filllib.c engine/fuseki.c engine/genmove.c engine/hash.c \
+	 engine/influence.c engine/interface.c engine/matchpat.c \
+	 engine/move_reasons.c engine/movelist.c engine/optics.c engine/owl.c \
+	 engine/printutils.c engine/readconnect.c engine/reading.c engine/score.c \
+	 engine/semeai.c engine/sgfdecide.c engine/sgffile.c engine/shapes.c \
+	 engine/showbord.c engine/utils.c engine/value_moves.c engine/worm.c \
+	 engine/globals.c engine/persistent.c engine/handicap.c engine/surround.c \
+	 interface/gtp.c interface/main.c interface/play_ascii.c \
+	 interface/play_gtp.c interface/play_solo.c interface/play_test.c \
+	 patterns/connections.c patterns/dfa.c patterns/helpers.c \
+	 patterns/transform.c patterns/owl_attackpat.c patterns/conn.c \
+	 patterns/patterns.c patterns/apatterns.c patterns/dpatterns.c \
+	 patterns/owl_vital_apat.c patterns/eyes.c patterns/influence.c \
+	 patterns/barriers.c patterns/endgame.c patterns/aa_attackpat.c \
+	 patterns/owl_defendpat.c patterns/fusekipat.c patterns/fuseki9.c \
+	 patterns/fuseki13.c patterns/fuseki19.c patterns/josekidb.c \
+	 patterns/handipat.c utils/getopt.c utils/getopt1.c utils/gg_utils.c \
+	 utils/random.c
+EXEBASE=gobmk
+NEED_MATH=yes
+BENCHLANG=C
+ONESTEP=
+CONESTEP=
+
+BENCH_FLAGS      = -DHAVE_CONFIG_H -I. -I.. -I../include -I./include
+CC               = /usr/bin/gcc
+COPTIMIZE        = -fno-strict-aliasing
+CXX              = /usr/bin/g++
+CXXOPTIMIZE      = -fno-strict-aliasing
+FC               = /usr/bin/gfortran
+FOPTIMIZE        = -fno-strict-aliasing
+FPBASE           = yes
+OS               = unix
+PORTABILITY      = -DSPEC_CPU_LP64
+absolutely_no_locking = 0
+abstol           = 
+action           = build
+allow_extension_override = 0
+backup_config    = 1
+baseexe          = gobmk
+basepeak         = 1
+benchdir         = benchspec
+benchmark        = 445.gobmk
+binary           = 
+bindir           = exe
+build_in_build_dir = 1
+builddir         = build
+bundleaction     = 
+bundlename       = 
+calctol          = 0
+changedmd5       = 0
+check_integrity  = 1
+check_md5        = 1
+check_version    = 1
+clean_between_builds = no
+command_add_redirect = 0
+commanderrfile   = speccmds.err
+commandexe       = gobmk_base.gcc43-64bit
+commandfile      = speccmds.cmd
+commandoutfile   = speccmds.out
+commandstdoutfile = speccmds.stdout
+compareerrfile   = compare.err
+comparefile      = compare.cmd
+compareoutfile   = compare.out
+comparestdoutfile = compare.stdout
+compile_error    = 0
+compwhite        = 
+configdir        = config
+configpath       = /home/gciotto/SPEC/config/project1d.cfg
+copies           = 1
+datadir          = data
+default_size     = ref
+delay            = 0
+deletebinaries   = 0
+deletework       = 0
+dependent_workloads = 0
+difflines        = 10
+dirprot          = 511
+endian           = 12345678
+env_vars         = 0
+exitvals         = spec_exit
+expand_notes     = 0
+expid            = 
+ext              = gcc43-64bit
+fake             = 0
+feedback         = 1
+flag_url_base    = http://www.spec.org/auto/cpu2006/flags/
+floatcompare     = 
+help             = 0
+http_proxy       = 
+http_timeout     = 30
+hw_avail         = Dec-9999
+hw_cpu_char      = 
+hw_cpu_mhz       = 9999
+hw_cpu_name      = Intel Core i5-2500K
+hw_disk          = 159 GB  add more disk info here
+hw_fpu           = Integrated
+hw_memory001     = 7.785 GB fixme: If using DDR3, format is:
+hw_memory002     = 'N GB (M x N GB nRxn PCn-nnnnnR-n, ECC)'
+hw_model         = System Model Name
+hw_nchips        = 1
+hw_ncores        = number of cores enabled
+hw_ncoresperchip = number of cores manufactured into each chip
+hw_ncpuorder     = 1,2 chips
+hw_nthreadspercore = number of threads enabled per core
+hw_ocache        = None
+hw_other         = None
+hw_pcache        = 9999 KB I + 9999 KB D on chip per core
+hw_scache        = 9999 KB I+D on chip per core
+hw_tcache        = 9999 MB I+D on chip per chip
+hw_vendor        = System Vendor
+ignore_errors    = yes
+ignore_sigint    = 0
+ignorecase       = 
+info_wrap_columns = 50
+inputdir         = input
+iteration        = -1
+iterations       = 3
+keeptmp          = 0
+license_num      = 0
+line_width       = 0
+locking          = 1
+log              = CPU2006
+log_line_width   = 0
+log_timestamp    = 0
+logname          = /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CPU2006.011.log
+lognum           = 011
+mach             = default
+mail_reports     = all
+mailcompress     = 0
+mailmethod       = smtp
+mailport         = 25
+mailserver       = 127.0.0.1
+mailto           = 
+make             = specmake
+make_no_clobber  = 0
+makeflags        = 
+max_active_compares = 0
+mean_anyway      = 0
+min_report_runs  = 3
+minimize_builddirs = 0
+minimize_rundirs = 0
+name             = gobmk
+need_math        = yes
+no_input_handler = close
+no_monitor       = 
+note_preenv      = 0
+notes_os_000     = 'ulimit -s unlimited' was used to set environment stack size
+notes_plat_sysinfo_000 =  Sysinfo program /home/gciotto/SPEC/Docs/sysinfo
+notes_plat_sysinfo_005 =  $Rev: 6775 $ $Date:: 2011-08-16 \#$ 8787f7622badcf24e01c368b1db4377c
+notes_plat_sysinfo_010 =  running on gciotto Sun Aug 28 23:08:19 2016
+notes_plat_sysinfo_015 = 
+notes_plat_sysinfo_020 =  This section contains SUT (System Under Test) info as seen by
+notes_plat_sysinfo_025 =  some common utilities.  To remove or add to this section, see:
+notes_plat_sysinfo_030 =    http://www.spec.org/cpu2006/Docs/config.html\#sysinfo
+notes_plat_sysinfo_035 = 
+notes_plat_sysinfo_040 =  From /proc/cpuinfo
+notes_plat_sysinfo_045 =     model name : Intel(R) Core(TM) i5-2500K CPU @ 3.30GHz
+notes_plat_sysinfo_050 =        1 "physical id"s (chips)
+notes_plat_sysinfo_055 =        4 "processors"
+notes_plat_sysinfo_060 =     cores, siblings (Caution: counting these is hw and system dependent.  The
+notes_plat_sysinfo_065 =     following excerpts from /proc/cpuinfo might not be reliable.  Use with
+notes_plat_sysinfo_070 =     caution.)
+notes_plat_sysinfo_075 =        cpu cores : 4
+notes_plat_sysinfo_080 =        siblings  : 4
+notes_plat_sysinfo_085 =        physical 0: cores 0 1 2 3
+notes_plat_sysinfo_090 =     cache size : 6144 KB
+notes_plat_sysinfo_095 = 
+notes_plat_sysinfo_100 =  From /proc/meminfo
+notes_plat_sysinfo_105 =     MemTotal:        8162908 kB
+notes_plat_sysinfo_110 =     HugePages_Total:       0
+notes_plat_sysinfo_115 =     Hugepagesize:       2048 kB
+notes_plat_sysinfo_120 = 
+notes_plat_sysinfo_125 =  From /etc/*release* /etc/*version*
+notes_plat_sysinfo_130 =     os-release:
+notes_plat_sysinfo_135 =        NAME="Arch Linux"
+notes_plat_sysinfo_140 =        ID=arch
+notes_plat_sysinfo_145 =        PRETTY_NAME="Arch Linux"
+notes_plat_sysinfo_150 =        ANSI_COLOR="0;36"
+notes_plat_sysinfo_155 =        HOME_URL="https://www.archlinux.org/"
+notes_plat_sysinfo_160 =        SUPPORT_URL="https://bbs.archlinux.org/"
+notes_plat_sysinfo_165 =        BUG_REPORT_URL="https://bugs.archlinux.org/"
+notes_plat_sysinfo_170 = 
+notes_plat_sysinfo_175 = 
+notes_plat_sysinfo_180 =  uname -a:
+notes_plat_sysinfo_185 =     Linux gciotto 4.6.4-1-ARCH \#1 SMP PREEMPT Mon Jul 11 19:12:32 CEST 2016
+notes_plat_sysinfo_190 =     x86_64 GNU/Linux
+notes_plat_sysinfo_195 = 
+notes_plat_sysinfo_200 = 
+notes_plat_sysinfo_205 =  SPEC is set to: /home/gciotto/SPEC
+notes_plat_sysinfo_210 =     Filesystem     Type  Size  Used Avail Use% Mounted on
+notes_plat_sysinfo_215 =     /dev/sda6      ext4  159G  137G   15G  91% /home
+notes_plat_sysinfo_220 = 
+notes_plat_sysinfo_225 =  (End of data from sysinfo program)
+notes_submit_000 = 'numactl' was used to bind copies to the cores.
+notes_submit_005 = See the configuration file for details.
+notes_wrap_columns = 0
+notes_wrap_indent =   
+num              = 445
+obiwan           = 
+os_exe_ext       = 
+output           = asc
+output_format    = asc,csv,html
+output_root      = /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1
+outputdir        = output
+parallel_setup   = 1
+parallel_setup_prefork = 
+parallel_setup_type = fork
+parallel_test    = 0
+parallel_test_submit = 0
+parallel_test_workloads = 
+path             = /home/gciotto/SPEC/benchspec/CPU2006/445.gobmk
+plain_train      = 1
+power            = 0
+preenv           = 1
+prefix           = 
+prepared_by      = gciotto  (is never output, only tags rawfile)
+ranks            = 1
+rate             = 0
+realuser         = your name here
+rebuild          = 0
+reftime          = reftime
+reltol           = 
+reportable       = yes
+resultdir        = result
+review           = 0
+run              = all
+rundir           = run
+runspec          = /home/gciotto/SPEC/bin/runspec --config=project1d --action=build --tune=base gobmk
+safe_eval        = 1
+section_specifier_fatal = 1
+sendmail         = /usr/sbin/sendmail
+setpgrp_enabled  = 1
+setprocgroup     = 1
+setup_error      = 0
+shrate           = 0
+sigint           = 2
+size             = ref
+size_class       = ref
+skipabstol       = 
+skipobiwan       = 
+skipreltol       = 
+skiptol          = 
+smarttune        = base
+specdiff         = specdiff
+specmake         = Makefile.YYYtArGeTYYYspec
+specrun          = specinvoke
+speed            = 0
+srcalt           = 
+srcdir           = src
+srcsource        = /home/gciotto/SPEC/benchspec/CPU2006/445.gobmk/src
+stagger          = 10
+strict_rundir_verify = 1
+submit_default   = $BIND $command
+sw_avail         = May-2010
+sw_base_ptrsize  = 64-bit
+sw_compiler      = gcc, g++ & gfortran 4.3.4
+sw_file          = ext4
+sw_os001         = NAME="Arch Linux"
+sw_os002         = 4.6.4-1-ARCH
+sw_other         = None
+sw_peak_ptrsize  = 64-bit
+sw_state         = Run level N (add definition here)
+sysinfo_program  = specperl /home/gciotto/SPEC/Docs/sysinfo
+table            = 1
+teeout           = yes
+teerunout        = yes
+test_date        = Aug-2016
+test_sponsor     = Test Sponsor (Optional, defaults to hw_vendor)
+tester           = (Optional, defaults to hw_vendor)
+top              = /home/gciotto/SPEC
+train_with       = train
+tune             = base
+uid              = 1000
+unbuffer         = 1
+update-flags     = 0
+use_submit_for_speed = 0
+username         = gciotto
+vendor           = anon
+vendor_makefiles = 0
+verbose          = 5
+version          = 0
+version_url      = http://www.spec.org/auto/cpu2006/current_version
+worklist         = list
+OUTPUT_RMFILES   = arb.out arend.out arion.out atari_atari.out blunder.out buzco.out nicklas2.out nicklas4.out
+  Compile for '445.gobmk' started at: Sun Aug 28 23:08:19 2016 (1472436499)
+Issuing make.clean command 'specmake clean'
+specmake clean 2> make.clean.err | tee make.clean.out
+Start make.clean command: Sun Aug 28 23:08:19 2016 (1472436499)
+rm -rf *.o  arb.out arend.out arion.out atari_atari.out blunder.out buzco.out nicklas2.out nicklas4.out
+find . \( -name \*.o -o -name '*.fppized.f*' -o -name '*.i' -o -name '*.mod' \) -print | xargs rm -rf
+rm -rf gobmk
+rm -rf gobmk.exe
+rm -rf core
+rm -rf 
+Stop make.clean command: Sun Aug 28 23:08:20 2016 (1472436500)
+Elapsed time for make.clean command: 00:00:01 (1)
+Issuing make command 'specmake build'
+specmake build 2> make.err | tee make.out
+Start make command: Sun Aug 28 23:08:20 2016 (1472436500)
+/usr/bin/gcc -c -o sgf/sgf_utils.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         sgf/sgf_utils.c
+/usr/bin/gcc -c -o sgf/sgftree.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         sgf/sgftree.c
+/usr/bin/gcc -c -o sgf/sgfnode.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         sgf/sgfnode.c
+/usr/bin/gcc -c -o engine/aftermath.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/aftermath.c
+/usr/bin/gcc -c -o engine/board.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/board.c
+/usr/bin/gcc -c -o engine/cache.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/cache.c
+/usr/bin/gcc -c -o engine/combination.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/combination.c
+/usr/bin/gcc -c -o engine/dragon.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/dragon.c
+/usr/bin/gcc -c -o engine/filllib.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/filllib.c
+/usr/bin/gcc -c -o engine/fuseki.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/fuseki.c
+/usr/bin/gcc -c -o engine/genmove.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/genmove.c
+/usr/bin/gcc -c -o engine/hash.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/hash.c
+/usr/bin/gcc -c -o engine/influence.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/influence.c
+/usr/bin/gcc -c -o engine/interface.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/interface.c
+/usr/bin/gcc -c -o engine/matchpat.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/matchpat.c
+/usr/bin/gcc -c -o engine/move_reasons.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/move_reasons.c
+/usr/bin/gcc -c -o engine/movelist.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/movelist.c
+/usr/bin/gcc -c -o engine/optics.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/optics.c
+/usr/bin/gcc -c -o engine/owl.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/owl.c
+/usr/bin/gcc -c -o engine/printutils.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/printutils.c
+/usr/bin/gcc -c -o engine/readconnect.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/readconnect.c
+/usr/bin/gcc -c -o engine/reading.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/reading.c
+/usr/bin/gcc -c -o engine/score.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/score.c
+/usr/bin/gcc -c -o engine/semeai.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/semeai.c
+/usr/bin/gcc -c -o engine/sgfdecide.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/sgfdecide.c
+/usr/bin/gcc -c -o engine/sgffile.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/sgffile.c
+/usr/bin/gcc -c -o engine/shapes.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/shapes.c
+/usr/bin/gcc -c -o engine/showbord.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/showbord.c
+/usr/bin/gcc -c -o engine/utils.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/utils.c
+/usr/bin/gcc -c -o engine/value_moves.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/value_moves.c
+/usr/bin/gcc -c -o engine/worm.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/worm.c
+/usr/bin/gcc -c -o engine/globals.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/globals.c
+/usr/bin/gcc -c -o engine/persistent.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/persistent.c
+/usr/bin/gcc -c -o engine/handicap.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/handicap.c
+/usr/bin/gcc -c -o engine/surround.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         engine/surround.c
+/usr/bin/gcc -c -o interface/gtp.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         interface/gtp.c
+/usr/bin/gcc -c -o interface/main.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         interface/main.c
+/usr/bin/gcc -c -o interface/play_ascii.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         interface/play_ascii.c
+/usr/bin/gcc -c -o interface/play_gtp.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         interface/play_gtp.c
+/usr/bin/gcc -c -o interface/play_solo.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         interface/play_solo.c
+/usr/bin/gcc -c -o interface/play_test.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         interface/play_test.c
+/usr/bin/gcc -c -o patterns/connections.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/connections.c
+/usr/bin/gcc -c -o patterns/dfa.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/dfa.c
+/usr/bin/gcc -c -o patterns/helpers.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/helpers.c
+/usr/bin/gcc -c -o patterns/transform.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/transform.c
+/usr/bin/gcc -c -o patterns/owl_attackpat.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/owl_attackpat.c
+/usr/bin/gcc -c -o patterns/conn.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/conn.c
+/usr/bin/gcc -c -o patterns/patterns.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/patterns.c
+/usr/bin/gcc -c -o patterns/apatterns.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/apatterns.c
+/usr/bin/gcc -c -o patterns/dpatterns.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/dpatterns.c
+/usr/bin/gcc -c -o patterns/owl_vital_apat.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/owl_vital_apat.c
+/usr/bin/gcc -c -o patterns/eyes.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/eyes.c
+/usr/bin/gcc -c -o patterns/influence.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/influence.c
+/usr/bin/gcc -c -o patterns/barriers.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/barriers.c
+/usr/bin/gcc -c -o patterns/endgame.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/endgame.c
+/usr/bin/gcc -c -o patterns/aa_attackpat.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/aa_attackpat.c
+/usr/bin/gcc -c -o patterns/owl_defendpat.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/owl_defendpat.c
+/usr/bin/gcc -c -o patterns/fusekipat.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/fusekipat.c
+/usr/bin/gcc -c -o patterns/fuseki9.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/fuseki9.c
+/usr/bin/gcc -c -o patterns/fuseki13.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/fuseki13.c
+/usr/bin/gcc -c -o patterns/fuseki19.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/fuseki19.c
+/usr/bin/gcc -c -o patterns/josekidb.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/josekidb.c
+/usr/bin/gcc -c -o patterns/handipat.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         patterns/handipat.c
+/usr/bin/gcc -c -o utils/getopt.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         utils/getopt.c
+/usr/bin/gcc -c -o utils/getopt1.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         utils/getopt1.c
+/usr/bin/gcc -c -o utils/gg_utils.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         utils/gg_utils.c
+/usr/bin/gcc -c -o utils/random.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         utils/random.c
+/usr/bin/gcc   -fno-strict-aliasing  -DSPEC_CPU_LP64        sgf/sgf_utils.o sgf/sgftree.o sgf/sgfnode.o engine/aftermath.o engine/board.o engine/cache.o engine/combination.o engine/dragon.o engine/filllib.o engine/fuseki.o engine/genmove.o engine/hash.o engine/influence.o engine/interface.o engine/matchpat.o engine/move_reasons.o engine/movelist.o engine/optics.o engine/owl.o engine/printutils.o engine/readconnect.o engine/reading.o engine/score.o engine/semeai.o engine/sgfdecide.o engine/sgffile.o engine/shapes.o engine/showbord.o engine/utils.o engine/value_moves.o engine/worm.o engine/globals.o engine/persistent.o engine/handicap.o engine/surround.o interface/gtp.o interface/main.o interface/play_ascii.o interface/play_gtp.o interface/play_solo.o interface/play_test.o patterns/connections.o patterns/dfa.o patterns/helpers.o patterns/transform.o patterns/owl_attackpat.o patterns/conn.o patterns/patterns.o patterns/apatterns.o patterns/dpatterns.o patterns/owl_vital_apat.o patterns/eyes.o patterns/influence.o patterns/barriers.o patterns/endgame.o patterns/aa_attackpat.o patterns/owl_defendpat.o patterns/fusekipat.o patterns/fuseki9.o patterns/fuseki13.o patterns/fuseki19.o patterns/josekidb.o patterns/handipat.o utils/getopt.o utils/getopt1.o utils/gg_utils.o utils/random.o             -lm        -o gobmk
+Stop make command: Sun Aug 28 23:08:29 2016 (1472436509)
+Elapsed time for make command: 00:00:09 (9)
+Issuing options command 'specmake options'
+specmake options 2> options.err | tee options.out
+Start options command: Sun Aug 28 23:08:29 2016 (1472436509)
+COMP: /usr/bin/gcc -c -o options.o -DSPEC_CPU -DNDEBUG -DHAVE_CONFIG_H -I. -I.. -I../include -I./include   -fno-strict-aliasing       -DSPEC_CPU_LP64         <source>
+C: CC="/usr/bin/gcc"
+C: COBJOPT="-c -o options"
+P: CPUFLAGS="-DSPEC_CPU -DNDEBUG"
+P: BENCH_FLAGS="-DHAVE_CONFIG_H -I. -I.. -I../include -I./include"
+P: BENCH_CFLAGS=""
+O: OPTIMIZE=""
+O: COPTIMIZE="-fno-strict-aliasing"
+P: PORTABILITY="-DSPEC_CPU_LP64"
+P: CPORTABILITY=""
+O: EXTRA_CFLAGS=""
+O: EXTRA_OPTIMIZE=""
+O: EXTRA_COPTIMIZE=""
+P: EXTRA_PORTABILITY=""
+P: EXTRA_CPORTABILITY=""
+LINK: /usr/bin/gcc   -fno-strict-aliasing  -DSPEC_CPU_LP64        <objects>   -lm        -o options
+C: LD="/usr/bin/gcc"
+O: COPTIMIZE="-fno-strict-aliasing"
+P: PORTABILITY="-DSPEC_CPU_LP64"
+C: MATH_LIBS="-lm"
+C: LDOUT="-o options"
+Stop options command: Sun Aug 28 23:08:29 2016 (1472436509)
+Elapsed time for options command: 00:00:00 (0)
+  Compile for '445.gobmk' ended at: Sun Aug 28 23:08:29 2016 (1472436509)
+  Elapsed compile for '445.gobmk': 00:00:10 (10)
+
+Build successes: 445.gobmk(base)
+
+Build Complete
+
+The log for this run is in /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CPU2006.011.log
+
+runspec finished at Sun Aug 28 23:08:30 2016; 13 total seconds elapsed

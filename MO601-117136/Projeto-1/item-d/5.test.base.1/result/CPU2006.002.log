@@ -1,0 +1,173 @@
+runspec v6674 started at Sun Aug 28 22:22:30 2016 on "gciotto"
+runspec is: /home/gciotto/SPEC/bin/runspec
+runspec: runspec --config=project1d --iterations=1 --size=test --tune=base --noreportable perlbench
+toolset: linux-suse10-amd64
+
+Locating benchmarks...found 31 benchmarks in 6 benchsets.
+Reading config file '/home/gciotto/SPEC/config/project1d.cfg'
+Running "specperl /home/gciotto/SPEC/Docs/sysinfo" to gather system information.
+Read 57 total lines from the sysinfo program.
+Read 56 usable lines from the sysinfo program.
+
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-gcc4x-flags-revA.xml)...
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-linux-platform-revA.xml)...
+Verbosity = 5
+Action    = validate
+Tune      = base
+Ext       = gcc43-64bit
+Size      = test
+Machine   = default
+benchmarks= 400.perlbench
+outputs   = asc,csv,html
+username  = gciotto
+Benchmarks selected: 400.perlbench
+Compiling Binaries
+
+------------------------------------------------------------------------
+  Up to date 400.perlbench base gcc43-64bit default
+
+
+Setting Up Run Directories
+  Setting up 400.perlbench test base gcc43-64bit default: created (run_base_test_gcc43-64bit.0000)
+
+-----------------------------------
+Running Benchmarks
+
+-----------------------------------
+  Running 400.perlbench test base gcc43-64bit default
+Commands to run:
+    -b numactl -m 0 --physcpubind=0
+    -C /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/run/run_base_test_gcc43-64bit.0000
+    -o attrs.out -e attrs.err ../run_base_test_gcc43-64bit.0000/perlbench_base.gcc43-64bit -I. -I./lib attrs.pl (timed)
+    -o gv.out -e gv.err ../run_base_test_gcc43-64bit.0000/perlbench_base.gcc43-64bit -I. -I./lib gv.pl (timed)
+    -o makerand.out -e makerand.err ../run_base_test_gcc43-64bit.0000/perlbench_base.gcc43-64bit -I. -I./lib makerand.pl (timed)
+    -o pack.out -e pack.err ../run_base_test_gcc43-64bit.0000/perlbench_base.gcc43-64bit -I. -I./lib pack.pl (timed)
+    -o redef.out -e redef.err ../run_base_test_gcc43-64bit.0000/perlbench_base.gcc43-64bit -I. -I./lib redef.pl (timed)
+    -o ref.out -e ref.err ../run_base_test_gcc43-64bit.0000/perlbench_base.gcc43-64bit -I. -I./lib ref.pl (timed)
+    -o regmesg.out -e regmesg.err ../run_base_test_gcc43-64bit.0000/perlbench_base.gcc43-64bit -I. -I./lib regmesg.pl (timed)
+    -o test.out -e test.err ../run_base_test_gcc43-64bit.0000/perlbench_base.gcc43-64bit -I. -I./lib test.pl (timed)
+Specinvoke: /home/gciotto/SPEC/bin/specinvoke -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/run/run_base_test_gcc43-64bit.0000 -e speccmds.err -o speccmds.stdout -f speccmds.cmd -C -q
+Issuing command '/home/gciotto/SPEC/bin/specinvoke -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/run/run_base_test_gcc43-64bit.0000 -e speccmds.err -o speccmds.stdout -f speccmds.cmd -C -q'
+/home/gciotto/SPEC/bin/specinvoke -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/run/run_base_test_gcc43-64bit.0000 -e speccmds.err -o speccmds.stdout -f speccmds.cmd -C -q
+Start command: Sun Aug 28 22:31:51 2016 (1472434311)
+Stop command: Sun Aug 28 22:31:59 2016 (1472434319)
+Elapsed time for command: 00:00:08 (8)
+Workload elapsed time (0:1) = 0.006338 seconds
+Workload elapsed time (0:2) = 0.004271 seconds
+Workload elapsed time (0:3) = 0.062774 seconds
+Workload elapsed time (0:4) = 0.07449 seconds
+Workload elapsed time (0:5) = 0.00222 seconds
+Workload elapsed time (0:6) = 0.002575 seconds
+Workload elapsed time (0:7) = 0.00408 seconds
+Workload elapsed time (0:8) = 3.564815 seconds
+Copy 0 of 400.perlbench (base test) run 1 finished at Sun Aug 28 22:31:55 2016.  Total elapsed time: 3.721563
+comparing files in '/home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/run/run_base_test_gcc43-64bit.0000'
+comparing 'append.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'args.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'arith.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'array.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'attrs.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'auto.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'base_cond.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'base_pat.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'base_term.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'bless.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'bop.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'bproto.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'chars.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'chop.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'cmdopt.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'cmp.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'comp_term.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'concat.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'context.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'decl.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'defins.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'delete.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'die.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'do.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'each.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'eval.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'exists_sub.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'exp.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'fh.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'grep.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'gv.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'hashwarn.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'if.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'inc.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'index.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'int.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'join.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'length.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'lex.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'list.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'loopctl.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'lop.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'makerand.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'method.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'my.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'nothr5005.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'oct.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'op_cond.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'op_pat.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'ord.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'override.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'pack.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'package.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'pos.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'push.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'quotemeta.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'range.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'recurse.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'redef.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'ref.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'regexp.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'regexp_noamp.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'regmesg.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'repeat.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'reverse.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'rs.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'sleep.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'sort.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'splice.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'study.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'sub_lval.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'subst.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'subst_amp.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'subst_wamp.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'tr.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'undef.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'unshift.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'vec.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+comparing 'wantarray.out' with abstol=, binary=, calctol=0, cw=, floatcompare=, ignorecase=, obiwan=, reltol=, skipabstol=, skipobiwan=, skipreltol=, skiptol=
+Specinvoke: /home/gciotto/SPEC/bin/specinvoke -E -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/run/run_base_test_gcc43-64bit.0000 -c 1 -e compare.err -o compare.stdout -f compare.cmd
+Issuing command '/home/gciotto/SPEC/bin/specinvoke -E -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/run/run_base_test_gcc43-64bit.0000 -c 1 -e compare.err -o compare.stdout -f compare.cmd'
+/home/gciotto/SPEC/bin/specinvoke -E -d /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/benchspec/CPU2006/400.perlbench/run/run_base_test_gcc43-64bit.0000 -c 1 -e compare.err -o compare.stdout -f compare.cmd
+Start command: Sun Aug 28 22:32:34 2016 (1472434354)
+Stop command: Sun Aug 28 22:32:52 2016 (1472434372)
+Elapsed time for command: 00:00:18 (18)
+Benchmark Times:
+  Start:    Sun Aug 28 22:31:51 2016 (1472434311)
+  Stop:     Sun Aug 28 22:31:59 2016 (1472434319)
+  Elapsed:  00:00:08 (8)
+  Reported: 3 721677000 3.721677
+ Success 400.perlbench base test ratio=-0.00, runtime=3.721677, power=0.00w, temp=0.00 deg, humidity=0.00%
+Success: 1x400.perlbench
+Producing Raw Reports
+mach: default
+  ext: gcc43-64bit
+    size: test
+      set: int
+        format: raw -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.002.test.rsf
+Parsing flags for 400.perlbench base: done
+Doing flag reduction: done
+        format: flags -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.002.test.flags.html
+        format: ASCII -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.002.test.txt
+        format: CSV -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.002.test.csv
+        format: HTML -> /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.002.test.html, /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/invalid.gif, /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CINT2006.002.test.gif
+      set: fp
+
+The log for this run is in /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CPU2006.002.log
+
+runspec finished at Sun Aug 28 22:34:25 2016; 715 total seconds elapsed

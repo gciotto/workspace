@@ -1,0 +1,35 @@
+runspec v6674 started at Sun Aug 28 22:34:57 2016 on "gciotto"
+runspec is: /home/gciotto/SPEC/bin/runspec
+runspec: runspec --config=project1d --action=build --tune=base perlbench
+toolset: linux-suse10-amd64
+
+Locating benchmarks...found 31 benchmarks in 6 benchsets.
+Reading config file '/home/gciotto/SPEC/config/project1d.cfg'
+Running "specperl /home/gciotto/SPEC/Docs/sysinfo" to gather system information.
+Read 57 total lines from the sysinfo program.
+Read 56 usable lines from the sysinfo program.
+
+Loading "http://www.spec.org/auto/cpu2006/current_version" for version check: OK
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-gcc4x-flags-revA.xml)...
+Retrieving flags file (/home/gciotto/SPEC/config/flags/Example-linux-platform-revA.xml)...
+Verbosity = 5
+Action    = build
+Tune      = base
+Ext       = gcc43-64bit
+Size      = ref
+Machine   = default
+benchmarks= 400.perlbench
+outputs   = asc,csv,html
+username  = gciotto
+Benchmarks selected: 400.perlbench
+Compiling Binaries
+
+------------------------------------------------------------------------
+  Up to date 400.perlbench base gcc43-64bit default
+
+
+Build Complete
+
+The log for this run is in /home/gciotto/workspace/MO601-117136/Projeto-1/item-d/5.test.base.1/result/CPU2006.003.log
+
+runspec finished at Sun Aug 28 22:34:59 2016; 2 total seconds elapsed
