@@ -137,6 +137,10 @@ class NTPDriver(Driver):
                 
             else:                 
                 
+                for key in _pvs:
+                    if "NTP" in key:
+                        self.setParamStatus(key, Alarm.NO_ALARM, Severity.NO_ALARM)
+                
                 self.setParam("NTP:OnOff", 1)
                 
                 self.setParam("NTP:Timestamp", _server_answer.tx_time)
@@ -173,6 +177,10 @@ class NTPDriver(Driver):
                 self.setParam("NTP:Roundtrip", _server_answer.root_delay * 1000)
                 
                 
+                # If server is unsynchronized, enables alarm
+                if _server_answer.leap == 3:
+                    self.setParamStatus("NTP:Leap", Alarm.STATE_ALARM, Severity.MAJOR_ALARM)
+                
                 # If stratum is bigger than 1, get offset from NTP packet. Otherwise,
                 # we need to request PPS ATOM driver directly.
                 if _server_answer.stratum > 1:
@@ -197,10 +205,7 @@ class NTPDriver(Driver):
                         _offset = float (_used_line[-2])
                         self.setParam("NTP:Offset", _offset)
                     
-                
-                for key in _pvs:
-                    if "NTP" in key:
-                        self.setParamStatus(key, Alarm.NO_ALARM, Severity.NO_ALARM)
+
         
             self.updatePVs()
             
