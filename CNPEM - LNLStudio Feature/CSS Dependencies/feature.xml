@@ -144,6 +144,18 @@
          id="org.csstudio.archive.reader.ea4.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.csstudio.applications.logbook.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.logbook.viewer.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.olog.feature"
+         version="0.0.0"/>
+
    <requires>
       <import plugin="org.eclipse.osgi"/>
       <import plugin="org.apache.batik.css" version="1.7.0" match="equivalent"/>
@@ -433,6 +445,20 @@
 
    <plugin
          id="org.csstudio.platform.libs.epics.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.utility.ldap.service"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.utility.ldap.treeconfiguration"
          download-size="0"
          install-size="0"
          version="0.0.0"
