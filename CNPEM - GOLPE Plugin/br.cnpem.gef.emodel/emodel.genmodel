@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/br.cnpem.gef.emodel/src" modelPluginID="br.cnpem.gef.emodel"
+    modelName="Emodel" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>model/golpe.ecore</foreignModel>
+  <genPackages prefix="Emodel" disposableProviderFactory="true" ecorePackage="golpe.ecore#/">
+    <genDataTypes ecoreDataType="golpe.ecore#//Rectangle"/>
+    <genClasses ecoreClass="golpe.ecore#//EGolpeModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference golpe.ecore#//EGolpeModel/components"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference golpe.ecore#//EGolpeModel/connections"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="golpe.ecore#//EGolpeComponentModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute golpe.ecore#//EGolpeComponentModel/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute golpe.ecore#//EGolpeComponentModel/iconAddress"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference golpe.ecore#//EGolpeComponentModel/place"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference golpe.ecore#//EGolpeComponentModel/rootModel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference golpe.ecore#//EGolpeComponentModel/connection"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute golpe.ecore#//EGolpeComponentModel/constraint"/>
+    </genClasses>
+    <genClasses ecoreClass="golpe.ecore#//EGolpeHostModel"/>
+    <genClasses ecoreClass="golpe.ecore#//EGolpeSwitchModel"/>
+    <genClasses ecoreClass="golpe.ecore#//EPlaceModel"/>
+    <genClasses ecoreClass="golpe.ecore#//EConnectionModel">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference golpe.ecore#//EConnectionModel/sources"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference golpe.ecore#//EConnectionModel/rootModel"/>
+    </genClasses>
+    <genClasses ecoreClass="golpe.ecore#//EBBBModel"/>
+    <genClasses ecoreClass="golpe.ecore#//EBBGModel"/>
+  </genPackages>
+</genmodel:GenModel>

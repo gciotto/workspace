@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="emodel" nsURI="www.cnpem.br" nsPrefix="br.cnpem.golpe">
+  <eClassifiers xsi:type="ecore:EClass" name="EGolpeModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
+        eType="#//EGolpeComponentModel" containment="true" eOpposite="#//EGolpeComponentModel/rootModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connections" upperBound="-1"
+        eType="#//EConnectionModel" containment="true" eOpposite="#//EConnectionModel/rootModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EGolpeComponentModel" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iconAddress" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="place" eType="#//EPlaceModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rootModel" eType="#//EGolpeModel"
+        eOpposite="#//EGolpeModel/components"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connection" upperBound="2"
+        eType="#//EConnectionModel"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constraint" eType="#//Rectangle"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EGolpeHostModel" eSuperTypes="#//EGolpeComponentModel"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EGolpeSwitchModel" eSuperTypes="#//EGolpeComponentModel"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EPlaceModel"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EConnectionModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sources" upperBound="2"
+        eType="#//EGolpeComponentModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rootModel" eType="#//EGolpeModel"
+        eOpposite="#//EGolpeModel/connections"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Rectangle" instanceClassName="org.eclipse.draw2d.geometry.Rectangle"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EBBBModel" eSuperTypes="#//EGolpeHostModel"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EBBGModel" eSuperTypes="#//EGolpeHostModel"/>
+</ecore:EPackage>
