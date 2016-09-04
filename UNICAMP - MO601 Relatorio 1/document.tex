@@ -1,0 +1,67 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+
+\usepackage{graphicx,url}
+
+\usepackage[brazil]{babel}   
+\usepackage[utf8]{inputenc}
+ 
+\sloppy
+
+\title{Contagem do número de instruções dos \textit{benchmarks} do
+\texttt{SPEC CPU2006} e implementação de uma \textit{pintool}}
+
+\author{Gustavo Ciotto Pinton\inst{1} }
+
+
+\address{Instituto de Computação -- Universidade Estadual de Campinas
+(UNICAMP)\\
+  Av. Albert Einstein, 1251, Cidade Universitária, Campinas/SP \\
+  Brasil, CEP 13083-852 \\  Fone: [19] 3521-5838
+  \email{ra117136@unicamp.br}
+}
+
+\begin{document} 
+
+\maketitle
+
+\begin{abstract}
+This report describes the number of instructions executed by each
+benchmark in \texttt{SPEC cpu2006}. It was achieved thanks to the
+Intel's \texttt{pin} application. All results were obtained by running the
+benchmarks with the \texttt{ref} inputs and a single iteration. A new
+pin tool was equally developed, which lists the number of executed instructions
+of every routine of all threads that compose the program. Five benchmarks,
+run with inputs belonging to the \texttt{test} set, were used to test this new
+tool.
+\end{abstract}
+     
+\begin{resumo} 
+Este relatório apresenta o número de instruções executadas por cada
+\textit{benchmark} presente no \texttt{SPEC cpu2006}, calculado através da
+utilização da ferramenta \texttt{pin}, desenvolvida pela Intel. Os valores
+encontrados correspondem às entradas do tipo \texttt{ref} e a uma única
+iteração. Além disso, desenvolveu-se uma nova \texttt{pin tool}, cuja saída
+é a uma lista com o número de instruções executas pelas rotinas de um programa,
+separadas pela sua respectiva \textit{thread}. Tal ferramenta foi testada em 5
+benchmarks na configuração \texttt{test}.
+\end{resumo}
+
+
+\section{Introdução}
+
+
+\section{Contagem das instruções} \label{sec:count}
+
+
+\section{Implementação de uma nova \textit{pin tool}} \label{sec:tool}
+
+
+\section{Conclusões}
+
+
+\bibliographystyle{sbc}
+\bibliography{sbc-template}
+
+\end{document}
