@@ -107,7 +107,58 @@ executadas.
 \section{Contagem das instruções} \label{sec:count}
 
 
+A fim de calcular as instruções de cada \textit{benchmark} do \texttt{SPEC
+CPU2006}, dois \textit{scripts bash} foram implementados. O primeiro, chamado de
+\texttt{run-pintool-all-benchmarks.sh} verifica e executa o \textit{runspec},
+escrito em \textit{perl}, para cada um dos \textit{benchmarks}, além de compilar
+a \textit{pintool} que será utilizada. Tal \textit{script} comunica alguns
+parâmetros importantes ao comando \textit{runspec}, tais como o método de
+compilação (\texttt{base}), o conjunto de entradas que será transmitido aos
+programas (\texttt{ref}, no nossa caso), o número de iterações (1) e,
+evidentemente, o nome do \textit{benchmark}. A execução deste comando produz um
+arquivo de extensão \texttt{.tmp.log} no diretório do projeto, que é copiado
+posteriormente a uma pasta, cujo nome é igual ao do
+\textit{benchmark} que acabou de ser executado. O arquivo de configuração
+transmitido ao comando \texttt{runspec} faz referência ao segundo \textit{script},
+\texttt{run-spec-command.sh}, responsável por relacionar o aplicativo
+\texttt{pin} com o respectivo \textit{benchmark}. Este \textit{script} recebe
+como parâmetro o comando que o \texttt{SPEC} utiliza e o retransmite para o
+\texttt{pin}, que é responsável por executá-lo efetivamente.
+
+No manual de referência do \texttt{pin}, são indicadas quatro maneiras distintas
+de se calcular o número de instruções executadas por um programa. A primeira,
+\texttt{inscount0}, insere a rotina de análise antes de cada instrução,
+produzindo, assim, uma grande perda de performance. A segunda,
+\texttt{inscount1}, é superior à anterior, à medida que utiliza uma outra medida
+de granularidade, chamado de \texttt{BBL} (do inglês, \textit{basic block}) e,
+portanto, economiza diversas chamadas à função de análise. A terceira rotina,
+chamada de \texttt{inscount2}, usa o mesmo princípio que a anterior, porém
+apresenta melhor desempenho, visto que faz uso de dois recursos a mais que
+\texttt{inscount1}. O primeiro recurso é a mudança de \texttt{IPOINT\_BEFORE}
+para \texttt{IPOINT\_ANYWHERE}, que autoriza o \texttt{pin} escolher em que
+ordem a função de análise é colocada, permitindo, assim, que ele escolha o ponto
+que requeira mínimas operações de salvamento e restaturação dos registradores.
+Além disso, esta ferramenta também usa a opção de \textit{fast call linkage},
+que explora o fato de que alguns compiladores podem eliminar o
+\textit{overhead} que, para funções pequenas como a a função de análise, é
+comparável ao próprio conjunto de operações da respectiva função. Esta opção é
+ativada através do uso de \texttt{PIN\_FAST\_ANALYSIS\_CALL}. Por fim, o último
+programa utiliza, além dos recursos comentados anteriormente, uma unidade de
+armazenamento rápido, chamado de \texttt{TLS}, indexado pelos \textit{indexes}
+das \textit{threads} para gerar o número de instruções por \textit{thread}. 
+
+Tendo em mente estas características, escolhe-se o programa
+\textbf{\texttt{inscount2}} para o cálculo do número de instruções, visto que
+este último apresenta o maior número de otimizações e que, neste contexto, não
+visa-se encontrar uma contagem por \textit{threads}, mas sim global. Os
+\textit{benchmarks} foram rodados em apenas um \textit{core} do processador
+\textit{Intel i3} e levaram, ao todo, 20 horas aproximadamente. A tabela
+\ref{spec:tabela} resume os resultados encontrados.
+
+
 \section{Implementação de uma nova \textit{pin tool}} \label{sec:tool}
+
+
 
 
 \section{Conclusões}
