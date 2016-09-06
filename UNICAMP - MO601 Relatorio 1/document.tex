@@ -3,8 +3,9 @@
 \usepackage{sbc-template}
 
 \usepackage{graphicx,url}
+\usepackage{csvsimple}
 
-\usepackage[brazil]{babel}   
+\usepackage[brazil]{babel}    
 \usepackage[utf8]{inputenc}
  
 \sloppy
@@ -152,18 +153,75 @@ Tendo em mente estas características, escolhe-se o programa
 este último apresenta o maior número de otimizações e que, neste contexto, não
 visa-se encontrar uma contagem por \textit{threads}, mas sim global. Os
 \textit{benchmarks} foram rodados em apenas um \textit{core} do processador
-\textit{Intel i3} e levaram, ao todo, 20 horas aproximadamente. A tabela
-\ref{spec:tabela} resume os resultados encontrados.
+\textit{Intel i3} e levaram, ao todo, 20 horas aproximadamente. Os resultados
+encontrados estão listados abaixo. Alguns \textit{benchmarks} possuem mais de
+uma entrada e, portanto, produzem mais de uma saída. Tais saídas estão separadas
+por \textit{vírgulas} na lista abaixo:
+
+Para os \textit{benchmarks} do conjunto \textbf{inteiro}:
+\begin {itemize}
+\item \texttt{400.perlbench}: 1109198045367, 384794966182, 707786630157
+\item \texttt{401.bzip2}: 432459815466, 181180973754, 309587458388,
+553737482083, 605707320979, 345617094417
+\item \texttt{403.gcc}: 77489490228, 151321617974, 139512528163, 103537789803,
+113969504551, 154631785799, 183463430994, 169999746216, 58461954145
+\item \texttt{429.mcf}: 341546845898
+\item \texttt{445.gobmk}: 234525674455, 625631596347, 325147399858, 235593319559, 339210226918
+\item \texttt{456.hmmer}: 971544939130, 2052353062674
+\item \texttt{458.sjeng}: 2309967978778
+\item \texttt{462.libquantum}: 2291912513237
+\item \texttt{464.h264ref}: 500835844419, 355915755256, 3188039031373
+\item \texttt{471.omnetpp}: 576122145483
+\item \texttt{473.astar}: 411719281496, 829803428219
+\item \texttt{483.xalancbmk}: 1048497777434
+\end {itemize}
+
+Para os \textit{benchmarks} do conjunto em \textbf{ponto flutuante}:
+
+\begin {itemize}
+\item \texttt{410.bwaves}: 2.495.514.310.671
+\item \texttt{416.gamess}: 1124505753634, 878108843916, 3766238100560
+\item \texttt{433.milc}: 1175358805504
+\item \texttt{434.zeusmp}: 2016616007502
+\item \texttt{435.gromacs}: 1971200720706
+\item \texttt{436.cactusADM}: 2655006820074
+\item \texttt{437.leslie3d}: 4626149683423
+\item \texttt{444.namd}: 2361163844939
+\item \texttt{447.dealII}: 1903231296730
+\item \texttt{450.soplex}: 377431323949, 389903616072
+\item \texttt{453.povray}: 1002529177253
+\item \texttt{454.calculix}: 6894341894243
+\item \texttt{459.GemsFDTD}: 2722715227347
+\item \texttt{465.tonto}: 3563812458171
+\item \texttt{470.lbm}: 1314569317678
+\item \texttt{481.wrf}: 3867428098913
+\item \texttt{482.sphinx3}: 3432419178361
+\item \texttt{998.specrand}: 536611748
+\item \texttt{999.specrand}: 536611748
+\end{itemize}
+
+Verifica-se, portanto, que o \textit{benchmark} que utiliza mais entradas em
+seus testes é \texttt{403.gcc}, totalizando 1.152.387.847.873 instruções
+executadas. Os \textit{benchmarks} que rodaram mais e menos instruções foram,
+respectivamente, \texttt{454.calculix} e
+\texttt{998.specrand}/\texttt{999.specrand}.
 
 
 \section{Implementação de uma nova \textit{pin tool}} \label{sec:tool}
 
+Tendo em vista que os programas apresentados na seção anterior não permitem a
+contagem de instruções por rotina e por \textit{thread}, propõe-se a
+implementação de uma nova \textit{pintool} contendo estas duas funcionalidades.
+Para isso, utiliza-se a API da ferramenta para a adição de funções de
+\textit{instrumentação} para cada routina e de \textit{análise} para suas
+instruções. Além disso, faz-se uso do \textit{TLS} para a armazenagem de
+informações específicas a uma \textit{thread}.
 
-
+O registro da função de instrumentação é realizada através
 
 \section{Conclusões}
 
-https://www.spec.org/cpu2006/Docs/readme1st.html#Q1
+% https://www.spec.org/cpu2006/Docs/readme1st.html#Q1
 
 \bibliographystyle{sbc}
 \bibliography{sbc-template}
