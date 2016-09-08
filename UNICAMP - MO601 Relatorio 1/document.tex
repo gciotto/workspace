@@ -213,11 +213,94 @@ Tendo em vista que os programas apresentados na seção anterior não permitem a
 contagem de instruções por rotina e por \textit{thread}, propõe-se a
 implementação de uma nova \textit{pintool} contendo estas duas funcionalidades.
 Para isso, utiliza-se a API da ferramenta para a adição de funções de
-\textit{instrumentação} para cada routina e de \textit{análise} para suas
+\textit{instrumentação} para cada rotina e de \textit{análise} para suas
 instruções. Além disso, faz-se uso do \textit{TLS} para a armazenagem de
 informações específicas a uma \textit{thread}.
 
-O registro da função de instrumentação é realizada através
+O registro da função de instrumentação é realizada através de uma chamada a
+\texttt{RTN\_AddInstrumentFunction()}, cujo  parâmetro é uma
+\textit{callback function} que é executada uma vez para cada rotina do
+programa. Dentro desta função, processa-se todo o comportamento estático do
+programa, isto é, explora-se o seu estado independente da sua execução. Cada
+rotina é descrita por uma estrutura de dados, cujo nome é \texttt{RTN}. Tal
+estrutura permite que diversas informações sejam extraídas, como por exemplo, o
+nome da rotina, através de \texttt{RTN\_Name()}, o número de instruções
+estáticas dentro dela, com \texttt{RTN\_NumIns()} e quais instruções pertencem a
+ela. Este último é realizado através da iteração de uma lista ligada, acessada
+através de \texttt{RTN\_InsHead()} ou \texttt{RTN\_InsTail()}. No entanto, tais
+funções devem ser chamadas somente depois de \texttt{RTN\_Open()} ser executada,
+conforme documentado no manual da ferramenta.
+
+O programa define duas novas classes, \texttt{Thread\_node} e
+\texttt{Routine\_node}, responsáveis por armazenar informações sobre as
+\textit{threads} e rotinas executadas. Os objetos instanciados destas classes
+compõem duas listas ligadas, sendo que cada nó do tipo \texttt{Routine\_node}
+contém o início e o fim de uma lista de objetos \texttt{Thread\_node}. Tal
+escolha de implementar uma lista de \texttt{Thread\_node} dentro de cada
+instância de \texttt{Routine\_node}, e não o inverso, foi adotada a fim de
+melhorar a performance da rotina de análise, que será explicada mais adiante.
+Além de dois ponteiros para o início e fim de uma lista ligada de
+\texttt{Thread\_node}s, um objeto da classe \texttt{Routine\_node} possui o nome
+da rotina, obtido através de \texttt{RTN\_Name()}, a referência para o próximo
+nó da lista e o \textit{id}, que é dado pela função \texttt{RTN\_Id()}.
+\texttt{Pin} atribui a cada rotina uma identificação única globalmente, isto é, 
+mesmo se uma determinada rotina com mesmo nome aparecer em duas imagens distintas,
+as duas \textit{cópias} terão \textit{ids} diferentes. Um objeto da classe
+\texttt{Thread\_node} possui, por sua vez, além de um ponteiro para o próximo
+elemento da lista, o \textit{id} da \textit{thread}, que pode ser recuperado
+através do \texttt{THREAD\_ID} e o número de instruções que a rotina daquela
+respectiva \textit{thread} executou.
+
+A criação de nós do tipo \texttt{Routine\_node} é realizada na rotina de
+instrumentação por motivos ligados à performance, visto que é um processo
+extremamente custoso. Tal afirmação reside no fato de que uma rotina
+pode aparecer mais de uma vez em \textit{threads} distintas e que, por este
+motivo, é necessário percorrer a lista toda vez a fim de procurá-la. Observa-se
+também que um programa pode apresentar um número elevado de rotinas - os
+\textit{benchmarks} testados, por exemplo, apresentam mais de 1000 delas. Dessa
+forma, caso tais operações fossem inseridas na função de análise, a performance
+do programa seria afetada muito negativamente. Sendo assim, após a verificação
+da existência da rotina na lista e a possível criação em caso negativo,
+inicia-se o processo de posicionamento das funções de análise. Cada estrutura do
+tipo \texttt{RTN} possui uma referência para uma lista das instruções que a
+compõem, sendo acessada pela função \texttt{RTN\_InsHead()} e percorrida por
+\texttt{RTN\_Next()}. Para cada instrução, executa-se, portanto, a função
+\texttt{INS\_InsertCall()} para inserir a \textit{callback} de análise. Essa
+função pode receber, além da referência da \textit{callback}, a ordem em que
+ela é chamada (antes ou depois, por exemplo, da execução da instrução) e um
+conjunto variável de parâmetros. \texttt{PIN} oferece uma série de
+possibilidades para a passagem de parâmetros à função de análise. No nosso caso,
+por exemplo, dois argumentos são utilizados, sendo eles o \textit{id} da
+\textit{thread}, que é passado através de \texttt{THREAD\_ID}, definido na
+enumeração \texttt{IARG\_TYPE}, e o ponteiro do objeto do tipo
+\texttt{Routine\_node}, que identifica a qual rotina a instrução pertence. Este
+último exige a adição de dois parâmetros a \texttt{INS\_InsertCall()}: um para a
+especificação do tipo do argumento, isto é, \texttt{IARG\_PTR}, e o segundo o
+ponteiro propriamente dito. Para a ordem de execução, quatro opções são
+disponíveis, sendo elas \texttt{IPOINT\_BEFORE}, \texttt{IPOINT\_AFTER} ,
+\texttt{IPOINT\_ANYWHERE} e \texttt{IPOINT\_TAKEN\_BRANCH}, equivalendo,
+respectivamente, à execução da rotina de análise antes, depois, em um ponto
+determinado pelo próprio \texttt{PIN} ou se um \textit{branch} foi executado.
+Como não há nenhuma preferência de ordem e prefere-se aquela que ofereça melhor
+desempenho, escolhe-se \texttt{IPOINT\_ANYWHERE}.
+
+Por último, a criação de nós do tipo \texttt{Thread\_node} é realizada na função
+de análise juntamente com o incremento do número de instruções executadas. É 
+necessário, porém, a fim de não comprometer siginificamente a execução do
+programa, implementarmos uma função que execute o mínimo de operações. Neste
+contexto, acessa-se a lista de \texttt{Thread\_node}s através do ponteiro do
+tipo \texttt{Routine\_node}, passado como parâmetro, e procura-se o nó, cujo
+\textit{id} seja igual ao segundo argumento da função. Caso ele não seja
+encontrado, um novo nó é criado. Vale lembrar, portanto, que o desempenho do
+programa é fortemente prejudicado caso ele possua muitas \textit{threads}. Isso
+porque a lista ligada de \texttt{Thread\_node}s é sempre percorrida a cada nova
+instrução. Por fim, o contador de instruções é incrementado.
+
+Esta \texttt{pintool} foi testada em cinco \textit{benchmarks} do
+\texttt{SPEC CPU2006}, sendo eles \texttt{400.perlbench}, \texttt{401.bzip2},
+\texttt{403.gcc}, \texttt{429.mcf}  e \texttt{445.gobmk}. Todos eles apresentam
+somente uma \textit{thread}. A seguir, são apresentadas algumas considerações
+importantes a respeito das execuções.
 
 \section{Conclusões}
 
