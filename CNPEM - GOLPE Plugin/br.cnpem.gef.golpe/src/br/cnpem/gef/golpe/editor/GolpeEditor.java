@@ -1,36 +1,42 @@
 package br.cnpem.gef.golpe.editor;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.EventObject;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
+import org.eclipse.gef.ui.properties.UndoablePropertySheetPage;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.PropertySheetPage;
 
-import emodel.EGolpeComponentModel;
-import emodel.EGolpeModel;
-import emodel.EmodelFactory;
-import emodel.EmodelPackage;
-import br.cnpem.gef.golpe.controller.GolpeEditPartFactory;
+import br.cnpem.gef.golpe.controller.ComponentEditPartFactory;
+import br.cnpem.gef.golpe.model.Component;
+import br.cnpem.gef.golpe.model.RootComponent;
 import br.cnpem.gef.palette.GolpeEditorPalette;
 
 public class GolpeEditor extends GraphicalEditorWithFlyoutPalette {
 
-	private EGolpeModel _root_model;
-	private Resource _resource;
+	private RootComponent _root_model;
+	private IFile file; 
+	PropertySheetPage propertyPage;
 
 	public GolpeEditor () {
 		setEditDomain(new DefaultEditDomain(this));
+		_root_model = new RootComponent();
+		
 	}
 
 	@Override
@@ -42,7 +48,7 @@ public class GolpeEditor extends GraphicalEditorWithFlyoutPalette {
 	@Override
 	protected void configureGraphicalViewer() {
 		super.configureGraphicalViewer();
-		getGraphicalViewer().setEditPartFactory(new GolpeEditPartFactory());
+		getGraphicalViewer().setEditPartFactory(new ComponentEditPartFactory());
 	}
 
 	@Override
@@ -53,16 +59,27 @@ public class GolpeEditor extends GraphicalEditorWithFlyoutPalette {
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		if (_resource == null)
+
+		if (file == null)
 			return;
 		
 		try {
-			_resource.save(null);
-		} catch (Exception e) {
 			
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file.getName()));
+			
+			out.writeObject(this._root_model);
+		
+			out.close();
+			
+			getCommandStack().markSaveLocation();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		
 	}
 
 	@Override
@@ -70,32 +87,40 @@ public class GolpeEditor extends GraphicalEditorWithFlyoutPalette {
 
 		super.init(site, input);
 
-		EmodelPackage.eINSTANCE.eClass();
-		ResourceSet _set = new ResourceSetImpl();
+		loadInput(input);
+		
+		this.setPartName(file.getName());
+		
+	}
+
+	private void loadInput(IEditorInput input){
 
 		if(input instanceof IFileEditorInput) {
-
+			
 			IFileEditorInput fileInput = (IFileEditorInput) input;
-
-			IFile file = fileInput.getFile();
-
-			_resource = _set.createResource(URI.createURI(file.getLocationURI().toString()));
+			file = fileInput.getFile();
 			
 			try {
 				
-				_resource.load(null);
-				_root_model = (EGolpeModel) _resource.getContents().get(0);
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getName()));
+				this._root_model = (RootComponent) in.readObject();
 				
-			} catch(Exception e) {
+				in.close();
 				
-				_root_model = EmodelFactory.eINSTANCE.createEGolpeModel();
-								
-				System.out.println("[Editor]" + e.getMessage());
-			}
-			
-			
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} 
 		}
 
 	}
 
+	@Override
+	public void commandStackChanged(EventObject event) {
+		firePropertyChange(PROP_DIRTY);
+		super.commandStackChanged(event);
+	}
 }

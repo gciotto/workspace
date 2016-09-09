@@ -5,6 +5,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="br.cnpem.gef.golpe.editor.GolpeEditor"
+            contributorClass="br.cnpem.gef.golpe.editor.GolpeEditorActionBarContributor"
             default="true"
             extensions="dilma"
             id="br.cnpem.gef.golpe.GolpeEditor"
