@@ -378,7 +378,8 @@ predictor}. \textit{Entrada} corresponde ao número de entradas de cada
 \textit{benchmark}, \textit{Misses} é a somatória do número de
 \textit{miss-predictions} de todas as entradas, \textit{Hits} a somatória das
 quantidades em que o preditor acertou e, enfim, \% é a razão 
-\(\frac{Hits}{Hits+Misses}\).
+\(\frac{Hits}{Hits+Misses}\). Tais campos são as médias dos resultados de todas
+as entradas.
 
  \begin{table}[h]
     \centering
@@ -390,8 +391,11 @@ quantidades em que o preditor acertou e, enfim, \% é a razão
 		\multicolumn{3}{c|}{\textbf{Modelo 2}}	\\ 	\hline 
 		\textit{\textbf{Benchmark}} & Entradas  & \textit{Misses} & \textit{Hits} & \%
 		& \textit{Misses} & \textit{Hits} & \% \\
-		\hline \hline \texttt{400.perlbench} & 3 & & & & & \\ \hline
-		\texttt{401.bzip2} & 6 & &  & & & \\ \hline 
+		\hline \hline \texttt{400.perlbench} & 3 & \(4.0\times10^{10}\) &
+		\(9.4\times10^{10}\) & 0.70 & \(2.7\times10^{10}\) & \(1.1\times10^{11}\)
+		& 0.80
+		\\
+		\hline \texttt{401.bzip2} & 6 & &  & & & \\ \hline 
 		\texttt{403.gcc} & 9 & & & & & \\
 		\hline \texttt{429.mcf} & 1 & & & & & \\ \hline 
 		\texttt{445.gobmk} & 5 & & & & & \\ \hline 		
