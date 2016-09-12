@@ -1,0 +1,11 @@
+\begin{thebibliography}{}
+
+\bibitem[Intel 2012]{Intel:12}
+Intel (2012).
+\newblock Pin 2.11 user guide.
+
+\bibitem[SPEC 2011]{SPEC:11}
+SPEC (2011).
+\newblock Spec cpu2006: Read me first.
+
+\end{thebibliography}

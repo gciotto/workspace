@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2016.5.14)  7 SEP 2016 23:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2016.5.14)  11 SEP 2016 20:29
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -134,6 +134,29 @@ Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 \c@csvcol=\count94
 \csv@out=\write3
 )
+(/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip45
+\subfigcapskip=\skip46
+\subfigcaptopadj=\dimen122
+\subfigbottomskip=\skip47
+\subfigcapmargin=\dimen123
+\subfiglabelskip=\skip48
+\c@subfigure=\count95
+\c@lofdepth=\count96
+\c@subtable=\count97
+\c@lotdepth=\count98
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/share/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip49
+\subfig@bottom=\skip50
+)
+(/usr/share/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen124
+)
 (/usr/share/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2015/08/03 3.9m The Babel package
 
@@ -142,8 +165,8 @@ Language: portuges 2008/03/18 v1.2q Portuguese support from the babel system
 
 (/usr/share/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2015/08/03 3.9m Babel common definitions
-\babel@savecnt=\count95
-\U@D=\dimen122
+\babel@savecnt=\count99
+\U@D=\dimen125
 )
 \l@brazil = a dialect from \language\l@portuges 
 Package babel Info: Making " an active character on input line 145.
@@ -387,19 +410,19 @@ Now handling font encoding U ...
 )) (./document.aux)
 \openout1 = `document.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 26.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 28.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -412,15 +435,15 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(85.35826pt, 426.79135pt, 85.35826pt)
-* v-part:(T,H,B)=(99.58464pt, 674.33032pt, 71.13188pt)
+* h-part:(L,W,R)=(73.97733pt, 449.55322pt, 73.97733pt)
+* v-part:(T,H,B)=(85.35826pt, 688.5567pt, 71.13188pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=426.79135pt
-* \textheight=674.33032pt
-* \oddsidemargin=13.08827pt
-* \evensidemargin=13.08827pt
-* \topmargin=-9.68535pt
+* \textwidth=449.55322pt
+* \textheight=688.5567pt
+* \oddsidemargin=1.70734pt
+* \evensidemargin=1.70734pt
+* \topmargin=-23.91173pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=12.0pt
@@ -440,16 +463,16 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 
 (/usr/share/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count96
-\scratchdimen=\dimen123
+\scratchcounter=\count100
+\scratchdimen=\dimen126
 \scratchbox=\box27
-\nofMPsegments=\count97
-\nofMParguments=\count98
+\nofMPsegments=\count101
+\nofMParguments=\count102
 \everyMPshowfont=\toks22
-\MPscratchCnt=\count99
-\MPscratchDim=\dimen124
-\MPnumerator=\count100
-\makeMPintoPDFobject=\count101
+\MPscratchCnt=\count103
+\MPscratchDim=\dimen127
+\MPnumerator=\count104
+\makeMPintoPDFobject=\count105
 \everyMPtoPDFconversion=\toks23
 ) (/usr/share/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -496,88 +519,102 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <16> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 30.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <16> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 28.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 28.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 30.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 30.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <16> not available
-(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 28.
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 30.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 30.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 28.
+(Font)              <12> on input line 30.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 28.
+(Font)              <8> on input line 30.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 28.
+(Font)              <6> on input line 30.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 30.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 32.
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <12> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 32.
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 34.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 53.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 58.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 7540) in paragraph at lines 111--128
-[]\OT1/ptm/m/n/12 A fim de cal-cu-lar as instru[][]oes de cada \OT1/ptm/m/it/12
- ben-ch-mark \OT1/ptm/m/n/12 do \OT1/pcr/m/n/12 SPEC CPU2006\OT1/ptm/m/n/12 ,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 111--128
-\OT1/ptm/m/n/12 dois \OT1/ptm/m/it/12 scripts bash \OT1/ptm/m/n/12 fo-ram im-pl
-e-men-ta-dos. O pri-meiro, cha-mado de
- []
-
-[2]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <12> not available
-(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 152.
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 163.
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 157.
+ <cint.png, id=17, 584.93532pt x 208.52907pt>
+File: cint.png Graphic file (type png)
 
- (/usr/share/texmf-dist/tex/latex/psnfss/omsptm.fd
+<use cint.png>
+Package pdftex.def Info: cint.png used on input line 193.
+(pdftex.def)             Requested size: 404.59515pt x 144.24158pt.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 194.
+
+ (/usr/share/texmf-dist/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 194.
+LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <10> not available
+(Font)              Font shape `OT1/phv/b/it' tried instead on input line 194.
+LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <10> not available
+(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 194.
+LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 194.
+
+<cfp.png, id=18, 542.77782pt x 217.5628pt>
+File: cfp.png Graphic file (type png)
+ <use cfp.png>
+Package pdftex.def Info: cfp.png used on input line 202.
+(pdftex.def)             Requested size: 404.59515pt x 162.18242pt.
+
+Underfull \hbox (badness 1057) in paragraph at lines 230--235
+\OT1/ptm/m/n/12 6.894.341.859.256 instru[][]oes) e \OT1/pcr/m/n/12 998.specrand
+\OT1/ptm/m/n/12 /\OT1/pcr/m/n/12 999.specrand \OT1/ptm/m/n/12 (tendo 536.611.74
+8
+ []
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <13> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 237.
+[3 <./cint.png (PNG copy)> <./cfp.png (PNG copy)>] [4]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 337.
+
+
+(/usr/share/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 163.
-
-Underfull \hbox (badness 2478) in paragraph at lines 166--168
-[][]\OT1/pcr/m/n/12 403.gcc\OT1/ptm/m/n/12 : 77489490228, 151321617974, 1395125
-28163, 103537789803,
- []
-
-[3]
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <13> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 210.
- [4] (./document.bbl)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 337.
+ [5] (./document.bbl)
 [6] (./document.aux) ) 
 Here is how much of TeX's memory you used:
- 4161 strings out of 493054
- 67125 string characters out of 6140586
- 149646 words of memory out of 5000000
- 7594 multiletter control sequences out of 15000+600000
- 23608 words of font info for 52 fonts, out of 8000000 for 9000
+ 4379 strings out of 493054
+ 70230 string characters out of 6140586
+ 153834 words of memory out of 5000000
+ 7790 multiletter control sequences out of 15000+600000
+ 28727 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,10n,46p,276b,270s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,10n,46p,298b,270s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/
-share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/u
-rw/courier/ucrb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb
-></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texmf-d
-ist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/tim
-es/utmbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sh
-are/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on document.pdf (6 pages, 119177 bytes).
+share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrb
+8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/te
+xmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1
+/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8
+a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf
+-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/
+times/utmr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on document.pdf (6 pages, 202206 bytes).
 PDF statistics:
- 60 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
+ 74 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
