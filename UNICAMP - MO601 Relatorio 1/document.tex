@@ -371,10 +371,9 @@ parâmetros são especificados através de, respectivamente,
 \texttt{IARG\_BRANCH\_TAKEN} durante a chamada de \texttt{INS\_InsertCall}.
 
 A execução desta \textit{pintool} nos mesmos \textit{benchmarks} da subseção
-anterior permitiu a avaliação dos dois modelos. Como esperado,
-o modelo de 2 \textit{bits} sempre superou o de 1 \textit{bit}. A tabela
+anterior permitiu a avaliação dos dois modelos.  A tabela
 \ref{tab:modelos} mostra os resultados para os dois modelos de \textit{branch
-predictor}. \textit{Entrada} corresponde ao número de entradas de cada
+predictor}. \textit{E} corresponde ao número de entradas de cada
 \textit{benchmark}, \textit{Misses} é a somatória do número de
 \textit{miss-predictions} de todas as entradas, \textit{Hits} a somatória das
 quantidades em que o preditor acertou e, enfim, \% é a razão 
@@ -385,23 +384,36 @@ as entradas.
     \centering
 	\caption{\label{tab:modelos} Resultados obtidos para os modelos \textit{1-bit}
 	e \textit{2-bit}.}
-	\begin{tabular}{ c | c | c | c | c | c | c | c |}
+	\begin{tabular}{| c | c | c | c | c | c | c | c |}
 		\hline
-		\multicolumn{2}{c|}{} & \multicolumn{3}{c|}{\textbf{Modelo 1}} &
-		\multicolumn{3}{c|}{\textbf{Modelo 2}}	\\ 	\hline 
-		\textit{\textbf{Benchmark}} & Entradas  & \textit{Misses} & \textit{Hits} & \%
-		& \textit{Misses} & \textit{Hits} & \% \\
+		\multicolumn{2}{|c|}{} & \multicolumn{3}{c|}{\textbf{Modelo 1}} &
+		\multicolumn{3}{|c|}{\textbf{Modelo 2}}	\\ 	\hline 
+		\textit{\textbf{Benchmark}} & \textit{E}  & \textit{Misses} & \textit{Hits} &
+		\% & \textit{Misses} & \textit{Hits} & \% \\
 		\hline \hline \texttt{400.perlbench} & 3 & \(4.0\times10^{10}\) &
 		\(9.4\times10^{10}\) & 0.70 & \(2.7\times10^{10}\) & \(1.1\times10^{11}\)
-		& 0.80
-		\\
-		\hline \texttt{401.bzip2} & 6 & &  & & & \\ \hline 
-		\texttt{403.gcc} & 9 & & & & & \\
-		\hline \texttt{429.mcf} & 1 & & & & & \\ \hline 
-		\texttt{445.gobmk} & 5 & & & & & \\ \hline 		
+		& 0.80 \\
+		\hline \texttt{401.bzip2} & 6 & \(9.1\times10^{9}\) & \(5.4\times10^{10}\) &
+		0.86 & \(1.3\times10^{10}\) & \(5.0\times10^{10}\) & 0. 79 \\ \hline
+		\texttt{403.gcc} & 9 & \(4.7\times10^{9}\) & \(2.3\times10^{10}\) &
+		0.83 & \(4.9\times10^{9}\) & \(2.3\times10^{10}\) & 0. 82 \\ \hline
+		\texttt{445.gobmk} & 5 & \(2.0\times10^{10}\) & \(4.3\times10^{10}\)  & 0.68 &
+		\(1.8\times10^{10}\) & \(4.5\times10^{10}\) & 0.72 \\ \hline
+		\texttt{999.specrand} & 1 & \(3.9\times10^{7}\) & \(6.4\times10^{7}\) & 0.62 &
+		\(4.7\times10^{7}\) & \(5.9\times10^{7}\) & 0.58\\ \hline
 	\end{tabular}	    
 \end{table} 
 
+Observa-se que:
+
+\begin {itemize}
+  \item O modelo 2 foi superior para os \textit{benchmarks}
+  \texttt{400.perlbench} e \texttt{445.gobmk}, e inferior para os demais,
+  provando que tais programas não apresentam comportamento desequilibrado, isto
+  é, não permanecem nos estados \textit{fortes} de tal modelo;
+  \item O desempenho foi inferior para o \textit{benchmark} que apresenta menos
+  instruções, isto é, \texttt{999.specrand}; 
+\end{itemize} 
 
 \section{Conclusões}
 
