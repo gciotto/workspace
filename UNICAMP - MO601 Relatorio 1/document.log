@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2016.5.14)  12 SEP 2016 19:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Arch Linux) (preloaded format=pdflatex 2016.5.14)  13 SEP 2016 17:58
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -436,11 +436,11 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
 * h-part:(L,W,R)=(73.97733pt, 449.55322pt, 73.97733pt)
-* v-part:(T,H,B)=(85.35826pt, 688.5567pt, 71.13188pt)
+* v-part:(T,H,B)=(85.35826pt, 694.24716pt, 65.44142pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
 * \textwidth=449.55322pt
-* \textheight=688.5567pt
+* \textheight=694.24716pt
 * \oddsidemargin=1.70734pt
 * \evensidemargin=1.70734pt
 * \topmargin=-23.91173pt
@@ -574,46 +574,51 @@ File: cfp.png Graphic file (type png)
 Package pdftex.def Info: cfp.png used on input line 202.
 (pdftex.def)             Requested size: 404.59515pt x 162.18242pt.
 
-Underfull \hbox (badness 1057) in paragraph at lines 230--235
+Underfull \hbox (badness 1057) in paragraph at lines 230--237
 \OT1/ptm/m/n/12 6.894.341.859.256 instru[][]oes) e \OT1/pcr/m/n/12 998.specrand
 \OT1/ptm/m/n/12 /\OT1/pcr/m/n/12 999.specrand \OT1/ptm/m/n/12 (tendo 536.611.74
 8
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <13> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 237.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 239.
 [3 <./cint.png (PNG copy)> <./cfp.png (PNG copy)>] [4]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 337.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 339.
 
 
 (/usr/share/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 337.
- [5] (./document.bbl)
-[6] (./document.aux) ) 
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 339.
+
+Underfull \hbox (badness 1694) in paragraph at lines 345--348
+[][]\OT1/ptm/m/n/12 A rou-tina \OT1/pcr/m/n/12 BZ2[]compressBlock \OT1/ptm/m/n/
+12 em \OT1/pcr/m/n/12 401.bzip2 \OT1/ptm/m/n/12 con-tri-bui com 22.2% das
+ []
+
+[5] (./document.bbl) [6] (./document.aux) ) 
 Here is how much of TeX's memory you used:
  4379 strings out of 493054
  70230 string characters out of 6140586
- 153834 words of memory out of 5000000
+ 153838 words of memory out of 5000000
  7790 multiletter control sequences out of 15000+600000
  28727 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,10n,46p,298b,270s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/
-share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
-/usr/share/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf-dist
-/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/cour
-ier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></us
-r/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-dist/
-fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/u
-tmbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/
-texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on document.pdf (6 pages, 219450 bytes).
+{/usr/share/texmf-dist/fonts/enc/dvi
+ps/base/8r.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
+></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><
+/usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist
+/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/hel
+vetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></
+usr/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-dist/fo
+nts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/ut
+mr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on document.pdf (6 pages, 220213 bytes).
 PDF statistics:
  82 PDF objects out of 1000 (max. 8388607)
  57 compressed objects within 1 object stream

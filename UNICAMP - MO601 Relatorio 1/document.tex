@@ -231,7 +231,9 @@ Verifica-se, portanto, que o \textit{benchmark} que utiliza mais entradas em
 seus testes é \texttt{403.gcc}, com 9 entradas, totalizando 1.152.387.847.873
 instruções executadas. Os \textit{benchmarks} que rodaram mais e menos instruções foram,
 respectivamente, \texttt{454.calculix} (com 6.894.341.859.256 instruções) e
-\texttt{998.specrand}/\texttt{999.specrand} (tendo 536.611.748 instruções cada). 
+\texttt{998.specrand}/\texttt{999.specrand} (tendo 536.611.748 instruções cada).
+Em geral, os \textit{benchmarks} do conjunto inteiro executam menos instruções
+que os do conjunto de ponto flutuante. 
 
 
 \section{Implementação de novas \textit{pin tools}} \label{sec:tool}
@@ -329,23 +331,27 @@ instrução. Por fim, o contador de instruções é incrementado.
 
 Esta \texttt{pintool} foi testada em cinco \textit{benchmarks} do
 \texttt{SPEC CPU2006}, sendo eles \texttt{400.perlbench}, \texttt{401.bzip2},
-\texttt{403.gcc}, \texttt{429.mcf}  e \texttt{445.gobmk}. A impressão dos resultados é
-realizada de maneira decrescente. A seguir, são apresentadas algumas
+\texttt{403.gcc}, \texttt{445.gobmk} e \texttt{999.specrand}. A impressão dos
+resultados é realizada de maneira decrescente. A seguir, são apresentadas algumas
 considerações importantes a respeito das execuções.
 
 \begin {itemize}
   \item Todos os \textit{benchmarks} \textbf{testados} apresentam apenas uma
   \textit{thread}, portanto a sua performance não é \textit{extremamente}
   degradada pela \textit{tool};
-  \item A execução de \texttt{malloc} corresponde a apenas 0.34\% das instruções
-  executadas por \texttt{400.perlbench};
-  \item A routina que é mais executada em \texttt{401.bzip2} é
-  \texttt{BZ2\_compressBlock}, sendo executada 0.7\% das vezes;
-  \item as instruções executadas em \texttt{htab\_traverse} valem 1.77\% do
+  \item A execução de \texttt{S\_regmatch} corresponde a 50\% das
+  instruções executadas por \texttt{400.perlbench}, com \(1.116\times10^{12}\)
+  instruções nas três entradas;
+  \item A routina \texttt{BZ2\_compressBlock} em \texttt{401.bzip2} contribui
+  com 22.2\% das instruções executadas, enquanto que \texttt{BZ2\_decompress}
+  apenas com 12.6\%;
+  \item as instruções executadas em \texttt{bitmap\_operation} valem 9.2\% do
   número de instruções de \texttt{403.gcc};
-  \item \texttt{update\_tree} corresponde a 1.09\% da execução de
-  \texttt{429.mcf};
-  \item \texttt{445.gobmk} chama, em média, 1664 rotinas.  
+  \item A rotina que executa mais instruções em \texttt{445.gobmk} é
+  \texttt{do\_play\_move}, com 8.4\% do total. Isto indica um grande equilíbrio
+  entre as funções.
+  \item \texttt{\_GI\_\_printf\_fp\_} corresponde a 32.6\% da execução de
+  \texttt{999.specrand};
 \end{itemize}
 
 \subsection{Simulação dos modelos de 1 e 2 \textit{bits} de \textit{branch
