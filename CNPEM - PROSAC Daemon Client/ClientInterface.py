@@ -54,7 +54,8 @@ class ClientInterface (QMainWindow):
         self.table_view.setModel(self.table_model)
         self.table_view.verticalHeader().hide()
 	self.table_view.setMinimumHeight(400)
-	self.table_view.setMinimumWidth(320)
+	self.table_view.setMinimumWidth(200)
+	self.table_view.setMaximumWidth(220)
         
         self.log_label = QLabel("Command log:", parent = self)
         self.log_label.setMaximumHeight(20)
@@ -174,7 +175,7 @@ class TableModel (QAbstractTableModel):
         return len(self._data)
     
     def columnCount(self, *args, **kwargs):
-        return 3
+        return 2
     
     def data(self, index, role):
         
@@ -199,10 +200,7 @@ class TableModel (QAbstractTableModel):
         if role == Qt.DisplayRole:
             
             if __col == 0:
-                return QVariant(__node.network_id)
-            
-            if __col == 1:
-                return QVariant(__node.node_id)
+                return QVariant(__node.dns_name)
             
             return QVariant(Control_Node_State.toString(__node.state))
         
@@ -219,12 +217,9 @@ class TableModel (QAbstractTableModel):
         
         if orientation == Qt.Horizontal:
             if section == 0:
-                return QVariant("Rede")
+                return QVariant("SBC")
             
             elif section == 1:
-                return QVariant("No")
-            
-            elif section == 2:
                 return QVariant("Status")
             
         return QVariant()
