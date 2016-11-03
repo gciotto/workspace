@@ -1,10 +1,10 @@
-\documentclass[12pt, a4paper]{article}
+\documentclass[11pt, a4paper]{article}
 %=========================== PACKAGES =============================%
 
 \usepackage[utf8]{inputenc} 
 \DeclareUnicodeCharacter{00A0}{ }
 
-\usepackage[hmargin=1.5cm,vmargin=1.5cm]{geometry}
+\usepackage[hmargin=1.5cm, vmargin=2.4cm]{geometry}
 \usepackage[brazil]{babel}
 
 \usepackage{longtable}
@@ -39,11 +39,20 @@
 {numbers=none} 
 
 \usepackage{multirow}
-
-
 \usepackage{float}
 
 \usepackage{enumerate}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\includegraphics[scale=0.17]{image/cnpem_logo}}
+\renewcommand\headrulewidth{0pt}
+
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+\usepackage{setspace}
 
 %=========================== PACKAGES =============================%
 
@@ -52,22 +61,28 @@
 
 \begin{document}
 
-\input{cover}
+\input{cover_cnpem}
+
+\input{cover_sign}
+
+\onehalfspacing
 
 \setcounter{tocdepth}{2}
 \tableofcontents
 
 \newpage
 
+\pagenumbering{arabic}
+
 \input{introduction}
 
-\input{ntp}
+\input{ntp} 
 
 \input{beagle-sincronismo}
 
 \input{client-prosac}
 
-\input{epics-server}
+\input{epics-server} 
 
 \input{epics-archiver}
 

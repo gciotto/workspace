@@ -562,7 +562,7 @@ A interface abaixo foi gerada a partir destas bibliotecas e utilizam as
     
     \centering
     \includegraphics[scale=0.4]{image/epics-opi-ntpgps}
-    \caption {\centering Interface construída para visualização das
+    \caption {Interface construída para visualização das
     \textit{PVs}.}
     \label{img:ntp-opi} 
 \end{figure} 
@@ -604,7 +604,7 @@ disponíveis.
     
     \centering
     \includegraphics[scale=0.6]{image/adafruit_GPS}
-    \caption {\centering Resultado do comando \texttt{ntpq -p} na
+    \caption {Resultado do comando \texttt{ntpq -p} na
     \textit{BeagleBone} conectada ao \textit{cape} com o receptor \textit{Adafruit Ultimate GPS}.}
     \label{img:adafruit} 
 \end{figure} 
@@ -626,12 +626,11 @@ anterior, o servidor conseguiu sincronizar-se ao pulso de PPS.
 \FloatBarrier
 
 \begin{figure}[h]
-    
     \centering
     \includegraphics[scale=0.6]{image/mikroe}
-    \caption {\centering Resultado do comando \texttt{ntpq -p} na
-    \textit{BeagleBone} conectada ao \textit{cape} com o receptor
-    \textit{MikroE GPS Click}.}
+    \caption {Resultado do comando \texttt{ntpq -p} na
+    \textit{BeagleBone} conectada ao \textit{cape} com o receptor \textit{MikroE
+    GPS Click}.}  
     \label{img:mikroe} 
 \end{figure} 
 
@@ -646,20 +645,17 @@ externo, referenciado pelo endereço \url{ntp.cnpem.br}.
 
 \FloatBarrier
 
-\begin{figure}[h]
+\begin{figure}[h!]
     
     \centering
     \includegraphics[scale=0.6]{image/cliente-ntp}
-    \caption {\centering Resultado do comando \texttt{ntpq -p} na
-    \textit{BeagleBone} cliente que obtêm sincronização de 3 servidores
-    distintos.}
+    \caption {Comando \texttt{ntpq -p} na \textit{BeagleBone} cliente que obtêm sincronização de 3 servidores distintos.}
     \label{img:cliente_ntp} 
 \end{figure} 
 
 \FloatBarrier
 
-Nota-se que a diferença
-entre as fontes PPS está na ordem de unidades de microssegundos e que a
+Nota-se que a diferença entre as fontes PPS está na ordem de unidades de microssegundos e que a
 diferença entre elas e a externa é da ordem de 100\(\mu s\). Isso indica que o
 fato de que a externa pertence a uma rede externa ao CNPEM, há a introdução de
 um atraso no horário fornecido por ela.
