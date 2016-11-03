@@ -97,6 +97,9 @@ class Network_Nodes():
 #     #### TESTES
 #     nodes.append(Control_Node(47, 5, "r47n5", "10.128.47.5"))
 #     nodes.append(Control_Node(47, 6, "r47n6", "10.128.47.6"))
+
+    # Adicionado em 15/09/2016 (gerador auxiliar de diesel)
+    nodes.append(Control_Node(0, 0, "GERADOR", "10.0.30.48"))
      
     #redes 36 e 38
     nodes.append(Control_Node(36,1,'r36n1','10.128.1.127'))
@@ -131,6 +134,8 @@ class Network_Nodes():
      
     # Adicionado em 14/07/2016 (no com espiao da referencia externa da fonte A6QF01)
     nodes.append(Control_Node(49, 2, "r49n2", "10.128.49.2"))
+
+
     
 
             
