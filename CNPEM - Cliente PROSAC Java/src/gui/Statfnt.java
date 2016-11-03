@@ -1,8 +1,14 @@
 package gui;
 
-import javax.swing.SpinnerListModel;
+import java.awt.BorderLayout;
+import java.awt.Checkbox;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import main.Board;
-import main.Client;
 
 /**
  * Graphical representation of a STATFNT board. This class inherits from JPanel, therefore
@@ -59,8 +65,8 @@ public class Statfnt extends javax.swing.JPanel implements IBoard {
      *  - Read Block  (5 bytes): priority + flags + port A + port B + port C
      *  - Write Block (3 bytes): priority + flags + reset	
      */
-    public void refresh()
-    {
+    public void refresh() {
+    	
         if(board == null)
             return;
         
@@ -99,22 +105,18 @@ public class Statfnt extends javax.swing.JPanel implements IBoard {
     public void setPosition(String p) {
         txtPosition.setText(p);
     }    
-
-    /**
-     * Code generated automatically by NetBeans window editor.
-     */
-    @SuppressWarnings("unchecked")                        
+              
     private void initComponents() {
 
-        txtName = new javax.swing.JLabel();
-        txtPosition = new javax.swing.JLabel();
-        lblportA = new javax.swing.JLabel();
-        lblportB = new javax.swing.JLabel();
-        lblportC = new javax.swing.JLabel();
-        lblByteA = new javax.swing.JLabel();
-        lblByteB = new javax.swing.JLabel();
-        chbReset = new java.awt.Checkbox();
-        lblByteC = new javax.swing.JLabel();
+        txtName = new JLabel();
+        txtPosition = new JLabel();
+        lblportA = new JLabel();
+        lblportB = new JLabel();
+        lblportC = new JLabel();
+        lblByteA = new JLabel();
+        lblByteB = new JLabel();
+        chbReset = new Checkbox();
+        lblByteC = new JLabel();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
@@ -140,70 +142,43 @@ public class Statfnt extends javax.swing.JPanel implements IBoard {
 
         lblByteC.setText("0");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtPosition)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblportA)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblByteA, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblportB)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblByteB, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblportC)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblByteC, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(chbReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-        );
+        setLayout(new BorderLayout());
         
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtName)
-                    .addComponent(txtPosition))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblportA)
-                    .addComponent(lblByteA))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblportB)
-                    .addComponent(lblByteB))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblportC)
-                        .addComponent(lblByteC))
-                    .addComponent(chbReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-    }// </editor-fold>                        
+        JPanel title = new JPanel();
+        title.setLayout(new BorderLayout());
+        title.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        title.add(txtPosition, BorderLayout.EAST);
+        title.add(txtName, BorderLayout.CENTER);
+        
+        add(title, BorderLayout.NORTH);
+        
+        JPanel data = new JPanel();
+        data.setLayout(new GridLayout(5, 2, 10, 10));
+        data.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        data.add(lblportA);
+        data.add(lblByteA);
+        data.add(lblportB);
+        data.add(lblByteB);
+        data.add(lblportC);
+        data.add(lblByteC);
+        
+        data.add(chbReset);
+        
+        add(data, BorderLayout.CENTER);
+        
+    }                     
 
     // Variables declaration - do not modify                     
-    private java.awt.Checkbox chbReset;
-    private javax.swing.JLabel lblByteA;
-    private javax.swing.JLabel lblByteB;
-    private javax.swing.JLabel lblByteC;
-    private javax.swing.JLabel lblportA;
-    private javax.swing.JLabel lblportB;
-    private javax.swing.JLabel lblportC;
-    private javax.swing.JLabel txtName;
-    private javax.swing.JLabel txtPosition;
+    private Checkbox chbReset;
+    private JLabel lblByteA;
+    private JLabel lblByteB;
+    private JLabel lblByteC;
+    private JLabel lblportA;
+    private JLabel lblportB;
+    private JLabel lblportC;
+    private JLabel txtName;
+    private JLabel txtPosition;
     // End of variables declaration                        
 }

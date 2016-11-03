@@ -198,6 +198,16 @@ public class BoardsFrame extends JFrame {
 			
 		}
 		
+		else if (m == Module.HP232) {
+			
+			HP232 hp232 = new HP232();
+			
+			hp232.setBoard(b);
+			
+			boardsList.add(hp232);
+			pBoards.add(hp232);
+		}
+		
 	}
 
 	/**

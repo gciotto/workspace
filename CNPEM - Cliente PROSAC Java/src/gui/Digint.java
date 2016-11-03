@@ -1,5 +1,11 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+
 /**
  * Graphical representation of a DIGINT board. This class inherits from JPanel, therefore
  * it can be placed inside a window, such as a JFrame. In our application, it will be instantiated
@@ -160,6 +166,48 @@ public class Digint extends javax.swing.JPanel implements IBoard {
         lblportCByte8.setText("Byte 8:");
         lblByteC8.setText("0");
 
+        setLayout(new BorderLayout());
+        
+        JPanel title = new JPanel();
+        title.setLayout(new BorderLayout());
+        title.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        title.add(txtPosition, BorderLayout.EAST);
+        title.add(txtName, BorderLayout.CENTER);
+        
+        add(title, BorderLayout.NORTH);
+        
+        JPanel data = new JPanel();
+        data.setLayout(new GridLayout(5, 2, 10, 10));
+        data.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        data.add(lblportCByte1);
+        data.add(lblByteC1);
+        
+        data.add(lblportCByte2);
+        data.add(lblByteC2);
+        
+        data.add(lblportCByte3);
+        data.add(lblByteC3);
+        
+        data.add(lblportCByte4);
+        data.add(lblByteC4);
+        
+        data.add(lblportCByte5);
+        data.add(lblByteC5);
+        
+        data.add(lblportCByte6);
+        data.add(lblByteC6);
+        
+        data.add(lblportCByte7);
+        data.add(lblByteC7);
+        
+        data.add(lblportCByte8);
+        data.add(lblByteC8);
+        
+        add(data);
+        
+        /*
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -240,7 +288,7 @@ public class Digint extends javax.swing.JPanel implements IBoard {
                     .addComponent(lblportCByte8)
                     .addComponent(lblByteC8))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        );*/
     }// </editor-fold>                        
 
     /* Variables declaration - do not modify */                     

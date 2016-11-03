@@ -169,7 +169,7 @@ public class Locon extends javax.swing.JPanel implements IBoard {
         else {
         	
             board.setWillCycle(true);
-            board.setCycleCurve(cycleCurve - 1);
+            board.setCycleCurve(32 + cycleCurve - 1);
         }
         
         writeBytes[1] = board.getCycleCurve();       
@@ -259,7 +259,12 @@ public class Locon extends javax.swing.JPanel implements IBoard {
 
         cbRamp.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Não Rampa", "Rampa 0", "Rampa 1" ,"Rampa 2" }));
 
-        cbCycle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Não Cicla", "Cicla 0", "Cicla 1", "Cicla 2", "Cicla 3", "Cicla 4" }));
+        cbCycle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Não Cicla", 	"Cicla 0", "Cicla 1", "Cicla 2", "Cicla 3", "Cicla 4", "Cicla 5",
+        																					"Cicla 6", "Cicla 7", "Cicla 8", "Cicla 9", "Cicla 10", "Cicla 11",
+        																					"Cicla 12", "Cicla 13", "Cicla 14", "Cicla 15", "Cicla 16", "Cicla 17",
+        																					"Cicla 18", "Cicla 19", "Cicla 20", "Cicla 21", "Cicla 22", "Cicla 23",
+        																					"Cicla 24", "Cicla 25", "Cicla 26"}));
+        
 
         spinner.setModel(new SpinnerListModel(spinnerValues));
         spinner.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -359,12 +364,12 @@ public class Locon extends javax.swing.JPanel implements IBoard {
                     .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(5, 5, 5))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
     private void spinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerStateChanged
         setSkips((String) spinner.getValue());
         
-    }//GEN-LAST:event_spinnerStateChanged
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private gui.Canvas canvas;

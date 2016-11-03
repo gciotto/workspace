@@ -355,7 +355,7 @@ public class PCOR4 extends javax.swing.JPanel implements IBoard {
                         .addComponent(spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(5, 5, 5))
         );
-    }// </editor-fold>                        
+    }                        
 
     private void spinnerStateChanged(javax.swing.event.ChangeEvent evt) {                                     
         setSkips((String) spinner.getValue());
