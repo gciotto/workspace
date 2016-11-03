@@ -1,0 +1,12 @@
+[Unit]
+Description=pyHP232 PROSAC
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/root/gciotto/pyHP232/pyHP232.py
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
