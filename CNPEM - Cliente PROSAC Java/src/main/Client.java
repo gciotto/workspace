@@ -91,9 +91,14 @@ public class Client
 
 		for(int i = 0; i < rampCurves[0].length; ++i)
 		{
-			rampCurves[0][i] = (short) ((i+1)*30);
-			rampCurves[1][i] = (short) (3*i);
-			rampCurves[2][i] = (short) (4000 * Math.random());
+			rampCurves[0][i] = (short) (2048 + 2047 * Math.cos((i % 510) * 2 * Math.PI / 510));
+			
+			if (i <= 510)
+				rampCurves[1][i] = (short) (i * 4095 / 510);
+			else
+				rampCurves[1][i] = (short) ((1020 - i) * 4095 / 509);
+			
+			rampCurves[2][i] = (short) (2048 + 2047 * Math.cos(i * 2 * Math.PI / 1020));
 		}
 	}
 
@@ -147,11 +152,11 @@ public class Client
 		if(connectTo(ip, Integer.parseInt(port)) < 0) // Erro
 			return;
 
-		connected = true;
-		frame.setConnected();
-
 		executeCommand(Command.IDENT);
 		executeCommand(Command.END_IDENT);
+		
+		connected = true;
+		frame.setConnected();
 
 		/* Checks if client supports all connected boards. */
 		if (!supportedBoards) {
