@@ -35,14 +35,12 @@ implementadas para a \textit{PRU} não estão sujeitas a fatores que degradam a
 precisão como o compartilhamento de \textit{CPU} com outros
 processos e preeempção. Aplicações que rodam sobre \textit{Linux} embarcado e
 que, portanto, compartilham recursos com outros processos, apresentam,
-geralmente, desempenho inferior. O sistema desenvolvido utiliza a \textit{PRU}
-para a recepção do sinal de sincronismo e ativa, posteriormente, seus nós
+geralmente, desempenho inferior. O sistema desenvolvido anteriormente pelo grupo
+utiliza a \textit{PRU} para a recepção do sinal de sincronismo e ativa, posteriormente, seus nós
 escravos, conforme figura \ref{fig:pru_sincronismo} abaixo. Esse sistema obteve
 um \textit{jitter} da ordem de 15ns, representando, assim, um valor próximo do
 ótimo, uma vez que os ciclos de processamento de cada um dos componentes estão
 próximos de 5ns.
-
-\FloatBarrier
 
 \begin{figure}[h]
 
@@ -52,15 +50,13 @@ próximos de 5ns.
 \label{fig:pru_sincronismo}
 \end{figure}
 
-\FloatBarrier
+\vspace{12pt}
 
 Nesta seção, será apresentada a alternativa descrita na figura
 \ref{fig:pru_sincronismo_ethernet}, que utiliza o protocolo \textit{Ethernet} e
 equipamentos padrões na implementação deste tipo de rede, como
 \textit{switches}, para o envio dos \textit{triggers} de sincronismo, e a sua
 respectiva \textit{performance}.
-
-\FloatBarrier
 
 \begin{figure}[h]
 
@@ -69,8 +65,6 @@ respectiva \textit{performance}.
 \caption {Sistema de sincronismo proposto.}
 \label{fig:pru_sincronismo_ethernet}
 \end{figure}
-
-\FloatBarrier
 
 \subsection {Implementação}
 
@@ -84,8 +78,8 @@ Black}. Em seu lugar, implementamos módulos do \textit{kernel} do
 \textit{Linux}, os chamados \textit{Loadable Kernel Modules} (\textit{LKM}).
 Tais módulos são mecanismos que permitem a adição ou remoção de código do \textit{Linux kernel}
 em tempo de execução e, por esta razão, são ideias para a implementação de
-\textit{device drivers}, cujo principal propósito é realizar a comunicação com o
-\textit{hardware} disponível. 
+\textit{device drivers} \cite{derek}, cujo principal propósito é realizar a
+comunicação com o \textit{hardware} disponível.  
 
 \vspace{12pt}
 
@@ -101,19 +95,14 @@ que, na maioria das vezes, escrevemos e executamos as aplicações em C. A figur
 de interrupções, que serão utilizadas neste exemplo, ao contrário do
 \textit{user space}.
 
-\FloatBarrier
-
 \begin{figure}[h]
 
 \centering
-\includegraphics[scale=0.55]{image/userspace-kernelspace}
-\caption {Comunicação entre \textit{kernel} e \textit{user spaces}.}
+\includegraphics[scale=0.54]{image/userspace-kernelspace}
+\caption {Comunicação entre \textit{kernel} e \textit{user spaces}. Extraída de
+\cite{derek}.}
 \label{fig:derek_kernel_user}
 \end{figure}
-
-\FloatBarrier
-
-\vspace{-12pt}
 
 \subsubsection{Descrição das características do projeto}
 
@@ -121,7 +110,7 @@ De maneira geral, serão desenvolvidas duas aplicações, uma para a \textit{Bea
 BB1} que recebe o \textit{trigger} de sincronismo e prepara o pacote
 \textit{UDP} para envio e a outra, para a placa \textit{BB2}, que é responsável
 pela recepção do respectivo pacote e tratamento. A aplicação que recebe o
-\textit{trigger} mantem um contador interno e o transmite em intervalos
+\textit{trigger} mantém um contador interno e o transmite em intervalos
 definidos de tempo, para que o nó escravo possa também manter um contador
 de mesmo tipo. Dessa forma, o nó escravo pode determinar se um pacote foi
 perdido durante a transmissão e corrigir seu contador.
@@ -147,56 +136,56 @@ Por questões de simplicidade, o módulo \textit{PWM} da placa que envia os
 pacotes \textit{UDP} (\textit{BB1}) será utilizado como gerador dos
 \textit{triggers} de sincronismo. A sua configuração será descrita na próxima subseção.
 
-\subsubsection {Configuração do \textit{PWM} com o \textit{Device Tree
-Overlays}}
-
-Os mecanismos de \textit{Cape Manager} e \textit{Device Tree Overlays} permitem
-a modificação do sistema, como, por exemplo, configuração da função dos pinos,
-ativação e carregamento de módulos em tempo de execução a partir de programas
-sendo executados no \textit{user space}.
-
-\vspace{12pt}
-
-
-Sendo assim, a fim de modificarmos o pino \texttt{P9\_22} (\textit{header P9},
-pino 22) para que atue como uma saída do módulo \textit{PWM}, é necessário
-escrevermos um arquivo de extensão \texttt{.dts} (\textit{device tree source}),
-contendo as especificações que desejamos adotar. Um arquivo deste tipo é
-disponível em \url{http://tinyurl.com/ntkl2w7} e contem todas as possíveis
-configurações de todos os pinos da \textit{BeagleBone Black}. Como vamos
-utilizar somente as linhas referentes ao \texttt{P9\_22}, podemos copiá-las para
-um arquivo separado e adotá-lo em seguida. Após obtermos tal arquivo, é
-necessário compilá-lo a partir do comando \texttt{dtc} e incluir o resultado no
-diretório \texttt{/lib/firmware/}.
-
-\vspace{12pt}
-
-Para carregar o \textit{overlay}, configuramos duas variáveis de ambiente:
-
-\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-$ export SLOTS=/sys/devices/bone_capemgr.9/slots
-$ export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
-\end{lstlisting}
-
-\vspace{12pt}
-
-Executamos, então, os comandos abaixo, em que \texttt{pwm\_P9\_22} referencia o
-arquivo gerado após compilação. \texttt{duty\_ns} e \texttt{period\_ns}
-são utilizados, respectivamente, para configurar o intervalo de tempo em que a
-onda permanecerá em nível lógico alto e o seu período total. Para as próximas
-seções, vamos adotá-los como, respectivamente, 2\textit{ms} e 70\textit{ms}. Um
-\textit{script bash}, que pode ser encontrado no repositório do grupo, foi
-escrito e automatiza o processo abaixo.
-
-\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-$ echo pwm_P9_22 > $SLOTS
-$ echo pwm > /sys/devices/ocp.3/P9_22_pinmux.12/state
-$ cd /sys/class/pwm/
-$ echo 0 > export 
-$ cd pwm0/
-$ echo 2000000 > duty_ns
-$ echo 70000000 > period_ns
-\end{lstlisting}
+% \subsubsection {Configuração do \textit{PWM} com o \textit{Device Tree
+% Overlays}}
+% 
+% Os mecanismos de \textit{Cape Manager} e \textit{Device Tree Overlays} permitem
+% a modificação do sistema, como, por exemplo, configuração da função dos pinos,
+% ativação e carregamento de módulos em tempo de execução a partir de programas
+% sendo executados no \textit{user space}.
+% 
+% \vspace{12pt}
+% 
+% 
+% Sendo assim, a fim de modificarmos o pino \texttt{P9\_22} (\textit{header P9},
+% pino 22) para que atue como uma saída do módulo \textit{PWM}, é necessário
+% escrevermos um arquivo de extensão \texttt{.dts} (\textit{device tree source}),
+% contendo as especificações que desejamos adotar. Um arquivo deste tipo é
+% disponível em \url{http://tinyurl.com/ntkl2w7} e contem todas as possíveis
+% configurações de todos os pinos da \textit{BeagleBone Black}. Como vamos
+% utilizar somente as linhas referentes ao \texttt{P9\_22}, podemos copiá-las para
+% um arquivo separado e adotá-lo em seguida. Após obtermos tal arquivo, é
+% necessário compilá-lo a partir do comando \texttt{dtc} e incluir o resultado no
+% diretório \texttt{/lib/firmware/}.
+% 
+% \vspace{12pt}
+% 
+% Para carregar o \textit{overlay}, configuramos duas variáveis de ambiente:
+% 
+% \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+% $ export SLOTS=/sys/devices/bone_capemgr.9/slots
+% $ export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
+% \end{lstlisting}
+% 
+% \vspace{12pt}
+% 
+% Executamos, então, os comandos abaixo, em que \texttt{pwm\_P9\_22} referencia o
+% arquivo gerado após compilação. \texttt{duty\_ns} e \texttt{period\_ns}
+% são utilizados, respectivamente, para configurar o intervalo de tempo em que a
+% onda permanecerá em nível lógico alto e o seu período total. Para as próximas
+% seções, vamos adotá-los como, respectivamente, 2\textit{ms} e 70\textit{ms}. Um
+% \textit{script bash}, que pode ser encontrado no repositório do grupo, foi
+% escrito e automatiza o processo abaixo.
+% 
+% \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+% $ echo pwm_P9_22 > $SLOTS
+% $ echo pwm > /sys/devices/ocp.3/P9_22_pinmux.12/state
+% $ cd /sys/class/pwm/
+% $ echo 0 > export 
+% $ cd pwm0/
+% $ echo 2000000 > duty_ns
+% $ echo 70000000 > period_ns
+% \end{lstlisting}
 
 \subsubsection{Implementação do \textit{Kernel Module} de \texttt{BB1}}
 \label{sec:bb1}
