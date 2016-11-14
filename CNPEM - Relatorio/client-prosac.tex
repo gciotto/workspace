@@ -1,4 +1,4 @@
-\section {Manutenção e Implementação de Clientes PROSAC}
+\section {Manutenção do PROSAC e Implementação de Aplicações Clientes}
 
 \subsection{Introdução}
 
@@ -16,6 +16,48 @@ Considerando a sua importância no contexto do sistema controle, dois clientes
 foram implementados a fim de testar seu funcionamento: um em Java e outro,
 utilizando o \textit{kit} de desenvolvimento \textit{STM32F7 Discovery}.
 
+\subsection {Manutenação do \textit{PROSAC}}
+
+O grupo de controle publicou na PCaPAC 2016 um artigo entitulado \textit{UVX
+Control System: An Approach With BeagleBone Black} \cite{pcapac2016}, em que fui
+um dos autores. Minha tarefa neste trabalho, em poucas palavras, foi ajustar a
+política de escalonamento e a prioridade das \textit{threads} que compõem o
+\textit{PROSAC}, de forma a obter o melhor desempenho possível nas tarefas
+síncronas realizadas pelo programa. As tarefas ditas \textit{síncronas}
+são aquelas que necessitam ser sincronizadas a partir de um pulso de sincronismo
+externo. No \textit{PROSAC}, tais tarefas consistem nas operações de ciclagem e
+rampa, isto é, a cada novo pulso recebido, o \textit{PROSAC} é encarregado de
+transmitir um novo valor às placas que estiverem participando do processo.
+Devido às mesmas limitações de processamento de tempo real discuitidas na seção
+\ref{sec:bb1}, o número de pulsos perdidos na nova versão do \textit{PROSAC} era
+elevado para as frequências superiores a 500Hz, que tornava o seu uso
+proibitivo. Dessa forma, prôpus utilizarmos o \textit{scheduler} denominado de
+\textit{Completely Fair Scheduler} e ajustar a prioridade das \textit{threads}
+de forma a garantir um maior tempo de CPU à \textit{thread} responsável por
+processar os pulsos. A tabela \ref{tab:prosac} a seguir ilustra a taxa de pulsos
+perdidos para a configuração do \textit{PROSAC} com o \textit{Completely Fair
+Scheduler} conectado a duas placas LOCON de \textit{12 bits}, ambas
+participando da ciclagem. Conforme tabela, as taxas de pulsos perdidos são muito
+inferiores aos pulsos totais recebidos, possibilitando, assim, seu uso no UVX.
+
+\vspace{-12pt}
+
+\begin{table}[h]
+
+	\centering
+	\caption{\label{tab:prosac} Resultados do \textit{PROSAC} com o
+	\textit{Completely Fair Scheduler}.}
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		\textbf{Frequência (Hz)} & \textbf{Pulsos perdidos} & \textbf{Total} &
+		\textbf{Razão} \\ \hline 
+		150 & 0 & 579.812  & 0 \\ \hline
+		512 & 8 & 5.376.056 & 0.0001\% \\ \hline
+		1000 & 18 & 6.050.225 & 0.0003\% \\ \hline
+	\end{tabular}	    
+\end{table}
+ 
+ 
 \subsection {Manutenção do cliente \textit{PROSAC} escrito em \textit{Java}}
 
 O cliente \textit{PROSAC} implementado em \textit{Java} foi desenvolvido em 2011

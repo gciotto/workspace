@@ -1,0 +1,659 @@
+\section {EPICS Archiver Appliance}
+\label{sec:archiver}
+\subsection {Introdução}
+
+O EPICS \textit{Archiver Appliance}, desenvolvido pelo instituto americano
+\textit{National Accelerator Laboratory (SLAC)}, é capaz de monitorar e arquivar
+um grande número de váriaveis, as chamadas \textit{PVs}, geradas por servidores
+EPICS presentes na rede. O sistema fornece também opções de configuração de um
+largo conjunto de parâmetros referentes ao armazenamento e monitoramento. Uma
+\textit{appliance} é composta basicamente por quatro módulos distintos, sendo eles:
+
+\begin{itemize}
+  \renewcommand\labelitemi{--}
+  \item \textit{Management}: provê as ferramentas necessárias para a gerência
+  da \textit{appliance}. Permite, por exemplo, adicionar ou remover \textit{PVs}
+  à lista de variáveis a serem arquivadas;
+  \item \textit{Engine}: realiza a integração entre os módulos;
+  \item \textit{Data Retrieval}: módulo responsável por recuperar os dados das
+  \textit{PVs} arquivadas;
+  \item \textit{ETL}: responsável por extrair os dados e tranformá-los a fim de
+  que as aplicações possam processá-los posteriormente;
+\end{itemize}
+
+A figura \ref{fig:epics_archiver} esquematiza o modo de funcionamento do
+\textit{EPICS Archiver Appliance}.
+
+\begin{figure}[h]
+    
+    \centering
+    \includegraphics[scale=0.6]{image/applarch}
+    \caption {Modo de funcionamento de uma \textit{appliance}}
+    \label{fig:epics_archiver} 
+\end{figure} 
+
+\vspace{12pt}
+
+O instituto desenvolvedor da aplicação sugere que cada módulo seja lançada em
+sua própria instância \textit{Tomcat}. Em adição, ele propõe a divisão da
+unidade de armazenamento em 3 outras unidades, de acordo com a frequência que os
+dados são salvos. Essas unidades são divididas \textit{short-term},
+\textit{medium-term} e \textit{long-term storage}, cujas frequências de
+armazenamento são, respectivamente, a cada hora, diária e anual. Essas
+configurações podem ser modificadas através da modificação de arquivos
+específicos, explicados nas próximas subseções.
+
+\vspace{12pt}
+
+
+Em um ambiente composto por diversos servidores EPICS e milhares de variáveis a
+serem monitoradas, tal como o \textit{Sirius}, um sistema capaz de automizar e
+agilizar o armazenamento e recuperação de dados se torna fundamental para o
+monitoramento de eventuais problemas. Sendo assim, as próximas seções são
+dedicadas à instalação e exploração dos recursos disponíveis nesta aplicação.
+\subsection {Instalação}
+
+Esta subseção é dedicada às etapas necessárias para a instalação do EPICS
+Archiver Appliance. Neste tutorial serão apresentadas dois métodos: um que
+utiliza os repositórios oficiais do Ubuntu 16.04 para obter os pacotes e o
+outro, os servidores dos próprios provedores dos serviços.
+
+\subsubsection {Instalação das dependências}
+\label{ref:epics-install}
+A aplicação necessita, além da própria base de bibliotecas EPICS, da
+instalação do \textit{java-jdk 8} e de servidores \textit{MySQL} e
+\textit{Apache Tomcat}. A instalação do \textit{Apache HTTP Server} é opcional e
+deve ser utilizada somente se o balanceamento de requisições entre as
+\textit{appliances} for pretentida. Nesse caso, vamos utilizar o módulo
+\textit{mod\_proxy\_balancer}.
+
+\begin {enumerate}[i.] 
+  \item \textit{Instalação do EPICS}: é necessário inicialmente fazer o
+  \textit{download} e compilar as bibliotecas EPICS. Escolha um diretório de
+  acordo com sua preferência (referenciado nesse documento por
+  \texttt{\$EPICS\_DIR}) e execute os comandos abaixo. Alguns erros podem
+  ocorrer na execução do comando \texttt{make}, resultantes da falta de algumas
+  bibliotecas no sistema. Faça as respectivas instalações e repita o processo.
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ cd $EPICS_DIR
+$ wget http://www.aps.anl.gov/epics/download/base/baseR3.14.12.5.tar.gz
+$ tar -xvzf baseR3.14.12.5.tar.gz
+$ rm baseR3.14.12.5.tar.gz
+$ cd base-3.14.12.5
+$ make
+\end{lstlisting}
+
+Adicione as seguintes variáveis de ambiente ao arquivo \texttt{.bashrc} do seu
+usuário (geralmente encontrado em \texttt{/home/user/}). Esse arquivo de
+configuração é consultado toda vez que um usuário executa um novo
+\textit{shell}.
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+export PATH=$EPICS_DIR/base-3.14.12.5/bin/linux-x86_64:$PATH
+export EPICS_BASE=$EPICS_DIR/base-3.14.12.5
+export EPICS_HOST_ARCH=linux-x86_64
+\end{lstlisting}	
+
+Enfim, atualize a sessão com
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ source /home/user/.bashrc
+\end{lstlisting}	
+
+Para testar a instalação, use o comando \texttt{caget} com
+alguma variável disponível na sua rede.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ caget variavel
+\end{lstlisting}
+
+\item \textit{Instalação do Java 8}: execute o comando abaixo para instalar o
+\textit{Java Development Kit}.
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo apt-get install openjdk-8-jdk
+\end{lstlisting}
+
+O EPICS Archiver Appliance necessita de duas variáveis de ambiente referentes ao
+\textit{Java}. Adicione-as no arquivo \textit{.bashrc}, após as variáveis de
+ambiente EPICS.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JRE_HOME=${JAVA_HOME}/jre
+\end{lstlisting}
+
+\item \textit{Instalação do MySQL Server}: para instalar um servidor
+\textit{MySQL}, basta executar o comando abaixo. Durante o processo de
+instalação, será requisitada a senha para o usuário \textit{root} do servidor.
+No nosso caso, senha escolhida foi \texttt{toor}.
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo apt-get install mysql-server
+\end{lstlisting}
+
+
+\item \textit{Instalação do Apache Tomcat}: defina um diretório onde os arquivos
+serão instalados e execute os comandos abaixo. Esse diretório será referenciado
+pela variável de ambiente \path{${TOMCAT_DIR}}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ cd ${TOMCAT_DIR}
+$ wget http://tinyurl.com/zewzg72
+$ tar -xvzf apache-tomcat-8.5.4.tar.gz
+$ rm apache-tomcat-8.5.4.tar.gz
+$ cd apache-tomcat-8.5.4/
+\end{lstlisting}
+
+Defina a variável de ambiente \texttt{\$\{CATALINA\_HOME\}}, responsável
+por referenciar o diretório \textit{apache-tomcat-8.5.4/} recém criado. Adicione
+a seguinte linha no arquivo \texttt{.bashrc} logo abaixo das variáveis de ambiente
+adicionadas na instalação do \textit{Java}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+export CATALINA_HOME = ${TOMCAT_DIR}/apache-tomcat-8.5.4
+\end{lstlisting}
+
+No \textit{Ubuntu} 16.04, a instalação pode ser realizada com o comando 
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+sudo apt-get install tomcat8
+\end{lstlisting}
+
+E defina a variável \texttt{\$\{CATALINA\_HOME\}} como 
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+export CATALINA_HOME = /usr/share/tomcat8
+\end{lstlisting}
+
+\item \textit{Instalação do Apache HTTP Server}: Para instalar o servidor
+\textit{Apache}, faça o \textit{download} do pacote. 
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ cd $INSTALL_DIR
+$ wget http://tinyurl.com/z8gnxmk
+$ tar -xvzf httpd-2.4.23.tar.gz
+$ rm httpd-2.4.23.tar.gz
+$ cd httpd-2.4.23
+\end{lstlisting}
+
+Algumas dependências devem ser instaladas:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo apt-get install libapr1-dev libaprutil1-dev
+\end{lstlisting}
+
+Será necessário instalar também a \texttt{libpcre}:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ cd $INSTALL_DIR
+$ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.37.tar.gz
+$ tar -xvzf pcre-8.37.tar.gz
+$ rm pcre-8.37.tar.gz
+$ cd pcre-8.37
+$ ./configure --prefix=$INSTALL_DIR/pcre
+$ make
+$ make install
+\end{lstlisting}
+
+Finalmente, execute os \textit{scripts} para instalar o \textit{Apache http}:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ cd $INSTALL_DIR/httpd-2.4.23
+$ ./configure --prefix=$INSTALL_DIR/httpd --with-pcre=$INSTALL_DIR/pcre
+$ make
+$ make install
+\end{lstlisting}
+
+Para habilitar o módulo \texttt{mod\_proxy\_balancer}, descomente as seguintes
+linhas no arquivo \texttt{\$INSTALL\_DIR/httpd/conf/httpd.conf}:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+LoadModule lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so
+\end{lstlisting}
+
+Adicione as linhas abaixo no mesmo arquivo. Quando uma requisição for realizada
+pelo endereço \texttt{localhost/lnls-archiver}, um dos endereços dentro da
+\textit{tag} \texttt{\(<\)Proxy\(>\)} será chamado. No nosso exemplo, colocamos
+o endereço do módulo \texttt{retrieval} de apenas uma \textit{appliance}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+<Proxy "balancer://appl">
+    BalancerMember "http://localhost:11998/retrieval"
+</Proxy>
+ProxyPass "/lnls-archiver" "balancer://appl"
+ProxyPassReverse "/test" "balancer://appl"
+\end{lstlisting}
+
+Inicie o servidor com o comando:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo $INSTALL_DIR/httpd/bin/apachectl start
+\end{lstlisting}
+
+O servidor \textit{Apache} funciona agora como um divisor de carga entre as
+diversas \textit{appliances} da rede.
+
+\vspace{12pt}
+
+No \textit{Ubuntu} 16.04, a instalação é realizada através do comando abaixo. A
+configuração deste módulo é um pouco distinta daquela documentada anteriormente,
+sendo que é necessário copiar os arquivos \path{proxy-balancer.*},
+\path{proxy.*}, \path{proxy-http.*}, \path{status.*} e
+\path{lbmethod_byrequest.*} da pasta \path{mods-avaiable/} para
+\path{mods-enabled/}. Os dois últimos diretórios encontram-se em
+\path{/etc/apache2/}. Enfim, a configuração dos \textit{proxies} deve ser
+realizada no arquivo \path{proxy.conf} da mesma maneira que foi explicada
+anteriormente.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo apt-get install apache2
+\end{lstlisting}
+
+O servidor é iniciado, por sua vez, através de 
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo systemctl start apache2.service
+\end{lstlisting}
+
+\end{enumerate} 
+
+\subsubsection {Instalação do EPICS Archiver Appliance}
+\label{sec:epicsappl}
+
+Tendo instalado todas as dependências, é necessário ainda configurar
+alguns parâmetros e instalar os pacotes referentes ao arquivador. Para tal, crie
+uma pasta onde serão instalados os pacotes. Esse diretório será referenciado por
+\texttt{\$INSTALL\_DIR} neste documento.
+
+\begin {enumerate}[i.] 
+  \item Crie uma pasta e faça o \textit{download} dos pacotes do arquivador,
+  segundo os comandos abaixo. 
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ mkdir $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27
+$ cd $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27
+$ wget http://tinyurl.com/zom7pbw
+$ tar -xvzf archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27.tar.gz
+$ rm archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27.tar.gz
+\end{lstlisting}
+
+Nesta pasta estão os arquivos \textit{.war}  usados para lançar os módulos e
+alguns \textit{scripts} sugeridos pelo desenvolvedor para auxiliar na
+instalação.
+	
+  \item \label{item:appl} Crie uma pasta onde as instâncias \textit{Tomcat} de cada módulo serão
+  armazenadas e, dentro dela, o arquivo \textit{lnls\_appliances.xml}. Tal pasta
+  será chamada de \path{lnls-control-archiver_v0.0.1_22-June-2016T10-25-27}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ mkdir $INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+$ cd INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+$ nano lnls_appliances.xml
+\end{lstlisting}
+
+Copie as seguintes linhas para esse arquivo. Se a configuração do
+\textit{Apache httpd} não foi realizada, então o endereço de
+\texttt{<data\_retrieval\_url>} deve ser igual ao endereço de
+\texttt{<retrieval\_url>}. Senão:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+<appliances> <appliance>
+     <identity>lnls_control_appliance</identity>
+     <cluster_inetport>localhost:12000</cluster_inetport>
+     <mgmt_url>http://localhost:11995/mgmt/bpl</mgmt_url>
+     <engine_url>http://localhost:11996/engine/bpl</engine_url>
+     <etl_url>http://localhost:11997/etl/bpl</etl_url>
+     <retrieval_url>http://localhost:11998/retrieval/bpl</retrieval_url>
+     <data_retrieval_url>http://localhost/lnls-archiver</data_retrieval_url>
+   </appliance>
+ </appliances>
+\end{lstlisting} 
+
+Esse arquivo especifica os endereços e portas de cada um dos quatro módulos, bem
+como o nome da \textit{appliance} (\texttt{lnls\_control\_appliance}). Os
+números das portas foram escolhidos aleatoriamente, mas, por sugestão do desenvolver,
+deve-se adotar uma sequência crescente a partir da porta do módulo
+\texttt{mgmt}, que, no nosso caso, vale 11995. É importante observar que
+\texttt{localhost} deve ser substituído pelo endereço que será utilizado para
+referenciar os \textit{servlets} remotamente.
+\texttt{\(<\)data\_retrieval\_url\(>\)} é o endereço que deverá ser utilizado a
+fim de enviar e obter requisões HTTP e JSON, conforme figura
+\ref{fig:epics_archiver} e \texttt{\(<\)cluster\_inetport\(>\)} é a combinação
+\texttt{TCPIP address:port} usado para a comunicação entre as
+\textit{appliances}. Por fim, adicione as váriaveis de ambiente ao arquivo
+\texttt{.bashrc}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+export ARCHAPPL_APPLIANCES=$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27/lnls_appliances.xml
+export ARCHAPPL_MYIDENTITY=lnls_control_appliance
+\end{lstlisting}
+
+O desenvolvedor sugere também trocar a porta padrão usada pelo \textit{Apache
+Tomcat} pela porta usada pelo módulo \texttt{mgmt}, isto é, 11995, e comentar
+as linhas sobre o uso do conector AJP. Para isso, siga a sequência abaixo.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ nano $CATALINA_HOME/conf/server.xml
+### Edite a porta de forma a obter
+[...]
+<Connector port="11995" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+[...]
+### Comente o trecho
+<!-- Define an AJP 1.3 Connector on port 8009 
+    <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /> -->
+\end{lstlisting}
+
+Execute o \textit{script} disponibilizado pelo desenvolvedor para criar as 4
+instâncias do \textit{Apache Tomcat}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ source /home/user/.bashrc
+$ cd $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27/install_scripts
+$ ./deployMultipleTomcats.py $INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+\end{lstlisting}
+
+Serão criadas 4 pastas dentro de
+\path{${INSTALL_DIR}/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27}, uma
+para cada módulo.
+
+\item É possível também alteração as configurações de \textit{log}. O
+desenvolvedor sugere que sejam executados os seguintes comandos:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ nano $CATALINA_HOME/lib/log4j.properties
+
+### Arquivo log4j.properties
+# Set root logger level and its only appender to A1.
+log4j.rootLogger=ERROR, A1
+log4j.logger.config.org.epics.archiverappliance=INFO
+log4j.logger.org.apache.http=ERROR
+
+# A1 is set to be a DailyRollingFileAppender
+log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.A1.File=arch.log
+log4j.appender.A1.DatePattern='.'yyyy-MM-dd
+
+# A1 uses PatternLayout.
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
+\end{lstlisting}
+
+\item O próximo passo é definir o arquivo \texttt{policies.py}. Esse arquivo
+especifica as regras de armazenagem que serão utilizadas pelo arquivador. O
+arquivo fornecido pelo desenvolver define, por exemplo, três modalidades de
+armazenamento, que foram exemplificadas na subseção \textbf{Introdução}. É
+possível ajustar neste arquivo parâmetros que alteram a taxa de armazenamento de
+uma PV dependendo de sua taxa de aquisição, por exemplo. Para um primeiro
+instante vamos usar esse arquivo fornecido, que está disponível na pasta
+\texttt{WEB-INF/classes} dentro do arquivo \texttt{mgmt.war} em
+\texttt{\$INSTALL\_DIR/archappl\_v0.0.1\_SNAPSHOT\_22-June-2016T10-25-27}.
+Copie-o para
+\texttt{\$INSTALL\_DIR/lnls-control-archiver\_v0.0.1\_22-June-2016T10-25 -27} e
+renomeie-o para \texttt{lnls\_policies.py}. Enfim, defina variáveis de ambiente
+usadas por este arquivo.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+export ARCHAPPL_POLICIES=$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27/lnls_policies.py
+export ARCHAPPL_SHORT_TERM_FOLDER=$INSTALL_DIR/lnls-archiver-storage/STS
+export ARCHAPPL_MEDIUM_TERM_FOLDER=$INSTALL_DIR/lnls-archiver-storage/MTS
+export ARCHAPPL_LONG_TERM_FOLDER=$INSTALL_DIR/lnls-archiver-storage/LTS
+\end{lstlisting}
+
+As três últimas variáveis devem ser corretamente configuradas de acordo com a
+disponibilidade de equipamentos, por exemplo. No nosso caso, um único diretório
+é usado para os três tipos de armazenamento, sendo ele \texttt{lnls-archiver-storage/}.
+
+\item \label{mysql-install}A próxima etapa é a criação de tabelas usadas pelo
+EPICS Archiver Appliance. Vamos criar uma base chamada \texttt{lnls\_appliance\_database} e o
+usuário \texttt{lnls\_user}, com todos os direitos de acesso a ela. No nosso
+caso, a senha do usuário é \texttt{controle}. 
+
+\begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,keywordstyle=\ttfamily,
+style=nonumbers] 
+$ mysql -u root -p
+>> CREATE DATABASE lnls_appliance_database;
+>> GRANT ALL ON lnls_appliance_database.* TO 'lnls_user'@'%' IDENTIFIED BY
+'controle';
+\end{lstlisting}
+
+Acesse o servidor \textit{mysql} com esse usuário e execute o \textit{script}
+de criação das tabelas disponibilizado pelo desenvolvedor:
+
+\begin{lstlisting}[basicstyle=\fontsize{9}{13}\selectfont\ttfamily,keywordstyle=\ttfamily,
+style=nonumbers] 
+$ mysql -u lnls_user -p
+>> USE lnls_appliance_database
+>> source $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27/install_scripts/archappl_mysql.sql
+\end{lstlisting}
+
+\item É necessário fazer o \textit{download} do conector \textit{MySQL} usado
+pelo \textit{Apache Tomcat}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ wget http://tinyurl.com/jf3cadl
+\end{lstlisting} 
+
+Abra este arquivo e extraia \texttt{mysql-connector-java-5.1.38-bin.jar} para o
+diretório \texttt{\$CATALINA\_HOME/lib/}. Abra o arquivo
+\textit{conf/context.xml} e adicione dentro de \texttt{\(<\)Context\(>\)}:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ nano $CATALINA_HOME/conf/context.xml
+
+<Context ...>
+	<Resource   name="jdbc/archappl"
+	      auth="Container"
+	      type="javax.sql.DataSource"
+	      factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+	      username="lnls_user"
+	      password="controle" 
+	      testWhileIdle="true"
+	      testOnBorrow="true"
+	      testOnReturn="false"
+	      validationQuery="SELECT 1"
+	      validationInterval="30000"
+	      timeBetweenEvictionRunsMillis="30000"
+	      maxActive="10" 
+	      minIdle="2" 
+	      maxWait="10000" 
+	      initialSize="2"
+	      removeAbandonedTimeout="60"
+	      removeAbandoned="true"
+	      logAbandoned="true"
+	      minEvictableIdleTimeMillis="30000" 
+	      jmxEnabled="true"
+	      driverClassName="com.mysql.jdbc.Driver"
+	      url="jdbc:mysql://localhost:3306/lnls_appliance_database"
+	 />
+</Context>
+\end{lstlisting}
+
+Note que modificamos os campos \texttt{username}, \texttt{password} e
+\texttt{url} de acordo com a instalação no item \ref{mysql-install}.
+
+\item É necessário copiar e extrair todos os arquivos \textit{.war} presentes em
+\path{archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27} para os respectivos
+diretórios \texttt{webapps/}. Para tal, definimos:
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+export DEPLOY_DIR=$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+export WARSRC_DIR=$INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27
+\end{lstlisting}
+
+E executamos o \textit{script} \texttt{lnls-archiver-extract-wars.sh}, presente
+no repositório do grupo, para extrair os arquivos \textit{.war}.
+
+
+\item Enfim, os 4 \textit{Tomcats} são lançados através do serviço
+\textit{systemd}, que pode ser obtido através do repositório \textit{git} do
+grupo, conforme comando abaixo. Tal serviço deve ser \textit{instalado} do
+diretório \path{/lib/systemd/system}.
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+$ sudo systemctl start lnls-archiver.service
+\end{lstlisting}
+
+\item O arquivador é acessado através da URL (\path{localhost} pode ser
+substituído pelo endereço IP que referencia o \textit{host})
+
+\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+http://localhost:11995/mgmt/ui/index.html
+\end{lstlisting}
+
+\end{enumerate} 
+
+\subsubsection{\textit{Debugging}}
+
+A lista abaixo apresenta algumas situações que foram encontradas durante a
+instalação.
+
+\begin {enumerate}[i.] 
+  \item Se após o reinício do arquivador todos os dados referentes às variáveis
+  forem perdidos é necessário checar todos os arquivos \path{conf/context.xml}
+  de cada um dos \textit{tomcats} e verificar que a configuração do servidor
+  \textit{MySQL} foi realizada corretamente.
+
+  \item Uma regra geral é verificar se todas as variáveis de ambiente foram
+  corretamente configuradas.
+\end{enumerate}
+
+\subsection{Uso do CS Studio no monitoramento} \label{appliance-csstudio}
+
+O \textit{CS Studio} pode ser usado para monitorar a \textit{appliance}. Para
+isso, entre em \texttt{Edit \(>\) Preferences} e acesse o item \texttt{CSS
+Applications \(>\) Trends \(>\) Data Browser}. No campo \textit{Archive Data
+Server URLs}, adicione o endereço contido em \texttt{<data\_retrieval\_url>} do
+arquivo configurado no item \ref{item:appl} da subseção \ref{sec:epicsappl},
+substituindo o protocolo \texttt{http://} por \texttt{pbraw://}. Escreva
+qualquer \textit{Server alias}. Na tabela \textit{Default Archive Data Sources},
+adicione o mesmo endereço e aperte \textit{Ok} para salvar as alterações.
+
+\vspace{12pt}
+
+É necessário alterar a perspectiva do \textit{CS Studio}. Acesse
+\texttt{Windows \(>\) Open Perspective} e escolha \textbf{Data Browser}. Na aba
+\textit{Archive Search}, escreva a \textit{URL} configurada anteriormente e no
+campo \textit{Pattern}, escreva o nome das variáveis arquivadas que deseja
+monitorar. Por exemplo, se escrevermos \texttt{MTTemp*}, todas as variáveis
+arquivadas com este início poderão ser acessadas. Clique com o botão direito na
+variável desejada e acesse \texttt{Process Variable \(>\) Data Browser}.
+
+\subsection{Acessando a \textit{appliance} com \textit{Python}}
+
+A \textit{appliance} pode ser acessada através de requisições \textit{JSON}
+realizadas por um módulo escrito em \textit{Python}, por exemplo. Abaixo, está
+apresentada uma classe que foi escrita a fim de obter dados e informações de
+variáveis arquivadas.
+
+\vspace{12pt}
+
+\begin{lstlisting}[language=Python]
+import time
+import urllib2
+import json
+
+class JsonRequester ():
+    
+    def __init__(self, data_retrieval_url, mgmt_url):
+        self.data_retrieval_url = data_retrieval_url
+        self.mgmt_url = mgmt_url
+    
+    def json_request_variables(self, variables_prefix):
+        
+        url_json = self.mgmt_url + 'bpl/getPVStatus?pv=' + variables_prefix
+        req = urllib2.urlopen(url_json)
+        data = json.load(req)
+        return data
+    
+    def json_request_data(self, variable, from_date, to_date):    
+        
+        retrieval_url = self.data_retrieval_url + "/data/getData.json?"
+        pv_name = ("pv=" + variable).replace(':', '%3A')
+        to_date =   ("&to=" + time.strftime("%Y-%m-%dT%H:%M:%S",to_date) + 
+        				".000Z").replace(':', '%3A')
+        from_date = ("&from=" + time.strftime("%Y-%m-%dT%H:%M:%S",from_date) + 
+        				".000Z").replace(':', '%3A')    
+        url_json = retrieval_url + pv_name + from_date + to_date
+        req = urllib2.urlopen(url_json)
+        data = json.load(req)
+        secs = [x['secs'] for x in data[0]['data']]
+        vals = [x['val'] for x in data[0]['data']]
+        return secs, vals
+\end{lstlisting}
+
+O método construtor recebe 2 \textit{strings} como parâmetros.
+\textit{data\_retrieval\_url} e \textit{mgmt\_url} estão contidos no arquivo
+\textit{lnls\_appliances.xml} e representam, respectivamente, os endereços dos
+\textit{servlets} de obtenção de dados e gerenciamento da \textit{appliance}. A
+primeira \textit{url} será usada para recuperar os dados e a segunda, para obter
+as informações relativas às variáveis arquivadas.
+
+\vspace{12pt}
+
+O método \textit{json\_request\_variables} é responsável por retornar
+informações de uma ou várias variáveis, cujo nome (no caso de uma pesquisa de
+uma única variável) ou prefixo (parte comum ao nome de diversas variáveis) é
+passado como parâmetro. Para tal, utiliza o método \texttt{getPVStatus}, que é
+disponível no \textit{servlet} de gerenciamento e acessível via a \textit{url}
+\texttt{mgmt\_url}. Esse método também recebe como parâmetro nomes ou prefixos
+de variáveis, especificados após o trecho \texttt{pv=} na requisição
+\textit{json}. Para recuperar todas as variáveis arquivadas por uma
+\textit{appliance} que comecem com o prefixo \texttt{MBTemp}, por exemplo,
+bastar utilizarmos \texttt{pv=MBTemp*} na requisição. Uma vez construída a
+\textit{url}, é necessário utilizar as bibliotecas \textit{python}
+\texttt{urllib2} e \texttt{json}, que realizam a comunicação com os
+\textit{servlets}. 
+
+\vspace{12pt}
+
+O método \textit{json\_request\_data} retorna os dados arquivados para uma
+determinada variável, passada como parâmetro. Além dela, essa função recebe dois
+outros valores, sendo eles objetos do tipo \textit{time}, cuja implementação
+reside no módulo \texttt{time}. Esses parâmetros representam, por sua vez, as
+fronteiras do intervalo de tempo para o qual se deseja recuperar os dados, sendo
+que \texttt{from\_date} é a data mais antiga e \texttt{to\_date}, a mais
+recente. Se \texttt{to\_date} vale \texttt{None}, então o sistema o interpreta
+como o tempo no qual a chamada da função foi feita. Os dados são recuperados
+através do método \texttt{getData}, disponível no \textit{servlet}
+\texttt{retrieval} da \textit{appliance}. Antes de realizarmos a requisição, é
+necessário traduzir os objetos \textit{time} para o formato aceito pela
+servidor. Sendo assim, utiliza-se o método \texttt{strftime} do módulo
+\texttt{time} que retorna a representação \textit{string}, segundo a máscara
+especificada (no nosso caso, \texttt{\%Y-\%m-\%dT\%H:\%M:\%S}), do objeto
+passado como parâmetro. A requisição é, enfim, realizada através dos mesmos
+métodos que foram usados na função anterior.
+
+\vspace{12pt}
+
+O servidor envia todos os dados, isto é, valores e datas do respectivo evento,
+em único vetor de dicionários. Por este motivo, é necessário processarmos essa
+estrutura antes de retorná-la ao programa que chamou o método. Os valores são
+acessíveis pelo índice \texttt{val} e seu tipo depende da aplicação. A data dos
+eventos relativos aos valores são recuperados pelo índice \texttt{secs} e são
+números inteiros que contém o número de segundos desde uma data de referência
+(1 de Janeiro de 1970) usada no \textit{servlet}. É necessário notar que as
+datas retornadas estão em \textit{UTC}, portanto é exigido que tais
+valores sejam convertidos para a o fuso local.
+
+\vspace{12pt}
+
+Uma interface gráfica foi implementada, usando os módulos \textit{Qt}, a fim de
+testarmos a comunicação. Ela possui um gráfico, onde serão mostrados os dados
+recuperados, uma caixa de opções, que possui todas as variáveis arquivadas na
+\textit{appliance}, e componentes para seleção das datas de início e fim do
+intervalo desejado. A figura \ref{fig:interface} representa o resultado da
+implementação.
+
+\FloatBarrier
+
+\begin{figure}[h]
+    
+    \centering
+    \includegraphics[scale=0.38]{image/screenshot-python}
+    \caption {Interface \textit{Qt} implementada em \textit{python}.}
+    \label{fig:interface} 
+\end{figure} 
+
+\FloatBarrier

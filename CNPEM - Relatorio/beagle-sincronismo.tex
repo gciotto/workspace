@@ -98,7 +98,7 @@ de interrupções, que serão utilizadas neste exemplo, ao contrário do
 \begin{figure}[h]
 
 \centering
-\includegraphics[scale=0.54]{image/userspace-kernelspace}
+\includegraphics[scale=0.45]{image/userspace-kernelspace}
 \caption {Comunicação entre \textit{kernel} e \textit{user spaces}. Extraída de
 \cite{derek}.}
 \label{fig:derek_kernel_user}
@@ -207,15 +207,17 @@ processo em curso de execução. O \textit{Linux} fornece duas políticas de
 prioridade superior à politíca comum, \texttt{SCHED\_NORMAL}. Portanto,
 processos cujas \textit{scheduler classes} são do tipo \textit{real-time} sempre
 são escolhidos antes daqueles de política comum. É necessário observar que,  no
-\textit{kernel} padrão do \textit{Linux},  estas classes não são capazes de garantir um comportamento dito \textit{hard
-real-time}, isto é, que asseguram o cumprimento de qualquer requisito dentro de
-um certo limite. As \textit{real-time scheduling policies} fornecem, portanto, um comportamento de \textit{soft real-time}, ou seja, o \textit{kernel} fará o
-máximo possível para atender às requisições, mas não pode prometer sempre
-cumpri-las. Porém, um \textit{patch}, chamado \path{RT_PREEMPT} e disponível em
-\url{http://tinyurl.com/2fxb3sd}, foi desenvolvido para
-garantir características de \textit{hard real-time}. Sua instalação está
-comentada nas próximas subseções. Quando uma tarefa do tipo \texttt{SCHED\_FIFO}
-assume a \textit{CPU}, ela continua a ser executada até que ela seja bloqueada ou que ela conceda explicitamente o processador a outro processo, podendo rodar
+\textit{kernel} padrão do \textit{Linux},  estas classes não são capazes de
+garantir um comportamento dito \textit{hard real-time}\cite{linuxlove}, isto é,
+que asseguram o cumprimento de qualquer requisito dentro de um certo limite. As
+\textit{real-time scheduling policies} fornecem, portanto, um comportamento de
+\textit{soft real-time}, ou seja, o \textit{kernel} fará o máximo possível para
+atender às requisições, mas não pode prometer sempre cumpri-las. Porém, um
+\textit{patch}, chamado \path{RT_PREEMPT} e disponível em
+\url{http://tinyurl.com/2fxb3sd}, foi desenvolvido para garantir características
+de \textit{hard real-time}. Quando uma tarefa do tipo \texttt{SCHED\_FIFO}
+assume a \textit{CPU}, ela continua a ser executada até que ela seja bloqueada
+ou que ela conceda explicitamente o processador a outro processo, podendo rodar
 indefinidamente caso nenhuma dessas condições seja atendida. Somente uma tarefa
 \texttt{SCHED\_FIFO} ou \texttt{SCHED\_RR} de maior prioridade pode interromper
 sua execução. Para as tarefas do tipo \texttt{SCHED\_RR}, o princípio é o mesmo,
@@ -230,7 +232,7 @@ semelhante à \texttt{SCHED\_FIFO}, exceto no tempo que é permitido ao uso de
 \textit{buffer} circular está vazio e só é ``acordada'' quando uma interrupção
 de tempo ocorrer (o \textit{buffer} volta a ser preenchido na função de
 tratamento desta interrupção). Os fluxogramas da figura \ref{fig:threads_bb1}
-abaixo resumem o funcionamento destas \textit{threads}.
+resumem o funcionamento destas \textit{threads}.
 
 \vspace{12pt}
 
@@ -246,12 +248,12 @@ dados onde serão colocados os processos que esperam pelo evento. Essa fila é d
 tipo \texttt{wake\_queue\_head\_t} e pode ser criada estaticamente, via
 a \textit{macro} \texttt{DECLARE\_WAITQUEUE()}, ou dinamicamente, via a função
 \texttt{init\_waitqueue\_head()}.
- 
+
 	\begin{figure}[h!]
 	
 	\centering
 	
-		\begin{subfigure}{.5\textwidth}
+		\begin{subfigure}{.33\textwidth}
 		  \centering
 		  \includegraphics[scale=0.55]{image/thread_int}
 		  \caption{\centering Fluxograma da \textit{thread} que é interrompida pelo
@@ -259,24 +261,31 @@ a \textit{macro} \texttt{DECLARE\_WAITQUEUE()}, ou dinamicamente, via a função
 		  \label{fig:thread_int}
 		  
 		\end{subfigure}%
-		\begin{subfigure}{.5\textwidth}
+		\begin{subfigure}{.33\textwidth}
 		  \centering
 		  \includegraphics[scale=0.55]{image/thread_proc}
 		  \caption{\centering Fluxograma da \textit{thread} que envia pacotes à
 		  rede.}
 		  \label{fig:thread_proc} 
-		\end{subfigure}
-	
-	
-	\caption{Fluxogramas das \textit{threads} que compõem \texttt{BB1}.}
-	\label{fig:threads_bb1}
-	\end{figure} 
+		\end{subfigure}%
+		\begin{subfigure}{.33\textwidth}
+			\centering
+			\includegraphics[scale=0.55]{image/thread_bb2}
+			\caption {\centering Fluxograma da \textit{thread} do \textit{kernel module}
+			em
+			\texttt{BB2}.}
+			\label{fig:thread_bb2}
+		\end{subfigure}%
+		\caption{Fluxogramas das \textit{threads} que compõem \texttt{BB1}
+		e \texttt{BB2}.}
+		\label{fig:threads_bb1}
+		\end{figure} 
 
 \vspace{12pt}
 
 Os processadores da família \textit{Sitara AM335x} da \textit{Texas Instruments}
 possuem um módulo, chamado de \textit{DMTimer}, composto por 7 \textit{timers}
-configuráveis. Cada um dos \textit{timers} contem um contador de 32
+configuráveis. Cada um dos \textit{timers} contém um contador de 32
 \textit{bits} crescente com capacidade de \textit{auto reload} e geração de
 interrupção ao atingir seu valor máximo (\texttt{0xFFFFFFFF}), isto é, em caso
 de \textit{overflow}. Além disso, é possível configurar um divisor de frêquencia
@@ -293,7 +302,7 @@ principal é a \texttt{omap\_dm\_timer\_request\_specific(int timer\_id)}, que
 recebe como parâmetro o \textit{id} do \textit{dmtimer} desejado. É necessário
 notar, porém, que talvez seja necessário a configuração de um \textit{overlay}
 para a configuração dos pinos utilizados pelo respectivo \textit{timer}. Em
-seguida, executamos a chamada \texttt{omap\_dm\_timer\_set\_source}, que
+seguida, executamos a chamada \path{omap_dm_timer_set_source}, que
 configura o sinal de \textit{clock} de entrada. Utilizamos o \textit{clock} de
 32kHz, portanto passamos a constante \texttt{OMAP\_TIMER\_SRC\_32\_KHZ} como
 parâmetro à função. \texttt{omap\_dm\_timer\_set\_prescaler} permite definir o
@@ -325,7 +334,7 @@ ela uma função de tratamento. Para configurá-la, utilizamos três funções:
   módulo. Recebe como parâmetro uma constante que define o evento que deve ser
   associado à interrupção. No nosso caso, como queremos que uma interrupção seja
   lançada após \textit{overflow} do contador, passamos o valor
-  \texttt{OMAP\_TIMER\_INT\_OVERFLOW};
+  \path{OMAP_TIMER_INT_OVERFLOW};
 
   \item \texttt{request\_irq()}, da biblioteca \texttt{linux/interrupt.h}:
   recebe como parâmetro o \textit{id} da interrupção, a sua função tratadora e
@@ -402,38 +411,37 @@ por sua vez, possui três atributos importantes: \path{sin_family},
 \path{sin_addr.s_addr} e \path{sin_port}. Recebem, respectivamente,
 \path{AF_INET}, \path{htonl(INADDR_SEND)} e \path{htons(CONNECT_PORT)}, em que
 \path{htonl()} e \path{htons()} são funções pré-definidas que convertem valores
-de \textit{host order} para \textit{network byte order}, \path{INADDR_SEND} é o
-endereço, por exemplo \path{0xc0a80216} para \path{192.168.2.22}, para o qual
-deseja-se enviar o datagramas e \path{CONNECT_PORT} é a porta. \path{connect()}, além de definir tais
-características, também ativa a conexão no \textit{socket}. O envio de pacotes é
+de \textit{host order} para \textit{network byte order}, por exemplo \path{0xc0a80216} para \path{192.168.2.22}, \path{INADDR_SEND} é o
+endereço para o qual deseja-se enviar o datagramas e \path{CONNECT_PORT} é a
+porta. \path{connect()}, além de definir tais características, também ativa a conexão no \textit{socket}. O envio de pacotes é
 realizado por \path{sock_sendmsg()}, que recebe dois parâmetros: as estruturas
 \texttt{struct socket} e \texttt{struct msghdr}, que contem o conteúdo da
 mensagem. Enfim, para desalocar o \textit{socket}, chama-se a funçao
 \path{sock_release()}.
 
-\vspace{12pt}
+% \vspace{12pt}
+% 
+% Por fim, a compilação do arquivo \path{.c} é realizada por meio de um
+% \textit{Makefile}, cujo conteúdo é semelhante ao código abaixo, em que
+% \path{timer_kernel_module} é o nome do arquivo do módulo e \texttt{\$(shell
+% uname -r)} retorna a versão dos \textit{linux headers} instalados na
+% \textit{Beagle}.
+% 
+% \begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
+% obj-m+=timer_kernel_module.o 
+%  
+% all:
+% 	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) modules 
+% clean:
+% 	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) clean
+% \end{lstlisting}
 
-Por fim, a compilação do arquivo \path{.c} é realizada por meio de um
-\textit{Makefile}, cujo conteúdo é semelhante ao código abaixo, em que
-\path{timer_kernel_module} é o nome do arquivo do módulo e \texttt{\$(shell
-uname -r)} retorna a versão dos \textit{linux headers} instalados na
-\textit{Beagle}.
-
-\begin{lstlisting}[keywordstyle=\ttfamily, style=nonumbers]
-obj-m+=timer_kernel_module.o 
- 
-all:
-	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) modules 
-clean:
-	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) clean
-\end{lstlisting}
-
-\vspace{12pt}
-
-A adição do módulo compilado (arquivo \path{.ko}) é realizado através do comando
-\path{insmod} e a sua remoção, a partir de \path{rmmod}. O arquivo
-de \textit{log} pode ser utilizado para eventual \textit{debug}, sendo acessado
-a partir de \path{/var/log/kern.log}.
+% \vspace{12pt}
+% 
+% A adição do módulo compilado (arquivo \path{.ko}) é realizado através do comando
+% \path{insmod} e a sua remoção, a partir de \path{rmmod}. O arquivo
+% de \textit{log} pode ser utilizado para eventual \textit{debug}, sendo acessado
+% a partir de \path{/var/log/kern.log}.
 
 \subsubsection{Implementação do \textit{Kernel Module} de \texttt{BB2}}
 
@@ -453,33 +461,34 @@ parâmetro através de uma estrutura do tipo \texttt{struct sockaddr}, que é
 inicializada com as funções \texttt{htonl} e \texttt{htons}, destacadas
 anteriormente. A recepção dos pacotes é feita via \path{sock_recvmsg()}, que
 bloqueia a \textit{thread} até que um datagrama seja detectado.
+% 
+% \vspace{12pt}
+% 
+% A compilação pode ser feito através de um \textit{Makefile} e a adição e remoção
+% do módulo, via os comandos \path{insmod} e \path{rmmod}.
 
-\vspace{12pt}
-
-A compilação pode ser feito através de um \textit{Makefile} e a adição e remoção
-do módulo, via os comandos \path{insmod} e \path{rmmod}.
-
-\FloatBarrier
-
-\begin{figure}[h]
-
-\centering
-\includegraphics[scale=0.55]{image/thread_bb2}
-\caption {Fluxograma da \textit{thread} do \textit{kernel module} em
-\texttt{BB2}.}
-\label{fig:thread_bb2}
-\end{figure}
-
-\FloatBarrier
-
-\subsubsection{Modificando o \textit{Linux} para \textit{hard real-time}}
-\label{kernel-linux}
-
-\textit{Seção a ser completada no decorrer das atividades.}
 
 \subsection{Utilizando o módulo PRU}
 
-\textit{Seção a ser completada no decorrer das atividades.}
+Implementações alternativas para os \textit{kernel modules} de \textit{BB1} e
+\textit{BB2} foram propostas usando o módulo PRU da \textit{BeagleBone Black}. 
+Para \textit{BB1}, a configuração do \textit{timer} e a verificação das
+interrupções gerada por ele e pelo pulso de sincronismo são feitas pela PRU.
+Quando um \textit{trigger} é recebido, um sinal é enviado para um programa
+rodando no \textit{user space} da \textit{Beagle}, cujo propósito é, de fato, enviar pacotes \textit{UDP} para \textit{BB2}. É
+importante observar que a comunicação entre o processador e o módulo PRU é
+garantida via \textit{hardware} e que uma API contendo funções de comunicação
+com a PRU também é fornecida pela comunidade.
+
+\vspace{12pt}
+
+Um processo semelhante foi realizada para \textit{BB2}, isto é, substituiu-se o
+\textit{kernel module} por um programa rodando na unidade de tempo real. Tal
+programa verifica, através de \textit{polling} nos registradores do controlador
+de rede, se um novo pacote foi recebido. Se isto ocorreu, então um sinal é
+enviado a um outro programa no \textit{user space}, responsável por tratar tal
+pacote. O tratamento de tal pacote não é realizado diretamente na PRU, visto que
+seria necessária a implementação de toda a pilha \textit{UDP/IP}.
 
 \subsection {Resultados}
 
@@ -496,35 +505,31 @@ gerados pela \textit{Beagle} \texttt{BB2}. Modificamos a opção \textit{Tempo d
 Persistência} do \textit{Display Forma de onda} para infinito, de forma a
 garantir que a tela do osciloscópio mantenha os pulsos gerados em instantes
 passados. Enfim, habilitamos o funcionamento do osciloscópio, obtendo o
-resultado presente na figura \ref{fig:osciloscopio_thread}.
-
-\FloatBarrier
+resultado presente na figura \ref{fig:osciloscopio_thread} para a implementação
+contendo os \textit{kernel modules}. O desvio padrão, ou \textit{jitter} obtido,
+é da ordem de 5.7\textit{ms}, muito distante daquele adquirido pelo sistema
+construído pelo grupo de controle, no qual utilizou-se a \textit{PRU} e
+obteve-se um valor próximo de 15\textit{ns}. Tal diferença é explicada,
+basicamente, por dois fatores: o canal utilizado para envio da mensagem e o
+componente de processamento da \textit{Beagle}. Na nossa aplicação, utilizamos
+um \textit{switch HP V1810G}, que apresenta um comportamento \textit{não
+deterministico}, isto é, não é possível prever com certitude o tempo necessário
+para que um pacote seja entregue a um determinado \textit{host}. O segundo
+aspecto a ser considerado é que aplicações rodando na \textit{PRU} não dividem
+recursos com outros processos, ao contrário de aplicações que rodam em
+\textit{embedded linux}. Na seção \ref{sec:bb1}, comentamos que, apesar do
+\textit{Linux} fornecer políticas de preempção \textit{real-time}, o
+comportamento chamado de \textit{hard real-time} não poderia ser alcançado pelo
+\textit{kernel}. Em oposição, as unidades \textit{PRUs} da \textit{Beagle} foram
+desenvolvidas para este propósito.
 
 \begin{figure}[h]
 
 \centering
-\includegraphics[scale=0.35]{image/tek_com_threads}
+\includegraphics[scale=0.25]{image/tek_com_threads}
 \caption {Captura de tela do osciloscópio.}
 \label{fig:osciloscopio_thread}
 \end{figure}
-
-\FloatBarrier
-
-O desvio padrão, ou \textit{jitter} obtido, é da ordem de 5.7\textit{ms}, muito
-distante daquele adquirido pelo sistema construído pelo grupo de controle, no
-qual utilizou-se a \textit{PRU} e obteve-se um valor próximo de 15\textit{ns}.
-Tal diferença é explicada, basicamente, por dois fatores: o canal utilizado para
-envio da mensagem e o componente de processamento da \textit{Beagle}. Na nossa
-aplicação, utilizamos um \textit{switch HP V1810G}, que apresenta um
-comportamento \textit{não deterministico}, isto é, não é possível prever com
-certitude o tempo necessário para que um pacote seja entregue a um determinado
-\textit{host}. O segundo aspecto a ser considerado é que aplicações rodando na
-\textit{PRU} não dividem recursos com outros processos, ao contrário de
-aplicações que rodam em \textit{embedded linux}. Na seção \ref{sec:bb1},
-comentamos que, apesar do \textit{Linux} fornecer políticas de preempção
-\textit{real-time}, o comportamento chamado de \textit{hard real-time} não
-poderia ser alcançado pelo \textit{kernel}. Em oposição, as unidades
-\textit{PRUs} da \textit{Beagle} foram desenvolvidas para este propósito.
 
 \subsection{Alternativa de solução: \textit{Industrial Ethernet}}
 
