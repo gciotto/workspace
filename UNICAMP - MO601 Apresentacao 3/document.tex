@@ -156,7 +156,7 @@ thread} se tornou o novo limite de velocidade do sistema.
 otimizações
 
 \begin{itemize} 
-	\item Depedências fracas: instruções que contribuem marginalmente para o
+	\item Dependências fracas: instruções que contribuem marginalmente para o
 	resultado e, portanto, podem ser retiradas.
 	
 \end{itemize} 
@@ -170,7 +170,7 @@ maneira de otimizá-la:
 	\textit{thread}. 
 	
 	\item Como identificá-los automaticamente?
-	
+	 
 	\item Uso de algoritmos genéticos.
   
   	\item Como caracterizar um gene? 
@@ -260,11 +260,47 @@ sistema, dado que novos \textit{misses} podem ser inseridos.
    de degradação)
  \end{itemize}
  
+ \item A identificação de um falso positivo é extremamente custoso! 
+ 
  \vspace{12pt}
  
  \item Dada à natureza dinâmica da evolução das dependências, uma boa maneira
- de encontrar as dependências corretas é o uso de algoritmo genéticos.
+ de encontrar as dependências corretas é o uso de algoritmos genéticos.
 \end{itemize}
+\end{frame}
+
+\section {Implementação Proposta}
+
+\begin{frame}
+\frametitle{Implementação Proposta}
+\framesubtitle{\textit{Design} básico}
+
+\begin{itemize}
+ \item Objetivo: encontrar o esqueleto que maximiza a performance.
+ \item Esqueleto = Versão do programa principal após um \textit{filtro}
+ \item Algoritmo genético para encontrar o melhor \textit{filtro}:
+ \begin{itemize}
+   \item Esqueleto é representado por um vetor de \textit{bits}
+   \item Mapeamento: instrução fraca \(\rightarrow\) gene, coleção de instr.
+   \(\rightarrow\) cromossomo
+ \end{itemize}
+ 
+ \vspace{12pt}
+ \centering
+\includegraphics[width=0.8\textwidth]{images/evol}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implementação Proposta}
+\framesubtitle{\textit{Design} básico}
+
+\begin{itemize}
+  \item Formação da população inicial:
+\end{itemize}
+
+ \centering
+\includegraphics[width=0.8\textwidth]{images/initial}
 \end{frame}
 
 \begin{frame}
