@@ -122,52 +122,150 @@ instruções.
 \end{frame}
 
 \begin{frame}
-\frametitle{Contagem de acessos à memória}
-\framesubtitle{Páginas de 4KB}
-
-
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Contagem de acessos à memória}
-\framesubtitle{Páginas de 4MB}
-
-
-
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Contagem de acessos à memória}
-\framesubtitle{\textit{Toy benchmark}}
+\frametitle{Motivação}
 
 \begin{itemize}
-\begin{itemize}
+\item Objetivos da arquitetura \textit{decoupled look-ahed thread}.
 
+\begin{itemize} 
+	\item Minimizar os custos de \textit{branch mispredictions} e \textit{cache
+	misses}, por exemplo.
+	
+	\item Explorar oportunidades de paralelismo e o grau de dependência de
+	instruções.
+  
+  	\item Minimizar o consumo energético 
+	
+\end{itemize} 
 \end{itemize}
 
-\end{itemize}
+\vspace{12pt}
+\centering
+\includegraphics[width=0.9\textwidth]{images/single-ipc-full}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Contagem de acessos à memória}
-\framesubtitle{\textit{Toy benchmark}}
+\frametitle{Motivação}
 
+\begin{itemize}
+\item Constatou-se que a \textit{thread} auxiliar, isto é, a \textit{look ahead
+thread} se tornou o novo limite de velocidade do sistema.
+
+\item A corretude da \textit{look-ahead thread} não é exigida, permitindo várias
+otimizações
+
+\begin{itemize} 
+	\item Depedências fracas: instruções que contribuem marginalmente para o
+	resultado e, portanto, podem ser retiradas.
+	
+\end{itemize} 
+
+\item O artigo \textit{Accelerating Decoupled
+Look-ahead via Weak Dependence Removal: A Metaheuristic Approach} propõe uma
+maneira de otimizá-la:
  
-\end{frame}
-
-\begin{frame}
-\frametitle{Conclusões}
-\framesubtitle{Resultados}
-
-\begin{itemize}
-
+\begin{itemize} 
+	\item Identificação dos pontos desnecessários que poderiam ser retirados desta
+	\textit{thread}. 
+	
+	\item Como identificá-los automaticamente?
+	
+	\item Uso de algoritmos genéticos.
+  
+  	\item Como caracterizar um gene? 
+	
+\end{itemize} 
 \end{itemize}
 
 \end{frame}
 
+\section{Arquitetura Decoupled Look-Ahead}
+
+\begin{frame}
+\frametitle{Arquitetura \textit{Decoupled Look-Ahead}}
+
+\begin{itemize}
+\item \textit{Parser} que transforma o binário do programa principal em uma
+versão reduzida, somente para procurar \textit{misses}.
+\item Versão esqueleto roda em \textit{core} separado, anteriormente ao programa
+principal.
+\item Os resultados de saltos condicionais são transmitidos através
+de uma fila para o \textit{core}.
+\end{itemize}
+
+\centering
+\includegraphics[width=0.9\textwidth]{images/look-ahead}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitetura \textit{Decoupled Look-Ahead}}
+\framesubtitle{Dependências fracas}
+
+\begin{itemize}
+ \item Instruções que contribuem o mínimo para os propósitos da \textit{lookup
+ahead thread}.
+\vspace{12pt}
+\item Exemplos:
+\begin{itemize}
+	\item Instruções aritméticas e lógicas que não mudam o resultado de um
+	registrador na maior parte do tempo: casos 3 e 5.
+	\item Ajustes inúteis em registradores (realizar uma operação em um registrador
+	sendo que ele será o alvo de um store em seguida): casos 2 e 4.
+	\item \textit{Loads/Stores} inúteis: caso 1.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitetura \textit{Decoupled Look-Ahead}}
+\framesubtitle{Dependências fracas}
+
+\centering
+\includegraphics[width=0.7\textwidth]{images/example}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitetura \textit{Decoupled Look-Ahead}}
+\framesubtitle{Dependências fracas}
+
+\begin{itemize}
+ \item Análise muito difícil caso seja realizada estaticamente: uma
+instrução se torna uma dependência fraca de acordo com o contexto do
+programa.
+\item Autores não conseguiram encontrar nenhuma
+característica especial em comum que pudesse identificá-las no
+momento de geração dos esqueletos. 
+
+\item A identificação de uma instrução errada pode piorar o desempenho do
+sistema, dado que novos \textit{misses} podem ser inseridos.
+\end{itemize}
+
+\centering
+\includegraphics[width=0.7\textwidth]{images/low}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitetura \textit{Decoupled Look-Ahead}}
+\framesubtitle{Dependências fracas}
+
+\begin{itemize}
+ \item Na figura anterior:
+ \begin{itemize}
+   \item Após a remoção de 50 dependências fracas, o efeito torna-se negativo.
+   \item Em torno de 250 instruções removidas, o pior efeito é encontrado (40\%
+   de degradação)
+ \end{itemize}
+ 
+ \vspace{12pt}
+ 
+ \item Dada à natureza dinâmica da evolução das dependências, uma boa maneira
+ de encontrar as dependências corretas é o uso de algoritmo genéticos.
+\end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{Referências}
