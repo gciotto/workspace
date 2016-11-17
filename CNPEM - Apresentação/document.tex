@@ -199,15 +199,17 @@ Centro Nacional de Pesquisa em Energia e Materias - CNPEM \\ }
 \frametitle{Sincronização via Ethernet com a BBB }
 \framesubtitle{Introdução}
 \begin{itemize}
+  \item Objetivo: avaliar o envio de \textit{triggers} de sincronismo via
+  \textit{Ethernet}.
+  \begin{itemize}
+    \item Quantificar o \textit{jitter}, já que o \textit{delay} pode ser
+    corrigido.
+  \end{itemize}
   \item Propósito geral:
   \begin{itemize}
-  \item \textit{BB1}: um \textit{timer} gera
-  interrupções a cada 1ms. A cada interrupção, um
-  registro contendo os dados a serem enviados via \textit{Ethernet} é
-  adicionado em um \textit{buffer} circular. Uma outra \textit{thread}
-  é responsável por retirar estes elementos do \textit{buffer}, prepapar os
-  pacotes \textit{UDP} e enviá-los.
-
+  \item \textit{BB1}: prepapar os
+  pacotes \textit{UDP} contendo \textit{triggers} e enviá-los.
+  
   \item \textit{BB2}: espera pacotes \textit{UDP}. Quando recebe, atualiza seu
   contador e seus pinos de saída.
   \end{itemize}
@@ -217,6 +219,88 @@ Centro Nacional de Pesquisa em Energia e Materias - CNPEM \\ }
     \item PRU - \textit{Programmable Real-time Unit}.
   \end{itemize}
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sincronização via Ethernet com a BBB }
+\framesubtitle{Introdução}
+\begin{itemize}
+  \item Implementação dos \textit{Kernel Modules}:
+\end{itemize}
+
+\vspace{-12pt}
+
+\begin{columns}
+
+\begin{column}{.33\textwidth}
+
+\begin{figure}[h!]
+	
+  \centering
+  \includegraphics[scale=0.260]{image/thread_int}
+  \caption{\centering BB1: \textit{thread} que é interrompida pelo
+  \textit{timer}.}
+  \label{fig:thread_int}
+\end{figure}
+\end{column}
+		  
+\begin{column}{.33\textwidth}
+
+\begin{figure}[h!]
+		  \centering
+		  \includegraphics[scale=0.260]{image/thread_proc}
+		  \caption{\centering BB1: \textit{thread} que envia pacotes à
+		  rede.}
+		  \label{fig:thread_proc} 
+\end{figure}
+\end{column}
+
+\begin{column}{.33\textwidth}
+
+\begin{figure}[h!]
+			\centering
+			\includegraphics[scale=0.260]{image/thread_bb2}
+			\caption {\centering \textit{thread} do \textit{kernel module}
+			em
+			\texttt{BB2}.}
+			\label{fig:thread_bb2}
+\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sincronização via Ethernet com a BBB }
+\framesubtitle{Resultados}
+
+\vspace{-24pt}
+
+\begin{columns}
+
+\begin{column}{.5\textwidth}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.16]{image/tek_com_threads}
+\caption {\centering Captura de tela do osciloscópio para a implementação com
+\textit{kernel modules}.}
+\label{fig:osciloscopio_thread}
+\end{figure}
+\end{column}
+		  
+\begin{column}{.5\textwidth}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.16]{image/tek_pru}
+\caption {\centering Captura de tela do osciloscópio para implementação com
+PRU.}
+\label{fig:pru_osciloscopio_thread}
+\end{figure}
+\end{column}
+
+\end{columns}
 \end{frame}
 
 \section {Manutenção do PROSAC e Implementação de Aplicações Clientes}
@@ -234,6 +318,7 @@ Centro Nacional de Pesquisa em Energia e Materias - CNPEM \\ }
     \item LOCON de 12 e 16 bits.
     \item STATFNT.
     \item DIGINT.
+    \item \ldots
    \end{itemize}
    \item Atualmente, executadas sobre o \textit{single-board computer Advantech
    PCM-4153F}:
@@ -448,7 +533,7 @@ Centro Nacional de Pesquisa em Energia e Materias - CNPEM \\ }
 
 \begin{frame}
 \frametitle{Servidor de alarmes BEAST}
-\framesubtitle{Obtendo o LNLStudio}
+\framesubtitle{Obtendo o LNLStudio - CSStudio 4.3 e Luna}
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.90\textwidth]{image/lnlstudio}
