@@ -12,16 +12,17 @@ controle de fontes e monitoramento de sensores. Exemplos de placas operadas pelo
 
 \vspace{12px}
 
-Considerando a sua importância no contexto do sistema controle, dois clientes
-foram implementados a fim de testar seu funcionamento: um em Java e outro,
-utilizando o \textit{kit} de desenvolvimento \textit{STM32F7 Discovery}.
+Considerando a sua importância no contexto do sistema controle, um artigo
+foi publicado na PCaPAC 2016 e dois clientes foram implementados a fim de testar
+seu funcionamento: um em Java e outro, utilizando o \textit{kit} de
+desenvolvimento \textit{STM32F7 Discovery}.
 
 \subsection {Manutenação do \textit{PROSAC}}
 
 O grupo de controle publicou na PCaPAC 2016 um artigo entitulado \textit{UVX
 Control System: An Approach With BeagleBone Black} \cite{pcapac2016}, em que fui
-um dos autores. Minha tarefa neste trabalho, em poucas palavras, foi ajustar a
-política de escalonamento e a prioridade das \textit{threads} que compõem o
+um dos co-autores. Minha tarefa neste trabalho, em poucas palavras, foi ajustar
+a política de escalonamento e a prioridade das \textit{threads} que compõem o
 \textit{PROSAC}, de forma a obter o melhor desempenho possível nas tarefas
 síncronas realizadas pelo programa. As tarefas ditas \textit{síncronas}
 são aquelas que necessitam ser sincronizadas a partir de um pulso de sincronismo
@@ -31,7 +32,7 @@ transmitir um novo valor às placas que estiverem participando do processo.
 Devido às mesmas limitações de processamento de tempo real discuitidas na seção
 \ref{sec:bb1}, o número de pulsos perdidos na nova versão do \textit{PROSAC} era
 elevado para as frequências superiores a 500Hz, que tornava o seu uso
-proibitivo. Dessa forma, prôpus utilizarmos o \textit{scheduler} denominado de
+proibitivo. Dessa forma, propus utilizarmos o \textit{scheduler} denominado de
 \textit{Completely Fair Scheduler} e ajustar a prioridade das \textit{threads}
 de forma a garantir um maior tempo de CPU à \textit{thread} responsável por
 processar os pulsos. A tabela \ref{tab:prosac} a seguir ilustra a taxa de pulsos
@@ -98,7 +99,8 @@ como interface \textit{Ethernet}, \textit{I2C}, \textit{UART} e tela
 solução foram:
 
 \begin{enumerate} [i.]
-  \item Configuração de plugins para desenvolvimento na \textit{IDE Eclipse}.
+  \item Configuração de \textit{plugins} para desenvolvimento na \textit{IDE
+  Eclipse}.
   \item Configuração da interface \textit{OpenOCD}, responsável pela comunicação
   entre placa e computador.
   \item Implementação de um projeto na aplicação \textit{STMCubeMX} para

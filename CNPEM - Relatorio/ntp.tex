@@ -42,7 +42,7 @@ compõe um comunicação. As variantes NTP são, portanto:
   \item \textit{server/client}: um cliente envia pacotes a um servidor
   requisitando sincronização, que responde utilizando o endereço contido nos
   respectivos pacotes. Nesta variante, servidores fornecem sincronização aos
-  clientes, mas não aceitam sincronizações vindas dos clientes. As associações
+  clientes, mas não aceitam sincronizações vindas deles. As associações
   entre os nós nesta variante são persistentes, ou seja, são criadas na
   inicialização do serviço e nunca são destruídas.
   
@@ -138,8 +138,8 @@ oferecida pelo NTP. Temos, assim:
   		\end{itemize}
   		
 	O \textit{poll process} é responsável, por sua vez, por enviar pacotes aos
-	servidores a cada intervalo de \(2^\tau\) segundos. \(\tau\) varia de 4 a 17,
-	resultando, assim, em intervalos de 16 segundos a 36 horas. O valor de \(\tau\)
+	servidores a cada intervalo de \(2^\tau\) segundos. \(\tau\) varia de 3 a 17,
+	resultando, assim, em intervalos de 8 segundos a 36 horas. O valor de \(\tau\)
 	pode variar durante a execução, sendo modificado pelo algoritmo regulador do
 	relógio, que será discutido posteriormente. 
 	
@@ -377,11 +377,10 @@ velocidade, data e hora no padrão \textit{UTC} e um pulso, chamado de
 para a implementação de um bom servidor NTP. Entretanto, os \textit{delays} com
 que tal informação é recebida e transmitida pelo \textit{receiver} não são
 constantes e variam conforme temperatura. Dessa forma, a fim de obter um tempo
-preciso, um pulso de 1PPS, que marca o ínicio de um novo segundo e cujo
-\textit{jitter} pertence à ordem de centenas de nanosegundos, também é
-fornecido. A combinação destes dois últimos, aliados a um sistema operacional com
+preciso, é necessário o uso do pulso de 1PPS, cuja finalidade é marcar o
+ínicio de um novo segundo. A combinação destes dois últimos, aliados a um sistema operacional com
 \textit{kernel} habilitado ao tratamento de tais pulsos, permite a implementação
-de um servidor com acurácia da ordem de 1\(\mu s\) em relação ao horário
+de um servidor com acurácia da ordem de microsegundos em relação ao horário
 \textit{real}. É importante destacar que o PPS deve ser combinado com alguma
 outra fonte de tempo, uma vez que ele não capaz de dizer o horário efetivo, isto
 é, horas, minutos e segundos, mas sim somente o início de um novo segundo.
@@ -410,7 +409,7 @@ Todos fornecem um pino de saída 1PPS e comunicação serial assíncrona
 estável \textit{74HC123}, a fim de obtermos um pulso 1PPS mais largo na entrada
 do pino da \textit{BeagleBone Black}. Tal pulso é fornecido por alguns
 receptores com uma largura de apenas \(10\mu s\), que pode não ser capturado
-pelp \textit{kernel} do sistema operacional da placa, dependendo evidentemente
+pelo \textit{kernel} do sistema operacional da placa, dependendo, evidentemente,
 da utilização da sua CPU. Sendo assim, utilizando-se um resistor de \(1M\Omega\)
 e um capacitor de \(1\mu F\), obtém-se uma largura de aproximadamente \(500
 ms\). Para os receptores listados acima, porém, o uso do multivibrador não é
@@ -435,8 +434,8 @@ protocolo de comunicação NMEA e realiza a troca de informação com o receptad
 GPS, e \textit{NTPD}, responsável por ajustar o tempo do sistema, conforme
 seções anteriores. A comunicação entre estes dois processos é realizada por meio de um
 espaço de memória compartilhado disponível. É necessário certificar-se, ainda,
-que o \textit{NTPD} foi compilado com o \textit{ATOM}, que se encarrega do
-processamento dos pulsos PPS.
+que o \textit{NTPD} foi compilado com o \textit{driver ATOM}, que se encarrega
+do processamento dos pulsos PPS.
 
 % A segunda etapa consiste na configuração das portas de entrada e
 % saída que serão usadas pela \textit{BeagleBone Black} para se comunicar com o
@@ -514,7 +513,7 @@ comunicar-se com os \textit{daemons} \textit{GPSD} e \textit{NTPD},
 respectivamente. A segunda, por sua vez, consiste em uma ponte, escrita em C,
 entre o \textit{Stream IOC} e as bibliotecas \texttt{libntpq} e \texttt{libgps}.
 De modo geral, o \textit{Stream IOC} envia requisições, seguindo o protocolo
-BSMP, via um \textit{socket unix} local para a \textit{ponte}, que, utiliza, por
+BSMP, via um \textit{socket unix} local para a \textit{ponte}, que utiliza, por
 sua vez, as bibliotecas \texttt{libntpq} e \texttt{libgps} para obter os valores. Vale
 destacar que a \texttt{libntpq} não está disponível nos repositórios oficiais da
 maioria dos sistemas Linux atuais e, portanto, deve ser compilada separadamente
@@ -559,7 +558,7 @@ tabela \ref{tab:ntpd} resume as principais variáveis geradas pelo servidor e a
 	\centering
 	\caption{\label{tab:gpsd} Variáveis definidas para o receptor
 	\textit{GPS}.}
-	\begin{tabular}{| c | c |}
+	\begin{tabular}{| c | l |}
 		\hline
 		\textbf{Nome} & \textbf{Descrição} \\	\hhline{|=|=|}
 		\texttt{GPS:Fix} & Indicação do tipo de \textit{fix} (\textit{No fix},
@@ -692,7 +691,7 @@ primeiros (\texttt{10.0.6.63} e \texttt{10.0.6.60}) são os endereços das placa
 ligadas, respectivamente, aos receptadores da \textit{Adafruit} e da
 \textit{MikroE}, e o último, enfim, é um servidor externo, referenciado pelo
 endereço \url{ntp.cnpem.br}.  Nota-se que a diferença entre as fontes PPS está
-na ordem de unidades de microssegundos e que a diferença entre elas e a externa
+na ordem de unidades de microsegundos e que a diferença entre elas e a externa
 é da ordem de 100\(\mu s\). Os testes para o módulo da \textit{ublox} não foram
 concluídos antes da redação deste relatório, portanto não serão incluídos.
 

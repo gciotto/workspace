@@ -74,7 +74,7 @@ está represetada na figura \ref{fig:best_arquitetura}, logo abaixo.
     ainda estão acionados (\textit{active alarms}).
     
     \item \textit{Alarm tree}: essa opção de visualização oferece
-    uma visão hierarquica dos alarmes, sendo organizada, do nível mais alto para
+    uma visão hierárquica dos alarmes, sendo organizada, do nível mais alto para
     o menor, em áreas, sistemas, subsistemas e variáveis. Oferece opções para
     configurar, remover ou adicionar variáveis no nível desejado. O estado do
     alarme de cada item é mostrado por uma cor e por uma anotação, sendo
@@ -108,12 +108,13 @@ necessário para exportar o produto a partir do código fonte. Depois
 de ter sido exportado, a versão do \textit{Eclipse} pode ser
 descartada. Utilizamos o \textit{MySQL}, \textit{Apache
 ActiveMQ} e a versão \textit{Eclipse Luna for RCP and Plugin Development} para
-os requisitos acima.
+os requisitos acima. O servidor de alarmes encontra-se no OPR23, assim
+como o arquivador.
 
 
 \subsection{Uso da interface \textit{Eclipse} como \textit{Alarm Client GUI}}
 
-Para configurar o \textit{Eclipse} como um cliente do servidor de alarmes, é
+Para utilizar o \textit{Eclipse} como um cliente do servidor de alarmes, é
 necessário configurá-lo para que ele acesse os servidores \textit{MySQL} e
 \textit{JMS}. Isso é realizado através de \texttt{Window > Preferences > CSS
 Applications > Alarm > Alarm System}. Se tudo foi configurado corretamente, já é
@@ -121,6 +122,13 @@ possível acessar os alarmes configurados através do componentes comentados no
 item \ref{client-gui} da seção \ref{beast-intro}. A figura \ref{fig:alarm}
 representa alguns alarmes que configuramos no grupo de Controle. Destaca-se a
 variável \texttt{Cnt:MikroE:GPS:Fix}, criada na seção \ref{sec:pvsgps}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{image/beast-screen-shot}
+\caption {Cliente \textit{BEAST} baseado no \textit{Control System Studio}.}
+\label{fig:alarm}
+\end{figure}
 
 \subsection {Obtendo um \textit{LNLStudio} a partir da configuração do
 \textit{Eclipse}}
@@ -136,6 +144,7 @@ originados do \textit{Control System Studio}, o \textit{LNLStudio} proporciona
 uma maior liberdade de configuração e modificação de parâmetros como, por
 exemplo, a possibilidade de autenticação a um servidor LDAP. Além disso, o
 último \textit{LNLStudio} foi construído a partir da versão 4.1.4 do CSS, sendo
-mais recente do que muitos dos demais produtos disponíveis.
+mais recente do que muitos dos demais produtos disponíveis. A figura
+\ref{fig:alarm} foi gerada a partir do \textit{LNLStudio}.
 
  

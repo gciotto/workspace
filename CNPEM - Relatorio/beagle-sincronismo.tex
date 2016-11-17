@@ -27,7 +27,7 @@ desenvolvida e estudada por outros laboratórios no mundo todo.
 Um sistema de sincronismo para as fontes de corrente já
 foi implementado pelo grupo de controle, utilizando as unidades
 \textit{Programmable Realtime Unit}, ou simplesmente \textit{PRU}, presentes na
-\textit{BeagleBone Board}. Tais unidades apresentam \textit{clock} de 200MHz,
+\textit{BeagleBone}. Tais unidades apresentam \textit{clock} de 200MHz,
 núcleos de memória própria e compartilhada, e módulos dedicados, como o
 \textit{Enhanced GPIO}, que favorecem a implementação de aplicações
 \textit{realtime}, em que a precisão é uma necessidade importante. Soluções
@@ -68,7 +68,8 @@ respectiva \textit{performance}.
 
 \subsection {Implementação}
 
-Esta subseção é dedicada à implementação do sistema de sincronismo proposto.
+Esta subseção é dedicada a duas implementações do sistema de sincronismo
+proposto.
 
 \subsubsection{\textit{Loadable Kernel Modules}}
 
@@ -134,7 +135,7 @@ Em termos de programação, as aplicações apresentam as seguintes característ
 
 Por questões de simplicidade, o módulo \textit{PWM} da placa que envia os
 pacotes \textit{UDP} (\textit{BB1}) será utilizado como gerador dos
-\textit{triggers} de sincronismo. A sua configuração será descrita na próxima subseção.
+\textit{triggers} de sincronismo. 
 
 % \subsubsection {Configuração do \textit{PWM} com o \textit{Device Tree
 % Overlays}}
@@ -471,14 +472,15 @@ bloqueia a \textit{thread} até que um datagrama seja detectado.
 \subsection{Utilizando o módulo PRU}
 
 Implementações alternativas para os \textit{kernel modules} de \textit{BB1} e
-\textit{BB2} foram propostas usando o módulo PRU da \textit{BeagleBone Black}. 
+\textit{BB2} foram propostas usando o módulo PRU da \textit{BeagleBone Black}.
 Para \textit{BB1}, a configuração do \textit{timer} e a verificação das
-interrupções gerada por ele e pelo pulso de sincronismo são feitas pela PRU.
+interrupções geradas por ele e pelo pulso de sincronismo são feitas pela PRU.
 Quando um \textit{trigger} é recebido, um sinal é enviado para um programa
-rodando no \textit{user space} da \textit{Beagle}, cujo propósito é, de fato, enviar pacotes \textit{UDP} para \textit{BB2}. É
-importante observar que a comunicação entre o processador e o módulo PRU é
-garantida via \textit{hardware} e que uma API contendo funções de comunicação
-com a PRU também é fornecida pela comunidade.
+rodando no \textit{user space} da \textit{Beagle}, cujo propósito é, de fato,
+enviar pacotes \textit{UDP} para \textit{BB2}. É importante observar que a
+comunicação entre o processador e o módulo PRU é garantida via \textit{hardware}
+e que uma API contendo funções de comunicação com a PRU também é fornecida pela
+comunidade.
 
 \vspace{12pt}
 
@@ -506,29 +508,44 @@ Persistência} do \textit{Display Forma de onda} para infinito, de forma a
 garantir que a tela do osciloscópio mantenha os pulsos gerados em instantes
 passados. Enfim, habilitamos o funcionamento do osciloscópio, obtendo o
 resultado presente na figura \ref{fig:osciloscopio_thread} para a implementação
-contendo os \textit{kernel modules}. O desvio padrão, ou \textit{jitter} obtido,
-é da ordem de 5.7\textit{ms}, muito distante daquele adquirido pelo sistema
-construído pelo grupo de controle, no qual utilizou-se a \textit{PRU} e
-obteve-se um valor próximo de 15\textit{ns}. Tal diferença é explicada,
-basicamente, por dois fatores: o canal utilizado para envio da mensagem e o
-componente de processamento da \textit{Beagle}. Na nossa aplicação, utilizamos
-um \textit{switch HP V1810G}, que apresenta um comportamento \textit{não
-deterministico}, isto é, não é possível prever com certitude o tempo necessário
-para que um pacote seja entregue a um determinado \textit{host}. O segundo
-aspecto a ser considerado é que aplicações rodando na \textit{PRU} não dividem
-recursos com outros processos, ao contrário de aplicações que rodam em
-\textit{embedded linux}. Na seção \ref{sec:bb1}, comentamos que, apesar do
-\textit{Linux} fornecer políticas de preempção \textit{real-time}, o
-comportamento chamado de \textit{hard real-time} não poderia ser alcançado pelo
-\textit{kernel}. Em oposição, as unidades \textit{PRUs} da \textit{Beagle} foram
-desenvolvidas para este propósito.
+contendo os \textit{kernel modules} e na \ref{fig:pru_osciloscopio_thread} para
+a implementação utilizando a PRU. Os desvios padrões, ou \textit{jitters},
+obtidos são, respectivamente, 5.7\textit{ms} e 985.1\(\mu s\), muito distantes
+daquele adquirido pelo sistema construído pelo grupo de controle, no qual
+utilizou-se somente a \textit{PRU} e obteve-se um valor próximo de
+15\textit{ns}. Tal diferença é explicada, basicamente, por dois fatores: o canal
+utilizado para envio da mensagem e o componente de processamento da
+\textit{Beagle}. Nas nossas aplicações, utilizamos um \textit{switch HP V1810G},
+que apresenta um comportamento \textit{não determinístico}, isto é, não é
+possível prever com certitude o tempo necessário para que um pacote seja
+entregue a um determinado \textit{host}. O segundo aspecto a ser considerado é
+que aplicações rodando na \textit{PRU} não dividem recursos com outros
+processos, ao contrário de aplicações que rodam em \textit{embedded linux}. Na
+seção \ref{sec:bb1}, comentamos que, apesar do \textit{Linux} fornecer políticas
+de preempção \textit{real-time}, o comportamento chamado de \textit{hard
+real-time} não poderia ser alcançado pelo \textit{kernel}. Em oposição, as
+unidades \textit{PRUs} da \textit{Beagle} foram desenvolvidas para este
+propósito.
 
 \begin{figure}[h]
 
 \centering
-\includegraphics[scale=0.25]{image/tek_com_threads}
-\caption {Captura de tela do osciloscópio.}
-\label{fig:osciloscopio_thread}
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[scale=0.26]{image/tek_com_threads}
+		\caption {\centering Captura de tela do osciloscópio para a implementação com
+		\textit{kernel modules}.}
+		\label{fig:osciloscopio_thread}
+	\end{subfigure}%
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[scale=0.26]{image/tek_pru}
+		\caption {\centering Captura de tela do osciloscópio para implementação com
+		PRU.}
+		\label{fig:pru_osciloscopio_thread}
+	\end{subfigure}%
+	
+	\caption {Resultados encontrados para as duas implementações.}
 \end{figure}
 
 \subsection{Alternativa de solução: \textit{Industrial Ethernet}}
@@ -544,10 +561,6 @@ família que o suportam são \textit{AM3357} e \textit{AM3359}. A \textit{Texas
 Instruments} fornece um \textit{kit} de desenvolvimento com o último, chamado de
 \textit{AM3359 Industrial Communications Engine}, e uma biblioteca desenvolvida
 para o uso deste protocolo, \textit{SYS/BIOS Industrial Software Development Kit
-(SDK)}.
-
-\vspace{12pt}
-
-Além do \textit{EtherCAT}, outras alternativas para comunicação
+(SDK)}. Além do \textit{EtherCAT}, outras alternativas para comunicação
 \textit{real-time} sobre \textit{Ethernet} e que são suportadas pelo processador
 AM3358 são \textit{Ethernet/IP}, \textit{PROFINET RT/IRT} e \textit{PROFIBUS}.

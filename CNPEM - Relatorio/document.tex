@@ -2,10 +2,10 @@
 %=========================== PACKAGES =============================%
 
 \usepackage[utf8]{inputenc} 
-\DeclareUnicodeCharacter{00A0}{ }
+\usepackage[T1]{fontenc} 
 
 \usepackage[hmargin=0.910cm, vmargin=2.2cm]{geometry}
-\usepackage[brazil]{babel}
+\usepackage[brazil]{babel} 
 
 \usepackage{longtable}
   
@@ -54,12 +54,19 @@
 
 \usepackage{setspace}
 
+\hyphenation{ res-pon-sá-ve-is }
+\hyphenation{ cons-tan-te }
+\hyphenation{ res-pec-ti-vo }
+\hyphenation{ con-fi-gu-ra-mos }
+
 %=========================== PACKAGES =============================%
 
 
 \author{Gustavo Ciotto Pinton}
 
 \begin{document}
+
+\selectlanguage{brazil}
 
 \input{cover_cnpem}
 
@@ -89,6 +96,8 @@
 \input{epics-beast}
 
 \input{conclusao}
+
+\newpage
 
 \bibliographystyle{plain}
 \bibliography{references} 
