@@ -1,0 +1,15 @@
+[Unit]
+Description=Stream IOC - gpds/ntpd bridge
+After=ntpd.service ntpdate.service gpsd.service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/root/gciotto/ntp-gps-building-scripts/ioc
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
+
+
