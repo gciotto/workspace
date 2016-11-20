@@ -1,8 +1,0 @@
-\select@language {brazil}
-\beamer@endinputifotherversion {3.36pt}
-\select@language {brazil}
-\beamer@sectionintoc {1}{Implementa\IeC {\c c}\IeC {\~a}o de um servidor NTP}{3}{0}{1}
-\beamer@sectionintoc {2}{Sincroniza\IeC {\c c}\IeC {\~a}o via Ethernet com a BeagleBone Black}{8}{0}{2}
-\beamer@sectionintoc {3}{Manuten\IeC {\c c}\IeC {\~a}o do PROSAC e Implementa\IeC {\c c}\IeC {\~a}o de Aplica\IeC {\c c}\IeC {\~o}es Clientes}{11}{0}{3}
-\beamer@sectionintoc {4}{Arquivador de vari\IeC {\'a}veis EPICS}{15}{0}{4}
-\beamer@sectionintoc {5}{Servidor de alarmes BEAST}{19}{0}{5}
