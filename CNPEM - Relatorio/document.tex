@@ -4,7 +4,7 @@
 \usepackage[utf8]{inputenc} 
 \usepackage[T1]{fontenc} 
 
-\usepackage[hmargin=0.910cm, vmargin=2.2cm]{geometry}
+\usepackage[hmargin=2.00cm, top=1.8cm, bottom=4.0cm]{geometry}
 \usepackage[brazil]{babel} 
 
 \usepackage{longtable}
@@ -44,8 +44,17 @@
 \usepackage{enumerate}
 
 \usepackage{fancyhdr}
-\pagestyle{fancy}
-\lhead{\includegraphics[scale=0.17]{image/cnpem_logo}}
+\pagestyle{fancy} 
+
+\rhead{\includegraphics[height=1.6cm]{image/CNPEM}}
+\lhead{\includegraphics[height=1.6cm]{image/LNLS}}
+
+\cfoot{\footnotesize O LNLS integra o Centro Nacional de Pesquisa em Energia e
+Materiais (CNPEM), Organização Social qualificada pelo Ministério da Ciência,
+Tecnologia, Inovações e Comunicações (MCTIC) \\ 
+Campus: Rua Giuseppe Máximo Scolfaro, 10.000 - Pólo II de Alta Tecnologia -
+Caixa Postal 6192 - 13083-970 - Campinas/SP\\
+Fone: +55.19.3512.1010 | Fax: +55.19.3512.1004 | www.lnls.cnpem.br} 
 \renewcommand\headrulewidth{0pt}
 
 \usepackage[scaled]{helvet}
@@ -58,6 +67,8 @@
 \hyphenation{ cons-tan-te }
 \hyphenation{ res-pec-ti-vo }
 \hyphenation{ con-fi-gu-ra-mos }
+\hyphenation{ fun-ci-o-na-li-da-des }
+\hyphenation{ dis-po-ní-veis }
 
 %=========================== PACKAGES =============================%
 
@@ -104,6 +115,5 @@
 \bibliography{references} 
 
 % \input{bibliografia} 
-    
 
 \end{document}

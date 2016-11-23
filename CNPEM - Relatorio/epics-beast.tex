@@ -22,7 +22,9 @@ está represetada na figura \ref{fig:best_arquitetura}, logo abaixo.
 \label{fig:best_arquitetura}
 \end{figure}
 
-É possível distinguir diversos componentes na figura acima:
+\vspace{12pt}
+
+É possível distinguir diversos componentes na figura \ref{fig:best_arquitetura}:
 
 \begin{enumerate}[i.]
   
@@ -139,12 +141,47 @@ O \textit{Eclipse} provê suporte para projetos do tipo
 \textit{Eclipse} como um novo produto, que chamaremos de \textit{LNLStudio}.
 Isso foi realizado através da seleção de apenas os \textit{plugins} que são
 importantes para o grupo, tais como aqueles ligados ao \textit{BEAST} e ao
-construtor de interfaces \textit{OPI Builder}.  Em relação a outros produtos
-originados do \textit{Control System Studio}, o \textit{LNLStudio} proporciona
-uma maior liberdade de configuração e modificação de parâmetros como, por
+construtor de interfaces \textit{OPI Builder}. A princípio, geramos tal produto
+por 2 maneiras distintas:
+
+\begin{itemize}\renewcommand\labelitemi{--}
+  \item A partir do repositório \textit{git} do \textit{Control System Studio}:
+ nesta abordagem, clona-se o repositório \texttt{org.csstudio.product} e
+ modifica-se os arquivos para adicionar os \textit{plugins} e personalizações
+ desejados. A compilação e instalação dos produtos é realizada via o aplication
+ \textit{Maven}.
+
+ \item A partir da criação de um novo produto no \textit{Eclipse}: cria-se um
+ novo projeto e um novo arquivo \texttt{.product}, especificando os
+ \textit{plugins} e \textit{features} desejados.
+\end{itemize}
+
+Em relação a outros produtos originados do \textit{Control System Studio}, o
+\textit{LNLStudio} proporciona uma maior liberdade de configuração e modificação de parâmetros como, por
 exemplo, a possibilidade de autenticação a um servidor LDAP. Além disso, o
-último \textit{LNLStudio} foi construído a partir da versão 4.1.4 do CSS, sendo
+último \textit{LNLStudio} foi construído a partir da versão 4.3.4 do CSS, sendo
 mais recente do que muitos dos demais produtos disponíveis. A figura
 \ref{fig:alarm} foi gerada a partir do \textit{LNLStudio}.
 
+\subsubsection{Criação de um novo \textit{plugin}}
+
+Um novo \textit{plugin} foi desenvolvido e
+adicionado ao produto \textit{LNLStudio}. Tal \textit{plugin}, chamado de \textit{Monitor}, é baseado
+na versão 3.x RCP do \textit{Eclipse} e na mesma API que o \textit{OPI Builder}
+foi construído, isto é, a \textit{GEF} (\textit{Graphical Editing Framework}).
+Sua finalidade é propiciar uma ferramenta de organização dos \textit{host} à medida que permite a criação de
+relações entre eles e a especificação de quais variáveis EPICS são gerados por
+eles. É importante observar que o \textit{plugin} possui integração com a
+maioria dos \textit{plugins} do \textit{CSStudio}, tais como o
+\textit{Databrowser} e \textit{OPI}. A figura \ref{fig:plugin} representa o
+um exemplo do \textit{plugin} desenvolvido para organização do \textit{host}
+ligado ao receptor GPS \textit{MikroE GPS Click} da seção \ref{sec:pvsgps}.
+
+\begin{figure}[h]
+
+\centering
+\includegraphics[width=0.995\textwidth]{image/plugin}
+\caption {\textit{Plugin} desenvolvido e integrado ao \textit{LNLStudio}.}
+\label{fig:plugin}
+\end{figure}
  

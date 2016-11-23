@@ -1,0 +1,283 @@
+= EPICS Archiver Appliance =
+
+== Introdução ==
+
+O EPICS ''Archiver Appliance'', desenvolvido pelo instituto americano ''National Accelerator Laboratory (SLAC)'', é capaz de monitorar e arquivar um grande número de váriaveis, as chamadas ''PVs'', geradas por servidores EPICS presentes na rede. O sistema fornece também opções de configuração de um largo conjunto de parâmetros referentes ao armazenamento e monitoramento. Uma ''appliance'' é composta basicamente por quatro módulos distintos, sendo eles:
+
+* ''Management'': provê as ferramentas necessárias para a gerência da ''appliance''. Permite, por exemplo, adicionar ou remover ''PVs'' à lista de variáveis a serem arquivadas;
+* ''Engine'': realiza a integração entre os módulos;
+* ''Data Retrieval'': módulo responsável por recuperar os dados das ''PVs'' arquivadas;
+* ''ETL'': responsável por extrair os dados e tranformá-los a fim de que as aplicações possam processá-los posteriormente;
+
+A figura [fig:epics<sub>a</sub>rchiver] esquematiza o modo de funcionamento do ''EPICS Archiver Appliance''.
+
+[[Image:image/applarch|frame|none|alt=|caption Modo de funcionamento de uma ''appliance''<span data-label="fig:epicsarchiver"></span>]]
+
+O instituto desenvolvedor da aplicação sugere que cada módulo seja lançada em sua própria instância ''Tomcat''. Em adição, ele propõe a divisão da unidade de armazenamento em 3 outras unidades, de acordo com a frequência que os dados são salvos. Essas unidades são divididas ''short-term'', ''medium-term'' e ''long-term storage'', cujas frequências de armazenamento são, respectivamente, a cada hora, diária e anual. Essas configurações podem ser modificadas através da modificação de arquivos específicos, explicados nas próximas subseções.
+
+Em um ambiente composto por diversos servidores EPICS e milhares de variáveis a serem monitoradas, tal como o ''Sirius'', um sistema capaz de automizar e agilizar o armazenamento e recuperação de dados se torna fundamental para o monitoramento de eventuais problemas. Sendo assim, as próximas seções são dedicadas à instalação e exploração dos recursos disponíveis nesta aplicação.
+
+== Instalação ==
+
+Esta subseção é dedicada às etapas necessárias para a instalação do EPICS Archiver Appliance. Neste tutorial serão apresentadas dois métodos: um que utiliza os repositórios oficiais do Ubuntu 16.04 para obter os pacotes e o outro, os servidores dos próprios provedores dos serviços.
+
+=== Instalação das dependências ===
+
+A aplicação necessita, além da própria base de bibliotecas EPICS, da instalação do ''java-jdk 8'' e de servidores ''MySQL'' e ''Apache Tomcat''. A instalação do ''Apache HTTP Server'' é opcional e deve ser utilizada somente se o balanceamento de requisições entre as ''appliances'' for pretentida. Nesse caso, vamos utilizar o módulo ''mod_proxy_balancer''.
+
+<ol style="list-style-type: lower-roman;">
+<li><p>''Instalação do EPICS'': é necessário inicialmente fazer o ''download'' e compilar as bibliotecas EPICS. Escolha um diretório de acordo com sua preferência (referenciado nesse documento por <code>$EPICS_DIR</code>) e execute os comandos abaixo. Alguns erros podem ocorrer na execução do comando <code>make</code>, resultantes da falta de algumas bibliotecas no sistema. Faça as respectivas instalações e repita o processo.</p>
+<pre>$ cd $EPICS_DIR
+$ wget http://www.aps.anl.gov/epics/download/base/baseR3.14.12.5.tar.gz
+$ tar -xvzf baseR3.14.12.5.tar.gz
+$ rm baseR3.14.12.5.tar.gz
+$ cd base-3.14.12.5
+$ make</pre>
+<p>Adicione as seguintes variáveis de ambiente ao arquivo <code>.bashrc</code> do seu usuário (geralmente encontrado em <code>/home/user/</code>). Esse arquivo de configuração é consultado toda vez que um usuário executa um novo ''shell''.</p>
+<pre>export PATH=$EPICS_DIR/base-3.14.12.5/bin/linux-x86_64:$PATH
+export EPICS_BASE=$EPICS_DIR/base-3.14.12.5
+export EPICS_HOST_ARCH=linux-x86_64</pre>
+<p>Enfim, atualize a sessão com</p>
+<pre>$ source /home/user/.bashrc</pre>
+<p>Para testar a instalação, use o comando <code>caget</code> com alguma variável disponível na sua rede.</p>
+<pre>$ caget variavel</pre></li>
+<li><p>''Instalação do Java 8'': execute o comando abaixo para instalar o ''Java Development Kit''.</p>
+<pre>$ sudo apt-get install openjdk-8-jdk</pre>
+<p>O EPICS Archiver Appliance necessita de duas variáveis de ambiente referentes ao ''Java''. Adicione-as no arquivo ''.bashrc'', após as variáveis de ambiente EPICS.</p>
+<pre>export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JRE_HOME=${JAVA_HOME}/jre</pre></li>
+<li><p>''Instalação do MySQL Server'': para instalar um servidor ''MySQL'', basta executar o comando abaixo. Durante o processo de instalação, será requisitada a senha para o usuário ''root'' do servidor. No nosso caso, senha escolhida foi <code>toor</code>.</p>
+<pre>$ sudo apt-get install mysql-server</pre></li>
+<li><p>''Instalação do Apache Tomcat'': defina um diretório onde os arquivos serão instalados e execute os comandos abaixo. Esse diretório será referenciado pela variável de ambiente .</p>
+<pre>$ cd ${TOMCAT_DIR}
+$ wget http://tinyurl.com/zewzg72
+$ tar -xvzf apache-tomcat-8.5.4.tar.gz
+$ rm apache-tomcat-8.5.4.tar.gz
+$ cd apache-tomcat-8.5.4/</pre>
+<p>Defina a variável de ambiente <code>${CATALINA_HOME}</code>, responsável por referenciar o diretório ''apache-tomcat-8.5.4/'' recém criado. Adicione a seguinte linha no arquivo <code>.bashrc</code> logo abaixo das variáveis de ambiente adicionadas na instalação do ''Java''.</p>
+<pre>export CATALINA_HOME = ${TOMCAT_DIR}/apache-tomcat-8.5.4</pre>
+<p>No ''Ubuntu'' 16.04, a instalação pode ser realizada com o comando</p>
+<pre>sudo apt-get install tomcat8</pre>
+<p>E defina a variável <code>${CATALINA_HOME}</code> como</p>
+<pre>export CATALINA_HOME = /usr/share/tomcat8</pre></li>
+<li><p>''Instalação do Apache HTTP Server'': Para instalar o servidor ''Apache'', faça o ''download'' do pacote.</p>
+<pre>$ cd $INSTALL_DIR
+$ wget http://tinyurl.com/z8gnxmk
+$ tar -xvzf httpd-2.4.23.tar.gz
+$ rm httpd-2.4.23.tar.gz
+$ cd httpd-2.4.23</pre>
+<p>Algumas dependências devem ser instaladas:</p>
+<pre>$ sudo apt-get install libapr1-dev libaprutil1-dev</pre>
+<p>Será necessário instalar também a <code>libpcre</code>:</p>
+<pre>$ cd $INSTALL_DIR
+$ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.37.tar.gz
+$ tar -xvzf pcre-8.37.tar.gz
+$ rm pcre-8.37.tar.gz
+$ cd pcre-8.37
+$ ./configure --prefix=$INSTALL_DIR/pcre
+$ make
+$ make install</pre>
+<p>Finalmente, execute os ''scripts'' para instalar o ''Apache http'':</p>
+<pre>$ cd $INSTALL_DIR/httpd-2.4.23
+$ ./configure --prefix=$INSTALL_DIR/httpd --with-pcre=$INSTALL_DIR/pcre
+$ make
+$ make install</pre>
+<p>Para habilitar o módulo <code>mod_proxy_balancer</code>, descomente as seguintes linhas no arquivo <code>$INSTALL_DIR/httpd/conf/httpd.conf</code>:</p>
+<pre>LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+LoadModule lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so</pre>
+<p>Adicione as linhas abaixo no mesmo arquivo. Quando uma requisição for realizada pelo endereço <code>localhost/lnls-archiver</code>, um dos endereços dentro da ''tag'' <code>&lt;Proxy&gt;</code> será chamado. No nosso exemplo, colocamos o endereço do módulo <code>retrieval</code> de apenas uma ''appliance''.</p>
+<pre>&lt;Proxy &quot;balancer://appl&quot;&gt;
+    BalancerMember &quot;http://localhost:11998/retrieval&quot;
+&lt;/Proxy&gt;
+ProxyPass &quot;/lnls-archiver&quot; &quot;balancer://appl&quot;
+ProxyPassReverse &quot;/test&quot; &quot;balancer://appl&quot;</pre>
+<p>Inicie o servidor com o comando:</p>
+<pre>$ sudo $INSTALL_DIR/httpd/bin/apachectl start</pre>
+<p>O servidor ''Apache'' funciona agora como um divisor de carga entre as diversas ''appliances'' da rede.</p>
+<p>No ''Ubuntu'' 16.04, a instalação é realizada através do comando abaixo. A configuração deste módulo é um pouco distinta daquela documentada anteriormente, sendo que é necessário copiar os arquivos , , , e da pasta para . Os dois últimos diretórios encontram-se em . Enfim, a configuração dos ''proxies'' deve ser realizada no arquivo da mesma maneira que foi explicada anteriormente.</p>
+<pre>$ sudo apt-get install apache2</pre>
+<p>O servidor é iniciado, por sua vez, através de</p>
+<pre>$ sudo systemctl start apache2.service</pre></li></ol>
+
+=== Instalação do EPICS Archiver Appliance ===
+
+Tendo instalado todas as dependências, é necessário ainda configurar alguns parâmetros e instalar os pacotes referentes ao arquivador. Para tal, crie uma pasta onde serão instalados os pacotes. Esse diretório será referenciado por <code>$INSTALL_DIR</code> neste documento.
+
+<ol style="list-style-type: lower-roman;">
+<li><p>Crie uma pasta e faça o ''download'' dos pacotes do arquivador, segundo os comandos abaixo.</p>
+<pre>$ mkdir $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27
+$ cd $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27
+$ wget http://tinyurl.com/zom7pbw
+$ tar -xvzf archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27.tar.gz
+$ rm archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27.tar.gz</pre>
+<p>Nesta pasta estão os arquivos ''.war'' usados para lançar os módulos e alguns ''scripts'' sugeridos pelo desenvolvedor para auxiliar na instalação.</p></li>
+<li><p>[item:appl] Crie uma pasta onde as instâncias ''Tomcat'' de cada módulo serão armazenadas e, dentro dela, o arquivo ''lnls_appliances.xml''. Tal pasta será chamada de .</p>
+<pre>$ mkdir $INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+$ cd INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+$ nano lnls_appliances.xml</pre>
+<p>Copie as seguintes linhas para esse arquivo. Se a configuração do ''Apache httpd'' não foi realizada, então o endereço de <code>&lt;data_retrieval_url&gt;</code> deve ser igual ao endereço de <code>&lt;retrieval_url&gt;</code>. Senão:</p>
+<pre>&lt;appliances&gt; &lt;appliance&gt;
+     &lt;identity&gt;lnls_control_appliance&lt;/identity&gt;
+     &lt;cluster_inetport&gt;localhost:12000&lt;/cluster_inetport&gt;
+     &lt;mgmt_url&gt;http://localhost:11995/mgmt/bpl&lt;/mgmt_url&gt;
+     &lt;engine_url&gt;http://localhost:11996/engine/bpl&lt;/engine_url&gt;
+     &lt;etl_url&gt;http://localhost:11997/etl/bpl&lt;/etl_url&gt;
+     &lt;retrieval_url&gt;http://localhost:11998/retrieval/bpl&lt;/retrieval_url&gt;
+     &lt;data_retrieval_url&gt;http://localhost/lnls-archiver&lt;/data_retrieval_url&gt;
+   &lt;/appliance&gt;
+ &lt;/appliances&gt;</pre>
+<p>Esse arquivo especifica os endereços e portas de cada um dos quatro módulos, bem como o nome da ''appliance'' (<code>lnls_control_appliance</code>). Os números das portas foram escolhidos aleatoriamente, mas, por sugestão do desenvolver, deve-se adotar uma sequência crescente a partir da porta do módulo <code>mgmt</code>, que, no nosso caso, vale 11995. É importante observar que <code>localhost</code> deve ser substituído pelo endereço que será utilizado para referenciar os ''servlets'' remotamente. <code>&lt;data_retrieval_url&gt;</code> é o endereço que deverá ser utilizado a fim de enviar e obter requisões HTTP e JSON, conforme figura [fig:epics<sub>a</sub>rchiver] e <code>&lt;cluster_inetport&gt;</code> é a combinação <code>TCPIP address:port</code> usado para a comunicação entre as ''appliances''. Por fim, adicione as váriaveis de ambiente ao arquivo <code>.bashrc</code>.</p>
+<pre>export ARCHAPPL_APPLIANCES=$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27/lnls_appliances.xml
+export ARCHAPPL_MYIDENTITY=lnls_control_appliance</pre>
+<p>O desenvolvedor sugere também trocar a porta padrão usada pelo ''Apache Tomcat'' pela porta usada pelo módulo <code>mgmt</code>, isto é, 11995, e comentar as linhas sobre o uso do conector AJP. Para isso, siga a sequência abaixo.</p>
+<pre>$ nano $CATALINA_HOME/conf/server.xml
+### Edite a porta de forma a obter
+[...]
+&lt;Connector port=&quot;11995&quot; protocol=&quot;HTTP/1.1&quot;
+               connectionTimeout=&quot;20000&quot;
+               redirectPort=&quot;8443&quot; /&gt;
+[...]
+### Comente o trecho
+&lt;!-- Define an AJP 1.3 Connector on port 8009 
+    &lt;Connector port=&quot;8009&quot; protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; /&gt; --&gt;</pre>
+<p>Execute o ''script'' disponibilizado pelo desenvolvedor para criar as 4 instâncias do ''Apache Tomcat''.</p>
+<pre>$ source /home/user/.bashrc
+$ cd $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27/install_scripts
+$ ./deployMultipleTomcats.py $INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27</pre>
+<p>Serão criadas 4 pastas dentro de , uma para cada módulo.</p></li>
+<li><p>É possível também alteração as configurações de ''log''. O desenvolvedor sugere que sejam executados os seguintes comandos:</p>
+<pre>$ nano $CATALINA_HOME/lib/log4j.properties
+
+### Arquivo log4j.properties
+# Set root logger level and its only appender to A1.
+log4j.rootLogger=ERROR, A1
+log4j.logger.config.org.epics.archiverappliance=INFO
+log4j.logger.org.apache.http=ERROR
+
+# A1 is set to be a DailyRollingFileAppender
+log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.A1.File=arch.log
+log4j.appender.A1.DatePattern='.'yyyy-MM-dd
+
+# A1 uses PatternLayout.
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n</pre></li>
+<li><p>O próximo passo é definir o arquivo <code>policies.py</code>. Esse arquivo especifica as regras de armazenagem que serão utilizadas pelo arquivador. O arquivo fornecido pelo desenvolver define, por exemplo, três modalidades de armazenamento, que foram exemplificadas na subseção '''Introdução'''. É possível ajustar neste arquivo parâmetros que alteram a taxa de armazenamento de uma PV dependendo de sua taxa de aquisição, por exemplo. Para um primeiro instante vamos usar esse arquivo fornecido, que está disponível na pasta <code>WEB-INF/classes</code> dentro do arquivo <code>mgmt.war</code> em <code>$INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27</code>. Copie-o para <code>$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25 -27</code> e renomeie-o para <code>lnls_policies.py</code>. Enfim, defina variáveis de ambiente usadas por este arquivo.</p>
+<pre>export ARCHAPPL_POLICIES=$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27/lnls_policies.py
+export ARCHAPPL_SHORT_TERM_FOLDER=$INSTALL_DIR/lnls-archiver-storage/STS
+export ARCHAPPL_MEDIUM_TERM_FOLDER=$INSTALL_DIR/lnls-archiver-storage/MTS
+export ARCHAPPL_LONG_TERM_FOLDER=$INSTALL_DIR/lnls-archiver-storage/LTS</pre>
+<p>As três últimas variáveis devem ser corretamente configuradas de acordo com a disponibilidade de equipamentos, por exemplo. No nosso caso, um único diretório é usado para os três tipos de armazenamento, sendo ele <code>lnls-archiver-storage/</code>.</p></li>
+<li><p>[mysql-install]A próxima etapa é a criação de tabelas usadas pelo EPICS Archiver Appliance. Vamos criar uma base chamada <code>lnls_appliance_database</code> e o usuário <code>lnls_user</code>, com todos os direitos de acesso a ela. No nosso caso, a senha do usuário é <code>controle</code>.</p>
+<pre>$ mysql -u root -p
+&gt;&gt; CREATE DATABASE lnls_appliance_database;
+&gt;&gt; GRANT ALL ON lnls_appliance_database.* TO 'lnls_user'@'%' IDENTIFIED BY
+'controle';</pre>
+<p>Acesse o servidor ''mysql'' com esse usuário e execute o ''script'' de criação das tabelas disponibilizado pelo desenvolvedor:</p>
+<pre>$ mysql -u lnls_user -p
+&gt;&gt; USE lnls_appliance_database
+&gt;&gt; source $INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27/install_scripts/archappl_mysql.sql</pre></li>
+<li><p>É necessário fazer o ''download'' do conector ''MySQL'' usado pelo ''Apache Tomcat''.</p>
+<pre>$ wget http://tinyurl.com/jf3cadl</pre>
+<p>Abra este arquivo e extraia <code>mysql-connector-java-5.1.38-bin.jar</code> para o diretório <code>$CATALINA_HOME/lib/</code>. Abra o arquivo ''conf/context.xml'' e adicione dentro de <code>&lt;Context&gt;</code>:</p>
+<pre>$ nano $CATALINA_HOME/conf/context.xml
+
+&lt;Context ...&gt;
+    &lt;Resource   name=&quot;jdbc/archappl&quot;
+          auth=&quot;Container&quot;
+          type=&quot;javax.sql.DataSource&quot;
+          factory=&quot;org.apache.tomcat.jdbc.pool.DataSourceFactory&quot;
+          username=&quot;lnls_user&quot;
+          password=&quot;controle&quot; 
+          testWhileIdle=&quot;true&quot;
+          testOnBorrow=&quot;true&quot;
+          testOnReturn=&quot;false&quot;
+          validationQuery=&quot;SELECT 1&quot;
+          validationInterval=&quot;30000&quot;
+          timeBetweenEvictionRunsMillis=&quot;30000&quot;
+          maxActive=&quot;10&quot; 
+          minIdle=&quot;2&quot; 
+          maxWait=&quot;10000&quot; 
+          initialSize=&quot;2&quot;
+          removeAbandonedTimeout=&quot;60&quot;
+          removeAbandoned=&quot;true&quot;
+          logAbandoned=&quot;true&quot;
+          minEvictableIdleTimeMillis=&quot;30000&quot; 
+          jmxEnabled=&quot;true&quot;
+          driverClassName=&quot;com.mysql.jdbc.Driver&quot;
+          url=&quot;jdbc:mysql://localhost:3306/lnls_appliance_database&quot;
+     /&gt;
+&lt;/Context&gt;</pre>
+<p>Note que modificamos os campos <code>username</code>, <code>password</code> e <code>url</code> de acordo com a instalação no item [mysql-install].</p></li>
+<li><p>É necessário copiar e extrair todos os arquivos ''.war'' presentes em para os respectivos diretórios <code>webapps/</code>. Para tal, definimos:</p>
+<pre>export DEPLOY_DIR=$INSTALL_DIR/lnls-control-archiver_v0.0.1_22-June-2016T10-25-27
+export WARSRC_DIR=$INSTALL_DIR/archappl_v0.0.1_SNAPSHOT_22-June-2016T10-25-27</pre>
+<p>E executamos o ''script'' <code>lnls-archiver-extract-wars.sh</code>, presente no repositório do grupo, para extrair os arquivos ''.war''.</p></li>
+<li><p>Enfim, os 4 ''Tomcats'' são lançados através do serviço ''systemd'', que pode ser obtido através do repositório ''git'' do grupo, conforme comando abaixo. Tal serviço deve ser ''instalado'' do diretório .</p>
+<pre>$ sudo systemctl start lnls-archiver.service</pre></li>
+<li><p>O arquivador é acessado através da URL ( pode ser substituído pelo endereço IP que referencia o ''host'')</p>
+<pre>http://localhost:11995/mgmt/ui/index.html</pre></li></ol>
+
+=== ''Debugging'' ===
+
+A lista abaixo apresenta algumas situações que foram encontradas durante a instalação.
+
+<ol style="list-style-type: lower-roman;">
+<li><p>Se após o reinício do arquivador todos os dados referentes às variáveis forem perdidos é necessário checar todos os arquivos de cada um dos ''tomcats'' e verificar que a configuração do servidor ''MySQL'' foi realizada corretamente.</p></li>
+<li><p>Uma regra geral é verificar se todas as variáveis de ambiente foram corretamente configuradas.</p></li></ol>
+
+== Uso do CS Studio no monitoramento ==
+
+O ''CS Studio'' pode ser usado para monitorar a ''appliance''. Para isso, entre em <code>Edit &gt; Preferences</code> e acesse o item <code>CSS Applications &gt; Trends &gt; Data Browser</code>. No campo ''Archive Data Server URLs'', adicione o endereço contido em <code>&lt;data_retrieval_url&gt;</code> do arquivo configurado no item [item:appl] da subseção [sec:epicsappl], substituindo o protocolo <code>http://</code> por <code>pbraw://</code>. Escreva qualquer ''Server alias''. Na tabela ''Default Archive Data Sources'', adicione o mesmo endereço e aperte ''Ok'' para salvar as alterações.
+
+É necessário alterar a perspectiva do ''CS Studio''. Acesse <code>Windows &gt; Open Perspective</code> e escolha '''Data Browser'''. Na aba ''Archive Search'', escreva a ''URL'' configurada anteriormente e no campo ''Pattern'', escreva o nome das variáveis arquivadas que deseja monitorar. Por exemplo, se escrevermos <code>MTTemp*</code>, todas as variáveis arquivadas com este início poderão ser acessadas. Clique com o botão direito na variável desejada e acesse <code>Process Variable &gt; Data Browser</code>.
+
+== Acessando a ''appliance'' com ''Python'' ==
+
+A ''appliance'' pode ser acessada através de requisições ''JSON'' realizadas por um módulo escrito em ''Python'', por exemplo. Abaixo, está apresentada uma classe que foi escrita a fim de obter dados e informações de variáveis arquivadas.
+
+<source lang="python">import time
+import urllib2
+import json
+
+class JsonRequester ():
+    
+    def __init__(self, data_retrieval_url, mgmt_url):
+        self.data_retrieval_url = data_retrieval_url
+        self.mgmt_url = mgmt_url
+    
+    def json_request_variables(self, variables_prefix):
+        
+        url_json = self.mgmt_url + 'bpl/getPVStatus?pv=' + variables_prefix
+        req = urllib2.urlopen(url_json)
+        data = json.load(req)
+        return data
+    
+    def json_request_data(self, variable, from_date, to_date):    
+        
+        retrieval_url = self.data_retrieval_url + "/data/getData.json?"
+        pv_name = ("pv=" + variable).replace(':', '%3A')
+        to_date =   ("&to=" + time.strftime("%Y-%m-%dT%H:%M:%S",to_date) + 
+                        ".000Z").replace(':', '%3A')
+        from_date = ("&from=" + time.strftime("%Y-%m-%dT%H:%M:%S",from_date) + 
+                        ".000Z").replace(':', '%3A')    
+        url_json = retrieval_url + pv_name + from_date + to_date
+        req = urllib2.urlopen(url_json)
+        data = json.load(req)
+        secs = [x['secs'] for x in data[0]['data']]
+        vals = [x['val'] for x in data[0]['data']]
+        return secs, vals</source>
+O método construtor recebe 2 ''strings'' como parâmetros. ''data_retrieval_url'' e ''mgmt_url'' estão contidos no arquivo ''lnls_appliances.xml'' e representam, respectivamente, os endereços dos ''servlets'' de obtenção de dados e gerenciamento da ''appliance''. A primeira ''url'' será usada para recuperar os dados e a segunda, para obter as informações relativas às variáveis arquivadas.
+
+O método ''json_request_variables'' é responsável por retornar informações de uma ou várias variáveis, cujo nome (no caso de uma pesquisa de uma única variável) ou prefixo (parte comum ao nome de diversas variáveis) é passado como parâmetro. Para tal, utiliza o método <code>getPVStatus</code>, que é disponível no ''servlet'' de gerenciamento e acessível via a ''url'' <code>mgmt_url</code>. Esse método também recebe como parâmetro nomes ou prefixos de variáveis, especificados após o trecho <code>pv=</code> na requisição ''json''. Para recuperar todas as variáveis arquivadas por uma ''appliance'' que comecem com o prefixo <code>MBTemp</code>, por exemplo, bastar utilizarmos <code>pv=MBTemp*</code> na requisição. Uma vez construída a ''url'', é necessário utilizar as bibliotecas ''python'' <code>urllib2</code> e <code>json</code>, que realizam a comunicação com os ''servlets''.
+
+O método ''json_request_data'' retorna os dados arquivados para uma determinada variável, passada como parâmetro. Além dela, essa função recebe dois outros valores, sendo eles objetos do tipo ''time'', cuja implementação reside no módulo <code>time</code>. Esses parâmetros representam, por sua vez, as fronteiras do intervalo de tempo para o qual se deseja recuperar os dados, sendo que <code>from_date</code> é a data mais antiga e <code>to_date</code>, a mais recente. Se <code>to_date</code> vale <code>None</code>, então o sistema o interpreta como o tempo no qual a chamada da função foi feita. Os dados são recuperados através do método <code>getData</code>, disponível no ''servlet'' <code>retrieval</code> da ''appliance''. Antes de realizarmos a requisição, é necessário traduzir os objetos ''time'' para o formato aceito pela servidor. Sendo assim, utiliza-se o método <code>strftime</code> do módulo <code>time</code> que retorna a representação ''string'', segundo a máscara especificada (no nosso caso, <code>%Y-%m-%dT%H:%M:%S</code>), do objeto passado como parâmetro. A requisição é, enfim, realizada através dos mesmos métodos que foram usados na função anterior.
+
+O servidor envia todos os dados, isto é, valores e datas do respectivo evento, em único vetor de dicionários. Por este motivo, é necessário processarmos essa estrutura antes de retorná-la ao programa que chamou o método. Os valores são acessíveis pelo índice <code>val</code> e seu tipo depende da aplicação. A data dos eventos relativos aos valores são recuperados pelo índice <code>secs</code> e são números inteiros que contém o número de segundos desde uma data de referência (1 de Janeiro de 1970) usada no ''servlet''. É necessário notar que as datas retornadas estão em ''UTC'', portanto é exigido que tais valores sejam convertidos para a o fuso local.
+
+Uma interface gráfica foi implementada, usando os módulos ''Qt'', a fim de testarmos a comunicação. Ela possui um gráfico, onde serão mostrados os dados recuperados, uma caixa de opções, que possui todas as variáveis arquivadas na ''appliance'', e componentes para seleção das datas de início e fim do intervalo desejado. A figura [fig:interface] representa o resultado da implementação.
+
+[[Image:image/screenshot-python|frame|none|alt=|caption Interface ''Qt'' implementada em ''python''.<span data-label="fig:interface"></span>]]
+

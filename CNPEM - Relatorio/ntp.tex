@@ -23,9 +23,9 @@ agir corretamente em casos de perdas ou pacotes repetidos.
 \vspace{12pt}
 
 Neste relatório, serão discutidas as características da versão 4 do NTP,
-especificadas no RFC5905 \cite{ntpv4rtp}, e sua aplicação no contexto do
-acelerador \textit{Sirius}. Esta versão aprimora alguns aspectos da versão 3
-(NTPv3) e adiciona algumas outras funcionalidades, como, por exemplo, a
+especificadas no RFC5905 \cite{ntpv4rtp}, e sua aplicação no contexto do sistema
+do controle do acelerador \textit{Sirius}. Esta versão aprimora alguns aspectos
+da versão 3 (NTPv3) e adiciona algumas outras funcionalidades, como, por exemplo, a
 descoberta dinâmica de servidores (\textit{automatic server discovery}),
 sincronização rápida na inicialização da rede ou depois de falhas (\textit{burst
 mode}) e uso da criptografia \textit{Public-key}.
@@ -155,7 +155,7 @@ oferecida pelo NTP. Temos, assim:
   		  \item determinar os melhores candidatos dentro do conjunto de servidores
   		  julgados importantes no passo anterior;
   		  \item computar estatísticas baseadas nos dados recolhidos dos servidores
-  		  presentes no subconjunto escolhido pelo algoritmo de clusterição.
+  		  presentes no subconjunto escolhido pelo algoritmo de clusterização.
   		\end{itemize}
   	
   	\item \textit{Clock discipline process}: responsável por controlar o tempo e
@@ -350,17 +350,18 @@ oferecida pelo NTP. Temos, assim:
 \subsection {Aplicação ao sistema de controle do \textit{Sirius}}
 
 Considerando que o sistema de controle do \textit{Sirius} será composto por uma
-vasta quantidade de \textit{Beagles} conectadas, é de extrema importância que a
-data e hora de todas elas estejam corretamente sincronizadas entre si, a fim de
-garantir a coerência entre os diversos \textit{logs} que serão gerados na
-execução dos programas. Conforme discutido na subseção anterior, um servidor NTP
-é capaz de fornecer sincronismo a um número variável de clientes, desde que eles
-estejam configurados a obter sincronização deste servidor.
+vasta quantidade de \textit{Beagles} e \textit{hosts} conectados, é de extrema
+importância que a data e hora de todas elas estejam corretamente sincronizadas
+entre si, a fim de garantir a coerência entre os diversos \textit{logs} e
+\textit{timestamps} de variáveis EPICS que serão gerados na execução dos
+programas. Conforme discutido na subseção anterior, um servidor NTP é capaz de
+fornecer sincronismo a um número variável de clientes, desde que eles estejam
+configurados a obter sincronização deste servidor.
 
 \vspace{12pt}  
 
 Diversos institutos fornecem, através da Internet, relógios de referência, isto
-é, servidores chamados de \textit{stratum 0}, obtidos a partir de equipamentos
+é, servidores chamados de \textit{stratum 1}, obtidos a partir de equipamentos
 como \textit{GPS}, relógios atômicos ou outros \textit{radio clocks}. Para a rede
 de controle do \textit{Sirius}, que pretende ser totalmente isolada de redes
 externas, tal solução não pode ser obviamente utilizada. Sendo assim, propõe-se
@@ -376,44 +377,45 @@ velocidade, data e hora no padrão \textit{UTC} e um pulso, chamado de
 \cite{gpsdhowto}. Pode-se imaginar que somente o horário fornecido é suficiente
 para a implementação de um bom servidor NTP. Entretanto, os \textit{delays} com
 que tal informação é recebida e transmitida pelo \textit{receiver} não são
-constantes e variam conforme temperatura. Dessa forma, a fim de obter um tempo
-preciso, é necessário o uso do pulso de 1PPS, cuja finalidade é marcar o
-ínicio de um novo segundo. A combinação destes dois últimos, aliados a um sistema operacional com
-\textit{kernel} habilitado ao tratamento de tais pulsos, permite a implementação
-de um servidor com acurácia da ordem de microsegundos em relação ao horário
-\textit{real}. É importante destacar que o PPS deve ser combinado com alguma
-outra fonte de tempo, uma vez que ele não capaz de dizer o horário efetivo, isto
-é, horas, minutos e segundos, mas sim somente o início de um novo segundo.
+constantes e variam conforme alguns parâmetros como temperatura e qualidade do
+sinal. Dessa forma, a fim de obter um tempo preciso, é necessário o uso do pulso
+de 1PPS, cuja finalidade é marcar o ínicio de um novo segundo. A combinação
+destes dois últimos, aliados a um sistema operacional com \textit{kernel}
+habilitado ao tratamento de tais pulsos, permite a implementação de um servidor
+com acurácia da ordem de microssegundos em relação ao horário \textit{real}. É
+importante destacar que o PPS deve ser combinado com alguma outra fonte de
+tempo, uma vez que ele não capaz de dizer o horário efetivo, isto é, horas,
+minutos e segundos, mas somente o início de um novo segundo.
 
 \vspace{12pt}
 
-As próximas subseções visam descrever o \textit{hardware} utilizado e a
+As próximas subseções descrevem o \textit{hardware} utilizado e a
 configuração do servidor NTP.
 
 \subsubsection{Descrição do \textit{hardware}}
 
-No total, utilizou-se três modelos diferentes de GPS, sendo que dois deles
-tratam-se de \textit{kits} contendo módulos GPS já integrados. Escolhemos, em um
-primeiro momento, os \textit{kits} \textit{Ultimate GPS Breakout} da
+No total, utilizou-se três modelos diferentes de receptores GPS, sendo que dois
+deles tratam-se de \textit{kits} contendo módulos GPS já integrados. Escolhemos,
+em um primeiro momento, os \textit{kits} \textit{Ultimate GPS Breakout} da
 \textit{Adafruit} e \textit{GPS Click} da \textit{MikroElektronika}. O terceiro
-modelo, por sua vez, é o módulo receptador \textit{CAM M8Q} da \textit{ublox},
-que foi posteriormente incluído em uma placa também desenvolvida durante o
-estágio. As principais vantagens em relação a este último são o menor custo
-(\$25 contra \$39.95 e \$49 dos dois \textit{kits}) e maior independência
-no \textit{design} do circuito de integração.
+modelo, por sua vez, é o módulo receptor \textit{CAM M8Q} da \textit{ublox}, que
+foi posteriormente incluído em uma placa desenvolvida e fabricada durante o
+estágio. As principais vantagens do modelo \textit{CAM-M8Q} são o menor custo
+(\$25 contra \$39.95 e \$49 dos dois \textit{kits}, respectivamente) e maior
+independência no projeto do circuito de integração.
 
 \vspace{12pt}
 
 Todos fornecem um pino de saída 1PPS e comunicação serial assíncrona
 \textit{RX/TX} (\textit{UART}). Foi utilizado também o multivibrador mono
 estável \textit{74HC123}, a fim de obtermos um pulso 1PPS mais largo na entrada
-do pino da \textit{BeagleBone Black}. Tal pulso é fornecido por alguns
-receptores com uma largura de apenas \(10\mu s\), que pode não ser capturado
-pelo \textit{kernel} do sistema operacional da placa, dependendo, evidentemente,
-da utilização da sua CPU. Sendo assim, utilizando-se um resistor de \(1M\Omega\)
-e um capacitor de \(1\mu F\), obtém-se uma largura de aproximadamente \(500
-ms\). Para os receptores listados acima, porém, o uso do multivibrador não é
-necessário, visto que todos provêem pulsos de largura superiores a 100\(ms\).
+do pino da \textit{BeagleBone Black}. Tal pulso é fornecido por receptores mais
+antigos com uma largura de apenas \(10\mu s\), que pode não ser capturado pelo
+\textit{kernel} do sistema operacional da placa, dependendo, evidentemente, da
+utilização da sua CPU. Sendo assim, utilizando-se um resistor de \(1M\Omega\) e
+um capacitor de \(1\mu F\) conectados ao \textit{74HC123}, obtém-se uma largura
+de aproximadamente \(500 ms\). Para os receptores listados acima, porém, o uso
+do multivibrador não é necessário, visto que todos provêem pulsos de largura superiores a 100\(ms\).
 
 \subsubsection{Configuração do servidor NTP}
 
@@ -430,7 +432,7 @@ GPS. Ela foi realizada a partir da implementação de um arquivo de extensão
 \vspace{12pt}
 
 Em seguida, configurou-se os \textit{daemons} \textit{GPSD}, que implementa o
-protocolo de comunicação NMEA e realiza a troca de informação com o receptador
+protocolo de comunicação NMEA e realiza a troca de informação com o receptor
 GPS, e \textit{NTPD}, responsável por ajustar o tempo do sistema, conforme
 seções anteriores. A comunicação entre estes dois processos é realizada por meio de um
 espaço de memória compartilhado disponível. É necessário certificar-se, ainda,
@@ -507,11 +509,13 @@ do processamento dos pulsos PPS.
 \label{sec:pvsgps}
 
 Duas implementações de servidores de variáveis EPICS foram escritas. A primeira,
-desenvolvida em \textit{python}, extende as classes presentes no módulo
+desenvolvida em \textit{Python}, extende as classes presentes no módulo
 \textit{PCASpy} e utiliza os módulos \texttt{python-gps} e \texttt{ntplib} para
 comunicar-se com os \textit{daemons} \textit{GPSD} e \textit{NTPD},
 respectivamente. A segunda, por sua vez, consiste em uma ponte, escrita em C,
-entre o \textit{Stream IOC} e as bibliotecas \texttt{libntpq} e \texttt{libgps}.
+entre o \textit{Stream IOC}, que consiste em uma aplicação desenvolvida pelo
+Grupo baseada no \textit{StreamDevice}, e as bibliotecas \texttt{libntpq} e
+\texttt{libgps}.
 De modo geral, o \textit{Stream IOC} envia requisições, seguindo o protocolo
 BSMP, via um \textit{socket unix} local para a \textit{ponte}, que utiliza, por
 sua vez, as bibliotecas \texttt{libntpq} e \texttt{libgps} para obter os valores. Vale
@@ -521,13 +525,14 @@ a partir do código fonte do \textit{NTPD}.
 
 \vspace{12pt}
 
-As variáveis EPICS geradas pelas implementações foram divididas em duas
+As variáveis EPICS servidas pelas implementações foram divididas em duas
 categorias principais, de acordo com a sua origem, isto é, se elas
 descrevem parâmetros do servidor NTP ou dados recebidos do receptor GPS. A
 tabela \ref{tab:ntpd} resume as principais variáveis geradas pelo servidor e a
 \ref{tab:gpsd}, para o módulo GPS. A interface representada na figura
-\ref{img:ntp-opi} foi gerada a partir destas bibliotecas e utilizam as
-\textit{PVs} descritas nas tabelas a seguir.
+\ref{img:ntp-opi}, construída no \textit{OPI Builder} do \textit{Control System
+Studio}, foi gerada a partir destas bibliotecas e referencia as \textit{PVs}
+descritas nas tabelas a seguir.
 
 \begin{table}[h]
 
@@ -640,14 +645,15 @@ tabela \ref{tab:ntpd} resume as principais variáveis geradas pelo servidor e a
 \end{figure} 
 
  
-\subsection{Construção de \textit{capes} para a \textit{BeagleBone Black}}
+\subsection{Projeto de \textit{capes} para a \textit{BeagleBone Black}}
 
 Três \textit{capes} foram implementados através do \textit{Kicad}, um para cada
-receptador GPS. Tais arquivos podem ser encontrados no repositório do grupo.
+receptor GPS, e fabricados na prototipadora \textit{LPKF}. Os \textit{layouts
+PCB} podem ser encontrados no repositório \textit{GIT} do grupo.
 
 \subsection{Resultados}
 
-A figura \ref{img:adafruit} representa os resultados obtidos para o receptor
+A figura \ref{img:adafruit} apresenta os resultados obtidos para o receptor
 \textit{Adafruit Ultimate GPS Breakout}. Tal tabela foi obtida através do
 comando \texttt{ntpq}, sendo que as colunas representam informações relativas às fontes de sincronismo que
 tal servidor utiliza, tais como \textit{stratum}, \textit{delay},
@@ -655,11 +661,11 @@ tal servidor utiliza, tais como \textit{stratum}, \textit{delay},
 anteriormente. Destaca-se a presença de duas fontes específicas, \texttt{SHM} e
 \texttt{PPS}. A primeira, cuja representação é a abreviação de \textit{SHared
 Memory}, obtém seus valores de hora e data por meio de um segmento compartilhado de memória,
-acessado igualmente pelo utilitário \texttt{gpsd}. O segundo trata-se da fonte
+acessado igualmente pelo utilitário \texttt{gpsd}. A segunda trata-se da fonte
 ligada ao PPS, controlada pelo \textit{driver} \texttt{ATOM} que tivemos que
 incorporar na compilação do \textit{NTP} e que utiliza a API \textit{timepps}
-para se comunicar ao \textit{kernel}. A fonte representada por \texttt{LOCAL},
-que obtém a data do próprio sistema, é considerada apenas se as duas anteriores
+para se comunicar com o \textit{kernel}. A fonte representada por
+\texttt{LOCAL}, que obtém a data do próprio sistema, é considerada apenas se as duas anteriores
 não estiverem disponíveis.
 
 \begin{figure}[h]
@@ -676,24 +682,24 @@ não estiverem disponíveis.
 
 Conforme esperado, o servidor conseguiu sincronizar-se ao início de um novo
 segundo (PPS) com precisão e \textit{offset} na ordem de unidades de
-microsegundos. Na tabela representada acima, por exemplo, o \textit{offset} é
+microssegundos. Na tabela representada acima, por exemplo, o \textit{offset} é
 -0.006ms, isto é, o horário do servidor está 6\(\mu s\) atrás do pulso de
 PPS, e o jitter, 0.006 ms.
 
 \vspace{12pt}
 
 A figura \ref{img:mikroe}, por sua vez, exibe o resultado da execução do mesmo
-comando, porém para o receptor da \textit{MikroE GPS Click}. Observa-se que,
+comando, porém para o receptor \textit{MikroE GPS Click}. Observa-se que,
 como no caso anterior, o servidor conseguiu sincronizar-se ao pulso de PPS.
 Enfim, a figura \ref{img:cliente_ntp} representa a saída do comando executado em
 uma \textit{Beagle} que utiliza 3 servidores para obter o horário. Os dois
 primeiros (\texttt{10.0.6.63} e \texttt{10.0.6.60}) são os endereços das placas
-ligadas, respectivamente, aos receptadores da \textit{Adafruit} e da
+ligadas, respectivamente, aos receptores da \textit{Adafruit} e da
 \textit{MikroE}, e o último, enfim, é um servidor externo, referenciado pelo
 endereço \url{ntp.cnpem.br}.  Nota-se que a diferença entre as fontes PPS está
-na ordem de unidades de microsegundos e que a diferença entre elas e a externa
+na ordem de unidades de microssegundos e que a diferença entre elas e a externa
 é da ordem de 100\(\mu s\). Os testes para o módulo da \textit{ublox} não foram
-concluídos antes da redação deste relatório, portanto não serão incluídos.
+concluídos antes da redação deste relatório, portanto não estão incluídos.
 
 \begin{figure}[h]
     \centering

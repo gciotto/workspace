@@ -215,7 +215,7 @@ que asseguram o cumprimento de qualquer requisito dentro de um certo limite. As
 \textit{soft real-time}, ou seja, o \textit{kernel} fará o máximo possível para
 atender às requisições, mas não pode prometer sempre cumpri-las. Porém, um
 \textit{patch}, chamado \path{RT_PREEMPT} e disponível em
-\url{http://tinyurl.com/2fxb3sd}, foi desenvolvido para garantir características
+\cite{rt}, foi desenvolvido para garantir características
 de \textit{hard real-time}. Quando uma tarefa do tipo \texttt{SCHED\_FIFO}
 assume a \textit{CPU}, ela continua a ser executada até que ela seja bloqueada
 ou que ela conceda explicitamente o processador a outro processo, podendo rodar
@@ -307,7 +307,7 @@ seguida, executamos a chamada \path{omap_dm_timer_set_source}, que
 configura o sinal de \textit{clock} de entrada. Utilizamos o \textit{clock} de
 32kHz, portanto passamos a constante \texttt{OMAP\_TIMER\_SRC\_32\_KHZ} como
 parâmetro à função. \texttt{omap\_dm\_timer\_set\_prescaler} permite definir o
-valor do divisor de frequência e \texttt{omap\_dm\_timer\_set\_load\_start}, o
+valor do divisor de frequência e \path{omap_dm_timer_set_load_start}, o
 valor que será carregado no contador quando um \textit{overflow} ocorrer. Tais
 definições dependem do intervalo desejado entre interrupções e são dadas pela
 equação \ref{eq:timer}, em que \textit{TDLR} é o valor a ser carregado no
@@ -412,13 +412,14 @@ por sua vez, possui três atributos importantes: \path{sin_family},
 \path{sin_addr.s_addr} e \path{sin_port}. Recebem, respectivamente,
 \path{AF_INET}, \path{htonl(INADDR_SEND)} e \path{htons(CONNECT_PORT)}, em que
 \path{htonl()} e \path{htons()} são funções pré-definidas que convertem valores
-de \textit{host order} para \textit{network byte order}, por exemplo \path{0xc0a80216} para \path{192.168.2.22}, \path{INADDR_SEND} é o
-endereço para o qual deseja-se enviar o datagramas e \path{CONNECT_PORT} é a
-porta. \path{connect()}, além de definir tais características, também ativa a conexão no \textit{socket}. O envio de pacotes é
-realizado por \path{sock_sendmsg()}, que recebe dois parâmetros: as estruturas
-\texttt{struct socket} e \texttt{struct msghdr}, que contem o conteúdo da
-mensagem. Enfim, para desalocar o \textit{socket}, chama-se a funçao
-\path{sock_release()}.
+de \textit{host order} para \textit{network byte order}, por exemplo
+\path{0xc0a80216} para \path{192.168.2.22}, \path{INADDR_SEND} é o endereço para
+o qual deseja-se enviar o datagramas e \path{CONNECT_PORT} é a porta.
+\path{connect()}, além de definir tais características, também ativa a conexão
+no \textit{socket}. O envio de pacotes é realizado por \path{sock_sendmsg()},
+que recebe dois parâmetros: as estruturas \texttt{struct socket} e
+\texttt{struct msghdr}, que contem o conteúdo da mensagem. Enfim, para desalocar
+o \textit{socket}, chama-se a funçao \path{sock_release()}.
 
 % \vspace{12pt}
 % 
@@ -484,7 +485,7 @@ comunidade.
 
 \vspace{12pt}
 
-Um processo semelhante foi realizada para \textit{BB2}, isto é, substituiu-se o
+Um processo semelhante foi realizado para \textit{BB2}, isto é, substituiu-se o
 \textit{kernel module} por um programa rodando na unidade de tempo real. Tal
 programa verifica, através de \textit{polling} nos registradores do controlador
 de rede, se um novo pacote foi recebido. Se isto ocorreu, então um sinal é
@@ -532,14 +533,14 @@ propósito.
 \centering
 	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
-		\includegraphics[scale=0.26]{image/tek_com_threads}
+		\includegraphics[width=0.95\textwidth]{image/tek_com_threads}
 		\caption {\centering Captura de tela do osciloscópio para a implementação com
 		\textit{kernel modules}.}
 		\label{fig:osciloscopio_thread}
 	\end{subfigure}%
 	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
-		\includegraphics[scale=0.26]{image/tek_pru}
+		\includegraphics[width=0.95\textwidth]{image/tek_pru}
 		\caption {\centering Captura de tela do osciloscópio para implementação com
 		PRU.}
 		\label{fig:pru_osciloscopio_thread}
