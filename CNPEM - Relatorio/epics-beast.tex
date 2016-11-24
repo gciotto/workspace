@@ -5,13 +5,13 @@
 Em um ambiente composto por centenas de milhares de variáveis EPICS, como o que
 será implementado no \textit{Sirius}, a necessidade de um sistema capaz de
 monitorar quais variáveis encontram-se em estados errôneos torna-se
-imprescindível. Sendo assim, o monitor de alarmes \textit{BEAST}, do inglês
-\textit{Best Ever Alarm System Toolkit} e desenvolvido pelo laboratório
-americano \textit{Oak Ridge National Laboratory}, representa uma solução capaz
-de gerenciar e controlar os alarmes gerados pelos servidores EPICS disponíveis
-na rede. Tal sistema é implementado em \textit{Java} e é baseado no ambiente
-gráfico de desenvolvimento \textit{Eclipse}. A arquitetura do sistema
-está represetada na figura \ref{fig:best_arquitetura}, logo abaixo.
+imprescindível. Sendo assim, o monitor de alarmes \textit{BEAST} (\textit{Best
+Ever Alarm System Toolkit}), desenvolvido pelo laboratório americano \textit{Oak
+Ridge National Laboratory}, representa uma solução capaz de gerenciar e
+controlar os alarmes gerados pelos servidores EPICS disponíveis na rede. Tal
+sistema é implementado em \textit{Java} e é baseado no ambiente gráfico de
+desenvolvimento \textit{Eclipse}. A arquitetura do sistema está representada na
+figura \ref{fig:best_arquitetura}, na qual destacam-se:
 
 \begin{figure}[h]
 
@@ -22,22 +22,22 @@ está represetada na figura \ref{fig:best_arquitetura}, logo abaixo.
 \label{fig:best_arquitetura}
 \end{figure}
 
-\vspace{12pt}
-
-É possível distinguir diversos componentes na figura \ref{fig:best_arquitetura}:
+% \vspace{12pt}
+% 
+% É possível distinguir diversos componentes na figura \ref{fig:best_arquitetura}:
 
 \begin{enumerate}[i.]
   
   \item \textit{Alarm server}: o servidor é responsável por tarefas fundamentais
   no monitoramento de alarmes. Cabe a ele a leitura da configuração dos alarmes
   armazenada no banco de dados \textit{Alarm Cfg \& State RDB}, conectar-se às
-  respectivas variávies, monitorar suas mudanças de estado e gerar alarmes
-  quando necessário e desativá-los logo que um operador toma conhecimento
+  respectivas variáveis, monitorar suas mudanças de estado e gerar alarmes
+  quando necessário e desativá-los logo que um operador tomar conhecimento
   do problema. Esse módulo permite que um número variável de clientes se conecte
   a ele. Uma variável pode adotar duas configurações distintas, sendo elas
   \textit{latch} e \textit{annunciate}. Para a primeira, o servidor mantém o
   alarme de maior gravidade, mesmo que o estado da variável não seja
-  atualmente errôneo, até que ele seja reconhecido manualmente pelo operador.
+  mais errôneo, até que ele seja reconhecido manualmente pelo operador.
   A fim de impedir um grande volume de alarmes gerados, é possível habilitar
   as opções \textit{delay}, que aciona o alarme somente se o estado errôneo da
   variável se mantiver durante o intervalo de tempo especificado, e
@@ -51,9 +51,9 @@ está represetada na figura \ref{fig:best_arquitetura}, logo abaixo.
   de alarme e o atual estado de todos os alarmes.
   
   \item \textit{Java Message Service - JMS}: utilizado para a comunicação entre
-  diferentes módulos. No projeto, foi empregada a implementação realizada pelo
+  diferentes processos. No projeto, foi empregada a implementação realizada pelo
   \textit{Apache Software Foundation} chamada de  \textit{Apache ActiveMQ}. O
-  sistema utiliza 4 \textit{topics} distintos, sendo eles:
+  sistema utiliza 4 \textit{topics} distintos, sendo os principais:
   
   \begin{itemize} \renewcommand\labelitemi{--}
     \item \textit{ALARM\_SERVER}: utilizado pelo servidor para publicar
@@ -94,7 +94,7 @@ está represetada na figura \ref{fig:best_arquitetura}, logo abaixo.
   É possível, a partir de qualquer uma das \textit{views} presentadas acima,
   acessar outros recursos, como, por exemplo, gráficos e valores atuais das
   variáveis desejadas. Para isso, basta apertar com o botão direito acima da
-  \textit{PV} e apertar em \textit{Process variables}. A implementação fornece,
+  \textit{PV} e apertar em \textit{Process variable}. A implementação fornece,
   ainda, suporte para autenticação de usuários via \textit{LDAP} ou
   \textit{JAAS}. Caso seja a escolha, somente usuários autorizados podem alterar
   as configurações de alarmes ou reconhecê-los.
@@ -119,9 +119,7 @@ como o arquivador.
 Para utilizar o \textit{Eclipse} como um cliente do servidor de alarmes, é
 necessário configurá-lo para que ele acesse os servidores \textit{MySQL} e
 \textit{JMS}. Isso é realizado através de \texttt{Window > Preferences > CSS
-Applications > Alarm > Alarm System}. Se tudo foi configurado corretamente, já é
-possível acessar os alarmes configurados através do componentes comentados no
-item \ref{client-gui} da seção \ref{beast-intro}. A figura \ref{fig:alarm}
+Applications > Alarm > Alarm System}. A figura \ref{fig:alarm}
 representa alguns alarmes que configuramos no grupo de Controle. Destaca-se a
 variável \texttt{Cnt:MikroE:GPS:Fix}, criada na seção \ref{sec:pvsgps}.
 
@@ -135,20 +133,20 @@ variável \texttt{Cnt:MikroE:GPS:Fix}, criada na seção \ref{sec:pvsgps}.
 \subsection {Obtendo um \textit{LNLStudio} a partir da configuração do
 \textit{Eclipse}}
 
-O \textit{Eclipse} provê suporte para projetos do tipo
-\textit{Plugin Project}, específicos para a criação de novos produtos e
-\textit{plugins}. Sendo assim, foi possível exportar a configuração atual do
-\textit{Eclipse} como um novo produto, que chamaremos de \textit{LNLStudio}.
-Isso foi realizado através da seleção de apenas os \textit{plugins} que são
-importantes para o grupo, tais como aqueles ligados ao \textit{BEAST} e ao
-construtor de interfaces \textit{OPI Builder}. A princípio, geramos tal produto
-por 2 maneiras distintas:
+O \textit{Eclipse} provê suporte para projetos do tipo \textit{Plugin
+Development}, específicos para a criação de novos produtos e \textit{plugins}. A
+partir de estudos dos conceitos envolvidos neste tipo de projeto, exportamos a
+configuração desejada do \textit{Eclipse} como um novo produto, para o qual
+demos o nome de \textit{LNLStudio}. Isso foi realizado através da seleção de
+apenas os \textit{plugins} que são importantes para o Grupo de Controle, tais
+como aqueles ligados ao \textit{BEAST} e ao construtor de interfaces \textit{OPI
+Builder}. A princípio, geramos tal produto por 2 maneiras distintas:
 
 \begin{itemize}\renewcommand\labelitemi{--}
   \item A partir do repositório \textit{git} do \textit{Control System Studio}:
  nesta abordagem, clona-se o repositório \texttt{org.csstudio.product} e
  modifica-se os arquivos para adicionar os \textit{plugins} e personalizações
- desejados. A compilação e instalação dos produtos é realizada via o aplication
+ desejados. A compilação e instalação dos produtos é realizada via o aplicativo
  \textit{Maven}.
 
  \item A partir da criação de um novo produto no \textit{Eclipse}: cria-se um
@@ -161,21 +159,21 @@ Em relação a outros produtos originados do \textit{Control System Studio}, o
 exemplo, a possibilidade de autenticação a um servidor LDAP. Além disso, o
 último \textit{LNLStudio} foi construído a partir da versão 4.3.4 do CSS, sendo
 mais recente do que muitos dos demais produtos disponíveis. A figura
-\ref{fig:alarm} foi gerada a partir do \textit{LNLStudio}.
+\ref{fig:alarm} foi, inclusive, gerada a partir do \textit{LNLStudio}.
 
 \subsubsection{Criação de um novo \textit{plugin}}
 
-Um novo \textit{plugin} foi desenvolvido e
-adicionado ao produto \textit{LNLStudio}. Tal \textit{plugin}, chamado de \textit{Monitor}, é baseado
+Um novo \textit{plugin} foi desenvolvido e adicionado ao produto
+\textit{LNLStudio}. Tal \textit{plugin}, chamado de \textit{Monitor}, é baseado
 na versão 3.x RCP do \textit{Eclipse} e na mesma API que o \textit{OPI Builder}
 foi construído, isto é, a \textit{GEF} (\textit{Graphical Editing Framework}).
-Sua finalidade é propiciar uma ferramenta de organização dos \textit{host} à medida que permite a criação de
-relações entre eles e a especificação de quais variáveis EPICS são gerados por
-eles. É importante observar que o \textit{plugin} possui integração com a
-maioria dos \textit{plugins} do \textit{CSStudio}, tais como o
-\textit{Databrowser} e \textit{OPI}. A figura \ref{fig:plugin} representa o
-um exemplo do \textit{plugin} desenvolvido para organização do \textit{host}
-ligado ao receptor GPS \textit{MikroE GPS Click} da seção \ref{sec:pvsgps}.
+Sua finalidade é propiciar uma ferramenta de organização dos \textit{hosts} à
+medida que permite a criação de relações entre eles e a especificação de quais
+variáveis EPICS são geradas por tais equipamentos. É importante observar que o
+\textit{plugin} possui integração com os \textit{plugins} \textit{Databrowser} e
+\textit{OPI} do \textit{CSStudio}. A figura \ref{fig:plugin} representa um
+exemplo do \textit{plugin} desenvolvido para organização do \textit{host} ligado
+ao receptor GPS \textit{MikroE GPS Click} da seção \ref{sec:pvsgps}.
 
 \begin{figure}[h]
 

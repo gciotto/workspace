@@ -365,7 +365,7 @@ Diversos institutos fornecem, através da Internet, relógios de referência, is
 como \textit{GPS}, relógios atômicos ou outros \textit{radio clocks}. Para a rede
 de controle do \textit{Sirius}, que pretende ser totalmente isolada de redes
 externas, tal solução não pode ser obviamente utilizada. Sendo assim, propõe-se
-a implementação de um servidor NTP \textit{stratum 0} a partir de um GPS
+a implementação de um servidor NTP \textit{stratum 1} a partir de um GPS
 \textit{receiver}, ligado a uma \textit{BeagleBone Black} dedicada, que
 hospedará o servidor.
 
@@ -378,8 +378,8 @@ velocidade, data e hora no padrão \textit{UTC} e um pulso, chamado de
 para a implementação de um bom servidor NTP. Entretanto, os \textit{delays} com
 que tal informação é recebida e transmitida pelo \textit{receiver} não são
 constantes e variam conforme alguns parâmetros como temperatura e qualidade do
-sinal. Dessa forma, a fim de obter um tempo preciso, é necessário o uso do pulso
-de 1PPS, cuja finalidade é marcar o ínicio de um novo segundo. A combinação
+sinal \cite{rasp}. Dessa forma, a fim de obter um tempo preciso, é necessário o
+uso do pulso de 1PPS, cuja finalidade é marcar o ínicio de um novo segundo. A combinação
 destes dois últimos, aliados a um sistema operacional com \textit{kernel}
 habilitado ao tratamento de tais pulsos, permite a implementação de um servidor
 com acurácia da ordem de microssegundos em relação ao horário \textit{real}. É
@@ -414,8 +414,8 @@ antigos com uma largura de apenas \(10\mu s\), que pode não ser capturado pelo
 \textit{kernel} do sistema operacional da placa, dependendo, evidentemente, da
 utilização da sua CPU. Sendo assim, utilizando-se um resistor de \(1M\Omega\) e
 um capacitor de \(1\mu F\) conectados ao \textit{74HC123}, obtém-se uma largura
-de aproximadamente \(500 ms\). Para os receptores listados acima, porém, o uso
-do multivibrador não é necessário, visto que todos provêem pulsos de largura superiores a 100\(ms\).
+de aproximadamente \(500 ms\) na saída deste \textit{chip}. Para os receptores
+listados acima, porém, o uso do multivibrador não é necessário, visto que todos provêem pulsos de largura superiores a 100\(ms\).
 
 \subsubsection{Configuração do servidor NTP}
 
@@ -513,7 +513,7 @@ desenvolvida em \textit{Python}, extende as classes presentes no módulo
 \textit{PCASpy} e utiliza os módulos \texttt{python-gps} e \texttt{ntplib} para
 comunicar-se com os \textit{daemons} \textit{GPSD} e \textit{NTPD},
 respectivamente. A segunda, por sua vez, consiste em uma ponte, escrita em C,
-entre o \textit{Stream IOC}, que consiste em uma aplicação desenvolvida pelo
+entre o \textit{Stream IOC}, que trata-se de uma aplicação desenvolvida pelo
 Grupo baseada no \textit{StreamDevice}, e as bibliotecas \texttt{libntpq} e
 \texttt{libgps}.
 De modo geral, o \textit{Stream IOC} envia requisições, seguindo o protocolo
@@ -532,7 +532,9 @@ tabela \ref{tab:ntpd} resume as principais variáveis geradas pelo servidor e a
 \ref{tab:gpsd}, para o módulo GPS. A interface representada na figura
 \ref{img:ntp-opi}, construída no \textit{OPI Builder} do \textit{Control System
 Studio}, foi gerada a partir destas bibliotecas e referencia as \textit{PVs}
-descritas nas tabelas a seguir.
+descritas nas tabelas a seguir. A figura ilustra o início do processo de
+sincronização do \textit{clock} do \textit{host}. Desse modo, verifica-se um
+grande \textit{offset} inicial e uma diminuição gradativa desta medida.
 
 \begin{table}[h]
 
@@ -647,7 +649,7 @@ descritas nas tabelas a seguir.
  
 \subsection{Projeto de \textit{capes} para a \textit{BeagleBone Black}}
 
-Três \textit{capes} foram implementados através do \textit{Kicad}, um para cada
+Três \textit{capes} foram construídos através do \textit{Kicad}, um para cada
 receptor GPS, e fabricados na prototipadora \textit{LPKF}. Os \textit{layouts
 PCB} podem ser encontrados no repositório \textit{GIT} do grupo.
 

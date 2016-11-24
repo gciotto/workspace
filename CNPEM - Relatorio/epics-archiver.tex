@@ -4,7 +4,7 @@
 
 O EPICS \textit{Archiver Appliance}, desenvolvido pelo instituto americano
 \textit{National Accelerator Laboratory (SLAC)}, é capaz de monitorar e arquivar
-um grande número de váriaveis, as chamadas \textit{PVs}, geradas por servidores
+um grande número de váriaveis, geradas por servidores
 EPICS presentes na rede. O sistema fornece também opções de configuração de um
 largo conjunto de parâmetros referentes ao armazenamento e monitoramento. Uma
 \textit{appliance} é composta basicamente por quatro módulos distintos, sendo eles:
@@ -35,19 +35,19 @@ largo conjunto de parâmetros referentes ao armazenamento e monitoramento. Uma
 
 O instituto desenvolvedor da aplicação sugere que cada módulo seja lançada em
 sua própria instância \textit{Tomcat}. Em adição, ele propõe a divisão da
-unidade de armazenamento em 3 outras unidades, de acordo com a frequência que os
-dados são salvos. Essas unidades são divididas \textit{short-term},
+unidade de armazenamento em 3 outras unidades, de acordo com a frequência em que
+os dados são salvos. Essas unidades são divididas em \textit{short-term},
 \textit{medium-term} e \textit{long-term storage}, cujas frequências de
 armazenamento são, respectivamente, a cada hora, diária e anual. Essas
-configurações podem ser modificadas através da modificação de arquivos
+configurações podem ser modificadas através de arquivos
 específicos, explicados nas próximas subseções.
 
 \vspace{12pt}
 
 
 Em um ambiente composto por diversos servidores EPICS e milhares de variáveis a
-serem monitoradas, tal como o \textit{Sirius}, um sistema capaz de automizar e
-agilizar o armazenamento e recuperação de dados se torna fundamental para o
+serem monitoradas, tal como o sistema de controle do \textit{Sirius}, um sistema
+capaz de automizar e agilizar o armazenamento e recuperação de dados se torna fundamental para o
 monitoramento de eventuais problemas. Sendo assim, as próximas seções são
 dedicadas à instalação e exploração dos recursos disponíveis nesta aplicação.
 
@@ -57,7 +57,7 @@ A versão de Junho de 2016 do \textit{archiver} foi instalada no \textit{OPR23},
 que se encontra na sala de controle, e pode ser acessada digitando-se o endereço
 \texttt{10.0.4.69} em qualquer \textit{browser}. Atualmente, o arquivador possui
 36 \textit{PVs} conectadas, contendo, inclusive, algumas das variáveis geradas
-pelos receptadores GPS, descritos na seção \ref{sec:pvsgps}. As próximas
+pelos receptores GPS, descritos na seção \ref{sec:pvsgps}. As próximas
 subseções descrevem algumas das modificações realizadas no \textit{archiver}.
 
 \subsubsection{\textit{Login} necessário}
@@ -75,7 +75,7 @@ requisição do tipo \textit{POST} é enviada e capturada pelo módulo
 \textit{management}, que, em seguida, inicia uma nova sessão para o usuário.
 Enfim, antes de qualquer operação de inserção ou remoção de variáveis, o
 módulo verifica se a sessão está definida e, caso esteja, autoriza a respectiva
-operação. Nossa intenção é integrar este sistema de \textit{login} ao servidor
+operação. A intenção é integrar este sistema de \textit{login} ao servidor
 LDAP do CNPEM no futuro.
 
 \vspace{12pt}
