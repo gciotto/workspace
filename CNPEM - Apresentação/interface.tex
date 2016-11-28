@@ -1,0 +1,41 @@
+\section{Software de interface com o multímetro HP U34401A}
+
+\begin{frame}
+\frametitle{Software de interface com o HP U34401A}
+\framesubtitle{Introdução}
+
+\begin{itemize}
+  \item Multímetro HP U34401A: usado para medidas da corrente do anel.
+  \vspace{12pt}
+  \item Versões mais recentes do PROSAC incompatíveis com a placa
+  \texttt{HP232}.
+  \vspace{12pt}
+  \item Versões mais antigas compatíveis, porém:
+	\begin{itemize}
+	\item Difícil manutenção (código em \textit{assembly}).
+	\item Falta de documentação.
+	\item Nenhuma placa reserva em caso de falha.
+	\end{itemize}	    
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Software de interface com o HP U34401A}
+\framesubtitle{Implementação proposta}
+
+\begin{itemize}
+  \item \textit{BeagleBone Black} + conversor USB-RS232 (desenvolvido pelo
+  Grupo).
+  \vspace{12pt}
+  \item \textit{Software de interface} entre controle e multímetro:
+  	\begin{itemize}
+	\item Escrito em \textit{Python}.
+	\item Recebe comandos do PROSAC e os encaminha ao conversor, utilizando
+	protocolo do equipamento.
+	\end{itemize}
+	\vspace{12pt}
+	\item Em operação no \textit{UVX}		    
+\end{itemize}
+
+\end{frame}
