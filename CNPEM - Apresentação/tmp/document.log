@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.11.26)  27 NOV 2016 22:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.11.26)  28 NOV 2016 22:04
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -1568,10 +1568,23 @@ Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 23.
 
 
 
-])
+] <image/sbc.png, id=466, 564.1075pt x 843.15pt>
+File: image/sbc.png Graphic file (type png)
+ <use image/sbc.png>
+Package pdftex.def Info: image/sbc.png used on input line 37.
+(pdftex.def)             Requested size: 116.18506pt x 173.66222pt.
+File: image/CNPEM_LNLS.png Graphic file (type png)
+
+<use image/CNPEM_LNLS.png>
+Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 37.
+(pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
+ [15
+
+ <./image/sbc.png>])
 \openout2 = `archiver.aux'.
 
- (./archiver.tex <image/applarch.png, id=465, 569.87906pt x 289.83281pt>
+ (./archiver.tex
+<image/applarch.png, id=496, 569.87906pt x 289.83281pt>
 File: image/applarch.png Graphic file (type png)
 
 <use image/applarch.png>
@@ -1581,7 +1594,7 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 24.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [15
+ [16
 
 
 
@@ -1590,10 +1603,10 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
 <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 48.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [16
+ [17
 
 ]
-<image/login.png, id=523, 1606.0pt x 876.27374pt>
+<image/login.png, id=553, 1606.0pt x 876.27374pt>
 File: image/login.png Graphic file (type png)
  <use image/login.png>
 Package pdftex.def Info: image/login.png used on input line 64.
@@ -1608,10 +1621,10 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 64.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [17
+ [18
 
  <./image/login.png>]
-<image/archiver.png, id=551, 1606.0pt x 876.27374pt>
+<image/archiver.png, id=582, 1606.0pt x 876.27374pt>
 File: image/archiver.png Graphic file (type png)
  <use image/archiver.png>
 Package pdftex.def Info: image/archiver.png used on input line 78.
@@ -1621,13 +1634,13 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
 <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 78.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [18
+ [19
 
  <./image/archiver.png>])
 \openout2 = `beast.aux'.
 
  (./beast.tex
-<image/beast-arquitetura.png, id=581, 627.34375pt x 435.6275pt>
+<image/beast-arquitetura.png, id=612, 627.34375pt x 435.6275pt>
 File: image/beast-arquitetura.png Graphic file (type png)
 
 <use image/beast-arquitetura.png>
@@ -1637,12 +1650,12 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 23.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [19
+ [20
 
 
 
  <./image/beast-arquitetura.png>]
-<image/beast-screen-shot.png, id=613, 1600.98125pt x 739.76375pt>
+<image/beast-screen-shot.png, id=643, 1600.98125pt x 739.76375pt>
 File: image/beast-screen-shot.png Graphic file (type png)
 
 <use image/beast-screen-shot.png>
@@ -1652,9 +1665,9 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 37.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [20
+ [21
 
- <./image/beast-screen-shot.png>] <image/lnlstudio.png, id=642, 1603.9925pt x 8
+ <./image/beast-screen-shot.png>] <image/lnlstudio.png, id=672, 1603.9925pt x 8
 75.27pt>
 File: image/lnlstudio.png Graphic file (type png)
 
@@ -1665,7 +1678,7 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 52.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [21
+ [22
 
  <./image/lnlstudio.png>])
 \openout2 = `bbb-sincronismo.aux'.
@@ -1675,26 +1688,26 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 27.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [22
+ [23
 
 
 
 ]
-<image/thread_int.png, id=699, 218.8175pt x 455.7025pt>
+<image/thread_int.png, id=729, 218.8175pt x 455.7025pt>
 File: image/thread_int.png Graphic file (type png)
 
 <use image/thread_int.png>
 Package pdftex.def Info: image/thread_int.png used on input line 76.
 (pdftex.def)             Requested size: 56.8912pt x 118.47984pt.
 
-<image/thread_proc.png, id=700, 247.92625pt x 421.575pt>
+<image/thread_proc.png, id=730, 247.92625pt x 421.575pt>
 File: image/thread_proc.png Graphic file (type png)
 
 <use image/thread_proc.png>
 Package pdftex.def Info: image/thread_proc.png used on input line 76.
 (pdftex.def)             Requested size: 64.4593pt x 109.6069pt.
 
-<image/thread_bb2.png, id=701, 235.88126pt x 432.61626pt>
+<image/thread_bb2.png, id=731, 235.88126pt x 432.61626pt>
 File: image/thread_bb2.png Graphic file (type png)
 
 <use image/thread_bb2.png>
@@ -1704,27 +1717,27 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 76.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [23
+ [24
 
  <./image/thread_int.png> <./image/thread_proc.png> <./image/thread_bb2.png>]
-<image/tek_com_threads.png, id=732, 1027.84pt x 770.88pt>
+<image/tek_com_threads.png, id=762, 1027.84pt x 770.88pt>
 File: image/tek_com_threads.png Graphic file (type png)
 
 <use image/tek_com_threads.png>
-Package pdftex.def Info: image/tek_com_threads.png used on input line 109.
-(pdftex.def)             Requested size: 164.45775pt x 123.34332pt.
+Package pdftex.def Info: image/tek_com_threads.png used on input line 107.
+(pdftex.def)             Requested size: 171.21765pt x 128.41302pt.
 
-<image/tek_pru.png, id=733, 1027.84pt x 770.88pt>
+<image/tek_pru.png, id=763, 1027.84pt x 770.88pt>
 File: image/tek_pru.png Graphic file (type png)
  <use image/tek_pru.png>
-Package pdftex.def Info: image/tek_pru.png used on input line 109.
-(pdftex.def)             Requested size: 164.45775pt x 123.34332pt.
+Package pdftex.def Info: image/tek_pru.png used on input line 107.
+(pdftex.def)             Requested size: 171.21765pt x 128.41302pt.
 File: image/CNPEM_LNLS.png Graphic file (type png)
 
 <use image/CNPEM_LNLS.png>
-Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 109.
+Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 107.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [24
+ [25
 
  <./image/tek_com_threads.png (PNG copy)> <./image/tek_pru.png (PNG copy)>])
 \openout2 = `referencias.aux'.
@@ -1735,7 +1748,7 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 17.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
 
-[25
+[26
 
 
 
@@ -1744,7 +1757,7 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 34.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [26
+ [27
 
 ])
 \tf@nav=\write6
@@ -1772,10 +1785,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 112.
  ) 
 Here is how much of TeX's memory you used:
- 19733 strings out of 493013
- 366655 string characters out of 6139316
- 457177 words of memory out of 5000000
- 22642 multiletter control sequences out of 15000+600000
+ 19744 strings out of 493013
+ 366786 string characters out of 6139316
+ 457231 words of memory out of 5000000
+ 22649 multiletter control sequences out of 15000+600000
  72881 words of font info for 102 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,17n,54p,388b,773s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1785,10 +1798,10 @@ urw/courier/ucrb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pf
 b></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-
 dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw
 /helvetic/uhvro8a.pfb>
-Output written on document.pdf (26 pages, 8309976 bytes).
+Output written on document.pdf (27 pages, 8356495 bytes).
 PDF statistics:
- 867 PDF objects out of 1000 (max. 8388607)
- 788 compressed objects within 8 object streams
- 79 named destinations out of 1000 (max. 500000)
- 194 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 898 PDF objects out of 1000 (max. 8388607)
+ 815 compressed objects within 9 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 199 words of extra memory for PDF output out of 10000 (max. 10000000)
 

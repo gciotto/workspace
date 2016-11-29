@@ -5,6 +5,6 @@
 \beamer@sectionintoc {2}{Manuten\IeC {\c c}\IeC {\~a}o do PROSAC e Implementa\IeC {\c c}\IeC {\~a}o de Aplica\IeC {\c c}\IeC {\~o}es Clientes}{8}{0}{2}
 \beamer@sectionintoc {3}{Software de interface com o mult\IeC {\'\i }metro HP U34401A}{12}{0}{3}
 \beamer@sectionintoc {4}{Software de monitora\IeC {\c c}\IeC {\~a}o de SBCs}{14}{0}{4}
-\beamer@sectionintoc {5}{Arquivador de vari\IeC {\'a}veis EPICS}{15}{0}{5}
-\beamer@sectionintoc {6}{Servidor de alarmes BEAST}{19}{0}{6}
-\beamer@sectionintoc {7}{Sincroniza\IeC {\c c}\IeC {\~a}o via Ethernet com a BeagleBone Black}{22}{0}{7}
+\beamer@sectionintoc {5}{Arquivador de vari\IeC {\'a}veis EPICS}{16}{0}{5}
+\beamer@sectionintoc {6}{Servidor de alarmes BEAST}{20}{0}{6}
+\beamer@sectionintoc {7}{Sincroniza\IeC {\c c}\IeC {\~a}o via Ethernet com a BeagleBone Black}{23}{0}{7}
