@@ -2,9 +2,8 @@
 \beamer@endinputifotherversion {3.36pt}
 \select@language {brazil}
 \beamer@sectionintoc {1}{Implementa\IeC {\c c}\IeC {\~a}o de um servidor NTP}{3}{0}{1}
-\beamer@sectionintoc {2}{Manuten\IeC {\c c}\IeC {\~a}o do PROSAC e Implementa\IeC {\c c}\IeC {\~a}o de Aplica\IeC {\c c}\IeC {\~o}es Clientes}{9}{0}{2}
-\beamer@sectionintoc {3}{Software de interface com o mult\IeC {\'\i }metro HP U34401A}{14}{0}{3}
-\beamer@sectionintoc {4}{Software de monitora\IeC {\c c}\IeC {\~a}o de SBCs}{17}{0}{4}
-\beamer@sectionintoc {5}{Arquivador de vari\IeC {\'a}veis EPICS}{20}{0}{5}
-\beamer@sectionintoc {6}{Servidor de alarmes BEAST}{25}{0}{6}
-\beamer@sectionintoc {7}{Sincroniza\IeC {\c c}\IeC {\~a}o via Ethernet com a BeagleBone Black}{29}{0}{7}
+\beamer@sectionintoc {2}{Manuten\IeC {\c c}\IeC {\~a}o do PROSAC e Implementa\IeC {\c c}\IeC {\~a}o de Aplica\IeC {\c c}\IeC {\~o}es Clientes}{7}{0}{2}
+\beamer@sectionintoc {3}{Arquivador de vari\IeC {\'a}veis EPICS}{12}{0}{3}
+\beamer@sectionintoc {4}{Servidor de alarmes BEAST}{17}{0}{4}
+\beamer@sectionintoc {5}{Sincroniza\IeC {\c c}\IeC {\~a}o via Ethernet com a BeagleBone Black}{22}{0}{5}
+\beamer@sectionintoc {6}{Outros projetos}{25}{0}{6}

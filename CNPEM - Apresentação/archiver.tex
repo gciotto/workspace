@@ -32,16 +32,23 @@
 \begin{itemize}
   \item Interfaces de \textit{login}:
   \begin{itemize}
-    \item Problema: qualquer pessoa logada pode inserir ou remover variáveis do
+    \item Problema: qualquer pessoa pode inserir ou remover variáveis do
     sistema.
-    \item Instalação de um servidor LDAP: no futuro, integrar com o servidor
-    LDAP do CNPEM.
-    \item Módulo PHP: realiza a comunicação entre servidor LDAP e usuário e
+    \vspace{8pt}
+    \item Instalação de um servidor LDAP de testes
+    	\begin{itemize}
+    	  \item Futuro: integração com o servidor LDAP do CNPEM.
+    	\end{itemize}
+    \vspace{8pt}
+    \item Módulo PHP: comunicação entre servidor LDAP e usuário e
     retorna se a autenticação foi bem sucedida ou não.
-    \item Em caso de sucesso, outra requisição POST é enviada ao módulo de
-    \textit{management}.
-    \item Módulo de \textit{management}: inicia uma nova sessão para o usuário.
+    \vspace{8pt}
+    \item Sucesso: segunda requisição POST enviada ao módulo \textit{archiver}.
+    \begin{itemize}
+      \item Nova sessão é aberta para o usuário.
+    \end{itemize}
   \end{itemize}
+  \vspace{8pt}
   \item Modificações nos arquivos \texttt{.css}.
 \end{itemize}
 
