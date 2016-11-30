@@ -115,8 +115,8 @@
   \item Variáveis EPICS definidas para o \textit{daemon NTPD} :
 
 	\begin{itemize}
-	\item  \texttt{NTP:Leap}: indicação de um eventual
-	\textit{leap second} pendente.
+% 	\item  \texttt{NTP:Leap}: indicação de um eventual
+% 	\textit{leap second} pendente.
 	\item \texttt{NTP:Offset}: \textit{offset} entre o
 	relógio do sistema e da fonte.
 	\item \texttt{NTP:Jitter}: desvio padrão das medidas
@@ -139,12 +139,24 @@
 \begin{frame}
 \frametitle{Implementação de um servidor NTP}
 \framesubtitle{Interface gráfica} 
+\begin{columns}
+\begin{column}{.5\textwidth}
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.26]{image/epics-opi-ntpgps}
+    \includegraphics[width=\textwidth]{image/gps}
+    \caption {Receptores GPS.}
+    \label{img:gpses} 
+\end{figure}
+\end{column} 
+\begin{column}{.5\textwidth}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{image/epics-opi-ntpgps}
     \caption {Interface construída para visualização das
     \textit{PVs}.}
     \label{img:ntp-opi} 
-\end{figure} 
+\end{figure}
+\end{column} 
+\end{columns}
 
 \end{frame}

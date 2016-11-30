@@ -88,24 +88,26 @@
   \item Configuração da interface \textit{OpenOCD}.
   \item \textit{STMCubeMX} para inicialização dos pinos.
   \item \textit{FreeRTOS} e \textit{LwIP}.
-  \item Correção do \path{stm32f7_hal_conf.h} com a definição dos
-  registradores corretos do módulo \textit{PHY}.
   \end{itemize}
 \end{itemize}
 
-\vspace{-12pt}
-
-\frametitle {Implementação de Clientes do PROSAC}
-\begin{figure}[h]
-\centering
-\subfloat[Tela inicial. \label{fig:1}]{
-\includegraphics[width=4.65cm]{image/stm32}}
-%
-\subfloat[Tela de comandos de cada placa. \label{fig:2}]{
-\includegraphics[width=4.65cm]{image/stm32-2}}
-\vspace{-12pt}
-\caption {Cliente PROSAC baseado no \textit{kit} \textit{STM32F7 Discovery}.}
-\label{fig:stm32}
-\end{figure}
-
+\begin{columns}
+\begin{column}{0.49\textwidth}
+	\begin{figure}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=\textwidth]{image/stm32}
+	\label{fig:1}
+	\caption{Tela inicial}
+	\end{figure}
+\end{column}
+\begin{column}{0.49\textwidth}
+	\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{image/stm32-2}
+	\label{fig:2}
+	\caption {Tela de comandos}.
+	\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
