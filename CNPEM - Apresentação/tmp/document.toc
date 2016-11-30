@@ -6,4 +6,3 @@
 \beamer@sectionintoc {3}{Arquivador de vari\IeC {\'a}veis EPICS}{12}{0}{3}
 \beamer@sectionintoc {4}{Servidor de alarmes BEAST}{16}{0}{4}
 \beamer@sectionintoc {5}{Sincroniza\IeC {\c c}\IeC {\~a}o via Ethernet com a BeagleBone Black}{21}{0}{5}
-\beamer@sectionintoc {6}{Outros projetos}{24}{0}{6}
