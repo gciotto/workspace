@@ -38,8 +38,8 @@ que, portanto, compartilham recursos com outros processos, apresentam,
 geralmente, desempenho inferior. O sistema desenvolvido anteriormente pelo grupo
 utiliza a \textit{PRU} para a recepção do sinal de sincronismo e ativa, posteriormente, seus nós
 escravos, conforme figura \ref{fig:pru_sincronismo} abaixo. Esse sistema obteve
-um \textit{jitter} da ordem de 15ns, representando, assim, um valor próximo do
-ótimo, uma vez que os ciclos de processamento de cada um dos componentes estão
+um \textit{jitter} da ordem de 18ns \cite{pat}, representando, assim, um valor
+próximo do ótimo, uma vez que os ciclos de processamento de cada um dos componentes estão
 próximos de 5ns.
 
 \begin{figure}[h]
@@ -70,6 +70,10 @@ outra, em que ambas utilizam seus módulos PRUs.
 \caption {Sistema de sincronismo proposto.}
 \label{fig:pru_sincronismo_ethernet}
 \end{figure}
+
+É importante observar que o modelo acima não pretende substituir a solução
+implementada anteriormente pelo grupo \cite{pat} e que está atualmente em uso,
+mas sim de contribuir para o aprendizado obtido durante o estágio.
 
 \subsection {Implementação de \textit{Kernel Modules}}
 
@@ -248,7 +252,7 @@ resumem o funcionamento destas \textit{threads}.
 A figura \ref{fig:thread_int} especifica o fluxograma da \textit{thread\_int}
 que preenche o \textit{buffer} circular a cada interrupção do relógio e sinaliza
 para a \textit{thread\_proc} que ele não está mais vazio. A figura
-\ref{fig:thread_proc} evidencia que um pacote é enviado somente o
+\ref{fig:thread_proc} evidencia que um pacote é enviado somente se o
 \textit{buffer} não estiver vazio. Caso contrário, a \textit{thread\_proc}
 se bloqueia esperando uma interrupção do relógio. As funções \texttt{wake\_up} e
 \texttt{wait\_event} estão disponíveis na biblioteca \texttt{linux/wait.h}. A
@@ -522,11 +526,11 @@ a implementação utilizando a PRU. Os desvios padrões, ou \textit{jitters},
 obtidos são, respectivamente, 5.7\textit{ms} e 985.1\(\mu s\), muito distantes
 daquele adquirido pelo sistema construído pelo grupo de controle, no qual
 utilizou-se somente a \textit{PRU} e obteve-se um valor próximo de
-15\textit{ns}. Tal diferença é explicada, basicamente, por dois fatores: o canal
-utilizado para envio da mensagem e o componente de processamento da
+18\textit{ns} \cite{pat}. Tal diferença é explicada, basicamente, por dois
+fatores: o canal utilizado para envio da mensagem e o componente de processamento da
 \textit{Beagle}. Nas nossas aplicações, utilizamos um \textit{switch HP V1810G},
 que apresenta um comportamento \textit{não determinístico}, isto é, não é
-possível prever com certitude o tempo necessário para que um pacote seja
+possível prever com certeza o tempo necessário para que um pacote seja
 entregue a um determinado \textit{host}. O segundo aspecto a ser considerado é
 que aplicações rodando na \textit{PRU} não dividem recursos com outros
 processos, ao contrário de aplicações que rodam em \textit{embedded linux}. Na
@@ -557,7 +561,12 @@ propósito.
 	\caption {Resultados encontrados para as duas implementações.}
 \end{figure}
 
-\subsection{Alternativa de solução: \textit{Industrial Ethernet}}
+\subsection{Alternativas de solução}
+
+Nesta subseção, serão introduzidas algumas alternativas que também utilizam
+\textit{Ethernet} como meio de comunicação de \textit{triggers} de sincronismo.
+
+\subsubsection{\textit{Industrial Ethernet}}
 
 Alguns protocolos foram desenvolvidos a fim de alcançar exigências de
 \textit{hard real-time} sobre redes \textit{Ethernet}. Um deles é o
@@ -573,3 +582,19 @@ para o uso deste protocolo, \textit{SYS/BIOS Industrial Software Development Kit
 (SDK)}. Além do \textit{EtherCAT}, outras alternativas para comunicação
 \textit{real-time} sobre \textit{Ethernet} e que são suportadas pelo processador
 AM3358 são \textit{Ethernet/IP}, \textit{PROFINET RT/IRT} e \textit{PROFIBUS}.
+
+\subsubsection{\textit{Time Sensitive Networking}}
+
+\textit{Time Sensitive Networking (TSN)} é um conjunto de padrões IEEE802 que
+extende as funcionalidades de uma rede \textit{Ethernet} e
+implementa mecanismos de sincronização temporal e escalonamento capazes de
+assegurar transmissões determinísticas sobre \textit{Ethernet}
+padrão \cite{marcio}. É importante observar também que o \textit{TSN}
+permanece compatível com a pilha TCP/IP.
+
+\vspace{12pt}
+
+Essa tecnologia ainda está em fase inicial de desenvolvimento, tendo sido
+anunciada neste mesmo ano de 2016.
+
+

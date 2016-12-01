@@ -1,15 +1,15 @@
 \section{Conclusão}
 
-Durante a execução do estágio, foi possível construir um servidor NTP de
-\textit{stratum} 1 a partir de 3 modelos de receptores GPS. Obtemos um
+Durante o período de execução do estágio, foi possível construir um servidor
+NTP de \textit{stratum} 1 a partir de 3 modelos de receptores GPS. Obtivemos um
 sincronismo entre o pulso PPS e o \textit{clock} da \textit{BeagleBone} com
 precisão na ordem de unidades de \textit{microssegundos} para todos eles. Além
-disso, desenvolveu-se um sistema de sincronismo via \textit{Ethernet} a partir
+disso, desenvolvi um sistema de sincronismo via \textit{Ethernet} a partir
 de duas implementações possíveis: uma baseada em \textit{kernel modules} do
-\textit{Linux} e a outra, na unidade de tempo real PRU. Apesar de não
+\textit{Linux} e a outra na unidade de tempo real PRU. Apesar de não
 conseguirmos \textit{jitters} da mesma ordem de grandeza de outras soluções
 desenvolvidas no grupo anteriormente, os resultados encontrados foram
-satisfatórios. Foram encontrados \textit{jitters} de 5.72\textit{ms} e
+satisfatórios. Foram obtidos \textit{jitters} de 5.72\textit{ms} e
 0.96\textit{ms}, respectivamente.
 
 \vspace{12pt}
@@ -17,35 +17,35 @@ satisfatórios. Foram encontrados \textit{jitters} de 5.72\textit{ms} e
 Outro ponto importante do estágio foi a manipulação de um programa muito
 utilizado no sistema de controle do UVX atualmente, o \textit{PROSAC}. Durante
 as semanas que estive concentrado nele, desenvolvi dois clientes, um em Java e
-outro em C, para computadores \textit{desktop} e o para \textit{kit}
+outro em C, para computadores \textit{desktop} e para o \textit{kit}
 \textit{STM32F746G Discovery}, respectivamente. Além disso, participei na
 elaboração do artigo \cite{pcapac2016}, publicado na PCaPAC2016, otimizando as
-políticas e prioridades de escalonamento das \textit{threads} que o compõem. As
-taxas de pulsos perdidos obtidos foram 0\%, 0.0001\% e 0.0003\% para as
-frequências em operação atualmente no UVX (150Hz, 512Hz e 1kHz,
+políticas e prioridades de escalonamento das \textit{threads} que compõem o
+PROSAC. As taxas obtidas de pulsos perdidos foram 0\%, 0.0001\% e 0.0003\% para
+três frequências comuns em operação atualmente no UVX (150Hz, 512Hz e 1kHz,
 respectivamente).
 
 \vspace{12pt}
 
 Por fim, algumas ferramentas EPICS foram estudadas e aprimoradas. Em relação ao
-\textit{EPIC Archiver Appliance}, além de sua instalação em um computador
+\textit{EPICS Archiver Appliance}, além de sua instalação em um computador
 localizado na sala de controle, foram adicionadas as funcionalidades de
 \textit{login} e \textit{autenticação} de usuários, bem como a personalização
 das interfaces \textit{web} de acordo com as cores do logotipo do laboratório.
 Adicionalmente, fui responsável por instalar e configurar o servidor de alarmes
 \textit{BEAST} e exportar uma versão do \textit{Control System Studio} com
 apenas as funcionalidades desejadas no grupo, para a qual dei o nome de
-\textit{LNLStudio}. Este nome produto foi baseado na última versão estável do
-CSS, sendo ela a 4.3.4.
+\textit{LNLStudio}. Este novo produto foi baseado na última versão estável do
+CS-Studio, sendo ela a 4.3.4.
 
 \vspace{12pt}
 
 Em suma, entrei em contato com diversos conteúdos distintos, variando
 de aplicações de baixo nível até a interfaces gráficas. Creio que as atividades
 desenvolvidas no Grupo de Controle  contribuíram tanto para meu desenvolvimento
-técnico quanto ao desenvolvimento pessoal. Julgo também que a orientação de
+técnico quanto ao pessoal. Julgo também que a orientação de
 todos do laboratório foi fundamental para que eu pudesse aproveitar ao máximo as
-atividades propostas. Tive, igualmente, a oportunidade de aprender conceitos que
-não foram diretamente dados no meu curso de graduação, muitos deles ligados à
-física de operação do acelerador.
+atividades propostas. Tive, igualmente, a oportunidade de aprender
+sobre conceitos que não foram diretamente abordados no meu curso de graduação,
+muitos deles ligados à física de operação do acelerador.
  

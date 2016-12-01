@@ -33,7 +33,7 @@ largo conjunto de parâmetros referentes ao armazenamento e monitoramento. Uma
 %     \label{fig:epics_archiver} 
 % \end{figure} 
 
-O instituto desenvolvedor da aplicação sugere que cada módulo seja lançada em
+O instituto desenvolvedor da aplicação sugere que cada módulo seja lançado em
 sua própria instância \textit{Tomcat}. Em adição, ele propõe a divisão da
 unidade de armazenamento em 3 outras unidades, de acordo com a frequência em que
 os dados são salvos. Essas unidades são divididas em \textit{short-term},
@@ -47,8 +47,8 @@ específicos, explicados nas próximas subseções.
 
 Em um ambiente composto por diversos servidores EPICS e milhares de variáveis a
 serem monitoradas, tal como o sistema de controle do \textit{Sirius}, um sistema
-capaz de automizar e agilizar o armazenamento e recuperação de dados se torna fundamental para o
-monitoramento de eventuais problemas. Sendo assim, as próximas seções são
+capaz de automatizar e agilizar o armazenamento e recuperação de dados se torna
+fundamental para o monitoramento de eventuais problemas. Sendo assim, as próximas seções são
 dedicadas à instalação e exploração dos recursos disponíveis nesta aplicação.
 
 \subsection {Instalação}
@@ -90,14 +90,16 @@ Alguns arquivos \textit{css} (\textit{Cascading Style Sheet}) foram modificados
 para refletir melhor o esquema de cores do laboratório. As imagens do
 \textit{logo} também foram modificadas.
 
-\subsection{Uso do CS Studio no monitoramento} \label{appliance-csstudio}
+\subsection{Uso do CS-Studio no monitoramento} \label{appliance-csstudio}
 
-O \textit{CS Studio} pode ser usado para monitorar a \textit{appliance}. Para
-isso, entre em \texttt{Edit \(>\) Preferences} e acesse o item \texttt{CSS
-Applications \(>\) Trends \(>\) Data Browser}. No campo \textit{Archive Data
-Server URLs}, adicione o endereço \url{pbraw://10.0.4.69/lnls-control-archiver}.
+O \textit{CS-Studio} \cite{css} pode ser usado para monitorar a
+\textit{appliance}. Para isso, entre em \texttt{Edit \(>\) Preferences} e acesse
+o item \texttt{CSS Applications \(>\) Trends \(>\) Data Browser}. No campo
+\textit{Archive Data Server URLs}, adicione o endereço
+\url{pbraw://10.0.4.69/lnls-control-archiver}.
 Escreva qualquer \textit{Server alias}. Na tabela \textit{Default Archive Data
-Sources}, adicione o mesmo endereço e aperte \textit{Ok} para salvar as alterações.
+Sources}, adicione o mesmo endereço e aperte \textit{Ok} para salvar as
+alterações.
 
 \vspace{12pt}
 

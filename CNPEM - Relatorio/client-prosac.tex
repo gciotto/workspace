@@ -2,9 +2,9 @@
 
 \subsection{Introdução}
 
-O \textit{PROSAC} é um \textit{firware} desenvolvido no grupo de controle, cujo
-principal propósito é receber requisões da sala de controle e acionar a
-respectiva placa do bastidor. Esse \textit{firware} apresenta, atualmente,
+O \textit{PROSAC} é um \textit{firmware} desenvolvido no grupo de controle, cujo
+principal propósito é receber requisições da sala de controle e acionar a
+respectiva placa do bastidor. Esse \textit{firmware} apresenta, atualmente,
 suporte a diversas placas que são usadas atualmente no \textit{UVX} para
 controle de fontes e monitoramento de sensores. Exemplos de placas operadas pelo
 \textit{PROSAC} são a \textit{LOCON} de 12 e 16 \textit{bits}, a
@@ -13,8 +13,8 @@ controle de fontes e monitoramento de sensores. Exemplos de placas operadas pelo
 \vspace{12px}
 
 Considerando a sua importância no contexto do sistema controle, um artigo
-foi publicado na PCaPAC 2016 e dois clientes foram implementados a fim de testar
-seu funcionamento: um em Java e outro, utilizando o \textit{kit} de
+foi publicado na PCaPAC 2016 \cite{pcapac2016} e dois clientes foram
+implementados a fim de testar seu funcionamento: um em Java e outro, utilizando o \textit{kit} de
 desenvolvimento \textit{STM32F7 Discovery}.
 
 \subsection {Manutenção do \textit{PROSAC}}
@@ -29,7 +29,7 @@ são aquelas que necessitam ser sincronizadas a partir de um pulso de sincronism
 externo. No \textit{PROSAC}, tais tarefas consistem nas operações de ciclagem e
 rampa, isto é, a cada novo pulso recebido, o \textit{PROSAC} é encarregado de
 transmitir um novo valor às placas que estiverem participando do processo.
-Devido às mesmas limitações de processamento de tempo real discuitidas na seção
+Devido às mesmas limitações de processamento de tempo real discutidas na seção
 \ref{sec:bb1}, o número de pulsos perdidos na nova versão do \textit{PROSAC} era
 elevado para as frequências superiores a 500Hz, que tornava o seu uso
 proibitivo. Dessa forma, propus utilizarmos o \textit{scheduler} denominado de
@@ -40,6 +40,16 @@ perdidos para a configuração do \textit{PROSAC} com o \textit{Completely Fair
 Scheduler} conectado a duas placas LOCON de \textit{12 bits}, ambas
 participando da ciclagem. Conforme tabela, as taxas de pulsos perdidos são muito
 inferiores aos pulsos totais recebidos, possibilitando, assim, seu uso no UVX.
+A documentação interna do Grupo contém resultados de testes realizados para a
+versão anterior do PROSAC, que roda sobre uma CPU \textit{Advantech PCM-4153F}, para
+duas frequências, 500Hz e 5kHz. Nesta oportunidade, foram obtidas
+taxas de pulsos perdidos de 0\% e 0.20\% \cite{martins}, respectivamente. A taxa
+encontrada para 500Hz é inferior àquela encontrada no nosso artigo, porém a
+quantidade total de pulsos enviados foi 82 vezes menor: os testes utilizaram
+apenas 65536 pulsos. Destaca-se também que o uso da \textit{Beagle} não
+justifica-se apenas pela quantidade de pulsos perdidos, mas também pelo seu
+custo (a \textit{Beagle} custa \$50, enquanto que a \textit{Advantech}, \$500) e pela sua
+forte comunidade de desenvolvedores.
 
 \begin{table}[h]
 
@@ -82,7 +92,7 @@ a fim de corrigir tais problemas:
   \item Correção nas escalas dos gráficos para as placas monopolares de 12 e 16
   \textit{bits}.
   
-  \item Para a operação de rampa, o \textit{PROSAC} necessita da ordem com que
+  \item Para a operação de rampa, o \textit{PROSAC} necessita da ordem em que
   as placas aparecem no bastidor, não seus \textit{IDs}. Por exemplo, se duas
   placas estiverem presentes, cujos \textit{IDs} são 5 e 19, e quisermos
   executar uma rampa na 5, temos que enviar sua posição do bastidor, isto é 0.
