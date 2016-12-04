@@ -89,39 +89,40 @@ compartilhados. Os autores destacam a existência de \textit{dependências
 fracas}, isto é, instruções que contribuem o mínimo para os propósitos da
 \textit{lookup ahead thread}. Exemplos destes tipos de instruções podem ser
 instruções aritméticas e lógicas que não mudam o resultado de um registrador na
-maioria do tempo, ajustes inúteis em registradores (realizar uma operação em um
-registrador sendo que ele será o alvo de um \textit{store} em seguida) e
+maior parte do tempo, ajustes inúteis em registradores (realizar uma operação em
+um registrador sendo que ele será o alvo de um \textit{store} em seguida) e
 instruções de \textit{store}/\textit{load} que sempre escrevem ou carregam o
 mesmo valor. Infelizmente, sua análise torna-se muito difícil caso seja
 realizada estaticamente, uma vez que uma instrução se torna uma dependência
-fraco de acordo com o contexto do programa. Os autores ainda afirmam que não
+fraca de acordo com o contexto do programa. Os autores ainda afirmam que não
 conseguiram encontrar nenhuma característica especial em comum que pudesse
 identificá-las rapidamente no momento de geração dos esqueletos. É importante
-lembrar que a identificação de uma instrução errada pode de fato piorar o
-desempenho do sistema, dado que novos \textit{misses} podem ser inseridos e
-que não ocorreriam naturalmente.
+lembrar que a identificação de uma instrução errada pode, de fato, piorar o
+desempenho do sistema, dado que novos \textit{misses}, que não ocorreriam
+naturalmente, podem ser inseridos.
 
 Sendo assim, dada a natureza dinâmica das dependências, a não-linearidade dos
-efeitos de performance e a interdependência das cadeias de intruções, a melhor
-solução encontradas pelos autores foi recorrer a heurísticas e análise de código
+efeitos de performance e a interdependência das cadeias de instruções, a melhor
+solução encontrada pelos autores foi recorrer a heurísticas e análise de código
 para predizer a fraca dependência. No caso, eles utilizaram algoritmos genéticos
 e propuseram um novo método para encontrar instruções com grande probabilidade de
 serem fracas dependências. O método proposto foi capaz de aumentar a performance
 total dos sistemas testados em até 1.48x (1.14x média geométrica).
 
 Apesar de toda a explicação, os elementos da figura escolhida para a reprodução
-não abrange diretamente as ideias anteriores. O objetivo neste relatório é
+não abrangem diretamente as ideias anteriores. O objetivo neste relatório é
 replicar as curvas \textit{ideal} e \textit{single thread} da figura
 \ref{fig:artigo} (figura 3 de \cite{artigo}, página 3). A curva relativa a
-\textit{single thread} corresponde à execução \textit{normal} dos \textit{benchmarks}, enquanto
-que a \textit{ideal} supõe que nunca ocorrerão \textit{mispredictions} nos
-preditores ou \textit{cache misses}, ou seja, supões-se que todos os dados estão
-disponíveis nos \textit{caches} e que o preditor sempre acertará suas previsões.
+\textit{single thread} corresponde à execução \textit{normal} dos
+\textit{benchmarks}, enquanto que a \textit{ideal} supõe que nunca ocorrerão
+\textit{mispredictions} nos preditores ou \textit{cache misses}, ou seja,
+supõe-se que todos os dados estão disponíveis nos \textit{caches} e que o
+preditor sempre acertará suas previsões.
 As duas outras curvas, por exigirem uma grande alteração na estrutura dos
 simuladores, serão deixadas para uma outra oportunidade. Destaca-se, ainda, que
 os autores utilizaram os \textit{benchmarks} do \texttt{SPEC CPU2000}. Por
 dificuldades de licença e por razões de simplicidade (já possuímos os
-\textit{pinballs}), usamos o \texttt{SPEC CPU2006}.
+\textit{pinballs}), usamos o \texttt{SPEC CPU2006}. 
 
 \begin{figure}[h!]
   \centering
@@ -178,7 +179,7 @@ seguintes propostas foram implementadas:
 	\textit{pinball} fosse executado em modo \texttt{CACHE\_ONLY}, gerando nenhum
 	arquivo de saída e nenhuma estatística.
 	\item Implementação de \textit{pintool}: uma nova \textit{pin tool} foi
-	implementada a fim de contar as intruções e chamar a função
+	implementada a fim de contar as instruções e chamar a função
 	\texttt{SimRoiStart()} explicitamente. Essa função e várias outras são
 	fornecidas pelo arquivo \path{sniper/include/sim_api.h} e podem ser adicionadas
 	aos programas simulados. Infelizmente, o \textit{sniper} não é capaz de
@@ -191,7 +192,7 @@ seguintes propostas foram implementadas:
 	o \textit{pinballs} haviam sido criados em máquinas de 64 \textit{bits} e não
 	poderiam rodar em máquinas de 32 \textit{bits}.
 	\item Utilizar um \textit{script python} com a opção \texttt{-s}: depois de
-	perguntar do \textit{Google group} do simulador, recebi a resposta de que um
+	perguntar no \textit{Google group} do simulador, recebi a resposta de que um
 	\textit{script python} capaz de contar as instruções é disponível no diretório
 	\texttt{sniper/scripts}. Tal \textit{script} se chama \texttt{roi-icount.py} e,
 	no nosso caso, deve ser chamado com o parâmetro 0:100000000:30000000, indicando
@@ -252,7 +253,7 @@ mantém uma janela de instruções para cada \textit{core} simulado
 em um processador super-escalar \textit{out-of-order}. Além disso, implementamos um
 preditor do tipo \textit{gshare}, a partir das classes abstratas fornecidas
 pelo simulador com as características apresentadas acima. Enfim, utilizamos o
-modelo do processador padrão \textit{Nehalem} para modelar as intruções e
+modelo do processador padrão \textit{Nehalem} para modelar as instruções e
 micro-instruções. Uma das metas do projeto 4 é implementar um modelo mais
 parecido ao POWER5, que foi utilizado no artigo.
 
@@ -263,7 +264,7 @@ da definição de uma classe abstrata chamada \texttt{BranchPredictor}, que poss
 2 métodos virtuais, sendo eles \texttt{predict()} e \texttt{update()}.
 Todos recebem como parâmetro o endereço atual de \textit{PC}. O primeiro retorna
 um valor \textit{booleano}, indicando se a operação de salto deve ou não ser
-realizada e o segundo atualiza o estado preditor e o histório de saltos de
+realizada e o segundo atualiza o estado do preditor e o histório de saltos de
 acordo com o resultado do salto após que tal operação tenha sido
 \textit{comitada}. Implementou-se, portanto, a classe
 \texttt{GShareBranchPredictor} que redefine estes dois métodos e mantém uma
@@ -277,7 +278,11 @@ método \texttt{create()} do arquivo \path{branch_predictor.cc} e compilar o
 
 \section{Resultados}
 
-No total, 4 arquivos de configuração foram utilizado, dois para a
+Contrariamente aos resultados da figura \ref{fig:artigo} que foram obtidos para
+os \textit{benchmarks} do \texttt{SPEC CPU2000}, os testes produzidos neste
+relatório foram gerados a partir dos \textit{pinballs} do \texttt{SPEC CPU2006}. 
+
+No total, 4 arquivos de configuração foram utilizados, dois para a
 micro-arquitetura \textit{Gainestown} e duas para a micro-arquitetura do artigo.
 É necessário observar que o caso referente ao \textit{Gainestown} não possui
 alguma ligação com o artigo, porém ele foi executado mesmo assim com o intuito
@@ -290,8 +295,12 @@ para a configuração da tabela \ref{tab:ambiente}. Os \textit{benchmarks} foram
 posicionados em ordem crescente de diferença entre o desempenho ideal e o
 normal.
 
-Observa-se que os desempenhos ideais das duas execuções são muito parecidos
-entre si.
+Observa-se que os desempenhos ideais das duas execuções apresentam IPCs 
+muito parecidos entre si, valendo 1.93 e 1.68 em média geométrica para a
+configuração do artigo e \textit{Gainestown}, respectivamente. As medidas de IPC
+para os casos normais variam mais entre si em média geométrica, valendo de 0.65
+para a configuração do artigo e 1.09 para o \textit{Gainestown} (variação de
+1.68x).
  
 \begin{figure}[ht]
   \centering
@@ -308,13 +317,31 @@ entre si.
     \label{fig:artigocfg}%
   }
   \caption{Resultados da simulação.}
-\end{figure} 
-  
+\end{figure}
 
+Em relação aos resultados encontrados no artigo, nota-se que, em geral, eles são
+maiores que os encontrados nos experimentos encontrados neste relatório. Uma
+possível explicação reside no fato de que os testes produzidos em \cite{artigo}
+utilizaram os programas completos para as estatísticas. Durante os testes com os
+\textit{pinballs} com 130M de instruções, constatou-se que os resultados obtidos
+eram muitos inferiores àqueles dos \textit{pinballs} de 1B instruções. É
+evidente que quanto mais instruções executarmos, mais parecidos serão os
+resultados encontrados. Entretanto, o tempo de execução também cresce muito: se
+assumirmos que o tempo de execução varia linearmente com o número de instruções,
+a execução completa de um \textit{benchmark} com um 1 trilhão de instruções
+levaria aproximadamente 500 horas!
+  
 
 \section{Conclusões}
 
-
+Foi possível reproduzir, através do \textit{sniper}, resultados semelhantes
+àqueles encontrados no artigo para as curvas \textit{ideal} e \textit{single
+thread}, apesar de que diferentes \textit{benchmarks} foram utilizados. Duas
+configurações foram testadas: uma para a microarquitetura \textit{Gainestown} e
+a outra para o ambiente configurado no artigo. Notou-se que, em geral, a
+primeira configuração apresentou resultados melhores de IPC, em média
+geométrica. Implementou-se, ainda, um preditor to tipo \textit{gshare} a partir
+das classes abstratas fornecidas pelo \textit{sniper}.
 
 
 \bibliographystyle{sbc}
