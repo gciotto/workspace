@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.30)  1 DEC 2016 09:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.30)  5 DEC 2016 15:56
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -1369,30 +1369,37 @@ Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 137.
 <image/gps.jpg, id=194, 4143.48pt x 2330.7075pt>
 File: image/gps.jpg Graphic file (type jpg)
  <use image/gps.jpg>
-Package pdftex.def Info: image/gps.jpg used on input line 162.
-(pdftex.def)             Requested size: 171.21765pt x 96.30646pt.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 162.
+Package pdftex.def Info: image/gps.jpg used on input line 163.
+(pdftex.def)             Requested size: 145.53604pt x 81.83203pt.
 
-<image/epics-opi-ntpgps.png, id=195, 707.64375pt x 589.20125pt>
+<image/gps-ublox.jpg, id=195, 4143.48pt x 2330.7075pt>
+File: image/gps-ublox.jpg Graphic file (type jpg)
+
+<use image/gps-ublox.jpg>
+Package pdftex.def Info: image/gps-ublox.jpg used on input line 163.
+(pdftex.def)             Requested size: 145.53604pt x 81.83203pt.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 163.
+
+<image/epics-opi-ntpgps.png, id=196, 707.64375pt x 589.20125pt>
 File: image/epics-opi-ntpgps.png Graphic file (type png)
 
 <use image/epics-opi-ntpgps.png>
-Package pdftex.def Info: image/epics-opi-ntpgps.png used on input line 162.
+Package pdftex.def Info: image/epics-opi-ntpgps.png used on input line 163.
 (pdftex.def)             Requested size: 171.21765pt x 142.55298pt.
 File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
-Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 162.
+Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 163.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
  [6
 
- <./image/gps.jpg> <./image/epics-opi-ntpgps.png>])
+ <./image/gps.jpg> <./image/gps-ublox.jpg> <./image/epics-opi-ntpgps.png>])
 \openout2 = `prosac.aux'.
 
- (./prosac.tex (./document.toc)
+ (./prosac.tex
+(./document.toc)
 File: image/CNPEM_LNLS.png Graphic file (type png)
-
-<use image/CNPEM_LNLS.png>
+ <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 2.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
  [7
@@ -1404,7 +1411,8 @@ File: image/CNPEM_LNLS.png Graphic file (type png)
  <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 27.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
- [8
+
+[8
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10.95> not available
@@ -1412,14 +1420,13 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10.95> not available
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 9.85492pt on input line 62.
 File: image/CNPEM_LNLS.png Graphic file (type png)
-
-<use image/CNPEM_LNLS.png>
+ <use image/CNPEM_LNLS.png>
 Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 62.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
  [9
 
 ]
-<image/prosac-java.png, id=315, 1114.1625pt x 765.86125pt>
+<image/prosac-java.png, id=316, 1114.1625pt x 765.86125pt>
 File: image/prosac-java.png Graphic file (type png)
 
 <use image/prosac-java.png>
@@ -1431,13 +1438,13 @@ Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 80.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
  [10
 
- <./image/prosac-java.png>] <image/stm32.jpg, id=344, 2930.95pt x 1750.54pt>
+ <./image/prosac-java.png>] <image/stm32.jpg, id=345, 2930.95pt x 1750.54pt>
 File: image/stm32.jpg Graphic file (type jpg)
  <use image/stm32.jpg>
 Package pdftex.def Info: image/stm32.jpg used on input line 113.
 (pdftex.def)             Requested size: 167.79518pt x 100.19316pt.
 
-<image/stm32-2.jpg, id=345, 2894.815pt x 1814.78pt>
+<image/stm32-2.jpg, id=346, 2894.815pt x 1814.78pt>
 File: image/stm32-2.jpg Graphic file (type jpg)
  <use image/stm32-2.jpg>
 Package pdftex.def Info: image/stm32-2.jpg used on input line 113.
@@ -1471,7 +1478,7 @@ Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 61.
  [13
 
 ]
-<image/login.png, id=436, 1606.0pt x 876.27374pt>
+<image/login.png, id=437, 1606.0pt x 876.27374pt>
 File: image/login.png Graphic file (type png)
  <use image/login.png>
 Package pdftex.def Info: image/login.png used on input line 77.
@@ -1492,7 +1499,7 @@ Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 77.
  [14
 
  <./image/login.png>]
-<image/archiver.png, id=465, 1606.0pt x 876.27374pt>
+<image/archiver.png, id=466, 1606.0pt x 876.27374pt>
 File: image/archiver.png Graphic file (type png)
  <use image/archiver.png>
 Package pdftex.def Info: image/archiver.png used on input line 91.
@@ -1521,7 +1528,7 @@ Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 2.
 
 
 ]
-<image/beast-arquitetura.png, id=527, 627.34375pt x 435.6275pt>
+<image/beast-arquitetura.png, id=528, 627.34375pt x 435.6275pt>
 File: image/beast-arquitetura.png Graphic file (type png)
 
 <use image/beast-arquitetura.png>
@@ -1538,7 +1545,7 @@ Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 22.
  [17
 
  <./image/beast-arquitetura.png>]
-<image/beast-screen-shot.png, id=557, 1600.98125pt x 739.76375pt>
+<image/beast-screen-shot.png, id=558, 1600.98125pt x 739.76375pt>
 File: image/beast-screen-shot.png Graphic file (type png)
 
 <use image/beast-screen-shot.png>
@@ -1550,7 +1557,7 @@ Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 36.
 (pdftex.def)             Requested size: 90.15022pt x 28.45274pt.
  [18
 
- <./image/beast-screen-shot.png>] <image/plugin.png, id=588, 1604.99625pt x 615
+ <./image/beast-screen-shot.png>] <image/plugin.png, id=589, 1604.99625pt x 615
 .29875pt>
 File: image/plugin.png Graphic file (type png)
 
@@ -1568,7 +1575,7 @@ Package pdftex.def Info: image/CNPEM_LNLS.png used on input line 48.
  [19
 
  <./image/plugin.png>]
-<image/lnlstudio.png, id=618, 1603.9925pt x 875.27pt>
+<image/lnlstudio.png, id=619, 1603.9925pt x 875.27pt>
 File: image/lnlstudio.png Graphic file (type png)
 
 <use image/lnlstudio.png>
@@ -1638,10 +1645,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 128.
  ) 
 Here is how much of TeX's memory you used:
- 19468 strings out of 494976
- 366086 string characters out of 6180333
+ 19473 strings out of 494976
+ 366194 string characters out of 6180333
  447308 words of memory out of 5000000
- 22104 multiletter control sequences out of 15000+600000
+ 22108 multiletter control sequences out of 15000+600000
  61910 words of font info for 83 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  48i,17n,57p,388b,670s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1651,10 +1658,10 @@ e/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive
 onts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
 rw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/
 uhvro8a.pfb>
-Output written on document.pdf (23 pages, 9419816 bytes).
+Output written on document.pdf (23 pages, 13026342 bytes).
 PDF statistics:
- 768 PDF objects out of 1000 (max. 8388607)
+ 769 PDF objects out of 1000 (max. 8388607)
  702 compressed objects within 8 object streams
  63 named destinations out of 1000 (max. 500000)
- 143 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 148 words of extra memory for PDF output out of 10000 (max. 10000000)
 
