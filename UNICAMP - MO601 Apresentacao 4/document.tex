@@ -170,7 +170,7 @@ maneira de otimizá-la a partir de algoritmos genéticos:
 
 \begin{frame}
 \frametitle{Projeto 3}
-\framesubtitle{Resultados - \textit{Gainestown}}
+\framesubtitle{Resultados}
 
 \centering
 \includegraphics[width=0.87\textwidth]{images/gainestown}
@@ -253,8 +253,80 @@ maneira de otimizá-la a partir de algoritmos genéticos:
 \frametitle{Projeto 4}
 \framesubtitle{Resultados}
 
+\begin{figure}
+\includegraphics[width=0.95\textwidth]{images/ipc}
+\caption{IPCs utilizando páginas de 4KB e 4MB}
+\end{figure}
 
 \end{frame}
+
+\begin{frame}
+\frametitle{Projeto 4}
+\framesubtitle{Resultados}
+
+\begin{figure}
+\includegraphics[width=\textwidth]{images/diferenca}
+\caption{Diferença nos resultados obtidos nas páginas de 4KB e 4MB}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Projeto 4}
+\framesubtitle{Resultados}
+
+\begin{figure}
+\includegraphics[width=0.98\textwidth]{images/ideal_pinballs}
+\caption{Diferença das curvas ideais calculadas em dois tipos de
+\textit{pinballs}}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Projeto 4}
+\framesubtitle{Resultados}
+
+\begin{figure}
+\includegraphics[width=0.98\textwidth]{images/4KB_pinballs}
+\caption{Diferença das curvas de 4KB calculadas em dois tipos de
+\textit{pinballs}}
+\end{figure}
+
+\end{frame}
+
+
+\section{Conclusões}
+
+\begin{frame}
+\frametitle{Conclusões}
+
+\begin{itemize}
+
+\item As curvas de 4KB e 4MB se distanciam da ideal para \textit{benchmarks} com
+grande \textit{memory footprints}.
+
+\vspace{12pt}
+
+\item A modificação do tamanho das páginas da memória não é um fator
+determinante para o IPC: obtivemos um ganho, em média, de apenas 0.11.
+
+\vspace{12pt}
+
+\item Diferença entre as execuções do \textit{pinball}:	
+\begin{itemize} 
+	\item Caso ideal: pouca divergência, já que os mesmos intervalos de
+	\textit{cache misses} e \textit{mispredictions} foram retirados.
+
+	\item 4KB: maior divergência, principalmente para os \textit{benchmarks} com
+	maiores \textit{footprints} de meemória.
+\end{itemize} 
+
+ 
+\end{itemize}
+
+\end{frame}
+
 
 \section{Referências}
 \begin{frame}
@@ -266,10 +338,10 @@ maneira de otimizá-la a partir de algoritmos genéticos:
 \item Carison, T. E. and Heirman, W. (2013). The Sniper User Manual.
 \item Parihar, R. and Huang, M. C. (2014). Accelerating decoupled look-ahead via
 weak dependence removal: A metaheuristic approach. International Symposium on High Performance Computer Architecture.
+\item Henning, J. L. (2007). SPEC CPU2006 Memory Footprint, ACM SIGARCH
+Computer Architecture News
 \end{itemize}
 
 \end{frame}
-
-
 
 \end{document}

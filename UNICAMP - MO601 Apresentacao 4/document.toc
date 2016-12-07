@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {brazil}
+\beamer@sectionintoc {1}{Arquitetura Decoupled Look-Ahead}{3}{0}{1}
+\beamer@sectionintoc {2}{Projeto 3}{5}{0}{2}
+\beamer@sectionintoc {3}{Projeto 4}{7}{0}{3}
+\beamer@sectionintoc {4}{Conclus\IeC {\~o}es}{13}{0}{4}
+\beamer@sectionintoc {5}{Refer\IeC {\^e}ncias}{14}{0}{5}
